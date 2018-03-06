@@ -10,8 +10,10 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <?php
-        // put your code here
-        ?>
+        <div class="col-lg-12">
+            <?php
+            echo "<p>test</p>";
+            ?>
+        </div>
     </body>
 </html>

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/project/assets/fontawesome/css/fontawesome-all.min.css">
   
   <!-- javascript -->
-  <script src="/project/assets/js/jquery-3.3.1.min.js"></script>
+  <script src="/project23_1718/assets/js/jquery-3.3.1.min.js"></script>
   <script src="/project/assets/js/bootstrap.min.js"></script>
 </head>
 <body style="height:1500px">
