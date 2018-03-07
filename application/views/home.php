@@ -13,6 +13,7 @@ and open the template in the editor.
         <div class="col-lg-12">
             <?php
             echo "<p>test</p>";
+            echo $gebruiker->naam;
             ?>
         </div>
     </body>
