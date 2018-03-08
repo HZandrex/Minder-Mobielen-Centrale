@@ -8,11 +8,11 @@ class Home extends CI_Controller {
     }
 
     public function index() {
-        $data['titel'] = 'Test';
+        $data['titel'] = 'Home';
         $data['author'] = 'Geffrey W.';
         
-        $this->load->model('gebruiker_model');
-        $data['gebruiker'] = $this->gebruiker_model->get();
+        $this->load->model('webinfo_model');
+        $data['webinfo'] = $this->webinfo_model->get();
 
         $partials = array('inhoud' => 'home');
         $this->template->load('main_master', $partials, $data);
