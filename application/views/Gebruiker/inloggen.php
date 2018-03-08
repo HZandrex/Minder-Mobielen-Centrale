@@ -1,19 +1,27 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <div class="col-lg-12">
-            <?php
-            echo "<p>test</p>";
-            ?>
-        </div>
-    </body>
-</html>
+<div class="col-lg-12">
+    <div class="row  justify-content-md-center">
+        <?php
+            $attributes = array('name' => 'loginForm');
+            echo form_open('inloggen/controleerLogin', $attributes);
+        ?>
+        <table>
+            <div class="form-group">
+                <?php echo form_label('E-mail:', 'email'); ?>
+                <?php echo form_input(array('name' => 'email', 'id' => 'email', 'size' => '30', 'class' => 'form-control')); ?>
+            </div>
+            <div class="form-group">
+                <?php echo form_label('Wachtwoord:', 'wachtwoord'); ?></td>
+                <?php 
+                    $data = array('name' => 'wachtwoord', 'id' => 'wachtwoord', 'size' => '30', 'class' => 'form-control');
+                    echo form_password($data);
+                ?>
+            </div>
+            <tr>
+                <td></td>
+                <td><?php echo form_submit(array('name' => 'inlogKnop', 'value' =>'Inloggen', 'class' => 'btn btn-primary')); ?></td>
+            </tr>
+        </table>
+
+        <?php echo form_close(); ?>
+    </div>
+</div>
