@@ -27,8 +27,16 @@ class ritten_model extends CI_Model {
         $ritten = $query->result();
 		
 		$this->load->model('adres_model');
+		$this->load->model('adresrit_model');
+		$this->load->model('vrijwilligerrit_model');
 		foreach($ritten as $rit){
-			$rit->heenvertrek = $this->adres_model->getAdresRit;
+			$rit->heenvertrek = $this->adresrit_model->getByRitIdAndType($rit->id, 1);
+			$rit->heenaankomst = $this->adresrit_model->getByRitIdAndType($rit->id, 2);
+			if($this->adresrit_model->terugRit($rit->id)){
+				$rit->terugvertrek = $this->adresrit_model->getByRitIdAndType($rit->id, 3);
+				$rit->terugaankomst = $this->adresrit_model->getByRitIdAndType($rit->id, 4);
+			}
+			$rit->status = $this->vrijwilligerrit_model->getByRitId($rit->id);
 		}
 		
         return $ritten;

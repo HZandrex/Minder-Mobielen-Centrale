@@ -1,13 +1,13 @@
 <?php
 
-class adres_model extends CI_Model {
+class status_model extends CI_Model {
 
     // +----------------------------------------------------------
-    // | MMC - adres_model.php
+    // | MMC - status_model.php
     // +----------------------------------------------------------
     // | 2 ITF - 2017-2018
     // +----------------------------------------------------------
-    // | Model voor adres gegevens.
+    // | Model voor status gegevens.
     // |
     // +----------------------------------------------------------
     // | Thomas More Kempen
@@ -23,8 +23,9 @@ class adres_model extends CI_Model {
     {
 		$this->db->select('*');
         $this->db->where('id', $id);
-        $query = $this->db->get('adres');
+        $query = $this->db->get('status');
         return $query->row();
     }
+
                         
 }

@@ -19,11 +19,16 @@
 		foreach($ritten as $rit){
 	?>
 		<tr>
-			<td>Datum</td>
+			<td><?php print $rit->heenvertrek->tijd;?></td>
 			<td>Vertrek</td>
-			<td>Start Adres</td>
-			<td>Eind Adres</td>
-			<td>Terugrit</td>
+			<td><?php print $rit->heenvertrek->adres->straat . " " . $rit->heenvertrek->adres->huisnummer;?></td>
+			<td><?php print $rit->heenaankomst->adres->straat . " " . $rit->heenaankomst->adres->huisnummer;?></td>
+			<td><?php if(!empty($rit->terugvertrek)){
+				print $rit->terugvertrek->tijd;
+				
+			}else{
+				print "N/A";
+			} ?></td>
 			<td><?php print $rit->prijs;?>€</td>
 			<td><?php 
 				if(!empty($rit->extraKost)){
@@ -31,7 +36,7 @@
 				}?>
 			</td>
 			<td><?php print (intval($rit->prijs) + intval($rit->extraKost));?>€</td>
-			<td>Status</td>
+			<td><?php print $rit->status->status->naam ?></td>
 			<td></td>
 		</tr>
 	<?php
