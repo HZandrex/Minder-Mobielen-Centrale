@@ -1,13 +1,13 @@
 <?php
 
-class adres_model extends CI_Model {
+class ritten_model extends CI_Model {
 
     // +----------------------------------------------------------
-    // | MMC - adres_model.php
+    // | mmc - Ritten_model.php
     // +----------------------------------------------------------
     // | 2 ITF - 2017-2018
     // +----------------------------------------------------------
-    // | Model voor adres gegevens.
+    // | Ritten model
     // |
     // +----------------------------------------------------------
     // | Thomas More Kempen
@@ -18,12 +18,20 @@ class adres_model extends CI_Model {
         parent::__construct();
     }
 
-	//Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
-    function get($id)
+    function getById($mmid)
     {
-        $this->db->where('id', $id);
-        $query = $this->db->get('adres');
-        return $query->row();
+        $this->db->where('mmid', $mmid);
+		//$this->db->order_by('datum', 'asc');
+		$query = $this->db->get('rit');
+        $ritten = array();
+        $ritten = $query->result();
+		
+		$this->load->model('adres_model');
+		foreach($ritten as $rit){
+			$rit->heenvertrek = $this->adres_model->getAdresRit;
+		}
+		
+        return $ritten;
     }
                         
 }
