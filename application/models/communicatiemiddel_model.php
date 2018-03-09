@@ -1,6 +1,6 @@
 <?php
 
-class adres_model extends CI_Model {
+class communicatiemiddel_model extends CI_Model {
 
     // +----------------------------------------------------------
     // | MMC - adres_model.php
@@ -19,11 +19,14 @@ class adres_model extends CI_Model {
     }
 
 	//Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
-    function getById($id)
+    function get($id)
     {
+		$this->db->select('naam');
         $this->db->where('id', $id);
-        $query = $this->db->get('adres');
-        return $query->row();
+        $query = $this->db->get('voorkeur');
+        $voorkeur = $query->row();
+		
+		return $voorkeur;
     }
                         
 }

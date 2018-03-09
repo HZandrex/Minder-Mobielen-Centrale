@@ -8,40 +8,40 @@
             <table>
 				<tr>
 					<td>Voornaam:</td>
-					<td><?php $gegevens->voornaam; ?></td>
+					<td><?php echo $gegevens->voornaam; ?></td>
 				</tr>
 				<tr>
 					<td>Naam:</td>
-					<td><?php $gegevens->naam; ?></td>
+					<td><?php echo $gegevens->naam; ?></td>
 				</tr>
 				<tr>
 					<td>Telefoonnummer:</td>
-					<td><?php $gegevens->telefoon; ?></td>
+					<td><?php echo $gegevens->telefoon; ?></td>
 				</tr>
 				<tr>
 					<td>Email:</td>
-					<td><?php $gegevens->mail; ?></td>
+					<td><?php echo $gegevens->mail; ?></td>
 				</tr>
 				<tr>
 					<td>Gewenst communicatiemiddel:</td>
-					<td><?php $gegevens->VoorkeurID; ?></td>
+					<td><?php echo $gegevens->voorkeur; ?></td>
 				</tr>
 			</table>
             </div>
-			<div class="col-md-6 form-group">
+			<div class="pull-left">
 			<h4>Adresgegevens</h4>
 				<table>
 					<tr>
 					<td>Gemeente:</td>
-					<td><?php $gegevens->gemeente; ?></td>
+					<td><?php echo $gegevens->adres; ?></td>
 				</tr>
 				<tr>
 					<td>Postcode:</td>
-					<td><?php $gegevens->postcode; ?></td>
+					<td><?php echo $gegevens->adres; ?></td>
 				</tr>
 				<tr>
 					<td>Straat + nr:</td>
-					<td><?php $gegevens->straat; ?> <?php $gegevens->huisnummer ?></td>
+					<td><?php echo $gegevens->adres; ?> <?php echo $gegevens->adres ?></td>
 				</tr>
 				</table>
 			</div>

@@ -14,9 +14,6 @@ class PersoonlijkeGegevens extends CI_Controller {
 		
 		$this->load->model('persoonlijke_gegevens_model');
 		$data['gegevens'] = $this->persoonlijke_gegevens_model->get();
-		
-		var_dump($gegevens);
-		exit;
 
         $partials = array('inhoud' => 'Gebruiker/persoonlijkeGegevens');
         $this->template->load('main_master', $partials, $data);

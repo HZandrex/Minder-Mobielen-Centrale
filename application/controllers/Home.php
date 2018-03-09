@@ -14,8 +14,10 @@ class Home extends CI_Controller {
         $CI = & get_instance(); 
         $CI->load->model('webinfo_model');
         $data['webinfo'] = $CI->webinfo_model->get();
+        
+        $data['gebruiker']  = $this->authex->getGebruikerInfo();
 
-        $partials = array('inhoud' => 'Gebruiker/homePagina');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/homePagina');
         $this->template->load('main_master', $partials, $data);
     }
 

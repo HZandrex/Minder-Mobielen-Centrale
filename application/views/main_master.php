@@ -44,7 +44,7 @@
                 </div>
                 
                 <div class="navbar-nav">
-                    <?php echo anchor('gebruiker/inloggen/inloggen', 'Inloggen', 'class="nav-item nav-link"') ?>
+                    <?php echo $menu?>
                 </div>
             </div>
          </nav>
