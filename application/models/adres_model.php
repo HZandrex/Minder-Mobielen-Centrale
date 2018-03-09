@@ -21,7 +21,6 @@ class adres_model extends CI_Model {
 	//Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
     function get($id)
     {
-		$this->db->select('*');
         $this->db->where('id', $id);
         $query = $this->db->get('adres');
         return $query->row();

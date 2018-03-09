@@ -1,13 +1,13 @@
 <?php
 
-class persoonlijke_gegevens_model extends CI_Model {
+class communicatiemiddel_model extends CI_Model {
 
     // +----------------------------------------------------------
-    // | MMC - persoonlijke_gegevens_model.php
+    // | MMC - adres_model.php
     // +----------------------------------------------------------
     // | 2 ITF - 2017-2018
     // +----------------------------------------------------------
-    // | Model voor persoonlijke gegevens op te halen.
+    // | Model voor adres gegevens.
     // |
     // +----------------------------------------------------------
     // | Thomas More Kempen
@@ -19,22 +19,14 @@ class persoonlijke_gegevens_model extends CI_Model {
     }
 
 	//Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
-    function get()
+    function get($id)
     {
-        $this->db->where('id', 1);
-        $query = $this->db->get('gebruiker');
-		$gegevens = $query->row();
+		$this->db->select('naam');
+        $this->db->where('id', $id);
+        $query = $this->db->get('voorkeur');
+        $voorkeur = $query->row();
 		
-		$this->load->model('adres_model');
-		$this->load->model('communicatiemiddel_model');
-		
-		$adresID = $gegevens->AdresID;
-		$voorkeurID = $gegevens->VoorkeurID;
-		
-		$gegevens->adres = $this->adres_model->get($adresID);
-		$gegevens->voorkeur = $this->communicatiemiddel_model->get($voorkeurID);
-		
-        return $gegevens;
+		return $voorkeur;
     }
                         
 }
