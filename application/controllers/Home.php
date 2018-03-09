@@ -11,10 +11,11 @@ class Home extends CI_Controller {
         $data['titel'] = 'Home';
         $data['author'] = 'Nico C.';
         
-        $this->load->model('webinfo_model');
-        $data['webinfo'] = $this->webinfo_model->get();
+        $CI = & get_instance(); 
+        $CI->load->model('webinfo_model');
+        $data['webinfo'] = $CI->webinfo_model->get();
 
-        $partials = array('inhoud' => 'homePagina');
+        $partials = array('inhoud' => 'Gebruiker/homePagina');
         $this->template->load('main_master', $partials, $data);
     }
 

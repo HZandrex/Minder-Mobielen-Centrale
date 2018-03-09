@@ -16,6 +16,7 @@
         <!-- Bootstrap Core CSS -->
         <?php echo pasStylesheetAan("bootstrap.min.css"); ?>
         <?php echo pasStylesheetAan("main_style.css"); ?>
+        <?php echo pasStylesheetAan("inloggen.css"); ?>
 
         <?php echo haalJavascriptOp("jquery-3.3.1.min.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.min.js"); ?>
@@ -43,7 +44,7 @@
                 </div>
                 
                 <div class="navbar-nav">
-                    <?php echo anchor('inloggen/inloggen', 'Inloggen', 'class="nav-item nav-link"') ?>
+                    <?php echo anchor('gebruiker/inloggen/inloggen', 'Inloggen', 'class="nav-item nav-link"') ?>
                 </div>
             </div>
          </nav>

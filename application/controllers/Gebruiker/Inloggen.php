@@ -8,10 +8,10 @@ class Inloggen extends CI_Controller {
     }
 
     public function inloggen() {
-        $data['titel'] = 'Inloggen';
+        $data['titel'] = '';
         $data['author'] = 'Geffrey W.';
 
-        $partials = array('inhoud' => 'Gebruiker/inloggen');
+        $partials = array('inhoud' => 'Gebruiker/inlogPagina');
         $this->template->load('main_master', $partials, $data);
     }
 
