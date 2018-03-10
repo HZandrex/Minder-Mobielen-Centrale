@@ -17,6 +17,7 @@
         <?php echo pasStylesheetAan("bootstrap.min.css"); ?>
         <?php echo pasStylesheetAan("main_style.css"); ?>
         <?php echo pasStylesheetAan("inloggen.css"); ?>
+		<?php echo pasStylesheetAan("../fontawesome/css/fontawesome-all.min.css"); ?>
 
         <?php echo haalJavascriptOp("jquery-3.3.1.min.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.min.js"); ?>
