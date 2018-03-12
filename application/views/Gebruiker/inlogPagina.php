@@ -2,7 +2,7 @@
     <div class="row justify-content-center align-self-center">
         <?php
             $attributes = array('name' => 'loginForm');
-            echo form_open('inloggen/controleerLogin', $attributes);
+            echo form_open('gebruiker/inloggen/controleerLogin', $attributes);
         ?>
         <div class="card" id="inlogscherm">
             <div class="card-body">

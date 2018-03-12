@@ -10,10 +10,9 @@ class Home extends CI_Controller {
     public function index() {
         $data['titel'] = 'Home';
         $data['author'] = 'Nico C.';
-        
-        $CI = & get_instance(); 
-        $CI->load->model('webinfo_model');
-        $data['webinfo'] = $CI->webinfo_model->get();
+         
+        $this->load->model('webinfo_model');
+        $data['webinfo'] = $this->webinfo_model->get();
         
         $data['gebruiker']  = $this->authex->getGebruikerInfo();
 

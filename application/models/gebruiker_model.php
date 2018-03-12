@@ -24,5 +24,31 @@ class Gebruiker_model extends CI_Model {
         $query = $this->db->get('gebruiker');
         return $query->row();
     }
+    
+    function getWithFunctions()
+    {
+        $this->db->where('id', 1);
+        $query = $this->db->get('gebruiker');
+        return $query->row();
+    }
+    
+    function getGebruiker($email, $wachtwoord) {
+        // geef gebruiker-object met $email en $wachtwoord EN geactiveerd = 1
+        $this->db->where('mail', $email);
+        $this->db->where('active', 1);
+        $query = $this->db->get('gebruiker');
+        
+        if ($query->num_rows() == 1) {
+            $gebruiker = $query->row();
+            // controleren of het wachtwoord overeenkomt
+            if (password_verify($wachtwoord, $gebruiker->wachtwoord)) {
+                return $gebruiker;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
                         
 }

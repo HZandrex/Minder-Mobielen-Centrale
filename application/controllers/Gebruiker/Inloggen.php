@@ -15,20 +15,6 @@ class Inloggen extends CI_Controller {
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/inlogPagina');
         $this->template->load('main_master', $partials, $data);
     }
-    
-    public function login()
-	{
-            $data['titel'] = 'Inloggen';
-            $data['author'] = 'Geffrey W.';
-            $data['gebruiker']  = $this->authex->getGebruikerInfo();
-            
-            $partials = array('hoofding' => 'main_header',
-                'menu' => 'main_menu', 
-                'inhoud' => 'home_aanmelden', 
-                'voetnoot' => 'main_footer');
-            
-            $this->template->load('main_master', $partials, $data);
-        }
         
         public function toonFout()
 	{
@@ -48,14 +34,14 @@ class Inloggen extends CI_Controller {
             $email = $this->input->post('email');
             $wachtwoord = $this->input->post('wachtwoord');
             
-            if ($this->authex->login($email, $wachtwoord)) {
-                redirect('home/index');
+            if ($this->authex->meldAan($email, $wachtwoord)) {
+                echo $this->session->userdata('gebruiker_id');
             } else {
-                redirect('home/toonFout');
+                redirect('home');
             }
         } 
         
-        public function meldAf()
+        public function loguit()
 	{
             $this->authex->meldAf();
             redirect('home/index');
