@@ -18,18 +18,23 @@ class Gebruiker_model extends CI_Model {
         parent::__construct();
     }
 
-    function get()
+    function get($id)
     {
-        $this->db->where('id', 1);
+        $this->db->where('id', $id);
         $query = $this->db->get('gebruiker');
         return $query->row();
     }
     
-    function getWithFunctions()
+    function getWithFunctions($id)
     {
-        $this->db->where('id', 1);
+        $this->db->where('id', $id);
         $query = $this->db->get('gebruiker');
-        return $query->row();
+        $gebruiker = $query->row();
+        
+        $this->load->model('functieGebruiker_model');
+        $gebruiker->functies = $this->functieGebruiker_model->getWithName($gebruiker->id);
+        
+        return $gebruiker;
     }
     
     function getGebruiker($email, $wachtwoord) {

@@ -5,19 +5,6 @@ if (!defined('BASEPATH'))
 
 class Authex {
 
-    // +----------------------------------------------------------
-    // | TV Shop
-    // +----------------------------------------------------------
-    // | 2ITF - 201x-201x
-    // +----------------------------------------------------------
-    // | Authex library
-    // |
-    // +----------------------------------------------------------
-    // | Nelson Wells (http://nelsonwells.net/2010/05/creating-a-simple-extensible-codeigniter-authentication-library/)
-    // | 
-    // | aangepast door Thomas More
-    // +----------------------------------------------------------
-
     public function __construct() {
         $CI = & get_instance();
 
@@ -39,7 +26,7 @@ class Authex {
             return null;
         } else {
             $id = $CI->session->userdata('gebruiker_id');
-            return $CI->gebruiker_model->get($id);
+            return $CI->gebruiker_model->getWithFunctions($id);
         }
     }
 

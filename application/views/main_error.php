@@ -7,15 +7,14 @@
         <div class="card" id="inlogscherm">
             <div class="card-body">
                 <h5 class="card-title">Inloggen</h5>
-                <div><p class="warning"><?php echo$fout?></p></div>
                 <div class="form-group">
                     <?php echo form_label('E-mail:', 'email'); ?>
-                    <?php echo form_input(array('name' => 'email', 'id' => 'email', 'size' => '30', 'class' => 'form-control', 'required' => 'true')); ?>
+                    <?php echo form_input(array('name' => 'email', 'id' => 'email', 'size' => '30', 'class' => 'form-control')); ?>
                 </div>
                 <div class="form-group">
                     <?php echo form_label('Wachtwoord:', 'wachtwoord'); ?></td>
                     <?php 
-                        $data = array('name' => 'wachtwoord', 'id' => 'wachtwoord', 'size' => '30', 'class' => 'form-control', 'required' => 'true');
+                        $data = array('name' => 'wachtwoord', 'id' => 'wachtwoord', 'size' => '30', 'class' => 'form-control');
                         echo form_password($data);
                     ?>
                 </div>

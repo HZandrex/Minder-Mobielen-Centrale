@@ -11,21 +11,22 @@ class Inloggen extends CI_Controller {
         $data['titel'] = '';
         $data['author'] = 'Geffrey W.';
         $data['gebruiker']  = $this->authex->getGebruikerInfo();
+        
+        $data['fout'] = '';
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/inlogPagina');
         $this->template->load('main_master', $partials, $data);
     }
-        
+
         public function toonFout()
 	{
-            $data['titel'] = 'Fout';
+            $data['titel'] = '';
+            $data['author'] = 'Geffrey W.';
             $data['gebruiker']  = $this->authex->getGebruikerInfo();
-            
-            $partials = array('hoofding' => 'main_header',
-                'menu' => 'main_menu',
-                'inhoud' => 'home_fout',
-                'voetnoot' => 'main_footer');
-            
+
+            $data['fout'] = "Fout: De opgegeven gebruikersnaam en wachtwoord komen niet overeen";
+
+            $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/inlogPagina');
             $this->template->load('main_master', $partials, $data);
         }
         
@@ -35,9 +36,9 @@ class Inloggen extends CI_Controller {
             $wachtwoord = $this->input->post('wachtwoord');
             
             if ($this->authex->meldAan($email, $wachtwoord)) {
-                echo $this->session->userdata('gebruiker_id');
-            } else {
                 redirect('home');
+            } else {
+                redirect('gebruiker/inloggen/toonFout');
             }
         } 
         

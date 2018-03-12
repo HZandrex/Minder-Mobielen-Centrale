@@ -11,3 +11,7 @@ and open the template in the editor.
 #inlogscherm{
     margin-top: 20px;
 }
+
+#fout{
+    background-color: black;
+}
