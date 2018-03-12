@@ -30,43 +30,51 @@
     </head>
 
     <body>
-        <div>
-            <?php echo anchor('home', toonAfbeelding("MMC.png", "height=100px"))?>
-        </div>
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <?php echo anchor('home', 'Home', 'class="navbar-brand active"') ?>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <?php echo $menu?>
+        <div class="page-wrap">
+            <div>
+                <?php echo anchor('home', toonAfbeelding("MMC.png", "height=100px"))?>
             </div>
-         </nav>
-        
-        <!-- Page Content -->
-        <div class="container">
+            <!-- Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <?php echo anchor('home', 'Home', 'class="navbar-brand active"') ?>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav mr-auto">
 
-            <!-- Jumbotron Header
-            <header class="jumbotron hero-spacer">
-                <?-php echo $hoofding; ?>
-            </header>
+                    </div>
 
-            <hr> -->
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <h3 id="pageTitle"><?php echo $titel; ?></h3>
+                    <div class="navbar-nav">
+                        <?php echo $menu?>
+                    </div>
                 </div>
-            </div>
+             </nav>
 
-            <!-- Page Features -->
-            <div class="row">
-                <?php echo $inhoud; ?>
+            <!-- Page Content -->
+            <div class="container">
+
+                <!-- Jumbotron Header
+                <header class="jumbotron hero-spacer">
+                    <?-php echo $hoofding; ?>
+                </header>
+
+                <hr> -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 id="pageTitle"><?php echo $titel; ?></h3>
+                    </div>
+                </div>
+
+                <!-- Page Features -->
+                <div class="row">
+                    <?php echo $inhoud; ?>
+                </div>
+                <!-- /.row -->
             </div>
-            <!-- /.row -->
+            <!-- /.container -->
         </div>
-        <!-- /.container -->
         
         <!-- Footer -->
         <footer class="footer">

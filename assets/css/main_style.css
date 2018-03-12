@@ -5,7 +5,7 @@ and open the template in the editor.
 */
 /* 
     Created on : 6-mrt-2018, 17:16:24
-    Author     : geffrey
+    Author     : geffrey, nico
 */
 
 body{
@@ -20,17 +20,37 @@ body{
     margin-top: 10px;
 }
 
+/*Fix: footer stick to bottom*/
+html, body {
+    height: 100%;
+}
+.page-wrap {
+    min-height: 100%;
+    /* equal to footer height */
+    margin-bottom: -60px; 
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.footer, .page-wrap:after {
+  /* .push must be the same height as footer */
+    height: 60px; 
+}
 .footer {
     background-color: #00599B;
     color: #F0F8FA;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 40px;
-    line-height: 40px; /* Vertically center the text there */
+    padding-top: 10px;
 }
 
 footer span{
     margin: 0 5px;
+}
+
+/*HomePagina elemenenten*/
+img.homePagina{
+    margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    right: 20px;
 }
