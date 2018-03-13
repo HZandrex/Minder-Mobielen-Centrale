@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-    
+
+
 
     <head>
 
@@ -17,7 +17,7 @@
         <?php echo pasStylesheetAan("bootstrap.min.css"); ?>
         <?php echo pasStylesheetAan("main_style.css"); ?>
         <?php echo pasStylesheetAan("inloggen.css"); ?>
-		<?php echo pasStylesheetAan("../fontawesome/css/fontawesome-all.min.css"); ?>
+        <?php echo pasStylesheetAan("../fontawesome/css/fontawesome-all.min.css"); ?>
 
         <?php echo haalJavascriptOp("jquery-3.3.1.min.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.min.js"); ?>
@@ -30,61 +30,42 @@
     </head>
 
     <body>
-        <div class="page-wrap">
-            <div>
-                <?php echo anchor('home', toonAfbeelding("MMC.png", "height=100px"))?>
-            </div>
-            <!-- Navigation -->
-            <nav class="navbar navbar-expand-lg navbar-dark">
-                <?php echo anchor('home', 'Home', 'class="navbar-brand active"') ?>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
+        <!-- navbar -->
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+                <?php echo anchor('home', toonAfbeelding("MMC_white.png", "height=50px"), 'class="navbar-brand"') ?>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav mr-auto">
-
-                    </div>
-
-                    <div class="navbar-nav">
-                        <?php echo $menu?>
-                    </div>
+                <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+                    <?php echo $menu ?>
                 </div>
-             </nav>
+            </nav>
+        </header>
 
-            <!-- Page Content -->
-            <div class="container">
-
-                <!-- Jumbotron Header
-                <header class="jumbotron hero-spacer">
-                    <?-php echo $hoofding; ?>
-                </header>
-
-                <hr> -->
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h3 id="pageTitle"><?php echo $titel; ?></h3>
-                    </div>
+        <!-- Content -->
+        <div class="container">
+            <!-- pagina titel -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 id="pageTitle"><?php echo $titel; ?></h1>
                 </div>
-
-                <!-- Page Features -->
-                <div class="row">
-                    <?php echo $inhoud; ?>
-                </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container -->
+            <!-- pagina inhoud -->
+            <?php echo $inhoud; ?>
         </div>
         
         <!-- Footer -->
         <footer class="footer">
             <div class="container">
                 <div class="row">
-                    <span class="mr-auto">
-                        <span>Nico C.</span><span>Lorenz C.</span><span>Tijmen E.</span><span>Michiel O.</span><span>Geffrey W.</span>
-                    </span>
+                    <span>Nico C.</span>
+                    <span class="footerNaam">Lorenz C.</span>
+                    <span class="footerNaam">Tijmen E.</span>
+                    <span class="footerNaam">Michiel O.</span>
+                    <span class="mr-auto">Geffrey W.</span>
 
-                    <span>Team 23 Christel Maes</span>
+                    <span id="footerTeam">Team 23 Christel Maes</span>
                     
                     <script>
                         $('span').filter(function(){ return $(this).text() === "<?php echo $author; ?>"; }).css('text-decoration','underline');

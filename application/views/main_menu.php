@@ -1,6 +1,8 @@
 <?php
 if ($gebruiker == null) { // niet aangemeld
-    echo '<div class="navbar-nav mr-auto"></div>';
+    echo '<div class="navbar-nav mr-auto">';
+        echo divAnchor('home', 'Home', 'class="nav-item nav-link"');
+    echo '</div>';
     echo '<div class="navbar-nav">';
         echo divAnchor('gebruiker/inloggen', 'Inloggen', 'class="nav-item nav-link"');
     echo '</div>';

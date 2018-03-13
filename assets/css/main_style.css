@@ -16,35 +16,44 @@ body{
     background-color: #00599B;
 }
 
-#pageTitle{
-    margin-top: 10px;
+html {
+  position: relative;
+  min-height: 100%;
 }
-
-/*Fix: footer stick to bottom*/
-html, body {
-    height: 100%;
-}
-.page-wrap {
-    min-height: 100%;
-    /* equal to footer height */
-    margin-bottom: -60px; 
-}
-.page-wrap:after {
-  content: "";
-  display: block;
-}
-.footer, .page-wrap:after {
-  /* .push must be the same height as footer */
-    height: 60px; 
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
 }
 .footer {
-    background-color: #00599B;
-    color: #F0F8FA;
-    padding-top: 10px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #00599B;
 }
 
-footer span{
+body > .container {
+  padding: 100px 15px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.footerNaam{
     margin: 0 5px;
+}
+
+@media (max-width: 576px) {
+    .footer span{
+        font-size: 10px;
+    }
+    #footerTeam{
+        visibility: collapse;
+    }
 }
 
 /*HomePagina elemenenten*/
@@ -53,4 +62,14 @@ img.homePagina{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     position: relative;
     right: 20px;
+}
+
+.testDiv{
+    background-color: pink;
+}
+.testDiv2{
+    background-color: cyan;
+}
+.testDiv3{
+    background-color: greenyellow;
 }

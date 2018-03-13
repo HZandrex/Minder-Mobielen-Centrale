@@ -19,5 +19,14 @@ class Home extends CI_Controller {
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/homePagina');
         $this->template->load('main_master', $partials, $data);
     }
+    
+    public function test() {
+        $data['titel'] = 'Home';
+        $data['author'] = 'Geffrey W.';
+        
+        $data['gebruiker']  = $this->authex->getGebruikerInfo();
 
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'test');
+        $this->template->load('main_master', $partials, $data);
+    }
 }
