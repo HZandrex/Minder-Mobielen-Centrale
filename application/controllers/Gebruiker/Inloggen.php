@@ -6,7 +6,6 @@
  * 
  * Controller-klase met alle methodes die gebruikt worden om in te loggen
  */
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Inloggen extends CI_Controller {
@@ -14,7 +13,7 @@ class Inloggen extends CI_Controller {
     public function __construct() {
         parent::__construct();
     }
-    
+
     /**
      * Toont het inlogscherm in de view inlogPagina.php
      * 
@@ -28,7 +27,7 @@ class Inloggen extends CI_Controller {
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/inlogPagina');
         $this->template->load('main_master', $partials, $data);
     }
-    
+
     /**
      * Zorgt er voor dat het inlogscherm terug wordt getoond met
      * de foutmelding dat de gegevens niet kloppen in de view inlogPagina.php
@@ -45,7 +44,7 @@ class Inloggen extends CI_Controller {
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/inlogPagina');
         $this->template->load('main_master', $partials, $data);
     }
-    
+
     /**
      * Logt in met de Authex library door de methode meldAan($email, $wachtwoord)
      * de inloggegevens worden via de post methode binnengehaald vanuit de form
@@ -70,7 +69,7 @@ class Inloggen extends CI_Controller {
             redirect('gebruiker/inloggen/toonFout');
         }
     }
-    
+
     /**
      * Logt uit met de Authex library met de methode meldAf(), vervolgens wordt Home::index() opgeroepen
      * @see Home::index()
@@ -78,6 +77,35 @@ class Inloggen extends CI_Controller {
     public function loguit() {
         $this->authex->meldAf();
         redirect('home');
+    }
+
+    public function wachtwoordVergeten() {
+        $data['titel'] = '';
+        $data['author'] = 'Geffrey W.';
+        $data['gebruiker'] = $this->authex->getGebruikerInfo();
+
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordVergeten');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function nieuwWachtwoord(){
+        
+    }
+
+    private function stuurMail($geadresseerde, $boodschap, $titel) {
+        $this->load->library('email');
+
+        $this->email->from('atworkteam23@gmail.com', 'tv-shop');
+        $this->email->to($geadresseerde);
+        $this->email->subject($titel);
+        $this->email->message($boodschap);
+
+        if (!$this->email->send()) {
+            show_error($this->email->print_debugger());
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
