@@ -13,6 +13,10 @@ if ($gebruiker == null) { // niet aangemeld
         case 'Coach':
             echo divAnchor('product/bestel', 'Producten bestellen', 'class="nav-item nav-link"');
             break;
+        
+        case 'Admin':
+            echo divAnchor('admin/webinfo', 'Webinfo wijzigen', 'class="nav-item nav-link"');
+            break;
         }
     }
     echo '</div>';
