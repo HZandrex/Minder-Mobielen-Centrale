@@ -17,8 +17,8 @@ class Gebruiker_model extends CI_Model {
     }
     
     /**
-     * Retourneert het record met id=$id uit de tabel bier_product
-     * @param type $id De id van het record dat opgevraagd wordt
+     * Retourneert het record met id=$id uit de tabel gebruiker
+     * @param $id De id van het record dat opgevraagd wordt
      * @return het opgevraagde record
      */
     function get($id)
@@ -28,6 +28,12 @@ class Gebruiker_model extends CI_Model {
         return $query->row();
     }
     
+    /**
+     * Retourneert het record met id=$id uit de tabel gebruiker
+     * hierbij worden ook zijn functies megegeven (MinderMobiele, coach, ...)
+     * @param $id De id van het record dat opgevraagd wordt
+     * @return het opgevraagde record
+     */
     function getWithFunctions($id)
     {
         $this->db->where('id', $id);
@@ -40,6 +46,14 @@ class Gebruiker_model extends CI_Model {
         return $gebruiker;
     }
     
+    /**
+     * Retourneert het record met mail=$email, wachtwoord=$wachtwoord & active = 1 uit de tabel gebruiker
+     * @param $email Het mail adres van het record dat opgevraagd wordt
+     * @param $wachtwoord Het wachtwoord in hash van het record dat opgevraagd wordt
+     * @return het opgevraagde record als er een gebruiker is met het opgeven email & wachtwoord combo en active is
+     * anders null
+     * 
+     */
     function getGebruiker($email, $wachtwoord) {
         // geef gebruiker-object met $email en $wachtwoord EN geactiveerd = 1
         $this->db->where('mail', $email);

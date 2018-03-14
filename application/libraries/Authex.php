@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @class Authex
+ * @brief Library 
+ * 
+ * Controller-klase met alle methodes die gebruikt worden om in te loggen
+ */
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
