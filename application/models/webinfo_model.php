@@ -27,5 +27,13 @@ class Webinfo_model extends CI_Model {
         }
         return $webinfo;
     }
-                        
+    
+    function update($webinfo)
+    {
+        for($i=1; $i < count($webinfo); $i++){
+            $webinfoElement = array('waarde' => $webinfo[$i-1]);
+            $this->db->where('id', $i);
+            $this->db->update('webinfo', $webinfoElement);
+        }
+    }
 }
