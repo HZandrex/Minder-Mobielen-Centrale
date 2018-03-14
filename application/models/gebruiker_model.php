@@ -1,23 +1,26 @@
 <?php
+/**
+ * @class Gebruiker_model
+ * @brief Model-klasse voor gebruikers (medewerkers, vrijwilligers, ...)
+ * 
+ * Model-klasse die alle methodes bevat om te interageren met de database-tabel gebruiker
+ */
 
 class Gebruiker_model extends CI_Model {
 
-    // +----------------------------------------------------------
-    // | Lekkerbier - Bestelling_model.php
-    // +----------------------------------------------------------
-    // | 2 ITF - 201x-201x
-    // +----------------------------------------------------------
-    // | Bestelling model
-    // |
-    // +----------------------------------------------------------
-    // | Thomas More Kempen
-    // +----------------------------------------------------------
-
     function __construct()
     {
+        /**
+         * Constructor
+         */
         parent::__construct();
     }
-
+    
+    /**
+     * Retourneert het record met id=$id uit de tabel bier_product
+     * @param type $id De id van het record dat opgevraagd wordt
+     * @return het opgevraagde record
+     */
     function get($id)
     {
         $this->db->where('id', $id);

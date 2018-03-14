@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-
     <head>
-
+        <?php
+        /**
+         * @mainpage Commentaar bij Project23_1718
+         * 
+         * # Wat?
+         * Je vindt hier onze Docygen-commentaar bij het PHP-project <b>Project23_1718</b>.
+         * - De commentaar bij onze model- en controller-klassen vind je onder het menu <em>Klassen</em>
+         * - De commentaar bij onze view-bestanden vind je onder het menu <em>Bestanden</em>
+         * - Ook de originele commentaar geschreven bij het Codeigniter-framwork is opgenomen.
+         * 
+         * # Wie?
+         * Dit project is geschreven en becommentarieerd door Nico Claes, Lorenz Cleymans, Tijmen Elseviers, Michiel Olijslagers & Geffrey Wuyts.
+         */
+        ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,7 +64,7 @@
             <!-- pagina inhoud -->
             <?php echo $inhoud; ?>
         </div>
-        
+
         <!-- Footer -->
         <footer class="footer">
             <div class="container">
@@ -66,9 +76,11 @@
                     <span class="mr-auto">Geffrey W.</span>
 
                     <span id="footerTeam">Team 23 Christel Maes</span>
-                    
+
                     <script>
-                        $('span').filter(function(){ return $(this).text() === "<?php echo $author; ?>"; }).css('text-decoration','underline');
+                        $('span').filter(function () {
+                            return $(this).text() === "<?php echo $author; ?>";
+                        }).css('text-decoration', 'underline');
                     </script>
                 </div>
             </div>

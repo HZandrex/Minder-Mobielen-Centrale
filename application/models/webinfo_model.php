@@ -18,7 +18,7 @@ class Webinfo_model extends CI_Model {
         parent::__construct();
     }
 
-    function get()
+    function getAll()
     {
         $query = $this->db->get('webinfo');
         $webinfo = array();

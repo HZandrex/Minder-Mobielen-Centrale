@@ -1,3 +1,12 @@
+<?php
+    /**
+     * @file Gebruiker/homePagina.php
+     * 
+     * View waarin de beginpagina wordt weergegeven (info, contact gegevens, ...)
+     * - krijgt een $webinfo-array binnen
+     */
+?>
+
 <div class="row">
     <div class="col-12">
         <?php
