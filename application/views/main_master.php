@@ -68,7 +68,7 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="container">
-                <div class="row">
+                <div class="row footText">
                     <span>Nico C.</span>
                     <span class="footerNaam">Lorenz C.</span>
                     <span class="footerNaam">Tijmen E.</span>
