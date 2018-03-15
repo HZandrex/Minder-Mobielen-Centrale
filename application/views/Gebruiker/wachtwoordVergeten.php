@@ -25,7 +25,6 @@
                 <?php echo form_label('E-mail:', 'email'); ?>
                 <?php echo form_input(array('name' => 'email', 'id' => 'email', 'size' => '30', 'class' => 'form-control', 'required' => 'true')); ?>
             </div>
-            <?php if(isset($fout)){echo $fout;}; ?>
             <?php echo form_submit(array('name' => 'verzendKnop', 'value' => 'Verzenden', 'class' => 'btn btn-primary')); ?>
         </div>
     </div>

@@ -31,6 +31,12 @@ class Gebruiker_model extends CI_Model {
         $query = $this->db->get('gebruiker');
         return $query->row();
     }
+    
+    function getByResetToken($resetToken) {
+        $this->db->where('resetToken', $resetToken);
+        $query = $this->db->get('gebruiker');
+        return $query->row();
+    }
 
     /**
      * Retourneert het record met id=$id uit de tabel gebruiker
@@ -89,7 +95,6 @@ class Gebruiker_model extends CI_Model {
     }
     
     function controleerResetToken($token) {
-        // is email al dan niet aanwezig
         $this->db->where('resetToken', $token);
         $query = $this->db->get('gebruiker');
 
@@ -105,6 +110,21 @@ class Gebruiker_model extends CI_Model {
         $gebruiker->resetToken = $resetToken;
         $this->db->where('mail', $email);
         $this->db->update('gebruiker', $gebruiker);
+    }
+    
+    function verwijderResetToken($resetToken){
+        $gebruiker = new stdClass();
+        $gebruiker->resetToken = null;
+        $this->db->where('resetToken', $resetToken);
+        $this->db->update('gebruiker', $gebruiker);
+    }
+    
+    function wijzigWachtwoord($resetToken, $wachtwoord){
+        $gebruiker = new stdClass();
+        $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
+        $this->db->where('resetToken', $resetToken);
+        $this->db->update('gebruiker', $gebruiker);
+        $this->verwijderResetToken($resetToken);
     }
 
 }

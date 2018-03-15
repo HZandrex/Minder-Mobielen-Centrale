@@ -35,7 +35,6 @@
                 echo form_password($data);
                 ?>
             </div>
-            <?php if(isset($fout)){echo $fout;}; ?>
             <?php echo form_submit(array('name' => 'wachtwoordWijzigenKnop', 'value' => 'Wachtwoord wijzigen', 'class' => 'btn btn-primary')); ?>
         </div>
     </div>
