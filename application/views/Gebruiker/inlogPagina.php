@@ -31,7 +31,9 @@
             </div>
             <?php if(isset($fout)){echo $fout;}; ?>
             <?php echo form_submit(array('name' => 'inlogKnop', 'value' => 'Inloggen', 'class' => 'btn btn-primary')); ?>
-            <?php echo '<p>' . anchor('gebruiker/inloggen/wachtwoordVergeten', 'Wachtwoord vergeten?') . '</p>'; ?>
+        </div>
+        <div class="card-body">
+            <?php echo anchor('gebruiker/inloggen/wachtwoordVergeten', 'Wachtwoord vergeten?', 'class="card-link"') ; ?>
         </div>
     </div>
 

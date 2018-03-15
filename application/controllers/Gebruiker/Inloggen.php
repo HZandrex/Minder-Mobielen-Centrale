@@ -87,9 +87,25 @@ class Inloggen extends CI_Controller {
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordVergeten');
         $this->template->load('main_master', $partials, $data);
     }
-    
-    public function nieuwWachtwoord(){
-        
+
+    public function nieuwWachtwoordAanvragen() {
+        $email = $this->input->post('email');
+
+        $this->load->model('gebruiker_model');
+
+        if ($this->gebruiker_model->controleerEmailVrij($email)) {
+            redirect('gebruiker/inloggen');
+        } else {
+            $resetToken = $this->random_resetToken();
+            $this->gebruiker_model->wijzigResetToken($email, $resetToken);
+            $titel = "Minder Mobiele Centrale aanvraag nieuw wachtwoord";
+            $boodschap = 'U heeft een nieuw wachtwoord aangevraagd. Druk op onderstaande link om een nieuw wachtwoord aan te vragen.</br>'
+                    . 'Wanneer u zelf geen nieuw wachtwoord hebt aangevraagd hoeft u deze mail simpel te negeren.</br>'
+                    . 'Verander wachtwoord: ' . anchor('http://localhost/project23_1718/index.php/gebruiker/inloggen/wachtwoordVergetenWijzigen/' . $resetToken);
+            $this->stuurMail($email, $boodschap, $titel);
+
+            redirect('gebruiker/inloggen');
+        }
     }
 
     private function stuurMail($geadresseerde, $boodschap, $titel) {
@@ -106,6 +122,36 @@ class Inloggen extends CI_Controller {
         } else {
             return true;
         }
+    }
+
+    public function wachtwoordVergetenWijzigen($resetToken) {
+        $data['titel'] = '';
+        $data['author'] = 'Geffrey W.';
+        $data['gebruiker'] = $this->authex->getGebruikerInfo();
+
+        $data['resetToken'] = $resetToken;
+
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordVergetenWijzigen');
+        $this->template->load('main_master', $partials, $data);
+    }
+
+    public function wachtwoordVeranderen() {
+        $resetToken = $this->input->post('resetToken');
+        $newWachtwoord = $this->input->post('wachtwoord');
+
+        $this->load->model('gebruiker_model');
+
+        if ($this->gebruiker_model->controleerResetToken($resetToken)) {
+            echo $newWachtwoord;
+        } else {
+            echo 'kaka';
+        }
+    }
+
+    private function random_resetToken() {
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $resetToken = substr(str_shuffle($chars), 0, 10);
+        return $resetToken;
     }
 
 }
