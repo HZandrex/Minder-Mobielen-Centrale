@@ -21,7 +21,7 @@ class Functie_model extends CI_Model {
     function get($id)
     {
         $this->db->where('id', $id);
-        $query = $this->db->get('functie');
+        $query = $this->db->get('Functie');
         return $query->row();
     }
                         
