@@ -17,6 +17,12 @@ body{
     background-color: #00599B;
 }
 
+.dropdown-menu{
+    background-color: #00599B;
+    border-radius: 0 0 0.25rem 0.25rem;
+    border-color: #00599B;
+}
+
 html {
   position: relative;
   min-height: 100%;
