@@ -205,7 +205,7 @@ class Inloggen extends CI_Controller {
         if ($this->gebruiker_model->controleerResetToken($resetToken)) {
             if ($Wachtwoord == $this->input->post('wachtwoordBevestigen')) {
                 $gebruiker = $this->gebruiker_model->getByResetToken($resetToken);
-                $this->gebruiker_model->wijzigWachtwoord($resetToken, $Wachtwoord);
+                $this->gebruiker_model->wijzigWachtwoordReset($resetToken, $Wachtwoord);
                 $titel = "Minder Mobiele Centrale wachtwoord veranderd";
                 $boodschap = "<p>U heeft zojuist uw wachtwoord veranderd. Noteer dit wachtwoord ergens of onthoud dit goed.</p>"
                         . "<p>Heeft u het wachtwoord niet veranderd en krijgd u deze mail, neem dan snel contact met ons op."

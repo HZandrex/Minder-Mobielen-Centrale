@@ -27,7 +27,7 @@ if ($gebruiker == null) { // niet aangemeld
                 <?php echo $gebruiker->voornaam . ' ' . $gebruiker->naam; ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <?php echo divAnchor('gebruiker/persoonlijkegegevens', 'Mijn gegevens', 'class="nav-link"'); ?>
+                <?php echo divAnchor('gebruiker/persoonlijkegegevens/wachtwoordWijzigen', 'Mijn gegevens', 'class="nav-link"'); ?>
                 <?php echo divAnchor('gebruiker/inloggen/loguit', 'Uitloggen', 'class="nav-link"'); ?>
             </div>
         </li>
