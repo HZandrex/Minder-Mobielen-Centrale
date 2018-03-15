@@ -29,23 +29,6 @@ class Inloggen extends CI_Controller {
     }
 
     /**
-     * Zorgt er voor dat het inlogscherm terug wordt getoond met
-     * de foutmelding dat de gegevens niet kloppen in de view inlogPagina.php
-     * 
-     * @see inlogPagina.php
-     */
-    public function toonFout() {
-        $data['titel'] = '';
-        $data['author'] = 'Geffrey W.';
-        $data['gebruiker'] = $this->authex->getGebruikerInfo();
-
-        $data['fout'] = '<div class="alert alert-danger">Fout: E-mail en Wachtwoord komen niet overeen, probeer opnieuw!</div>';
-
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/inlogPagina');
-        $this->template->load('main_master', $partials, $data);
-    }
-
-    /**
      * Logt in met de Authex library door de methode meldAan($email, $wachtwoord)
      * de inloggegevens worden via de post methode binnengehaald vanuit de form
      * in de view inlogPagina.php
@@ -66,7 +49,7 @@ class Inloggen extends CI_Controller {
         if ($this->authex->meldAan($email, $wachtwoord)) {
             redirect('home');
         } else {
-            redirect('gebruiker/inloggen/toonFout');
+            redirect('gebruiker/inloggen/toonFoutInloggen');
         }
     }
 
@@ -123,16 +106,50 @@ class Inloggen extends CI_Controller {
             return true;
         }
     }
-
-    public function wachtwoordVergetenWijzigen($resetToken) {
+    
+    /**
+     * Zorgt er voor dat het inlogscherm terug wordt getoond met
+     * de foutmelding dat de gegevens niet kloppen in de view inlogPagina.php
+     * 
+     * @see inlogPagina.php
+     */
+    public function toonFoutMelding($foutTitel, $boodschap, $link) {
         $data['titel'] = '';
         $data['author'] = 'Geffrey W.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
+        
+        $data['foutTitel'] = $foutTitel;
+        $data['boodschap'] = $boodschap;
+        $data['link'] = $link;
 
-        $data['resetToken'] = $resetToken;
-
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordVergetenWijzigen');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'main_error');
         $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function toonFoutInloggen(){
+            $titel = "Fout!";
+            $boodschap = "Het opgegeven mail adres komt niet overeen met het wachtwoord.</br>"
+                    . "Probeer opnieuw!";
+            $link = array("url" => "gebruiker/inloggen", "tekst" => "terug");
+            
+            $this->toonFoutMelding($titel, $boodschap, $link);
+        }
+
+    public function wachtwoordVergetenWijzigen($resetToken) {
+        $this->load->model('gebruiker_model');
+        if($this->gebruiker_model->controleerResetToken($resetToken)){
+            $data['titel'] = '';
+            $data['author'] = 'Geffrey W.';
+            $data['gebruiker'] = $this->authex->getGebruikerInfo();
+
+            $data['resetToken'] = $resetToken;
+
+            $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordVergetenWijzigen');
+            $this->template->load('main_master', $partials, $data);
+        }
+        else{
+            redirect('gebruiker/inloggen');
+        }
     }
 
     public function wachtwoordVeranderen() {

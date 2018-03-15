@@ -29,7 +29,6 @@
                 echo form_password($data);
                 ?>
             </div>
-            <?php if(isset($fout)){echo $fout;}; ?>
             <?php echo form_submit(array('name' => 'inlogKnop', 'value' => 'Inloggen', 'class' => 'btn btn-primary')); ?>
         </div>
         <div class="card-body">
