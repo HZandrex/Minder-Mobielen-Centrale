@@ -13,24 +13,21 @@ class VrijwilligerRit_model extends CI_Model {
     // | Thomas More Kempen
     // +----------------------------------------------------------
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
     }
 
-	//Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
-    function getByRitId($id)
-    {
-		$this->db->select('*');
+    //Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
+    function getByRitId($id) {
+        $this->db->select('*');
         $this->db->where('ritid', $id);
         $query = $this->db->get('vrijwilligerrit');
-		
-		$this->load->model('status_model');
-		$array = array();
-		$array = $query->row();
-		$array->status = $this->status_model->getById($array->StatusId);
+
+        $this->load->model('status_model');
+        $array = array();
+        $array = $query->row();
+        $array->status = $this->status_model->getById($array->StatusId);
         return $array;
     }
 
-                        
 }
