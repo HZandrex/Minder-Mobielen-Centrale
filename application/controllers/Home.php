@@ -20,8 +20,8 @@ class Home extends CI_Controller {
      * in een sessievariabelen.
      * Vervolgens wordt het resulterende object getoond in de view Gebruiker/homePagina.php
      * 
-     * @see webinfo_model::getAll()
-     * @see libraries/Authex.php::getGebruikerInfo()
+     * @see Webinfo_model::getAll()
+     * @see Authex
      * @see Gebruiker/homePagina.php
      */
     public function index() {

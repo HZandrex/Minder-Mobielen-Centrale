@@ -26,12 +26,21 @@ class Gebruiker_model extends CI_Model {
         return $query->row();
     }
     
+    /**
+     * Retourneert het record met mail=$email uit de tabel gebruiker
+     * @param $email Het mailadres van het record dat opgevraagd wordt
+     * @return het opgevraagde record
+     */
     function getByMail($email) {
         $this->db->where('mail', $email);
         $query = $this->db->get('Gebruiker');
         return $query->row();
     }
-    
+    /**
+     * Retourneert het record met resetToken=$resetToken uit de tabel gebruiker
+     * @param $resetToken De resetToken van het record dat opgevraagd wordt
+     * @return het opgevraagde record
+     */
     function getByResetToken($resetToken) {
         $this->db->where('resetToken', $resetToken);
         $query = $this->db->get('Gebruiker');
@@ -57,7 +66,7 @@ class Gebruiker_model extends CI_Model {
 
     /**
      * Retourneert het record met mail=$email, wachtwoord=$wachtwoord & active = 1 uit de tabel gebruiker
-     * @param $email Het mail adres van het record dat opgevraagd wordt
+     * @param $email Het mailadres van het record dat opgevraagd wordt
      * @param $wachtwoord Het wachtwoord in hash van het record dat opgevraagd wordt
      * @return het opgevraagde record als er een gebruiker is met het opgeven email & wachtwoord combo en active is
      * anders null
@@ -85,7 +94,7 @@ class Gebruiker_model extends CI_Model {
     /**
      * Retourneert true wanneer het email adres nog niet wordt gebruikt en false
      * wanneer er al een account is met dit mailadres.
-     * @param $email Het mail adres dat wordt gecontroleerd
+     * @param $email Het mailadres dat wordt gecontroleerd
      * @return true bij nog niet bestaan & false bij het al bestaan
      */
     function controleerEmailVrij($email) {
@@ -100,8 +109,13 @@ class Gebruiker_model extends CI_Model {
         }
     }
     
-    function controleerResetToken($token) {
-        $this->db->where('resetToken', $token);
+    /**
+     * Retourneert true wanneer de resetToken bestaat en false wanneer hij niet bestaat.
+     * @param $resetToken De resetToken dat wordt gecontroleerd
+     * @return false bij niet bestaan & true bij het bestaan
+     */
+    function controleerResetToken($resetToken) {
+        $this->db->where('resetToken', $resetToken);
         $query = $this->db->get('Gebruiker');
 
         if ($query->num_rows() == 0) {
@@ -111,6 +125,11 @@ class Gebruiker_model extends CI_Model {
         }
     }
     
+    /**
+     * Wijzigt de waarde van resetToken waar mail=$email in de tabel Gebruiker
+     * @param $email Het mailadres van wie de token moet worden gewijzigt
+     * @param $resetToken De resetToken dat wordt gecontroleerd
+     */
     function wijzigResetToken($email, $resetToken){
         $gebruiker = new stdClass();
         $gebruiker->resetToken = $resetToken;
@@ -118,6 +137,10 @@ class Gebruiker_model extends CI_Model {
         $this->db->update('Gebruiker', $gebruiker);
     }
     
+    /**
+     * Verwijdert resetToken waar resetToken = $resetToken
+     * @param $resetToken De resetToken dat wordt verwijdert
+     */
     function verwijderResetToken($resetToken){
         $gebruiker = new stdClass();
         $gebruiker->resetToken = null;
@@ -125,6 +148,11 @@ class Gebruiker_model extends CI_Model {
         $this->db->update('Gebruiker', $gebruiker);
     }
     
+    /**
+     * Wijzigt het wachtwoord na een nieuw aan te vragen waar resetToken = $resetToken
+     * @param $resetToken De resetToken waarvan het wachtwoord wordt veranderd
+     * @param $wachtwoord Het nieuwe wachtwoord dat werd opgeven in Gebruiker/wachtwoordVergetenWijzigen.php
+     */
     function wijzigWachtwoordReset($resetToken, $wachtwoord){
         $gebruiker = new stdClass();
         $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
@@ -133,6 +161,11 @@ class Gebruiker_model extends CI_Model {
         $this->verwijderResetToken($resetToken);
     }
     
+    
+    /**
+     * Wijzigt het wachtwoord waar id = $id
+     * @param $wachtwoord Het nieuwe wachtwoord dat werd opgeven in Gebruiker/wachtwoordWijzigen.php
+     */
     function wijzigWachtwoord($id, $wachtwoord){
         $gebruiker = new stdClass();
         $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
