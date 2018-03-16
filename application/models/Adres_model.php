@@ -1,6 +1,6 @@
 <?php
 
-class adres_model extends CI_Model {
+class Adres_model extends CI_Model {
 
     // +----------------------------------------------------------
     // | MMC - adres_model.php
