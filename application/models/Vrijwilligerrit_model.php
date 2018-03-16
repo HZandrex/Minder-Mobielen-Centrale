@@ -1,6 +1,6 @@
 <?php
 
-class vrijwilligerrit_model extends CI_Model {
+class VrijwilligerRit_model extends CI_Model {
 
     // +----------------------------------------------------------
     // | MMC - vrijwilligerrit_model.php

@@ -1,6 +1,6 @@
 <?php
 
-class status_model extends CI_Model {
+class Status_model extends CI_Model {
 
     // +----------------------------------------------------------
     // | MMC - status_model.php

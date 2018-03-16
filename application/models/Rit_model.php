@@ -1,6 +1,6 @@
 <?php
 
-class ritten_model extends CI_Model {
+class Rit_model extends CI_Model {
 
     // +----------------------------------------------------------
     // | mmc - Ritten_model.php
