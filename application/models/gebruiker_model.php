@@ -119,12 +119,20 @@ class Gebruiker_model extends CI_Model {
         $this->db->update('Gebruiker', $gebruiker);
     }
     
-    function wijzigWachtwoord($resetToken, $wachtwoord){
+    function wijzigWachtwoordReset($resetToken, $wachtwoord){
         $gebruiker = new stdClass();
         $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
         $this->db->where('resetToken', $resetToken);
         $this->db->update('Gebruiker', $gebruiker);
         $this->verwijderResetToken($resetToken);
+    }
+    
+    function wijzigWachtwoord($id, $wachtwoord){
+        $gebruiker = new stdClass();
+        $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
+        $this->db->where('id', $id);
+        $this->db->update('Gebruiker', $gebruiker);
+        $this->authex->meldAf();
     }
 
 }
