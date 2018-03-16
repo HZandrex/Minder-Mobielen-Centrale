@@ -21,18 +21,18 @@ class FunctieGebruiker_model extends CI_Model {
     function get($gebruikersId)
     {
         $this->db->where('GebruikersId', $gebruikersId);
-        $query = $this->db->get('functiegebruiker');
+        $query = $this->db->get('FunctieGebruiker');
         return $query->result();
     }
     function getWithName($gebruikersId)
     {
         $this->db->where('GebruikersId', $gebruikersId);
-        $query = $this->db->get('functiegebruiker');
+        $query = $this->db->get('FunctieGebruiker');
         $functiesGebruiker = $query->result();
         
         $this->load->model('functie_model');
         foreach ($functiesGebruiker as $functieGebruiker) {
-            $functieGebruiker->functieNaam = $this->functie_model->get($functieGebruiker->FunctiesId);
+            $functieGebruiker->functieNaam = $this->functie_model->get($functieGebruiker->functiesId);
         }
         
         return $functiesGebruiker;

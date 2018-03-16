@@ -22,19 +22,19 @@ class Gebruiker_model extends CI_Model {
      */
     function get($id) {
         $this->db->where('id', $id);
-        $query = $this->db->get('gebruiker');
+        $query = $this->db->get('Gebruiker');
         return $query->row();
     }
     
     function getByMail($email) {
         $this->db->where('mail', $email);
-        $query = $this->db->get('gebruiker');
+        $query = $this->db->get('Gebruiker');
         return $query->row();
     }
     
     function getByResetToken($resetToken) {
         $this->db->where('resetToken', $resetToken);
-        $query = $this->db->get('gebruiker');
+        $query = $this->db->get('Gebruiker');
         return $query->row();
     }
 
@@ -46,7 +46,7 @@ class Gebruiker_model extends CI_Model {
      */
     function getWithFunctions($id) {
         $this->db->where('id', $id);
-        $query = $this->db->get('gebruiker');
+        $query = $this->db->get('Gebruiker');
         $gebruiker = $query->row();
 
         $this->load->model('functieGebruiker_model');
@@ -67,7 +67,7 @@ class Gebruiker_model extends CI_Model {
         // geef gebruiker-object met $email en $wachtwoord EN geactiveerd = 1
         $this->db->where('mail', $email);
         $this->db->where('active', 1);
-        $query = $this->db->get('gebruiker');
+        $query = $this->db->get('Gebruiker');
 
         if ($query->num_rows() == 1) {
             $gebruiker = $query->row();
@@ -81,11 +81,17 @@ class Gebruiker_model extends CI_Model {
             return null;
         }
     }
-
+    
+    /**
+     * Retourneert true wanneer het email adres nog niet wordt gebruikt en false
+     * wanneer er al een account is met dit mailadres.
+     * @param $email Het mail adres dat wordt gecontroleerd
+     * @return true bij nog niet bestaan & false bij het al bestaan
+     */
     function controleerEmailVrij($email) {
         // is email al dan niet aanwezig
         $this->db->where('mail', $email);
-        $query = $this->db->get('gebruiker');
+        $query = $this->db->get('Gebruiker');
 
         if ($query->num_rows() == 0) {
             return true;
@@ -96,7 +102,7 @@ class Gebruiker_model extends CI_Model {
     
     function controleerResetToken($token) {
         $this->db->where('resetToken', $token);
-        $query = $this->db->get('gebruiker');
+        $query = $this->db->get('Gebruiker');
 
         if ($query->num_rows() == 0) {
             return FALSE;
@@ -109,22 +115,30 @@ class Gebruiker_model extends CI_Model {
         $gebruiker = new stdClass();
         $gebruiker->resetToken = $resetToken;
         $this->db->where('mail', $email);
-        $this->db->update('gebruiker', $gebruiker);
+        $this->db->update('Gebruiker', $gebruiker);
     }
     
     function verwijderResetToken($resetToken){
         $gebruiker = new stdClass();
         $gebruiker->resetToken = null;
         $this->db->where('resetToken', $resetToken);
-        $this->db->update('gebruiker', $gebruiker);
+        $this->db->update('Gebruiker', $gebruiker);
     }
     
-    function wijzigWachtwoord($resetToken, $wachtwoord){
+    function wijzigWachtwoordReset($resetToken, $wachtwoord){
         $gebruiker = new stdClass();
         $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
         $this->db->where('resetToken', $resetToken);
-        $this->db->update('gebruiker', $gebruiker);
+        $this->db->update('Gebruiker', $gebruiker);
         $this->verwijderResetToken($resetToken);
+    }
+    
+    function wijzigWachtwoord($id, $wachtwoord){
+        $gebruiker = new stdClass();
+        $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
+        $this->db->where('id', $id);
+        $this->db->update('Gebruiker', $gebruiker);
+        $this->authex->meldAf();
     }
 
 }

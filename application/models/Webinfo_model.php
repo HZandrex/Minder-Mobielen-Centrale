@@ -20,7 +20,7 @@ class Webinfo_model extends CI_Model {
 
     function getAll()
     {
-        $query = $this->db->get('webinfo');
+        $query = $this->db->get('Webinfo');
         $webinfo = array();
         foreach($query->result() as $waarde){
             $webinfo["$waarde->naam"] = "$waarde->waarde";
@@ -33,7 +33,7 @@ class Webinfo_model extends CI_Model {
         for($i=1; $i < count($webinfo); $i++){
             $webinfoElement = array('waarde' => $webinfo[$i-1]);
             $this->db->where('id', $i);
-            $this->db->update('webinfo', $webinfoElement);
+            $this->db->update('Webinfo', $webinfoElement);
         }
     }
 }
