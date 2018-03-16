@@ -34,13 +34,12 @@ class Inloggen extends CI_Controller {
      * in de view inlogPagina.php
      * 
      * Wanneer het inloggen lukt zal Home::index() worden opgeroepen
-     * wanner de gegevens fout zijn zal de methode Inloggen::toonFout() worden opgeroepen.
+     * wanner de gegevens fout zijn zal de methode toonFoutInloggen worden opgeroepen.
      * 
      * @param $email Het mail adres dat werd opgeven in de view inlogPagina.php
      * @param $wachtwoord Het wachtwoord dat werd opgeven in de view inlogPagina.php
-     * @see Inloggen::toonFout()
+     * @see Inloggen::toonFoutInloggen()
      * @see Home::index()
-     * @see inlogPagina.php
      */
     public function controleerLogin() {
         $email = $this->input->post('email');
@@ -61,6 +60,12 @@ class Inloggen extends CI_Controller {
         $this->authex->meldAf();
         redirect('home');
     }
+    
+    /**
+     * Toont het scherm om een nieuw wachtwoord aan te vragen in de view wachtwoordVergeten.php
+     * 
+     * @see wachtwoordVergeten.php
+     */
 
     public function wachtwoordVergeten() {
         $data['titel'] = '';
@@ -70,7 +75,33 @@ class Inloggen extends CI_Controller {
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordVergeten');
         $this->template->load('main_master', $partials, $data);
     }
-
+    
+    /**
+     * Kijkt eerst of er een account bestaat met het opgegeven mailadres(mail = $email) via gebruiker_model.
+     * Wanneer er een geen account wordt gevonden wordt de functie toonFoutWachtwoordVeranderen worden opgeroepen.
+     * 
+     * Bij het vinden van een account zal er eerst een reset token worden gegereneerd via de functie random_resetToken(),
+     * vervolgens wordt er gecontroleerd of deze al bestaat in de tabel via het gebruiker_model. Als de token al bestaat zal
+     * er een nieuwe worden gegenereerd totdat hij uniek is in de tabel.
+     * 
+     * Vervolgens zal de gebruiker met het opgegeven mailadres worden bijgewerkt met de reset token via het gebruiker_model,
+     * er zal ook een mail worden gestuurd naar het opgegeven mailadres om te zeggen dat er nieuw wachtwoord is aangevraagd en
+     * een link in om het nieuwe wachtwoord in te stellen. deze link bevat de reset token om op de pagina te controlren of
+     * dit een geldig verzoek is en voor wie het nieuwe wachtwoord bedoeld is, het verzenden van de mail gebeurt via de functie
+     * stuurMail. Vervolgens wordt ook een bevesteging getoond via toonMailNieuwWachtwoordVerstuurd.
+     * 
+     * De link da de view wachtwoordVergetenWijzigen.php openen.
+     * 
+     * @param $email Het mail adres dat werd opgeven in de view inlogPagina.php
+     * @param $resetToken een toekn van 20 willekeurige karrakters lang om het proces vijlig te maken
+     * @see Inloggen::toonFoutWachtwoordVeranderen()
+     * @see Inloggen::toonMailNieuwWachtwoordVerstuurd()
+     * @see Inloggen::random_resetToken()
+     * @see Inloggen::wachtwoordVergetenWijzigen()
+     * @see Gebruiker_model::controleerEmailVrij()
+     * @see Gebruiker_model::controleerResetToken()
+     * @see Gebruiker_model::wijzigResetToken()
+     */
     public function nieuwWachtwoordAanvragen() {
         $email = $this->input->post('email');
 
@@ -93,7 +124,15 @@ class Inloggen extends CI_Controller {
             redirect('gebruiker/inloggen/toonMailNieuwWachtwoordVerstuurd');
         }
     }
-
+    
+    /**
+     * Stuurt een E-mail naar het ogegeven mailadres $geadresseerde, de mail wordt opgesteld
+     * met de parameters $titel en $boodschap. Dit gebeurd via de email library.
+     * 
+     * De configuratie van het mail adres waar me wordt verzonden is email.php dat zich bevind in de config map.
+     * 
+     * @see email.php
+     */
     private function stuurMail($geadresseerde, $boodschap, $titel) {
         $this->load->library('email');
 

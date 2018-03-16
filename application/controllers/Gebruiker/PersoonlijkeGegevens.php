@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * @class PersoonlijkeGegevens
+ * @brief Controller-klasse voor de persoonlijke gegevens
+ * 
+ * Controller-klase met alle methodes die gebruikt worden om persoonlijke gegevens te beheren
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class PersoonlijkeGegevens extends CI_Controller {

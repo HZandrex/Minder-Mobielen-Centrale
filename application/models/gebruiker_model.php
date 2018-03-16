@@ -81,7 +81,13 @@ class Gebruiker_model extends CI_Model {
             return null;
         }
     }
-
+    
+    /**
+     * Retourneert true wanneer het email adres nog niet wordt gebruikt en false
+     * wanneer er al een account is met dit mailadres.
+     * @param $email Het mail adres dat wordt gecontroleerd
+     * @return true bij nog niet bestaan & false bij het al bestaan
+     */
     function controleerEmailVrij($email) {
         // is email al dan niet aanwezig
         $this->db->where('mail', $email);
