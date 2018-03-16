@@ -1,6 +1,6 @@
 <?php
 
-class communicatiemiddel_model extends CI_Model {
+class Voorkeur_model extends CI_Model {
 
     // +----------------------------------------------------------
     // | MMC - adres_model.php

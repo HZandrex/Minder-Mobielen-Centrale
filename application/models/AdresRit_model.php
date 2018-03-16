@@ -1,6 +1,6 @@
 <?php
 
-class adresrit_model extends CI_Model {
+class AdresRit_model extends CI_Model {
 
     // +----------------------------------------------------------
     // | MMC - adresrit_model.php
@@ -24,18 +24,18 @@ class adresrit_model extends CI_Model {
 		$this->db->select('*');
         $this->db->where('ritid', $id);
 		$this->db->where('typeAdresId', $type);
-        $query = $this->db->get('adresrit');
+        $query = $this->db->get('Adresrit');
 		$array = array();
 		$array = $query->row();
 		
-		$this->load->model('adres_model');
+		$this->load->model('Adres_model');
 		$array->adres = $this->adres_model->getById($array->AdresId);
         return $array;
     }
 	
 	function terugRit($id){
         $this->db->where('RitId', $id);
-		$query = $this->db->get('adresrit');
+		$query = $this->db->get('Adresrit');
 		
 		$rows = array();
 		$check = 0;
