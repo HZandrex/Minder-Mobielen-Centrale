@@ -53,12 +53,12 @@ class PersoonlijkeGegevens extends CI_Controller {
                         . "<p>Heeft u het wachtwoord niet veranderd en krijgd u deze mail, neem dan snel contact met ons op."
                         . " U vindt deze gegevens op onze site.<p>" . anchor('home', "Link naar de site van de Minder Mobiele Centrale");
                 $this->stuurMail($gebruiker->mail, $boodschap, $titel);
-                redirect('gebruiker/inloggen/toonWachtwoordVeranderd');
+                redirect('gebruiker/persoonlijkegegevens/toonwachtwoordveranderd');
             } else {
-                redirect('gebruiker/inloggen/toonFoutNieuwWachtwoord/' . $resetToken);
+                redirect('gebruiker/persoonlijkegegevens/toonfoutwachtwoordovereenkomst');
             }
         } else {
-            redirect('gebruiker/inloggen/toonFoutLinkVerlopen');
+            redirect('gebruiker/persoonlijkegegevens/toonfoutoudwachtwoord');
         }
     }
     
@@ -66,7 +66,7 @@ class PersoonlijkeGegevens extends CI_Controller {
         $this->load->library('email');
 
         $this->email->from('atworkteam23@gmail.com', 'tv-shop');
-        $this->email->to($geadresseerde);
+        $this->email->to(/*$geadresseerde*/'atworkteam23@gmail.com');
         $this->email->subject($titel);
         $this->email->message($boodschap);
 
@@ -76,6 +76,46 @@ class PersoonlijkeGegevens extends CI_Controller {
         } else {
             return true;
         }
+    }
+    
+    public function toonMelding($foutTitel, $boodschap, $link) {
+        $data['titel'] = '';
+        $data['author'] = 'Geffrey W.';
+        $data['gebruiker'] = $this->authex->getGebruikerInfo();
+
+        $data['foutTitel'] = $foutTitel;
+        $data['boodschap'] = $boodschap;
+        $data['link'] = $link;
+
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'main_error');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function toonFoutOudWachtwoord() {
+        $titel = "Fout!";
+        $boodschap = "Het oude wachtwoord is niet correct.</br>"
+                . "Probeer opnieuw!";
+        $link = array("url" => "gebruiker/persoonlijkegegevens/wachtwoordwijzigen", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+    
+    public function toonFoutWachtwoordOvereenkomst() {
+        $titel = "Fout!";
+        $boodschap = "Het wachtwoord is niet 2 keer hetzelfde.</br>"
+                . "Probeer opnieuw!";
+        $link = array("url" => "gebruiker/persoonlijkegegevens/wachtwoordwijzigen", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+    
+    public function toonWachtwoordVeranderd() {
+        $titel = "Wachtwoord succesvol veranderd";
+        $boodschap = "Uw wachtwoord werd succesvol gewijzigd.</br>"
+                . "U kan nu gewoon inloggen met het nieuwe wachtwoord.";
+        $link = array("url" => "gebruiker/inloggen", "tekst" => "Inloggen");
+
+        $this->toonMelding($titel, $boodschap, $link);
     }
 
 }

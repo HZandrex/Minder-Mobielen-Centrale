@@ -24,7 +24,7 @@ class Inloggen extends CI_Controller {
         $data['author'] = 'Geffrey W.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/inlogPagina');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/inlogpagina');
         $this->template->load('main_master', $partials, $data);
     }
 
@@ -48,7 +48,7 @@ class Inloggen extends CI_Controller {
         if ($this->authex->meldAan($email, $wachtwoord)) {
             redirect('home');
         } else {
-            redirect('gebruiker/inloggen/toonFoutInloggen');
+            redirect('gebruiker/inloggen/toonfoutinloggen');
         }
     }
 
@@ -58,7 +58,7 @@ class Inloggen extends CI_Controller {
      */
     public function loguit() {
         $this->authex->meldAf();
-        redirect('home');
+        redirect('gebruiker/inloggen');
     }
     
     /**
@@ -72,7 +72,7 @@ class Inloggen extends CI_Controller {
         $data['author'] = 'Geffrey W.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordVergeten');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordvergeten');
         $this->template->load('main_master', $partials, $data);
     }
     
@@ -108,7 +108,7 @@ class Inloggen extends CI_Controller {
         $this->load->model('gebruiker_model');
 
         if ($this->gebruiker_model->controleerEmailVrij($email)) {
-            redirect('gebruiker/inloggen/toonFoutWachtwoordVeranderen');
+            redirect('gebruiker/inloggen/toonfoutwachtwoordveranderen');
         } else {
             $resetToken = $this->random_resetToken();
             while ($this->gebruiker_model->controleerResetToken($resetToken)) {
@@ -118,10 +118,10 @@ class Inloggen extends CI_Controller {
             $titel = "Minder Mobiele Centrale aanvraag nieuw wachtwoord";
             $boodschap = '<p>U heeft een nieuw wachtwoord aangevraagd. Druk op onderstaande link om een nieuw wachtwoord aan te vragen.</p>'
                     . '<p>Wanneer u zelf geen nieuw wachtwoord hebt aangevraagd hoeft u deze mail simpel te negeren.</p>'
-                    . '<p>Verander wachtwoord: ' . anchor('http://localhost/project23_1718/index.php/gebruiker/inloggen/wachtwoordVergetenWijzigen/' . $resetToken, 'Link om wachtwoord te veranderen') . '</p>';
+                    . '<p>Verander wachtwoord: ' . anchor('http://localhost/project23_1718/index.php/gebruiker/inloggen/wachtwoordvergetenwijzigen/' . $resetToken, 'Link om wachtwoord te veranderen') . '</p>';
             $this->stuurMail($email, $boodschap, $titel);
 
-            redirect('gebruiker/inloggen/toonMailNieuwWachtwoordVerstuurd');
+            redirect('gebruiker/inloggen/toonmailnieuwwachtwoordverstuurd');
         }
     }
     
@@ -137,7 +137,7 @@ class Inloggen extends CI_Controller {
         $this->load->library('email');
 
         $this->email->from('atworkteam23@gmail.com', 'tv-shop');
-        $this->email->to($geadresseerde);
+        $this->email->to(/*$geadresseerde*/'atworkteam23@gmail.com');
         $this->email->subject($titel);
         $this->email->message($boodschap);
 
@@ -178,7 +178,7 @@ class Inloggen extends CI_Controller {
         $titel = "Fout!";
         $boodschap = "Het opgegeven mail adres is niet gekoppeld aan een account.</br>"
                 . "Probeer opnieuw!";
-        $link = array("url" => "gebruiker/inloggen/wachtwoordVergeten", "tekst" => "Terug");
+        $link = array("url" => "gebruiker/inloggen/wachtwoordvergeten", "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);
     }
@@ -187,7 +187,7 @@ class Inloggen extends CI_Controller {
         $titel = "Fout!";
         $boodschap = "De url die u gebruikte is niet meer geldig.</br>"
                 . "Vraag een nieuwe aan!";
-        $link = array("url" => "gebruiker/inloggen/wachtwoordVergeten", "tekst" => "Terug");
+        $link = array("url" => "gebruiker/inloggen/wachtwoordvergeten", "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);
     }
@@ -196,7 +196,7 @@ class Inloggen extends CI_Controller {
         $titel = "Fout!";
         $boodschap = "De opgegeven wachtwoorden komen niet overeen.</br>"
                 . "Probeer opnieuw!";
-        $link = array("url" => "gebruiker/inloggen/wachtwoordVergetenWijzigen/" . $token, "tekst" => "Terug");
+        $link = array("url" => "gebruiker/inloggen/wachtwoordvergetenwijzigen/" . $token, "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);
     }
@@ -228,10 +228,10 @@ class Inloggen extends CI_Controller {
 
             $data['resetToken'] = $resetToken;
 
-            $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordVergetenWijzigen');
+            $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordvergetenwijzigen');
             $this->template->load('main_master', $partials, $data);
         } else {
-            redirect('gebruiker/inloggen/toonFoutLinkVerlopen');
+            redirect('gebruiker/inloggen/toonfoutlinkverlopen');
         }
     }
 
@@ -250,12 +250,12 @@ class Inloggen extends CI_Controller {
                         . "<p>Heeft u het wachtwoord niet veranderd en krijgd u deze mail, neem dan snel contact met ons op."
                         . " U vindt deze gegevens op onze site.<p>" . anchor('home', "Link naar de site van de Minder Mobiele Centrale");
                 $this->stuurMail($gebruiker->mail, $boodschap, $titel);
-                redirect('gebruiker/inloggen/toonWachtwoordVeranderd');
+                redirect('gebruiker/inloggen/toonwachtwoordveranderd');
             } else {
-                redirect('gebruiker/inloggen/toonFoutNieuwWachtwoord/' . $resetToken);
+                redirect('gebruiker/inloggen/toonfoutnieuwwachtwoord/' . $resetToken);
             }
         } else {
-            redirect('gebruiker/inloggen/toonFoutLinkVerlopen');
+            redirect('gebruiker/inloggen/toonfoutlinkverlopen');
         }
     }
 
