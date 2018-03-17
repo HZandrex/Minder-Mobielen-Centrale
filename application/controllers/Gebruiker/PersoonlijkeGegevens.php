@@ -87,7 +87,7 @@ class PersoonlijkeGegevens extends CI_Controller {
         $data['boodschap'] = $boodschap;
         $data['link'] = $link;
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'main_error');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'main_melding');
         $this->template->load('main_master', $partials, $data);
     }
     

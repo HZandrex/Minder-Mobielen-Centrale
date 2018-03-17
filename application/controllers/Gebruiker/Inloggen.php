@@ -66,7 +66,6 @@ class Inloggen extends CI_Controller {
      * 
      * @see wachtwoordVergeten.php
      */
-
     public function wachtwoordVergeten() {
         $data['titel'] = '';
         $data['author'] = 'Geffrey W.';
@@ -128,10 +127,16 @@ class Inloggen extends CI_Controller {
     /**
      * Stuurt een E-mail naar het ogegeven mailadres $geadresseerde, de mail wordt opgesteld
      * met de parameters $titel en $boodschap. Dit gebeurd via de email library.
+     * De parameters komen van een andere functie waar deze functie wordt opgeroepen bv. inloggen::nieuwWachtwoordAanvragen()
      * 
      * De configuratie van het mail adres waar me wordt verzonden is email.php dat zich bevind in de config map.
      * 
+     * @param $geadresseerde Het mailadres waar de mail naar wordt gestuurd
+     * @param $boodschap De inhoud van de mail
+     * @param $titel De titel van de mail
+     * 
      * @see email.php
+     * @see inloggen::nieuwWachtwoordAanvragen()
      */
     private function stuurMail($geadresseerde, $boodschap, $titel) {
         $this->load->library('email');
@@ -150,7 +155,14 @@ class Inloggen extends CI_Controller {
     }
 
     /**
+     * Toont de melding pagina met de opgeven parrameters foutTitel=$foutTitel, boodschap=$boodschap & link=$link
+     * in de view main_melding.
      * 
+     * @param $foutTitel De titel die op de meldingspagina komt
+     * @param $boodschap De boodschap dat getoond moet worden
+     * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
+     * 
+     * @see main_melding
      */
     public function toonMelding($foutTitel, $boodschap, $link) {
         $data['titel'] = '';
@@ -161,10 +173,15 @@ class Inloggen extends CI_Controller {
         $data['boodschap'] = $boodschap;
         $data['link'] = $link;
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'main_error');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'main_melding');
         $this->template->load('main_master', $partials, $data);
     }
-
+    
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen
+     * 
+     * @see Inloggen::toonMelding()
+     */
     public function toonFoutInloggen() {
         $titel = "Fout!";
         $boodschap = "Het opgegeven mail adres komt niet overeen met het wachtwoord.</br>"
@@ -173,7 +190,12 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-
+    
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen
+     * 
+     * @see Inloggen::toonMelding()
+     */
     public function toonFoutWachtwoordVeranderen() {
         $titel = "Fout!";
         $boodschap = "Het opgegeven mail adres is niet gekoppeld aan een account.</br>"
@@ -182,7 +204,12 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-
+    
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen
+     * 
+     * @see Inloggen::toonMelding()
+     */
     public function toonFoutLinkVerlopen() {
         $titel = "Fout!";
         $boodschap = "De url die u gebruikte is niet meer geldig.</br>"
@@ -191,7 +218,12 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-
+    
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen
+     * 
+     * @see Inloggen::toonMelding()
+     */
     public function toonFoutNieuwWachtwoord($token) {
         $titel = "Fout!";
         $boodschap = "De opgegeven wachtwoorden komen niet overeen.</br>"
@@ -201,6 +233,11 @@ class Inloggen extends CI_Controller {
         $this->toonMelding($titel, $boodschap, $link);
     }
     
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen
+     * 
+     * @see Inloggen::toonMelding()
+     */
     public function toonMailNieuwWachtwoordVerstuurd() {
         $titel = "Mail verstuurd";
         $boodschap = "Er wordt een mail gestuurd naar het opgegevens E-mail adres.</br>"
@@ -210,6 +247,11 @@ class Inloggen extends CI_Controller {
         $this->toonMelding($titel, $boodschap, $link);
     }
     
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen
+     * 
+     * @see Inloggen::toonMelding()
+     */
     public function toonWachtwoordVeranderd() {
         $titel = "Wachtwoord succesvol veranderd";
         $boodschap = "Uw wachtwoord werd succesvol gewijzigd.</br>"
@@ -218,7 +260,18 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-
+    
+    /**
+     * Wanneer de $resetToken bestaat in de tabel gebruiker zal de view gerbuiker/wachtwoordVergetenWijzigen.php,
+     * wanneer dit niet bestaat zal de er melding worden getoond via Inloggen::toonFoutLinkVerlopen().
+     * De resetToken word gecontroleerd via Gebruiker_model.
+     * 
+     * @param $resetToken Wordt megeven in de link uit de mail
+     * 
+     * @see Gebruiker_model::controleerResetToken()
+     * @see Inloggen::toonFoutLinkVerlopen()
+     * @see Gebruiker/wachtwoordVergetenWijzigen.php
+     */
     public function wachtwoordVergetenWijzigen($resetToken) {
         $this->load->model('gebruiker_model');
         if ($this->gebruiker_model->controleerResetToken($resetToken)) {
