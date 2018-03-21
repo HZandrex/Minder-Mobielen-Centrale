@@ -24,27 +24,27 @@ class AdresRit_model extends CI_Model {
 		$this->db->select('*');
         $this->db->where('ritid', $id);
 		$this->db->where('typeAdresId', $type);
-        $query = $this->db->get('Adresrit');
+        $query = $this->db->get('AdresRit');
 		$array = array();
 		$array = $query->row();
 		
 		$this->load->model('Adres_model');
-		$array->adres = $this->adres_model->getById($array->AdresId);
+		$array->adres = $this->adres_model->getById($array->adresId);
         return $array;
     }
 	
 	function terugRit($id){
         $this->db->where('RitId', $id);
-		$query = $this->db->get('Adresrit');
+		$query = $this->db->get('AdresRit');
 		
 		$rows = array();
 		$check = 0;
 		$rows = $query->result();
 		foreach($rows as $row){
-			if($row->TypeAdresId == 3){
+			if($row->typeAdresId == 3){
 				$check++;
 			}
-			if($row->TypeAdresId == 4){
+			if($row->typeAdresId == 4){
 				$check++;
 			}
 			if($check == 2){

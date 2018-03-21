@@ -23,12 +23,12 @@ class VrijwilligerRit_model extends CI_Model {
     {
 		$this->db->select('*');
         $this->db->where('ritid', $id);
-        $query = $this->db->get('vrijwilligerrit');
+        $query = $this->db->get('VrijwilligerRit');
 		
 		$this->load->model('status_model');
 		$array = array();
 		$array = $query->row();
-		$array->status = $this->status_model->getById($array->StatusId);
+		$array->status = $this->status_model->getById($array->statusId);
         return $array;
     }
 

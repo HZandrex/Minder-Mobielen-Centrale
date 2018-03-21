@@ -8,18 +8,30 @@ class Ritten extends CI_Controller {
     }
 
     public function index() {
-        $data['titel'] = 'Ritten';
+        $this->load->model('rit_model');
+        $data['ritten'] = $this->rit_model->getById(114);
+		
+		$data['titel'] = 'Ritten';
         $data['author'] = 'Michiel O.';
-        
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
- 
-        $this->load->model('ritten_model');
-        $data['ritten'] = $this->ritten_model->getById(114);
 
         $partials = array('menu' => 'main_menu','inhoud' => 'MM/ritten');
         $this->template->load('main_master', $partials, $data);
     }
 
+	
+	public function eenRit($gebruikerId){
+		
+		
+		
+		
+		$data['titel'] = 'Details rit';
+        $data['author'] = 'Michiel O.';
+		$data['gebruiker'] = $this->authex->getGebruikerInfo();
+		
+		$partials = array('menu' => 'main_menu','inhoud' => 'MM/rit');
+        $this->template->load('main_master', $partials, $data);
+	}
 
 	
 }

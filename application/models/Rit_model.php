@@ -22,7 +22,7 @@ class Rit_model extends CI_Model {
     {
         $this->db->where('mmid', $mmid);
 		//$this->db->order_by('datum', 'asc');
-		$query = $this->db->get('rit');
+		$query = $this->db->get('Rit');
         $ritten = array();
         $ritten = $query->result();
 		

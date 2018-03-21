@@ -22,7 +22,7 @@ class Adres_model extends CI_Model {
     function getById($id)
     {
         $this->db->where('id', $id);
-        $query = $this->db->get('adres');
+        $query = $this->db->get('Adres');
         return $query->row();
     }
                         

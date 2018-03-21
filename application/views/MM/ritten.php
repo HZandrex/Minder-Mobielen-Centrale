@@ -36,7 +36,7 @@
 					</td>
 					<td><?php print (intval($rit->prijs) + intval($rit->extraKost));?>€</td>
 					<td><?php print $rit->status->status->naam ?></td>
-					<td><?php print anchor('url', '<i class="fa fa-eye fa-2x"></i>'); ?></td>
+					<td><?php print anchor(array('MM/ritten/eenRit', $rit->id), '<i class="fa fa-eye fa-2x"></i>'); ?></td>
 				</tr>
 	<?php
 			}
