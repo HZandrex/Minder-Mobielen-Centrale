@@ -1,4 +1,13 @@
 <?php
+    /**
+     * @file main_menu.php
+     * 
+     * View waarin de inhoud van de navbar wordt opgemaakt
+     * - aan de hand van de functie van de ingelogde gebruiker worden er andere functies getoont
+     */
+?>
+
+<?php
 echo '<div class="navbar-nav mr-auto">';
 echo divAnchor('home', 'Home', 'class="nav-item nav-link"');
 

@@ -16,12 +16,11 @@ class Home extends CI_Controller {
     /**
      * Haalt al de webinfo om weer te geven op via webinfo_model (deze wordt zodanig in een array gestoken
      * zodat de info makkelijk te raadplegen is) en de info van
-     * de aangemelde gebruiker via de authex library, de aangemelde gebruiker zit
+     * de aangemelde gebruiker via de Authex library, de aangemelde gebruiker zit
      * in een sessievariabelen.
      * Vervolgens wordt het resulterende object getoond in de view Gebruiker/homePagina.php
      * 
      * @see Webinfo_model::getAll()
-     * @see Authex
      * @see Gebruiker/homePagina.php
      */
     public function index() {

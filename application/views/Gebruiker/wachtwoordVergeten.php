@@ -1,11 +1,11 @@
 <?php
     /**
-     * @file Gebruiker/inlogPagina.php
+     * @file Gebruiker/wachtwoordVergeten.php
      * 
-     * View waarin de inlogpagina wordt weergegeven
-     * - geeft via loginForm email & wachtwoord door naar Inloggen::controleerLogin()
+     * View waarin een nieuw wachtwoord kan worden aangevraagd via mail
+     * - stuurd naar het opgegeven mail adres in wachtwoordVergetenForm een link om het wachtwoord te wijzigen via Inloggen::nieuwWachtwoordAanvragen()
      * 
-     * @see Inloggen::controleerLogin()
+     * @see Inloggen::nieuwWachtwoordAanvragen()
      */
 ?>
 

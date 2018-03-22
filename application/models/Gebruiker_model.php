@@ -149,9 +149,12 @@ class Gebruiker_model extends CI_Model {
     }
     
     /**
-     * Wijzigt het wachtwoord na een nieuw aan te vragen waar resetToken = $resetToken
+     * Wijzigt het wachtwoord na een nieuw aan te vragen waar resetToken = $resetToken,
+     * vervolgens wordt de resetToken verwijderd via Gebruiker_model::verwijderResetToken()
      * @param $resetToken De resetToken waarvan het wachtwoord wordt veranderd
      * @param $wachtwoord Het nieuwe wachtwoord dat werd opgeven in Gebruiker/wachtwoordVergetenWijzigen.php
+     * 
+     * @see Gebruiker_model::verwijderResetToken()
      */
     function wijzigWachtwoordReset($resetToken, $wachtwoord){
         $gebruiker = new stdClass();
