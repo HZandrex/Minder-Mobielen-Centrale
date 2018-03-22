@@ -1,17 +1,17 @@
 <?php
     /**
-     * @file Gebruiker/inlogPagina.php
+     * @file Gebruiker/wachtwoordWijzigen.php
      * 
-     * View waarin de inlogpagina wordt weergegeven
-     * - geeft via loginForm email & wachtwoord door naar Inloggen::controleerLogin()
+     * View waarin het wachtwoord veranderd kan worden
+     * - geeft via wachtwoordVeranderenForm oudwachtwoord, nieuwWachtwoord & wachtwoordBevestigen door naar PersoonlijkeGegevens::wachtwoordVeranderen()
      * 
-     * @see Inloggen::controleerLogin()
+     * @see PersoonlijkeGegevens::wachtwoordVeranderen())
      */
 ?>
 
 <div class="row justify-content-center align-self-center">
     <?php
-    $attributes = array('name' => 'wachtwoordVergetenForm');
+    $attributes = array('name' => 'wachtwoordVeranderenForm');
     $hidden = array('id' => $gebruiker->id);
     echo form_open('gebruiker/persoonlijkegegevens/wachtwoordveranderen', $attributes, $hidden);
     ?>

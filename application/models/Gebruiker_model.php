@@ -4,7 +4,7 @@
  * @class Gebruiker_model
  * @brief Model-klasse voor gebruikers (medewerkers, vrijwilligers, ...)
  * 
- * Model-klasse die alle methodes bevat om te interageren met de database-tabel gebruiker
+ * Model-klasse die alle methodes bevat om te interageren met de database-tabel gebruiker.
  */
 class Gebruiker_model extends CI_Model {
 
@@ -16,7 +16,7 @@ class Gebruiker_model extends CI_Model {
     }
 
     /**
-     * Retourneert het record met id=$id uit de tabel gebruiker
+     * Retourneert het record met id=$id uit de tabel gebruiker.
      * @param $id De id van het record dat opgevraagd wordt
      * @return het opgevraagde record
      */
@@ -27,7 +27,7 @@ class Gebruiker_model extends CI_Model {
     }
     
     /**
-     * Retourneert het record met mail=$email uit de tabel gebruiker
+     * Retourneert het record met mail=$email uit de tabel gebruiker.
      * @param $email Het mailadres van het record dat opgevraagd wordt
      * @return het opgevraagde record
      */
@@ -37,7 +37,7 @@ class Gebruiker_model extends CI_Model {
         return $query->row();
     }
     /**
-     * Retourneert het record met resetToken=$resetToken uit de tabel gebruiker
+     * Retourneert het record met resetToken=$resetToken uit de tabel gebruiker.
      * @param $resetToken De resetToken van het record dat opgevraagd wordt
      * @return het opgevraagde record
      */
@@ -48,7 +48,7 @@ class Gebruiker_model extends CI_Model {
     }
 
     /**
-     * Retourneert het record met id=$id uit de tabel gebruiker
+     * Retourneert het record met id=$id uit de tabel gebruiker.
      * hierbij worden ook zijn functies megegeven (MinderMobiele, coach, ...)
      * @param $id De id van het record dat opgevraagd wordt
      * @return het opgevraagde record
@@ -65,7 +65,7 @@ class Gebruiker_model extends CI_Model {
     }
 
     /**
-     * Retourneert het record met mail=$email, wachtwoord=$wachtwoord & active = 1 uit de tabel gebruiker
+     * Retourneert het record met mail=$email, wachtwoord=$wachtwoord & active = 1 uit de tabel gebruiker.
      * @param $email Het mailadres van het record dat opgevraagd wordt
      * @param $wachtwoord Het wachtwoord in hash van het record dat opgevraagd wordt
      * @return het opgevraagde record als er een gebruiker is met het opgeven email & wachtwoord combo en active is
@@ -126,7 +126,7 @@ class Gebruiker_model extends CI_Model {
     }
     
     /**
-     * Wijzigt de waarde van resetToken waar mail=$email in de tabel Gebruiker
+     * Wijzigt de waarde van resetToken waar mail=$email in de tabel Gebruiker.
      * @param $email Het mailadres van wie de token moet worden gewijzigt
      * @param $resetToken De resetToken dat wordt gecontroleerd
      */
@@ -138,7 +138,7 @@ class Gebruiker_model extends CI_Model {
     }
     
     /**
-     * Verwijdert resetToken waar resetToken = $resetToken
+     * Verwijdert resetToken waar resetToken = $resetToken.
      * @param $resetToken De resetToken dat wordt verwijdert
      */
     function verwijderResetToken($resetToken){
@@ -150,7 +150,7 @@ class Gebruiker_model extends CI_Model {
     
     /**
      * Wijzigt het wachtwoord na een nieuw aan te vragen waar resetToken = $resetToken,
-     * vervolgens wordt de resetToken verwijderd via Gebruiker_model::verwijderResetToken()
+     * vervolgens wordt de resetToken verwijderd via Gebruiker_model::verwijderResetToken().
      * @param $resetToken De resetToken waarvan het wachtwoord wordt veranderd
      * @param $wachtwoord Het nieuwe wachtwoord dat werd opgeven in Gebruiker/wachtwoordVergetenWijzigen.php
      * 
@@ -166,7 +166,7 @@ class Gebruiker_model extends CI_Model {
     
     
     /**
-     * Wijzigt het wachtwoord waar id = $id
+     * Wijzigt het wachtwoord waar id = $id en meld de gebruiker af.
      * @param $wachtwoord Het nieuwe wachtwoord dat werd opgeven in Gebruiker/wachtwoordWijzigen.php
      */
     function wijzigWachtwoord($id, $wachtwoord){

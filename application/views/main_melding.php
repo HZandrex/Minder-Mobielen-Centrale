@@ -1,6 +1,6 @@
 <?php
     /**
-     * @file main_meldig.php
+     * @file main_melding.php
      * 
      * View waarin een melding wordt weergegeven
      * - de inhoud wordt megeven bij het oproepen van deze view
