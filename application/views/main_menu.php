@@ -25,6 +25,7 @@ if ($gebruiker == null) { // niet aangemeld
 
             case 'Admin':
                 echo divAnchor('admin/webinfo', 'Webinfo wijzigen', 'class="nav-item nav-link"');
+                echo divAnchor('admin/instellingen', 'Instellingen', 'class="nav-item nav-link"');
                 break;
         }
     }
