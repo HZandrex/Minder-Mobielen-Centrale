@@ -34,7 +34,13 @@ class PersoonlijkeGegevens extends CI_Controller {
     public function wachtwoordWijzigen(){
         $data['titel'] = '';
         $data['author'] = 'Geffrey W.';
-        $data['gebruiker'] = $this->authex->getGebruikerInfo();
+        
+        $gebruiker = $this->authex->getGebruikerInfo();
+        if ($gebruiker != null){
+            $data['gebruiker'] = $gebruiker;
+        } else{
+            redirect('gebruiker/inloggen');
+        }
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordWijzigen');
         $this->template->load('main_master', $partials, $data);

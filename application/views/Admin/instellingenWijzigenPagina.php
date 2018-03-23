@@ -1,6 +1,6 @@
 <?php
 
-//print_r($instellingen);
+var_dump($gebruiker->functies);
 ?>
 <div class="row">
     <div class="col-sm-12 col-md-6">
@@ -19,12 +19,13 @@
         echo form_close();
     ?>
     </div>
+    
     <div class="col-sm-12 col-md-6">
         <div class="row">
             <div class="col-12">
                 <p>Communicatie mogenlijkheden:</p>
             </div>
-            <div class="col-8">
+            <div class="col-11">
                 <?php
                     $lengte = count($voorkeuren);
                     if(count($voorkeuren) > 10){
@@ -36,8 +37,8 @@
             <div class="col-1">
                 <?php echo anchor('', '<i class="fas fa-times fa-2x" style="color:red" padding:0></i>'); ?>
             </div>
-            <div class="row">
-                <div class="form-group col-4">
+            <div class="row" style="padding: 10px 10px 0">
+                <div class="form-group col-8">
                     <?php
                         echo form_input(array('name' => 'nieuweVoorkeur', 'id' => 'nieuweVoorkeur', 'placeholder' => 'Nieuwe voorkeur', 'size' => '30', 'class' => 'form-control'));
                     ?>
