@@ -7,6 +7,9 @@ class Voorkeur_model extends CI_Model {
         parent::__construct();
     }
     
-    
-                        
+    function getAll()
+    {
+        $query = $this->db->get('Voorkeur');
+        return $query->result();
+    }                   
 }

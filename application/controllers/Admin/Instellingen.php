@@ -26,6 +26,9 @@ class Instellingen extends CI_Controller {
         
         $this->load->model('instelling_model');
         $data['instellingen'] = $this->instelling_model->getAll();
+        
+        $this->load->model('voorkeur_model');
+        $data['voorkeuren'] = $this->voorkeur_model->getAll();
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'admin/instellingenwijzigenpagina');
         $this->template->load('main_master', $partials, $data);
