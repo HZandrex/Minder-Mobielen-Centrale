@@ -2,9 +2,20 @@
 	-> rit met een pijl tussen
 	-> km prijs, extra prijs, totale prijs
 -->
+
+<?php var_dump($rit); ?>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="..">Overzicht ritten</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Rit bekijken</li>
+  </ol>
+</nav>
 <div class="row">
 	<div class="col-sm-12">
-		<p>Naam: Michiel Olijslagers</p>
+		<p>
+			<button type="button" class="btn btn-primary"><i class="fas fa-pen-square"></i> Wijzigen</button>
+			<button type="button" class="btn btn-primary"><i class="fas fa-ban"></i> Rit anuleren</button>
+		</p>
 	</div>
 </div>
 <div class="card">
@@ -13,22 +24,43 @@
 			<div class="col-sm-6">
 				<p><i class="fas fa-shopping-cart"></i> klant: Michiel Olijslagers</p>
 				<p><i class="fas fa-car"></i> chauffeur: Jan Jansen</p>
-				<p><i class="fas fa-circle text-success"></i> status: Goedgekeurd</p>
+				<p>
+					<?php
+						switch($rit->status->status->id){
+							case 1:
+								print '<i class="fas fa-circle text-danger"></i> status: ' . $rit->status->status->naam;
+								break;
+							case 2:
+								print '<i class="fas fa-circle text-success"></i> status: ' . $rit->status->status->naam;
+								break;
+							case 3:
+								print '<i class="fas fa-circle text-primary"></i> status: ' . $rit->status->status->naam;
+								break;
+							case 4:
+								print '<i class="fas fa-circle text-warning"></i> status: ' . $rit->status->status->naam;
+								break;
+							default:
+								print "error geen duidelijke status gevonden!";
+								break;
+						}
+					
+					?>
+				</p>
 			</div>
 			<div class="col-sm-6">
 				<table class="mt-3">
 					<tr>
 						<td>Km kost: </td>
-						<td> € 12</td>
+						<td> € <?php print $rit->prijs; ?></td>
 						
 					</tr>
 					<tr>
 						<td>Extra kost: </td>
-						<td> € 12</td>
+						<td> € <?php print $rit->extraKost; ?></td>
 					</tr>
 					<tr style="border-top: 1px solid grey;">
 						<td><strong>Totale prijs: </strong></td>
-						<td> € 24</td>
+						<td> € <?php print ($rit->prijs + $rit->extraKost); ?></td>
 					</tr>
 				</table>
 			</div>
@@ -50,21 +82,21 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-3">
-					do 5 apr
+					<?php print date('D, j M' , strtotime($rit->heenvertrek->tijd)); ?>
 				</div>
 				<div class="col-sm-2">
-					<p><i class="far fa-clock"></i> 8:50</p>
-					<p><i class="fas fa-map-marker"></i> zuidstraat 96</p>
+					<p><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->heenvertrek->tijd)); ?></p>
+					<p><i class="fas fa-map-marker"></i> <?php print $rit->heenvertrek->adres->straat . " " . $rit->heenvertrek->adres->huisnummer; ?> </p>
 				</div>
 				<div class="col-sm-2">
 					<div class="mt-4"><i class="far fa-arrow-alt-circle-right"></i>-------<i class="far fa-arrow-alt-circle-right"></i></div>
 				</div>
 				<div class="col-sm-2">
-					<p class="text-left"><i class="far fa-clock"></i> 9:20</p>
-					<p><i class="fas fa-flag-checkered"></i> zuidstraat 96</p>
+					<p class="text-left"><i class="far fa-clock"></i> 9:20</p><!-- nog te bereken -->
+					<p><i class="fas fa-flag-checkered"></i> <?php print $rit->heenaankomst->adres->straat . " " . $rit->heenaankomst->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-3">
-					<i class="fas fa-hourglass-half"></i> 30 min
+					<i class="fas fa-hourglass-half"></i> 30 min <!-- nog te bereken -->
 				</div>
 			</div>
 		</div>
@@ -85,18 +117,18 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-3">
-					do 5 apr
+					<?php print date('D, j M' , strtotime($rit->terugvertrek->tijd)); ?>
 				</div>
 				<div class="col-sm-2">
-					<p><i class="far fa-clock"></i> 16:30</p>
-					<p><i class="fas fa-map-marker"></i> zuidstraat 96</p>
+					<p><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->terugvertrek->tijd)); ?></p>
+					<p><i class="fas fa-map-marker"></i> <?php print $rit->terugvertrek->adres->straat . " " . $rit->terugvertrek->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-2">
 					<div class="mt-4"><i class="far fa-arrow-alt-circle-right"></i>-------<i class="far fa-arrow-alt-circle-right"></i></div>
 				</div>
 				<div class="col-sm-2">
-					<p class="text-left"><i class="far fa-clock"></i> 17:00</p>
-					<p><i class="fas fa-flag-checkered"></i> zuidstraat 96</p>
+					<p class="text-left"><i class="far fa-clock"></i> 6:00</p>
+					<p><i class="fas fa-flag-checkered"></i> <?php print $rit->terugaankomst->adres->straat . " " . $rit->terugaankomst->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-3">
 					<i class="fas fa-hourglass-half"></i> 30 min
@@ -110,7 +142,7 @@
 		<div class="card">
 			<div class="card-body">
 				<h5>Opmerking Klant</h5>
-				<p>Je kan parkeren aan de ingang van de school.</p>
+				<p><?php print $rit->opmerkingKlant; ?></p>
 			</div>
 		</div>
 	</div>
@@ -118,7 +150,7 @@
 		<div class="card">
 			<div class="card-body">
 				<h5>Opmerking Chauffeur</h5>
-				<p>De serie kwam pas echt op gang rond 1960, na een aantal proefuitzendingen, de eerste daarvan in 1955. Swiebertje werd van 20 april 1955 tot 25 april 1975 op televisie uitgezonden. De serie eindigde met het vertrek van Swiebertje naar Canada.</p>
+				<p><?php print $rit->opmerkingVrijwilliger; ?></p>
 			</div>
 		</div>
 	</div>

@@ -22,8 +22,8 @@ class Ritten extends CI_Controller {
 	
 	public function eenRit($gebruikerId){
 		
-		
-		
+		$this->load->model('rit_model');
+		$data['rit'] = $this->rit_model->getByRitId($gebruikerId);
 		
 		$data['titel'] = 'Details rit';
         $data['author'] = 'Michiel O.';
