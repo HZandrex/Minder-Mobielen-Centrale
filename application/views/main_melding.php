@@ -1,3 +1,12 @@
+<?php
+    /**
+     * @file main_melding.php
+     * 
+     * View waarin een melding wordt weergegeven
+     * - de inhoud wordt megeven bij het oproepen van deze view
+     */
+?>
+
 <div class="col-lg-12">
     <div class="row justify-content-center align-self-center">
         <?php
