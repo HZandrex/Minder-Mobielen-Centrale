@@ -9,7 +9,7 @@ class Ritten extends CI_Controller {
 
     public function index() {
         $this->load->model('rit_model');
-        $data['ritten'] = $this->rit_model->getById(114);
+        $data['ritten'] = $this->rit_model->getById(9);
 		
 		$data['titel'] = 'Ritten';
         $data['author'] = 'Michiel O.';

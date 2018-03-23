@@ -35,7 +35,17 @@
 						}?>
 					</td>
 					<td><?php print (intval($rit->prijs) + intval($rit->extraKost));?>€</td>
-					<td><?php print $rit->status->status->naam ?></td>
+					<td> <?php
+                        if ($rit->status->status->id == "1"){
+                            print anchor('url', '<i class="fa fa-times fa-2x cross"></i>');
+                        }else if ($rit->status->status->id=="2"){
+                            print anchor('url', '<i class="fa fa-check fa-2x check"></i>');
+                        }else if ($rit->status->status->id =="3"){
+                            print anchor('url','<i class="fa fa-question-circle fa-2x question")></i>');
+                        }else if ($rit->status->status->id =="4"){
+                            print anchor('url','<i class="fa fa-minus-circle fa-2x verbod")></i>');
+                        }
+                        ?></td>
 					<td><?php print anchor(array('MM/ritten/eenRit', $rit->id), '<i class="fa fa-eye fa-2x"></i>'); ?></td>
 				</tr>
 	<?php
