@@ -14,7 +14,7 @@
     $attributes = array('name' => 'loginForm');
     echo form_open('gebruiker/inloggen/controleerLogin', $attributes);
     ?>
-    <div class="card" id="inlogscherm">
+    <div class="card" style="margin-top: 20px">
         <div class="card-body">
             <h5 class="card-title">Inloggen</h5>
             

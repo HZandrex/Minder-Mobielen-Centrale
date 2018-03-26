@@ -22,7 +22,11 @@ class Ritten extends CI_Controller {
     public function index() {
 		$lid = 9;
         $this->load->model('rit_model');
+<<<<<<< HEAD
         $data['ritten'] = $this->rit_model->getByMMCId($lid);
+=======
+        $data['ritten'] = $this->rit_model->getById(9);
+>>>>>>> aa809ded74c067f2aed0aa883d4a92bab2f0e744
 		
 		$data['titel'] = 'Ritten';
         $data['author'] = 'Michiel O.';
