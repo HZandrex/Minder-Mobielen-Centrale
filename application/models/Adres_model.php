@@ -1,29 +1,30 @@
 <?php
-
+/**
+	* @class Adres_model
+	* @brief Model-klasse voor adres
+	* 
+	* Model-klasse die alle methodes bevat om te data uit de database-tabel adres te halen.
+*/
 class Adres_model extends CI_Model {
 
-    // +----------------------------------------------------------
-    // | MMC - adres_model.php
-    // +----------------------------------------------------------
-    // | 2 ITF - 2017-2018
-    // +----------------------------------------------------------
-    // | Model voor adres gegevens.
-    // |
-    // +----------------------------------------------------------
-    // | Thomas More Kempen
-    // +----------------------------------------------------------
-
+	/**
+		*Constructor
+	*/
     function __construct()
     {
         parent::__construct();
     }
 
-	//Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
+	/**
+		*Geeft het opgevraagde adres terug aan de hand van een id
+		*
+		*@param $id Dit is adres id
+		*@return Het opgevraagde adres
+	*/
     function getById($id)
     {
         $this->db->where('id', $id);
         $query = $this->db->get('Adres');
         return $query->row();
-    }
-                        
+    }    	
 }

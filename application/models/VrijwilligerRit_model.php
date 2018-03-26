@@ -2,23 +2,22 @@
 
 class VrijwilligerRit_model extends CI_Model {
 
-    // +----------------------------------------------------------
-    // | MMC - vrijwilligerrit_model.php
-    // +----------------------------------------------------------
-    // | 2 ITF - 2017-2018
-    // +----------------------------------------------------------
-    // | Model voor vrijwilligerrit gegevens.
-    // |
-    // +----------------------------------------------------------
-    // | Thomas More Kempen
-    // +----------------------------------------------------------
-
+    /**
+		*Constructor
+	*/
     function __construct()
     {
         parent::__construct();
     }
 
 	//Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
+	/**
+		*Haalt al de vrijwilligers met hun status op van een bepaalde rit 
+		*
+		*@param $id is het id van de gevraagde rit
+		*@see Status_model::getById()
+		*@return Al de statussen van een rit ivm de vrijwilliger
+	*/
     function getByRitId($id)
     {
 		$this->db->select('*');
