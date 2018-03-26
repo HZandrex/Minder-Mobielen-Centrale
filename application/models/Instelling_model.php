@@ -32,4 +32,11 @@ class Instelling_model extends CI_Model {
         $query = $this->db->get('Instelling');
         return $query->result();
     }
+
+    function wijzig($instellingen){
+        foreach ($instellingen as $instelling){
+            $this->db->where('id', $instelling->id);
+            $this->db->update('Instelling', $instelling);
+        }
+    }
 }

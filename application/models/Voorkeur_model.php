@@ -11,5 +11,10 @@ class Voorkeur_model extends CI_Model {
     {
         $query = $this->db->get('Voorkeur');
         return $query->result();
-    }                   
+    }
+
+    function voegToe($voorkeur){
+        $this->db->insert('Voorkeur', $voorkeur);
+        return $this->db->insert_id();
+    }
 }

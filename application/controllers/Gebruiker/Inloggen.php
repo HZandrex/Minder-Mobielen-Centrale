@@ -43,7 +43,7 @@ class Inloggen extends CI_Controller {
      * @see Home::index()
      */
     public function controleerLogin() {
-        $email = $this->input->post('email');
+        $email = strtolower($this->input->post('email'));
         $wachtwoord = $this->input->post('wachtwoord');
 
         if ($this->authex->meldAan($email, $wachtwoord)) {

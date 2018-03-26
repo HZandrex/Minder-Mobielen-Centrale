@@ -18,7 +18,7 @@ if ($gebruiker == null) { // niet aangemeld
     echo '</div>';
 } else { // wel aangemeld
     foreach ($gebruiker->functies as $functie) {
-        switch ($functie->functieNaam->naam) {
+        switch ($functie->naam) {
             case 'Coach':
                 echo divAnchor('product/bestel', 'Producten bestellen', 'class="nav-item nav-link"');
                 break;
