@@ -4,10 +4,24 @@
 ?>
 <script>
     $(document).ready(function(){
+        function haalVoorkeurOp ( id ) {
+            $.ajax({type : "GET",
+                url : site_url + "/admin/instellingen/haalAjaxOp_voorkeur",
+                data : { zoekId : id },
+                success : function(result){
+                    $("#teWijzigeVoorkeur").val(result);
+                    $("#voorkeurId").val(id);
+                },
+                error: function (xhr, status, error) {
+                    alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                }
+            });
+        }
 
         $( "#soort" ).change(function() {
             console.log($( this ).val());
             $('.voorkeurForm').prop('disabled', false);
+            haalVoorkeurOp($(this).val());
         });
 
     });
@@ -54,7 +68,8 @@
                 <div class="row" style="padding-top: 10px">
                     <div class="col-6">
                         <?php
-                        echo form_input(array('name' => 'nieuweVoorkeur', 'id' => 'nieuweVoorkeur', 'placeholder' => 'Selecteer voorkeur', 'disabled' => 'true', 'size' => '30', 'class' => 'form-control voorkeurForm'));
+                        echo form_input(array('type' => 'hidden', 'name' => 'voorkeurId', 'id' => 'voorkeurId'));
+                        echo form_input(array('name' => 'teWijzigeVoorkeur', 'id' => 'teWijzigeVoorkeur', 'placeholder' => 'Selecteer voorkeur', 'disabled' => 'true', 'size' => '30', 'class' => 'form-control voorkeurForm'));
                         ?>
                     </div>
                     <div class="col-6" style="padding-left: 0">

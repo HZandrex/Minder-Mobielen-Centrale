@@ -149,4 +149,13 @@ class Instellingen extends CI_Controller {
 
         redirect('admin/instellingen/tooninstellinggewijzigd');
     }
+
+    public function haalAjaxOp_Voorkeur() {
+        $zoekId = $this->input->get('zoekId');
+
+        $this->load->model('voorkeur_model');
+        $data['voorkeur'] = $this->voorkeur_model->get($zoekId);
+
+        $this->load->view("admin/ajax_voorkeur", $data);
+    }
 }
