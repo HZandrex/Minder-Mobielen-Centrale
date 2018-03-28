@@ -4,7 +4,10 @@
 ?>
 <script>
     $(document).ready(function(){
-        function haalVoorkeurOp ( id ) {
+        $('.voorkeurForm').prop('disabled', true);
+        $('#teWijzigeVoorkeur').val('');
+
+        /*function haalVoorkeurOp ( id ) {
             $.ajax({type : "GET",
                 url : site_url + "/admin/instellingen/haalAjaxOp_voorkeur",
                 data : { zoekId : id },
@@ -16,12 +19,13 @@
                     alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
                 }
             });
-        }
+        }*/
 
-        $( "#soort" ).change(function() {
-            console.log($( this ).val());
+        $("#soort").click(function() {
             $('.voorkeurForm').prop('disabled', false);
-            haalVoorkeurOp($(this).val());
+            //haalVoorkeurOp($(this).val());
+            $("#teWijzigeVoorkeur").val($(this).text());
+            $("#voorkeurId").val($(this).val());
         });
 
     });
@@ -51,7 +55,7 @@
     <div class="col-sm-12 col-md-6">
         <?php
         $attributes = array('name' => 'voorkeurForm');
-        echo form_open('admin/instellingen/voorkeurVerwijderen', $attributes);
+        echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
         ?>
         <div class="row">
             <div class="col-12">
@@ -69,15 +73,15 @@
                     <div class="col-6">
                         <?php
                         echo form_input(array('type' => 'hidden', 'name' => 'voorkeurId', 'id' => 'voorkeurId'));
-                        echo form_input(array('name' => 'teWijzigeVoorkeur', 'id' => 'teWijzigeVoorkeur', 'placeholder' => 'Selecteer voorkeur', 'disabled' => 'true', 'size' => '30', 'class' => 'form-control voorkeurForm'));
+                        echo form_input(array('name' => 'teWijzigeVoorkeur', 'id' => 'teWijzigeVoorkeur', 'placeholder' => 'Selecteer voorkeur', 'size' => '30', 'class' => 'form-control voorkeurForm'));
                         ?>
                     </div>
                     <div class="col-6" style="padding-left: 0">
                         <?php
-                        echo form_submit(array('name' => 'voorkeurWijzigen', 'value' => 'Wijzigen', 'class' => 'btn btn-primary voorkeurForm', 'disabled' => 'true'));
+                        echo form_submit(array('name' => 'voorkeurWijzigen', 'value' => 'Wijzigen', 'class' => 'btn btn-primary voorkeurForm'));
                         ?>
                         <?php
-                        echo form_submit(array('name' => 'voorkeurVerwijderen', 'value' => 'Verwijderen', 'class' => 'btn btn-danger voorkeurForm', 'disabled' => 'true'));
+                        echo form_submit(array('name' => 'voorkeurVerwijderen', 'value' => 'Verwijderen', 'class' => 'btn btn-danger voorkeurForm'));
                         ?>
                     </div>
                 </div>

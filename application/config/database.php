@@ -75,7 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
+<<<<<<< HEAD
 	'hostname' => '81.240.223.142',
+=======
+	'hostname' => '81.240.223.142:3306',
+>>>>>>> d88768fb0c299445d2089e9c2c83c67fa9ce44f0
 	'username' => 'school',
 	'password' => 'FwOVROAZKQm2slIm',
 	'database' => 'mmc',

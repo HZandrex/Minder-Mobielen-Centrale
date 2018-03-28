@@ -19,10 +19,17 @@ class PersoonlijkeGegevens extends CI_Controller {
         $data['titel'] = 'Persoonlijke Gegevens';
         $data['author'] = 'Tijmen Elseviers';
 		
-		$this->load->model('persoonlijke_gegevens_model');
-		$data['gegevens'] = $this->persoonlijke_gegevens_model->get();
+		$gebruiker = $this->authex->getGebruikerInfo();
+        if ($gebruiker != null){
+            $data['gebruiker'] = $gebruiker;
+        } else{
+            redirect('gebruiker/inloggen');
+        }
+		
+		$this->load->model('Gebruiker_model');
+		$data['gegevens'] = $gebruiker;
 
-        $partials = array('inhoud' => 'Gebruiker/persoonlijkeGegevens');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/persoonlijkeGegevens');
         $this->template->load('main_master', $partials, $data);
     }
     
