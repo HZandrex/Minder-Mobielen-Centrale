@@ -42,8 +42,9 @@
 				</tr>
 				</table>
 			</div>
-			<div>
-				<?php echo divAnchor('gebruiker/persoonlijkegegevens/wachtwoordWijzigen', 'Wachtwoord wijzigen', 'class="btn btn-primary"'); ?>
+			<div class="col-lg-12 col-sm-12">
+				<?php echo anchor('gebruiker/persoonlijkegegevens/wachtwoordWijzigen', 'Wachtwoord wijzigen', 'class="btn btn-primary"'); ?>
+				<?php echo anchor('gebruiker/persoonlijkegegevens/gegevensWijzigen', 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
 			</div>
     </div>
 </div>
