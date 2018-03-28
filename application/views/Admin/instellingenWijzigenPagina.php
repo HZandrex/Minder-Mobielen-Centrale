@@ -7,7 +7,7 @@
         $('.voorkeurForm').prop('disabled', true);
         $('#teWijzigeVoorkeur').val('');
 
-        function haalVoorkeurOp ( id ) {
+        /*function haalVoorkeurOp ( id ) {
             $.ajax({type : "GET",
                 url : site_url + "/admin/instellingen/haalAjaxOp_voorkeur",
                 data : { zoekId : id },
@@ -19,11 +19,13 @@
                     alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
                 }
             });
-        }
+        }*/
 
         $("#soort").click(function() {
             $('.voorkeurForm').prop('disabled', false);
-            haalVoorkeurOp($(this).val());
+            //haalVoorkeurOp($(this).val());
+            $("#teWijzigeVoorkeur").val($(this).text());
+            $("#voorkeurId").val($(this).val());
         });
 
     });
