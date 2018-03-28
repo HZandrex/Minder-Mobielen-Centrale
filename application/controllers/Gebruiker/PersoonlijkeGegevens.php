@@ -14,7 +14,6 @@ class PersoonlijkeGegevens extends CI_Controller {
         parent::__construct();
     }
 
-	//Aanpassingen nodig om ingelogde gebruiker weer te geven.
     public function persoonlijkeGegevens() {
         $data['titel'] = 'Persoonlijke Gegevens';
         $data['author'] = 'Tijmen Elseviers';
@@ -30,6 +29,24 @@ class PersoonlijkeGegevens extends CI_Controller {
 		$data['gegevens'] = $gebruiker;
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/persoonlijkeGegevens');
+        $this->template->load('main_master', $partials, $data);
+    }
+	
+    public function gegevensWijzigen() {
+        $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
+        $data['author'] = 'Tijmen Elseviers';
+		
+		$gebruiker = $this->authex->getGebruikerInfo();
+        if ($gebruiker != null){
+            $data['gebruiker'] = $gebruiker;
+        } else{
+            redirect('gebruiker/inloggen');
+        }
+		
+		$this->load->model('Gebruiker_model');
+		$data['gegevens'] = $gebruiker;
+
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/gegevensWijzigen');
         $this->template->load('main_master', $partials, $data);
     }
     
