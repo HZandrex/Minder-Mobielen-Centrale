@@ -22,12 +22,29 @@ class CoachMindermobiele_model extends CI_Model {
      *@param $id is het id van de gevraagde status
      *@return Al de informatie over de bepaalde status
      */
-    function getById($id)
+    function getById()
     {
-        $this->db->select('*');
-        $this->db->where('id', 8);
-        $query = $this->db->get('CoachMindermobiele');
-        return $query->row();
+
+        $this->db->where('coachId', 8);
+        $query = $this->db->get('CoachMinderMobiele');
+        $naam = $query->result();
+        $this->load->model('rit_model');
+        $this->load->model('gebruiker_model');
+        $ritten = array();
+        foreach ($naam as $mm){
+            $temp= $this->rit_model->getByMMCId($mm->mmId);
+            if (!empty($temp)){
+                foreach ($temp as $rit){
+                    $rit->persoon = $this->gebruiker_model->get($mm->mmId);
+                    array_push($ritten, $rit);
+                }
+
+
+            }
+
+
+        }
+        return $ritten;
     }
 
 

@@ -6,7 +6,7 @@
  * - krijgt een $ritten object binnen waar al de nodige info instaat
  * - maakt gebruik van een tabel om alles weer te geven
  */
-var_dump($naam);
+var_dump($ritten[0]);
 ?>
 <div class="card">
     <table class="table table-striped">
@@ -33,7 +33,7 @@ var_dump($naam);
                 <tr>
                     <td><?php print date("d.m.y", strtotime($rit->heenvertrek->tijd));?></td>
                     <td><?php print date("G:i", strtotime($rit->heenvertrek->tijd));?></td>
-                    <td><?php print $MM->voornaam?></td>
+                    <td><?php print $rit->persoon->voornaam ." ". $rit->persoon->naam?></td>
                     <td><?php print $rit->heenvertrek->adres->straat . " " . $rit->heenvertrek->adres->huisnummer;?></td>
                     <td><?php print $rit->heenaankomst->adres->straat . " " . $rit->heenaankomst->adres->huisnummer;?></td>
                     <td><?php if(!empty($rit->terugvertrek)){
