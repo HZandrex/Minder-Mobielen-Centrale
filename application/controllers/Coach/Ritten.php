@@ -8,19 +8,29 @@ class Ritten extends CI_Controller {
     }
 
     public function index() {
+//        $lid = 9;
+//        $this->load->model('rit_model');
+        $this->load->model('functiegebruiker_model');
+//        $this->load->model('gebruiker_model');
+
+        $data['naam']= $this->functiegebruiker_model->getByMMId();
+//        $data['MM']= array();
+
+//        foreach ($data['naam'] as $mm){
+//            array_push($data['MM'], $this->gebruiker_model->get($mm->id));
+//        }
+
+//        $data['ritten'] = $this->rit_model->getByMMCId($lid);
+
         $data['titel'] = 'Ritten';
         $data['author'] = 'Lorenz C.';
-        
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
- 
-        $this->load->model('rit_model');
-        $data['ritten'] = $this->rit_model->getById(9);
-
 
         $partials = array('menu' => 'main_menu','inhoud' => 'Coach/ritten');
         $this->template->load('main_master', $partials, $data);
         
     }
+
 
 
 	

@@ -38,5 +38,5 @@ class FunctieGebruiker_model extends CI_Model {
         
         return $functies;
     }
-                        
+
 }
