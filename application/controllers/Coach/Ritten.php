@@ -8,19 +8,32 @@ class Ritten extends CI_Controller {
     }
 
     public function index() {
+
+        $this->load->model('coachmindermobiele_model');
+
+
+        $data['ritten']= $this->coachmindermobiele_model->getById();
+
+
+        $this->load->library('pagination');
+
+        $config['base_url'] = 'Coach/ritten';
+        $config['total_rows'] = 200;
+        $config['per_page'] = 20;
+
+        $this->pagination->initialize($config);
+
+        echo $this->pagination->create_links();
+
         $data['titel'] = 'Ritten';
         $data['author'] = 'Lorenz C.';
-        
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
- 
-        $this->load->model('rit_model');
-        $data['ritten'] = $this->rit_model->getById(9);
-
 
         $partials = array('menu' => 'main_menu','inhoud' => 'Coach/ritten');
         $this->template->load('main_master', $partials, $data);
         
     }
+
 
 
 	

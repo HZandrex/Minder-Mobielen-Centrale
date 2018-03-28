@@ -25,6 +25,8 @@ class Gebruiker_model extends CI_Model {
         $query = $this->db->get('Gebruiker');
         return $query->row();
     }
+
+
     
     /**
      * Retourneert het record met mail=$email uit de tabel gebruiker.
