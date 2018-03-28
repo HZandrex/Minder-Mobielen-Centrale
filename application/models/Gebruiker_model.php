@@ -25,6 +25,8 @@ class Gebruiker_model extends CI_Model {
         $query = $this->db->get('Gebruiker');
         return $query->row();
     }
+
+
     
     /**
      * Retourneert het record met mail=$email uit de tabel gebruiker.
@@ -59,6 +61,10 @@ class Gebruiker_model extends CI_Model {
         $gebruiker = $query->row();
 
         $this->load->model('functieGebruiker_model');
+		$this->load->model('adres_model');
+		$this->load->model('voorkeur_model');
+		$gebruiker->voorkeur = $this->voorkeur_model->get($gebruiker->voorkeurId);
+		$gebruiker->adres = $this->adres_model->getById($gebruiker->id);
         $gebruiker->functies = $this->functieGebruiker_model->getWithName($gebruiker->id);
 
         return $gebruiker;

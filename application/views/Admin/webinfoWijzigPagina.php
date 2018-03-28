@@ -20,7 +20,7 @@
         <input type="url" class="form-control" name="foto_3" value= "<?php echo $webinfo["foto_3"]?>" required>
     </div>
 </div>
-
+<div class="row">
 <div class="col-md-6">
     <h3>Contactinformatie</h3>
         <div class="form-group">
@@ -103,6 +103,7 @@
             <?php echo form_label('Opmerking:', 'openingsurenOpmerking'); ?>
             <input type="text" class="form-control" name="openingsurenOpmerking" value= "<?php echo $webinfo["openingsurenOpmerking"]?>" required>
         </div>
+</div>
 </div>
 <div class="text-right col-12">
     <?php echo form_submit('knop', 'Opslaan', 'class="btn btn-primary"'); ?>
