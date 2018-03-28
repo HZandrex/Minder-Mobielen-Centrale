@@ -110,6 +110,16 @@ class Instellingen extends CI_Controller {
         $this->toonMelding($titel, $boodschap, $link);
     }
 
+    public function voorkeurBeheren(){
+        $knop = $this->input->post('voorkeurWijzigen');
+        if (isset($knop)){
+            echo "test";
+        } else {
+            echo "kaka";
+        }
+        exit();
+    }
+
     public function voorkeurToevoegen(){
         $voorkeur = new stdClass();
 
