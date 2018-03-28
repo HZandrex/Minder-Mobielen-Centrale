@@ -102,6 +102,20 @@ class Instellingen extends CI_Controller {
      *
      * @see Inloggen::toonMelding()
      */
+    public function toonFoutVoorkeurInGebruik() {
+        $titel = "Fout!";
+        $boodschap = "U probeerde een voorkeur te verwijderen die nog in gebruik is door iemand.</br>"
+            . "Zorg eerst dat deze niet meer gebruikt wordt en probeer dan opnieuw!";
+        $link = array("url" => "admin/instellingen", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
     public function toonInstellingGewijzigd() {
         $titel = "Succes!";
         $boodschap = "De instellingen zijn succesvol gewijzigd!";
@@ -111,31 +125,49 @@ class Instellingen extends CI_Controller {
     }
 
     public function voorkeurBeheren(){
-        $knop = $this->input->post('voorkeurWijzigen');
-        if (isset($knop)){
-            echo "test";
-        } else {
-            echo "kaka";
-        }
-        exit();
-    }
-
-    public function voorkeurToevoegen(){
-        $voorkeur = new stdClass();
-
-        $voorkeur->id = $this->input->post('id');
-        $voorkeur->naam = $this->input->post('nieuweVoorkeur');
-
         $this->load->model('voorkeur_model');
-        if ($voorkeur->id == 0){
-            $this->voorkeur_model->voegToe($voorkeur);
-        }
-        else{
-            echo "fout";
-            exit();
-        }
 
-        redirect('admin/instellingen');
+        $wijzigenKnop = $this->input->post('voorkeurWijzigen');
+        $verwijderKnop = $this->input->post('voorkeurVerwijderen');
+        if (isset($wijzigenKnop)){
+            $voorkeur = new stdClass();
+            $voorkeur->id = $this->input->post('voorkeurId');
+            $voorkeur->naam = $this->input->post('teWijzigeVoorkeur');
+
+            $this->voorkeur_model->wijzigen($voorkeur);
+
+            redirect('admin/instellingen');
+        } elseif (isset($verwijderKnop)){
+            $id = $this->input->post('voorkeurId');
+
+            if(!$this->voorkeur_model->verwijderen($id)){
+                redirect('admin/instellingen/toonfoutvoorkeuringebruik');
+            }
+
+            redirect('admin/instellingen');
+        } else{
+            $nieuweVoorkeur = $this->input->post('nieuweVoorkeur');
+            if ($nieuweVoorkeur != ""){
+                $voorkeur = new stdClass();
+
+                $voorkeur->id = $this->input->post('id');
+                $voorkeur->naam = $nieuweVoorkeur;
+
+                $this->load->model('voorkeur_model');
+                if ($voorkeur->id == 0){
+                    $this->voorkeur_model->voegToe($voorkeur);
+                }
+                else{
+                    echo "fout";
+                    exit();
+                }
+
+                redirect('admin/instellingen');
+            } else{
+                echo "leeg";
+            }
+
+        }
     }
 
     public function wijzigInstellingen(){
@@ -158,14 +190,5 @@ class Instellingen extends CI_Controller {
         $this->instelling_model->wijzig($instellingen);
 
         redirect('admin/instellingen/tooninstellinggewijzigd');
-    }
-
-    public function haalAjaxOp_Voorkeur() {
-        $zoekId = $this->input->get('zoekId');
-
-        $this->load->model('voorkeur_model');
-        $data['voorkeur'] = $this->voorkeur_model->get($zoekId);
-
-        $this->load->view("admin/ajax_voorkeur", $data);
     }
 }

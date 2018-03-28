@@ -4,28 +4,26 @@
 ?>
 <script>
     $(document).ready(function(){
-        $('.voorkeurForm').prop('disabled', true);
+        var aniTijd = 100;
+
         $('#teWijzigeVoorkeur').val('');
 
-        /*function haalVoorkeurOp ( id ) {
-            $.ajax({type : "GET",
-                url : site_url + "/admin/instellingen/haalAjaxOp_voorkeur",
-                data : { zoekId : id },
-                success : function(result){
-                    $("#teWijzigeVoorkeur").val(result);
-                    $("#voorkeurId").val(id);
-                },
-                error: function (xhr, status, error) {
-                    alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
-                }
-            });
-        }*/
-
-        $("#soort").click(function() {
-            $('.voorkeurForm').prop('disabled', false);
-            //haalVoorkeurOp($(this).val());
+        $("#soort option").click(function() {
+            $('#voorkeurAdd').hide(aniTijd);
+            $('#teWijzigeVoorkeur').prop('disabled', false);
+            $('#nieuweVoorkeur').prop('disabled', true);
+            $('#voorkeurEdit').show(aniTijd);
+            $('#voorkeurNew').show(aniTijd);
             $("#teWijzigeVoorkeur").val($(this).text());
             $("#voorkeurId").val($(this).val());
+        });
+
+        $("#nieuwKnop").click(function () {
+            $('#voorkeurNew').hide(aniTijd);
+            $('#voorkeurEdit').hide(aniTijd);
+            $('#voorkeurAdd').show(aniTijd);
+            $('#nieuweVoorkeur').prop('disabled', false);
+            $('#teWijzigeVoorkeur').prop('disabled', true);
         });
 
     });
@@ -68,50 +66,51 @@
                 echo form_listboxpro('soort', $voorkeuren, 'id', 'naam', 0, array('id' => 'soort', 'size' => $lengte, 'class' => 'form-control'));
                 ?>
             </div>
-            <div class="col-12">
+            <div class="col-12" id="voorkeurEdit">
                 <div class="row" style="padding-top: 10px">
+                    <div class="col-12">
+                        <?php echo form_label('Verander de naam:', 'teWijzigeVoorkeur'); ?>
+                    </div>
                     <div class="col-6">
                         <?php
                         echo form_input(array('type' => 'hidden', 'name' => 'voorkeurId', 'id' => 'voorkeurId'));
-                        echo form_input(array('name' => 'teWijzigeVoorkeur', 'id' => 'teWijzigeVoorkeur', 'placeholder' => 'Selecteer voorkeur', 'size' => '30', 'class' => 'form-control voorkeurForm'));
+                        echo form_input(array('name' => 'teWijzigeVoorkeur', 'id' => 'teWijzigeVoorkeur', 'placeholder' => 'Selecteer voorkeur', 'required' => 'true', 'disabled' => 'true', 'size' => '30', 'class' => 'form-control'));
                         ?>
                     </div>
                     <div class="col-6" style="padding-left: 0">
                         <?php
-                        echo form_submit(array('name' => 'voorkeurWijzigen', 'value' => 'Wijzigen', 'class' => 'btn btn-primary voorkeurForm'));
+                        echo form_submit(array('name' => 'voorkeurWijzigen', 'value' => 'Wijzigen', 'class' => 'btn btn-primary'));
                         ?>
                         <?php
-                        echo form_submit(array('name' => 'voorkeurVerwijderen', 'value' => 'Verwijderen', 'class' => 'btn btn-danger voorkeurForm'));
+                        echo form_submit(array('name' => 'voorkeurVerwijderen', 'value' => 'Verwijderen', 'class' => 'btn btn-danger'));
                         ?>
                     </div>
                 </div>
 
             </div>
 
-            <?php echo form_close(); ?>
+            <div class="col-12" id="voorkeurNew" style="padding-top: 10px">
+                <button id="nieuwKnop" type="button" class="btn btn-primary">Nieuw</button>
+            </div>
 
-
-
-
-
-
-            <!--<?php
-            $attributes = array('name' => 'voorkeurToevoegenForm');
-            echo form_open('admin/instellingen/voorkeurToevoegen', $attributes);
-            ?>
-            <div class="row" style="padding: 10px 10px 0">
-                <div class="form-group col-8">
-                    <?php
-                        echo form_input(array('name' => 'nieuweVoorkeur', 'id' => 'nieuweVoorkeur', 'placeholder' => 'Nieuwe voorkeur', 'required' => 'true', 'size' => '30', 'class' => 'form-control'));
-                    ?>
-                </div>
-                <div class="col-3">
-                    <?php
-                        echo form_submit(array('name' => 'voorkeurToevoegen', 'value' => 'Toevoegen', 'class' => 'btn btn-primary'));
-                    ?>
+            <div class="col-12" id="voorkeurAdd" style="display: none">
+                <div class="row" style="padding-top: 10px">
+                    <div class="col-12">
+                        <?php echo form_label('Geef een nieuwe voorkeur in:', 'nieuweVoorkeur'); ?>
+                    </div>
+                    <div class="col-6">
+                        <?php
+                            echo form_input(array('name' => 'nieuweVoorkeur', 'id' => 'nieuweVoorkeur', 'placeholder' => 'Nieuwe voorkeur', 'required' => 'true', 'disabled' => 'true', 'size' => '30', 'class' => 'form-control'));
+                        ?>
+                    </div>
+                    <div class="col-6" style="padding-left: 0">
+                        <?php
+                            echo form_submit(array('name' => 'voorkeurToevoegen', 'value' => 'Toevoegen', 'class' => 'btn btn-primary'));
+                        ?>
+                    </div>
                 </div>
             </div>
-            <?php echo form_close(); ?>-->
+            <?php echo form_close(); ?>
         </div>
     </div>
 </div>
