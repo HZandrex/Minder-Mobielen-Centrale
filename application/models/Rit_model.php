@@ -85,7 +85,8 @@ class Rit_model extends CI_Model {
 		
 		$this->load->model('adresrit_model');
 		$this->load->model('vrijwilligerrit_model');	
-		$this->load->model('google_model');			
+		$this->load->model('google_model');		
+		$this->load->model('gebruiker_model');		
 		
 		$rit[0]->heenvertrek = $this->adresrit_model->getByRitIdAndType($rit[0]->id, 1);
 		$rit[0]->heenaankomst = $this->adresrit_model->getByRitIdAndType($rit[0]->id, 2);
@@ -98,6 +99,7 @@ class Rit_model extends CI_Model {
 			$rit[0]->terug = $this->google_model->getReisTijd($rit[0]->terugvertrek->adresId, $rit[0]->terugaankomst->adresId, $rit[0]->terugvertrek->tijd)->rows[0]->elements[0];
 		}
 		$rit[0]->status = $this->vrijwilligerrit_model->getByRitId($rit[0]->id);
+		$rit[0]->MM = $this->gebruiker_model->get($rit[0]->mmId);
 		
 		return $rit[0];
 	}

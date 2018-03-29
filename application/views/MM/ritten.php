@@ -48,16 +48,16 @@
 						<td><?php print (intval($rit->prijs) + intval($rit->extraKost));?>€</td>
 						<td><?php
                             if ($rit->status->status->id == "1"){
-                                print '<i class="fa fa-times fa-2x  text-danger"></i>';
+                                print '<i class="fa fa-times fa-2x  text-danger" data-toggle="tooltip" data-placement="top" title="' . $rit->status->status->naam . '"></i>';
                             }else if ($rit->status->status->id=="2"){
-                                print '<i class="fa fa-check fa-2x  text-success"></i>';
+                                print '<i class="fa fa-check fa-2x  text-success" data-toggle="tooltip" data-placement="top" title="' . $rit->status->status->naam . '"></i>';
                             }else if ($rit->status->status->id =="3"){
-                                print '<i class="fa fa-question-circle fa-2x text-info"></i>';
+                                print '<i class="fa fa-question-circle fa-2x text-info" data-toggle="tooltip" data-placement="top" title="' . $rit->status->status->naam . '"></i>';
                             }else if ($rit->status->status->id =="4"){
-                                print '<i class="fa fa-minus-circle fa-2x text-warning"></i>';
+                                print '<i class="fa fa-minus-circle fa-2x text-warning" data-toggle="tooltip" data-placement="top" title="' . $rit->status->status->naam . '"></i>';
                             }
                         ?></td>
-						<td><?php print anchor(array('MM/ritten/eenRit', $rit->id), '<i class="fa fa-eye fa-2x"></i>'); ?></td>
+						<td><?php print anchor(array('MM/ritten/eenRit', $rit->id), '<i class="fa fa-eye fa-2x" data-toggle="tooltip" data-placement="top" title="Bekijken"></i>'); ?></td>
 					</tr>
 		<?php
 				}
@@ -67,3 +67,8 @@
 	  </tbody>
 	</table>
 </div>
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>	

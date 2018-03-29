@@ -24,11 +24,11 @@
         <title>Minder Mobiele Centrale</title>
 
         <!-- Bootstrap Core CSS -->
-        <?php echo pasStylesheetAan("bootstrap.min.css"); ?>
-        <?php echo pasStylesheetAan("main_style.css"); ?>
+		<?php echo pasStylesheetAan("main.css"); ?>
         <?php echo pasStylesheetAan("../fontawesome/css/fontawesome-all.min.css"); ?>
 
         <?php echo haalJavascriptOp("jquery-3.3.1.min.js"); ?>
+		<?php echo haalJavascriptOp("popper.min.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.min.js"); ?>
 
         <script type="text/javascript">
