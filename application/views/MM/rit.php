@@ -9,7 +9,7 @@
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
 */
-	// var_dump($rit);
+	var_dump($rit);
 ?>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">

@@ -50,7 +50,16 @@ class Ritten extends CI_Controller {
 		$partials = array('menu' => 'main_menu','inhoud' => 'MM/rit');
         $this->template->load('main_master', $partials, $data);
 	}
-
+	
+	public function nieuweRit(){
+		$data['titel'] = 'Nieuwe rit';
+        $data['author'] = 'Michiel O.';
+		$data['gebruiker'] = $this->authex->getGebruikerInfo();
+		
+		$partials = array('menu' => 'main_menu','inhoud' => 'MM/nieuweRit');
+        $this->template->load('main_master', $partials, $data);
+		
+	}
 	
 }
 

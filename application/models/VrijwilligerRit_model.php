@@ -10,7 +10,6 @@ class VrijwilligerRit_model extends CI_Model {
         parent::__construct();
     }
 
-	//Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
 	/**
 		*Haalt al de vrijwilligers met hun status op van een bepaalde rit 
 		*
