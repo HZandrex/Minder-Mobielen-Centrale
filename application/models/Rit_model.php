@@ -49,7 +49,7 @@ class Rit_model extends CI_Model {
         $ritten = $query->result();
 		
 		$this->load->model('adresrit_model');
-		$this->load->model('vrijwilligerrit_model');
+		$this->load->model('status_model');
 		$i =0;
 		foreach($ritten as $rit){
 			$rit->heenvertrek = $this->adresrit_model->getByRitIdAndType($rit->id, 1);
@@ -58,7 +58,7 @@ class Rit_model extends CI_Model {
 				$rit->terugvertrek = $this->adresrit_model->getByRitIdAndType($rit->id, 3);
 				$rit->terugaankomst = $this->adresrit_model->getByRitIdAndType($rit->id, 4);
 			}
-			$rit->status = $this->vrijwilligerrit_model->getByRitId($rit->id);
+			$rit->status = $this->status_model->getById($rit->statusId);
 			if(new DateTime() > new DateTime($rit->heenvertrek->tijd)){
 				unset($ritten[$i]);
 			}
@@ -84,7 +84,7 @@ class Rit_model extends CI_Model {
 		$rit = $query->result();
 		
 		$this->load->model('adresrit_model');
-		$this->load->model('vrijwilligerrit_model');	
+		$this->load->model('status_model');	
 		$this->load->model('google_model');		
 		$this->load->model('gebruiker_model');		
 		
@@ -98,8 +98,9 @@ class Rit_model extends CI_Model {
 			$rit[0]->terugaankomst = $this->adresrit_model->getByRitIdAndType($rit[0]->id, 4);
 			$rit[0]->terug = $this->google_model->getReisTijd($rit[0]->terugvertrek->adresId, $rit[0]->terugaankomst->adresId, $rit[0]->terugvertrek->tijd)->rows[0]->elements[0];
 		}
-		$rit[0]->status = $this->vrijwilligerrit_model->getByRitId($rit[0]->id);
+		$rit[0]->status = $this->status_model->getById($rit[0]->statusId);
 		$rit[0]->MM = $this->gebruiker_model->get($rit[0]->mmId);
+		$rit[0]->vrijwilliger = $this->gebruiker_model->get($rit[0]->mmId);
 		
 		return $rit[0];
 	}
