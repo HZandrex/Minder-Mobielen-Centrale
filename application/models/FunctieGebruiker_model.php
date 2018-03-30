@@ -39,4 +39,17 @@ class FunctieGebruiker_model extends CI_Model {
         return $functies;
     }
 
+    function getAllGebruikersByFunction($functieId)
+    {
+        $this->db->where('functieId', $functieId);
+        $query = $this->db->get('FunctieGebruiker');
+        $functies =  $query->result();
+        $this->load->model('gebruiker_model');
+        $gebruikers = array();
+        foreach ($functies as $functie) {
+            array_push($gebruikers, $this->gebruiker_model->get($functie->gebruikerId));
+        }
+        return $gebruikers;
+    }
+
 }

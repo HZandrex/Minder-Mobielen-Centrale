@@ -24,5 +24,11 @@ class Functie_model extends CI_Model {
         $query = $this->db->get('Functie');
         return $query->row();
     }
+
+    function getAll($totId){
+        $this->db->where('id <', $totId);
+        $query = $this->db->get('Functie');
+        return $query->result();
+    }
                         
 }

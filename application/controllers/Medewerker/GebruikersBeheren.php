@@ -36,6 +36,12 @@ class GebruikersBeheren extends CI_Controller {
             }
         }
 
+        $this->load->model('functiegebruiker_model');
+        $data['gebruikers'] = $this->functiegebruiker_model->getAllGebruikersByFunction(1);
+
+        $this->load->model('functie_model');
+        $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+
         $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gebruikersbeherenoverzicht');
         $this->template->load('main_master', $partials, $data);
     }
