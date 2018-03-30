@@ -45,10 +45,15 @@ class PersoonlijkeGegevens extends CI_Controller {
 		
 		$this->load->model('Gebruiker_model');
 		$data['gegevens'] = $gebruiker;
+		
+		$this->load->model('Voorkeur_model');
+		$data['communicatiemiddelen'] = $this->Voorkeur_model->getAll();
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/gegevensWijzigen');
         $this->template->load('main_master', $partials, $data);
     }
+	
+	
     
     /**
      * Toont het scherm om het wachtwoord te veranderen in de view Gebruiker/wachtwoordWijzigen.php

@@ -69,6 +69,19 @@ class Gebruiker_model extends CI_Model {
 
         return $gebruiker;
     }
+	
+	function updateGebruiker($gebruiker)
+    {
+			$this->db->set('voornaam', $gebruiker->voornaam);
+			$this->db->set('naam', $gebruiker->naam);
+			$this->db->set('geboorte', $gebruiker->geboorte);
+			$this->db->set('telefoon', $gebruiker->telefoon);
+			$this->db->set('mail', $gebruiker->mail);
+			$this->db->set('voorkeurId', $gebruiker->voorkeurId);
+            $this->db->where('id', $gebruiker->id);
+			$this->db->update('Gebruiker');
+
+    }
 
     /**
      * Retourneert het record met mail=$email, wachtwoord=$wachtwoord & active = 1 uit de tabel gebruiker.
