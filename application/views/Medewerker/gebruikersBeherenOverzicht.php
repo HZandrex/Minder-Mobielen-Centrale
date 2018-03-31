@@ -1,5 +1,16 @@
+<script>
+    $(document).ready(function(){
+
+        $('#gebruikersForm input[name=functieRadiogroup]').change(function () {
+            console.log($('#gebruikersForm input[name=functieRadiogroup]:checked').val());
+        });
+    });
+
+</script>
+
+
 <?php
-$attributes = array('name' => 'voorkeurForm');
+$attributes = array('name' => 'gebruikersForm', 'id' => 'gebruikersForm');
 echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
 ?>
 <div class="row">
