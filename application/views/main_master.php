@@ -29,6 +29,7 @@
 
         <?php echo haalJavascriptOp("jquery-3.3.1.min.js"); ?>
 		<?php echo haalJavascriptOp("popper.min.js"); ?>
+		<?php echo haalJavascriptOp("bootstrap-datepicker.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.min.js"); ?>
 
         <script type="text/javascript">

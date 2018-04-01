@@ -1,7 +1,3 @@
-<!--
-	->extra kost: als er geen is niks laten zien
-	->anuleren knop niet laten zien als de rit geanuleerd is
--->
 <?php
 /**
 	* @file rit.php
@@ -9,7 +5,7 @@
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
 */
-	var_dump($rit);
+	// var_dump($rit);
 ?>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -21,7 +17,7 @@
 	<div class="col-sm-12">
 		<p>
 			<button type="button" class="btn btn-primary"><i class="fas fa-pen-square"></i> Wijzigen</button>
-			<?php if($rit->status->status->id != 1){ ?>
+			<?php if($rit->status->id != 1){ ?>
 			<button type="button" class="btn btn-primary"><i class="fas fa-ban"></i> Rit anuleren</button>
 			<?php } ?>
 		</p>
@@ -32,21 +28,30 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<p><i class="fas fa-shopping-cart"></i> klant: <?php print $rit->MM->voornaam . " " . $rit->MM->naam; ?></p>
-				<p><i class="fas fa-car"></i> chauffeur: <?php print $rit->status->vrijwilliger->voornaam . " " . $rit->status->vrijwilliger->naam; ?></p>
+				<p>
+				<i class="fas fa-car"></i> chauffeur: 
+				<?php 
+					if(!empty($rit->vrijwilliger)){
+						print $rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->vrijwilliger->vrijwilliger->naam; 
+					}else{
+						print "Nog geen vrijwilliger gevonden";
+					}
+				?>
+				</p>
 				<p>
 					<?php
-						switch($rit->status->status->id){
+						switch($rit->status->id){
 							case 1:
-								print '<i class="fas fa-circle text-danger"></i> status: ' . $rit->status->status->naam;
+								print '<i class="fas fa-circle text-danger"></i> status: ' . $rit->status->naam;
 								break;
 							case 2:
-								print '<i class="fas fa-circle text-success"></i> status: ' . $rit->status->status->naam;
+								print '<i class="fas fa-circle text-success"></i> status: ' . $rit->status->naam;
 								break;
 							case 3:
-								print '<i class="fas fa-circle text-primary"></i> status: ' . $rit->status->status->naam;
+								print '<i class="fas fa-circle text-primary"></i> status: ' . $rit->status->naam;
 								break;
 							case 4:
-								print '<i class="fas fa-circle text-warning"></i> status: ' . $rit->status->status->naam;
+								print '<i class="fas fa-circle text-warning"></i> status: ' . $rit->status->naam;
 								break;
 							default:
 								print "error geen duidelijke status gevonden!";

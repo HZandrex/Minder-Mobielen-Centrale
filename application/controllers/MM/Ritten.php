@@ -20,13 +20,12 @@ class Ritten extends CI_Controller {
 		*
 	*/	
     public function index() {
-		$lid = 9;
-        $this->load->model('rit_model');
-        $data['ritten'] = $this->rit_model->getByMMCId($lid);
-		
 		$data['titel'] = 'Ritten';
         $data['author'] = 'Michiel O.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
+		
+        $this->load->model('rit_model');
+        $data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id);
 
         $partials = array('menu' => 'main_menu','inhoud' => 'MM/ritten');
         $this->template->load('main_master', $partials, $data);
@@ -52,14 +51,20 @@ class Ritten extends CI_Controller {
 	}
 	
 	public function nieuweRit(){
+		$this->load->model('rit_model');
 		$data['titel'] = 'Nieuwe rit';
         $data['author'] = 'Michiel O.';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
+		
+		
+		$data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruiker']->id);
 		
 		$partials = array('menu' => 'main_menu','inhoud' => 'MM/nieuweRit');
         $this->template->load('main_master', $partials, $data);
 		
 	}
+	
+	//$this->gebruiker_model->getCredits($data['gebruiker']->id, date("Y-m-d G:i:s", time())); --> please NIET verwijderen
 	
 }
 

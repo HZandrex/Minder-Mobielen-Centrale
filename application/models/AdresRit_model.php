@@ -25,6 +25,8 @@ class AdresRit_model extends CI_Model {
 	*/
     function getByRitIdAndType($ritId, $type)
     {
+		$this->load->model('adres_model');
+		
 		$this->db->select('*');
         $this->db->where('ritid', $ritId);
 		$this->db->where('typeAdresId', $type);
@@ -32,7 +34,6 @@ class AdresRit_model extends CI_Model {
 		$array = array();
 		$array = $query->row();
 		
-		$this->load->model('adres_model');
 		$array->adres = $this->adres_model->getById($array->adresId);
         return $array;
     }
@@ -62,6 +63,28 @@ class AdresRit_model extends CI_Model {
 			}
 		}
 		return False;
+	}
+	
+	function getTime($ritId, $typeId){
+		$this->db->where('RitId', $ritId);
+		$this->db->where('typeAdresId', $typeId);
+		$query = $this->db->get('AdresRit');
+		
+		return $query->row()->tijd;
+	}
+	
+	function getAdressen($ritId){
+		$this->load->model('adres_model');
+		$adressen = array();
+		$this->db->where('RitId', $ritId);
+		$query = $this->db->get('AdresRit');
+		$rows = $query->result();
+		
+		foreach($rows as $row){
+			array_push($adressen, $this->adres_model->getById($row->adresId));
+		}
+		
+		return $adressen;
 	}
                         
 }

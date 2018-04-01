@@ -39,4 +39,10 @@ class Instelling_model extends CI_Model {
             $this->db->update('Instelling', $instelling);
         }
     }
+	
+	function getValueById($id){
+		$query = $this->db->get('Instelling');
+		$this->db->where('id', $id);
+		return $query->row();
+	}
 }
