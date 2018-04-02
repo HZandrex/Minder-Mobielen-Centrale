@@ -2,12 +2,19 @@
 	var_dump($gebruiker);
 	var_dump($adressen);
 	
-	$selectAdressen = '<option selected>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
+	$selectAdressen = '<option value="default" selected>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
 	foreach($adressen as $adres){
 		$selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
 	}
 
 ?>
+
+<style>
+	.pac-container{
+		z-index: 10000;
+	}
+
+</style>
 
 <div class="card">
 	<div class="card-body">
@@ -152,11 +159,10 @@
 
 
 
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-id="">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form id="needs-validation" novalidate>
+			<form id="adres" novalidate>
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Nieuw adres</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -164,52 +170,48 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="form-group">
-						<div class="form-check">
-							<label for="straat">Straat</label>
-							<input type="text" class="form-control" id="straat" required>
-							<div class="invalid-feedback">
-								Oeps hier is iets fout!
-							</div>
+					<div id="locationField">
+						<div class="form-group">
+							<input type="text" class="form-control" id="autocomplete" placeholder="Vul hier het adres in" onFocus="geolocate()">
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="form-check">
-							<label for="huisnummer">Nummer</label>
-							<input type="number" class="form-control" id="huisnummer" required>
-							<div class="invalid-feedback">
-								Oeps hier is iets fout!
-							</div>
+					<div id="address">
+						<div class="form-group">
+							<label for="street_number">Nummer</label>
+							<input type="text" class="form-control" id="street_number" disabled="true">
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="form-check">
-							<label for="gemeente">Gemeente</label>
-							<input type="text" class="form-control" id="gemeente" required>
-							<div class="invalid-feedback">
-								Oeps hier is iets fout!
-							</div>
+						<div class="form-group">
+							<label for="route">Straat</label>
+							<input type="text" class="form-control" id="route" disabled="true">
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="form-check">
-							<label for="postcode">Postcode</label>
-							<input type="number" class="form-control" id="postcode" required>
-							<div class="invalid-feedback">
-								Oeps hier is iets fout!
-							</div>
+						<div class="form-group">
+							<label for="locality">Gemeente</label>
+							<input type="text" class="form-control" id="locality" disabled="true">
+						</div>
+						<div class="form-group">
+							<label for="postal_code">Postcode</label>
+							<input type="text" class="form-control" id="postal_code" disabled="true">
+						</div>
+						<div class="form-group">
+							<label for="administrative_area_level_1">Staat</label>
+							<input type="text" class="form-control" id="administrative_area_level_1" disabled="true">
+						</div>
+						<div class="form-group">
+							<label for="country">Land</label>
+							<input type="text" class="form-control" id="country" disabled="true">
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Anuleren</button>
-					<button type="button" class="btn btn-success" id="testAdres">Test adres</button>
+					<button type="button" class="btn btn-danger" id="anuleerAdres">Anuleren</button>
 					<button type="button" class="btn btn-primary" id="saveAdres">Opslaan</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
+<!-- Replace the value of the key parameter with your own API key. -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete" async defer></script>
 	
 
 
@@ -232,20 +234,41 @@ $('#heenDatum').change(function(){
 });
 
 $('select').change(function() {
-	$soortAdres = $(this).attr('id');
 	if($(this).val() == 'nieuwAdres'){
+		$('#exampleModal').attr('data-id', $(this).attr('id'));
 		$('#exampleModal').modal('show');
 	}
 });
 
-$('#testAdres').click(function(){
-	testAdres();
+$('#anuleerAdres').click(function(){
+	$('#' + $('#exampleModal').attr('data-id')).val('default');
+	$('#exampleModal').modal('hide');
 });
 
+$('#exampleModal').on('hidden.bs.modal', function (e) {
+	$('#' + $('#exampleModal').attr('data-id')).val('default');
+	$('#exampleModal').modal('hide');
+})
+
 $('#saveAdres').click(function(){
-	// testAdres
+	//uitlezen adres
+	var huisnummer = $('#street_number').val();
+	var straat = $('#route').val();
+	var gemeente = $('#locality').val();
+	var postcode = $('#postal_code').val();
 	
 	// ajaxrequest
+	$.ajax(
+		{
+			type:"post",
+			url: "<?php echo base_url(); ?>index.php/MM/ritten/nieuwAdres",
+			data:{ huisnummer:huisnummer, straat:straat, gemeente:gemeente, postcode:postcode},
+			success:function(response)
+			{
+				console.log(response);
+			}
+		}
+	);
 	
 	// get id of adres
 	
@@ -254,16 +277,74 @@ $('#saveAdres').click(function(){
 	// fill in just created adres 
 });
 
-function testAdres(){
-	console.log('test');
-	
-	//check if al fields are filles
-	
-	//check if google knows this adressen
-	
-	//return true or false
+function errorModal(bericht){
+	$('#address').prepend('<div class="alert alert-danger" role="alert">' + bericht + '</div>');
 }
 
 //fill in adres --> check if both adresses are filled --> calculate cost
 
+
+
+
+
+//autocomplete van google
+var placeSearch, autocomplete;
+var componentForm = {
+  street_number: 'short_name',
+  route: 'long_name',
+  locality: 'long_name',
+  administrative_area_level_1: 'short_name',
+  country: 'long_name',
+  postal_code: 'short_name'
+};
+
+function initAutocomplete() {
+  // Create the autocomplete object, restricting the search to geographical
+  // location types.
+  autocomplete = new google.maps.places.Autocomplete(
+      /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+      {types: ['geocode']});
+
+  // When the user selects an address from the dropdown, populate the address
+  // fields in the form.
+  autocomplete.addListener('place_changed', fillInAddress);
+}
+
+function fillInAddress() {
+  // Get the place details from the autocomplete object.
+  var place = autocomplete.getPlace();
+
+  for (var component in componentForm) {
+    document.getElementById(component).value = '';
+    document.getElementById(component).disabled = false;
+  }
+
+  // Get each component of the address from the place details
+  // and fill the corresponding field on the form.
+  for (var i = 0; i < place.address_components.length; i++) {
+    var addressType = place.address_components[i].types[0];
+    if (componentForm[addressType]) {
+      var val = place.address_components[i][componentForm[addressType]];
+      document.getElementById(addressType).value = val;
+    }
+  }
+}
+
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var geolocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      var circle = new google.maps.Circle({
+        center: geolocation,
+        radius: position.coords.accuracy
+      });
+      autocomplete.setBounds(circle.getBounds());
+    });
+  }
+}
 </script>

@@ -64,6 +64,13 @@ class Ritten extends CI_Controller {
 		
 	}
 	
+	public function nieuwAdres(){
+		$this->load->model('adres_model');
+		$id = $this->adres_model->addAdres(htmlspecialchars(trim($_POST['huisnummer'])), htmlspecialchars(trim($_POST['straat'])), htmlspecialchars(trim($_POST['gemeente'])), htmlspecialchars(trim($_POST['postcode'])));
+		
+		echo $id;
+	}
+	
 	//$this->gebruiker_model->getCredits($data['gebruiker']->id, date("Y-m-d G:i:s", time())); --> please NIET verwijderen
 	
 }

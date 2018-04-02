@@ -26,5 +26,11 @@ class Adres_model extends CI_Model {
         $this->db->where('id', $id);
         $query = $this->db->get('Adres');
         return $query->row();
-    }    	
+    }    
+
+	function addAdres($huisnummer, $straat, $gemeente, $postcode){
+		
+		
+		return 1;
+	}
 }
