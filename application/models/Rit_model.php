@@ -133,6 +133,7 @@ class Rit_model extends CI_Model {
 		$this->load->model('adresrit_model');
 		
 		$adressen = array();
+		$temp = array();
 		array_push($adressen, $this->gebruiker_model->getWithFunctions($mmId)->adres);
 		
 		$this->db->where('mmId', $mmId);
@@ -142,10 +143,18 @@ class Rit_model extends CI_Model {
 		foreach($ritten as $rit){
 			$ritAdressen = $this->adresrit_model->getAdressen($rit->id);
 			foreach($ritAdressen as $adres){
-				array_push($adressen, $adres);
+				array_push($temp, $adres);
 			}
 		}
-		
+
+		function cmp($a, $b)
+		{
+			return strcmp($a->straat, $b->straat);
+		}
+		usort($temp, "cmp");
+
+		$adressen = array_merge($adressen, $temp);
+
 		return $this->helper_model->unique_multidim_array($adressen, 'id');
 	}
 	

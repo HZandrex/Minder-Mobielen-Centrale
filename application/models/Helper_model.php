@@ -38,6 +38,5 @@ class helper_model extends CI_Model {
 		} 
 		return $temp_array; 
 	} 
-
                         
 }

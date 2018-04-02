@@ -1,8 +1,8 @@
 <?php
-	var_dump($gebruiker);
-	var_dump($adressen);
+	// var_dump($gebruiker);
+	// var_dump($adressen);
 	
-	$selectAdressen = '<option value="default" selected>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
+	$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
 	foreach($adressen as $adres){
 		$selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
 	}
@@ -28,7 +28,7 @@
 			</div>
 			<div class="col-sm-6">
 				<button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Opslaan</button>
-				<button type="button" class="btn btn-danger"><i class="fas fa-ban"></i> Anuleren</button>
+				<?php print anchor(array('MM/ritten'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));?>
 			</div>
 		</div>
 	</div>
@@ -170,6 +170,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
+					<div class="alert alert-danger" role="alert" id="errorModal" style="display: none;"></div>
 					<div id="locationField">
 						<div class="form-group">
 							<input type="text" class="form-control" id="autocomplete" placeholder="Vul hier het adres in" onFocus="geolocate()">
@@ -220,6 +221,12 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 })
 
+$('.form-control').datepicker({
+    format: 'dd/mm/yyyy',
+	weekStart: 1,
+	language: 'nl'
+});
+
 $('#heenTerug').click(function() {
 	if (!$(this).is(':checked')) {
 		$('#terug').slideUp();
@@ -243,12 +250,19 @@ $('select').change(function() {
 $('#anuleerAdres').click(function(){
 	$('#' + $('#exampleModal').attr('data-id')).val('default');
 	$('#exampleModal').modal('hide');
+	$("form#adres :input").each(function(){
+		$(this).val('');
+	});
+	$('#errorModal').hide();
 });
 
-$('#exampleModal').on('hidden.bs.modal', function (e) {
+$("#exampleModal").on('hide.bs.modal', function () {
 	$('#' + $('#exampleModal').attr('data-id')).val('default');
-	$('#exampleModal').modal('hide');
-})
+	$("form#adres :input").each(function(){
+		$(this).val('');
+	});
+	$('#errorModal').hide();
+});
 
 $('#saveAdres').click(function(){
 	//uitlezen adres
@@ -257,28 +271,53 @@ $('#saveAdres').click(function(){
 	var gemeente = $('#locality').val();
 	var postcode = $('#postal_code').val();
 	
-	// ajaxrequest
-	$.ajax(
-		{
-			type:"post",
-			url: "<?php echo base_url(); ?>index.php/MM/ritten/nieuwAdres",
-			data:{ huisnummer:huisnummer, straat:straat, gemeente:gemeente, postcode:postcode},
-			success:function(response)
-			{
-				console.log(response);
-			}
+	if(huisnummer == '' || straat == '' || gemeente == '' || postcode == ''){
+		errorModal('Vul een volledig adres in! huisnummer, straat, gemeente, postcode');
+	}else{
+		//kijk of adres al ingeladen is
+		var bestaat = checkOfAdresIngeladenIs(huisnummer, straat, gemeente);
+		if(bestaat != false){
+			$('#exampleModal').modal('hide');
+			$('#' + $('#exampleModal').attr('data-id')).val(bestaat);
+			
+		}else{
+			// ajaxrequest
+			$.ajax(
+				{
+					type:"post",
+					url: "<?php echo base_url(); ?>index.php/MM/ritten/nieuwAdres",
+					data:{ huisnummer:huisnummer, straat:straat, gemeente:gemeente, postcode:postcode},
+					success:function(response)
+					{
+						console.log(response);//Stationsstraat 177, Geel, België
+						var adres = JSON.parse(response);
+						//toevoegen aan adressen lijst
+						$('select').each(function(){
+							$(this).children().eq(1).after('<option value="' + adres.id + '">' + adres.straat + ' ' + adres.huisnummer + ' (' + adres.gemeente + ')</option>');
+						});
+						$('#exampleModal').modal('hide');
+						$('#' + $('#exampleModal').attr('data-id')).val(adres.id);
+					}
+				}
+			);
 		}
-	);
-	
-	// get id of adres
-	
-	// make new adres list
-	
-	// fill in just created adres 
+	}
 });
 
 function errorModal(bericht){
-	$('#address').prepend('<div class="alert alert-danger" role="alert">' + bericht + '</div>');
+	$('#errorModal').html(bericht);
+	$('#errorModal').slideDown();
+}
+
+function checkOfAdresIngeladenIs(huisnummer, straat, gemeente){
+	var result = false;
+	$('select#heenStartAdres option').each(function(){
+		if($(this).text() == (straat + " " + huisnummer + " (" + gemeente + ")")){
+			result = $(this).val();
+			return false;
+		}
+	});
+	return result;
 }
 
 //fill in adres --> check if both adresses are filled --> calculate cost
@@ -316,7 +355,7 @@ function fillInAddress() {
 
   for (var component in componentForm) {
     document.getElementById(component).value = '';
-    document.getElementById(component).disabled = false;
+   // document.getElementById(component).disabled = false;
   }
 
   // Get each component of the address from the place details
