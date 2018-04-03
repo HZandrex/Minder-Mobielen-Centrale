@@ -200,7 +200,7 @@ class Gebruiker_model extends CI_Model {
 		$this->load->model('rit_model');
 		
 		$gebruikteCredits = $this->rit_model->getAantalRitten($id, $date);
-		$maxCredits = $this->instelling_model->getValueById(3);
+		$maxCredits = $this->instelling_model->getValueById(1);
 		
 		$creditsOver = $maxCredits->waarde - $gebruikteCredits;
 		return $creditsOver;

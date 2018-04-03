@@ -41,8 +41,8 @@ class Instelling_model extends CI_Model {
     }
 	
 	function getValueById($id){
-		$query = $this->db->get('Instelling');
 		$this->db->where('id', $id);
+		$query = $this->db->get('Instelling');
 		return $query->row();
 	}
 }

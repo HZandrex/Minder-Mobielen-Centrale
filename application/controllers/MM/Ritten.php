@@ -78,7 +78,30 @@ class Ritten extends CI_Controller {
 		 
 	}
 	
-	//$this->gebruiker_model->getCredits($data['gebruiker']->id, date("Y-m-d G:i:s", time())); --> please NIET verwijderen
+	public function berekenKost(){
+		$this->load->model('google_model');
+		$this->load->model('instelling_model');
+		$startAdres = htmlspecialchars(trim($_POST['startAdres']));
+		$eindAdres = htmlspecialchars(trim($_POST['eindAdres']));
+		$timeStamp = htmlspecialchars(trim($_POST['timeStamp']));
+
+		$afstand = $this->google_model->getReisTijd($startAdres, $eindAdres, $timeStamp);
+		$afstand->kostPerKm = $this->instelling_model->getValueById(2);
+
+		echo json_encode ($afstand);		
+	}
+	
+	public function berekenCredits(){
+		$this->load->model('gebruiker_model');
+		$userId = htmlspecialchars(trim($_POST['userId']));
+		$date = str_replace('/', '-', htmlspecialchars(trim($_POST['date'])));
+		$credits = $this->gebruiker_model->getCredits($userId, date("Y-m-d G:i:s", strtotime($date)));
+		// echo json_encode(date("Y-m-d G:i:s", strtotime($date)) . " " .$credits);
+		
+		echo json_encode($credits);
+	}
+	
+	
 	
 }
 

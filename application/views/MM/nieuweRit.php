@@ -15,147 +15,146 @@
 	}
 
 </style>
-
-<div class="card">
-	<div class="card-body">
-		<div class="row">
-			<div class="col-sm-6">
-				<p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruiker->voornaam . " " . $gebruiker->naam; ?></p>
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="heenTerug">
-					<label class="custom-control-label" for="heenTerug">Heen en terug</label>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Opslaan</button>
-				<?php print anchor(array('MM/ritten'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));?>
-			</div>
-		</div>
-	</div>
-</div>
-<article class="mt-2" id="heen">
+<main>
 	<div class="card">
-		<div class="card-header">
-			<div class="row">
-				<div class="col-sm-6">
-					<h5>Heen rit</h5>
-				</div>
-				<div class="col-sm-6 text-right">
-					
-				</div>
-			</div>
-		</div>
 		<div class="card-body">
 			<div class="row">
-				<div class="col">
-					<label for="heenDatum">Datum: </label>
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<label class="input-group-text" for='heenDatum'>
-								<i class="fas fa-calendar-alt"></i>
-							</label>
-						</div>
-						<input data-provide="datepicker" id="heenDatum" class="form-control">
-					</div>
-				</div>
-				<div class="col">
-					<label for="startTijdHeen">Start tijd: </label>
-					<input type="time" id="startTijdHeen" width="276" class="form-control" id="time"/>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					<label for="heenStartAdres">Start adres: </label>
-					<select class="custom-select" id="heenStartAdres">
-						<?php
-							print $selectAdressen;
-						?>
-					</select>
-				</div>
-				<div class="col">
-					<label for="heenEindeAdres">Bestemming adres: </label>
-					<select class="custom-select" id="heenEindeAdres">
-						<?php
-							print $selectAdressen;
-						?>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
-</article>
-<article class="mt-2" id="terug" style="display: none;">
-	<div class="card">
-		<div class="card-header">
-			<div class="row">
 				<div class="col-sm-6">
-					<h5>Terug rit</h5>
+					<p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruiker->voornaam . " " . $gebruiker->naam; ?></p>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="heenTerug">
+						<label class="custom-control-label" for="heenTerug">Heen en terug</label>
+					</div>
+					<p id="credits"></p>
 				</div>
-				<div class="col-sm-6 text-right">
-					
+				<div class="col-sm-6">
+					<button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Opslaan</button>
+					<?php print anchor(array('MM/ritten'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));?>
 				</div>
 			</div>
 		</div>
-		<div class="card-body">
-			<div class="row">
-				<div class="col">
-					<label for="terugDatum">Datum: </label>
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<label class="input-group-text" for='terugDatum'>
-								<i class="fas fa-calendar-alt"></i>
-							</label>
-						</div>
-						<input data-provide="datepicker" id="terugDatum" class="form-control" placeholder="" disabled>
+	</div>
+	<article class="mt-2" id="heen">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-sm-6">
+						<h5>Heen rit</h5>
+					</div>
+					<div class="col-sm-6 text-right">
+						<p id="heenInfo"></p>
 					</div>
 				</div>
-				<div class="col">
-					<label for="startTijdTerug">Start tijd: </label>
-					<input type="time" id="startTijdTerug" width="276" class="form-control" id="time"/>
-				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<label for="terugStartAdres">Start adres: </label>
-					<select class="custom-select" id="terugStartAdres">
-						<?php
-							print $selectAdressen;
-						?>
-					</select>
-				</div>
-				<div class="col">
-					<label for="terugEindeAdres">Bestemming adres: </label>
-					<select class="custom-select" id="terugEindeAdres">
-						<?php
-							print $selectAdressen;
-						?>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
-</article>
-<div class="row mt-2">
-	<div class="col-sm-6">
-		<div class="card">
 			<div class="card-body">
-				<h5>Opmerking</h5>
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+				<div class="row">
+					<div class="col">
+						<label for="heenDatum">Datum: </label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for='heenDatum'>
+									<i class="fas fa-calendar-alt"></i>
+								</label>
+							</div>
+							<input data-provide="datepicker" id="heenDatum" class="form-control datepicker">
+						</div>
+					</div>
+					<div class="col">
+						<label for="startTijdHeen">Start tijd: </label>
+						<input type="time" id="startTijdHeen" width="276" class="form-control" id="time"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label for="heenStartAdres">Start adres: </label>
+						<select class="custom-select" id="heenStartAdres">
+							<?php
+								print $selectAdressen;
+							?>
+						</select>
+					</div>
+					<div class="col">
+						<label for="heenEindeAdres">Bestemming adres: </label>
+						<select class="custom-select" id="heenEindeAdres">
+							<?php
+								print $selectAdressen;
+							?>
+						</select>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-sm-6">
+	</article>
+	<article class="mt-2" id="terug" style="display: none;">
 		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-sm-6">
+						<h5>Terug rit</h5>
+					</div>
+					<div class="col-sm-6 text-right">
+						<p id="terugInfo"></p>
+					</div>
+				</div>
+			</div>
 			<div class="card-body">
-				<h5>Verwachte kost</h5>
-				<p>10km * 5€ = 50€</p>
-				<p>
-					Aantal ritten over		
-				</p>
+				<div class="row">
+					<div class="col">
+						<label for="terugDatum">Datum: </label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for='terugDatum'>
+									<i class="fas fa-calendar-alt"></i>
+								</label>
+							</div>
+							<input data-provide="datepicker" id="terugDatum" class="form-control" placeholder="" disabled>
+						</div>
+					</div>
+					<div class="col">
+						<label for="startTijdTerug">Start tijd: </label>
+						<input type="time" id="startTijdTerug" width="276" class="form-control" id="time"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label for="terugStartAdres">Start adres: </label>
+						<select class="custom-select" id="terugStartAdres">
+							<?php
+								print $selectAdressen;
+							?>
+						</select>
+					</div>
+					<div class="col">
+						<label for="terugEindeAdres">Bestemming adres: </label>
+						<select class="custom-select" id="terugEindeAdres">
+							<?php
+								print $selectAdressen;
+							?>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+	<div class="row mt-2">
+		<div class="col-sm-6">
+			<div class="card">
+				<div class="card-body">
+					<h5>Opmerking</h5>
+					<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="card">
+				<div class="card-body">
+					<h5>Verwachte kost</h5>
+					<table id="kost"></table>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</main>
 
 
 
@@ -221,7 +220,7 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 })
 
-$('.form-control').datepicker({
+$('.datepicker').datepicker({
     format: 'dd/mm/yyyy',
 	weekStart: 1,
 	language: 'nl'
@@ -320,11 +319,81 @@ function checkOfAdresIngeladenIs(huisnummer, straat, gemeente){
 	return result;
 }
 
-//fill in adres --> check if both adresses are filled --> calculate cost
+$('main input').change(function(){
+	calulateCost();
+});
 
+$('main select').change(function(){
+	calulateCost();
+});
 
+$('#heenDatum').change(function(){
+	var timeStamp = $('#heenDatum').val() + ' 00:00:00';
+	$.ajax(
+	{
+		type:"post",
+		url: "<?php echo base_url(); ?>index.php/MM/ritten/berekenCredits",
+		data:{ userId:'<?php echo $gebruiker->id; ?>', date: timeStamp},
+		success:function(response)
+		{
+			var credits = JSON.parse(response);				
+			$('#credits').text('Je hebt nog ' + credits + ' credits, deze rit kost 1 credit.');
+		}
+	});
+});
 
-
+function calulateCost(){
+	if($('#heenStartAdres').val() != null && $('#heenEindeAdres').val() != null && $('#startTijdHeen').val() != '' && $('#heenDatum').val() != ''){
+		var timeStamp = $('#heenDatum').val();
+		var now = new Date();
+		var timeStamp = timeStamp.charAt(3) + timeStamp.charAt(4) + '/' + timeStamp.charAt(0) + timeStamp.charAt(1) + '/' + timeStamp.charAt(6) + timeStamp.charAt(7) + timeStamp.charAt(8) + timeStamp.charAt(9) + ' ' + $('#startTijdHeen').val() + ':00';
+		var d = new Date(timeStamp);
+		if(d > now){
+			var totaalPrijs = 0;
+			$.ajax(
+			{
+				type:"post",
+				url: "<?php echo base_url(); ?>index.php/MM/ritten/berekenKost",
+				data:{ startAdres:$('#heenStartAdres').val(), eindAdres:$('#heenEindeAdres').val(), timeStamp:timeStamp},
+				success:function(response)
+				{
+					var data = JSON.parse(response);
+					console.log(data);
+					var heenPrijs = totaalPrijs = Math.round(parseFloat(data.rows[0].elements[0].distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
+					$('#kost').html('');
+					
+					$('#kost').append('<tr id="heen"><td>Heen rit (' + data.rows[0].elements[0].distance.text + '): </td><td> € ' + heenPrijs + '</td></tr>');
+					$('#heenInfo').text('Verwachte informatie: ' + data.rows[0].elements[0].distance.text + ', ' + data.rows[0].elements[0].duration.text);
+					
+					if($('#terugStartAdres').val() != null && $('#terugEindeAdres').val() != null && $('#startTijdTerug').val() != '' && $('#terugDatum').val() != '' && $('input#heenTerug').is(':checked')){
+						var timeStamp = $('#terugDatum').val() + ' ' + $('#startTijdTerug').val();
+						$.ajax(
+						{
+							type:"post",
+							url: "<?php echo base_url(); ?>index.php/MM/ritten/berekenKost",
+							data:{ startAdres:$('#terugStartAdres').val(), eindAdres:$('#terugEindeAdres').val(), timeStamp:timeStamp},
+							success:function(response)
+							{
+								var data = JSON.parse(response);
+								var terugPrijs = Math.round(parseFloat(data.rows[0].elements[0].distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
+								
+								$('#kost').append('<tr id="terug"><td>Terug rit (' + data.rows[0].elements[0].distance.text + '): </td><td> € ' + terugPrijs + '</td></tr>');
+								$('#kost').append('<tr style="border-top: 1px solid grey;"><td><strong>Totale prijs: </strong></td><td> € ' + (parseFloat(totaalPrijs) + parseFloat(terugPrijs)) + '</td></tr>');
+								$('#terugInfo').text('Verwachte informatie: ' + data.rows[0].elements[0].distance.text + ', ' + data.rows[0].elements[0].duration.text);
+							}
+						});
+					}else{
+						$('#kost').append('<tr style="border-top: 1px solid grey;"><td><strong>Totale prijs: </strong></td><td> € ' + totaalPrijs + '</td></tr>');
+					}
+				}
+			});
+		}
+	}else{
+		$('#kost').html('');
+		$('#terugInfo').html('');
+		$('#heenInfo').html('');
+	}
+}
 
 //autocomplete van google
 var placeSearch, autocomplete;

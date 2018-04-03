@@ -11,15 +11,16 @@ class helper_model extends CI_Model {
 	
 	function getStartEnEindeWeek($date){
 		$today = date('U', strtotime($date));
+		
 		$dow = date('w', $today);
-			$offset = $dow - 1;
+		$offset = $dow - 1;
 		if ($offset < 0) {
 			$offset = 6;
-		}
+		}	
 		
 		$start = $today - ($offset * 86400);
 		$einde = $start + (6 * 86400);
-		
+
 		$datum = array("start"=>(date("Y-m-d", $start) . ' 00:00:00'), "einde"=>(date("Y-m-d", $einde) . ' 00:00:00'));
 		return $datum;
 	}
