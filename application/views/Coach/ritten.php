@@ -18,11 +18,11 @@ var_dump($ritten[0]);
             <th scope="col">Start Adres</th>
             <th scope="col">Eind Adres</th>
             <th scope="col">Terugrit</th>
-            <th scope="col">Afstand prijs</th>
-            <th scope="col">Extra kost</th>
+
             <th scope="col">Totaal kost</th>
             <th scope="col">Status</th>
-            <th scope="col"></th>
+            <th scope="col">Details</th>
+<!--            <th scope="col"></th>-->
         </tr>
         </thead>
         <tbody>
@@ -41,31 +41,29 @@ var_dump($ritten[0]);
                         }else{
                             print "N/A";
                         } ?></td>
-                    <td><?php print $rit->prijs;?>€</td>
-                    <td><?php
-                        if(!empty($rit->extraKost)){
-                            print $rit->extraKost . "€";
-                        }?>
-                    </td>
                     <td><?php print (intval($rit->prijs) + intval($rit->extraKost));?>€</td>
                     <td><?php
-                        if ($rit->status->status->id == "1"){
-                            print '<i class="fa fa-times fa-2x  text-danger"></i>';
-                        }else if ($rit->status->status->id=="2"){
-                            print '<i class="fa fa-check fa-2x  text-success"></i>';
-                        }else if ($rit->status->status->id =="3"){
-                            print '<i class="fa fa-question-circle fa-2x text-info"></i>';
-                        }else if ($rit->status->status->id =="4"){
-                            print '<i class="fa fa-minus-circle fa-2x text-warning"></i>';
+                        if ($rit->status->id == "1"){
+                            print '<i class="fa fa-times fa-2x  text-danger" data-toggle="tooltip" data-placement="top" title="' . $rit->status->naam . '"></i>';
+                        }else if ($rit->status->id=="2"){
+                            print '<i class="fa fa-check fa-2x  text-success" data-toggle="tooltip" data-placement="top" title="' . $rit->status->naam . '"></i>';
+                        }else if ($rit->status->id =="3"){
+                            print '<i class="fa fa-question-circle fa-2x text-info" data-toggle="tooltip" data-placement="top" title="' . $rit->status->naam . '"></i>';
+                        }else if ($rit->status->id =="4"){
+                            print '<i class="fa fa-minus-circle fa-2x text-warning" data-toggle="tooltip" data-placement="top" title="' . $rit->status->naam . '"></i>';
                         }
                         ?></td>
-                    <td><?php print anchor(array('MM/ritten/eenRit', $rit->id), '<i class="fa fa-eye fa-2x"></i>'); ?></td>
+                    <td><?php print anchor(array('MM/ritten/eenRit', $rit->id), '<i class="fa fa-eye fa-2x" data-toggle="tooltip" data-placement="top" title="Bekijken"></i>'); ?></td>
+
                 </tr>
+
                 <?php
             }
         }
 
         ?>
+        <div class="pagination"><?php echo $this->pagination->create_links(); ?>
+        </div>
         </tbody>
     </table>
 </div>

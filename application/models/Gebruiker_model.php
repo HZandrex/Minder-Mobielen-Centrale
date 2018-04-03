@@ -26,7 +26,6 @@ class Gebruiker_model extends CI_Model {
         return $query->row();
     }
 
-
     
     /**
      * Retourneert het record met mail=$email uit de tabel gebruiker.
@@ -38,6 +37,7 @@ class Gebruiker_model extends CI_Model {
         $query = $this->db->get('Gebruiker');
         return $query->row();
     }
+	
     /**
      * Retourneert het record met resetToken=$resetToken uit de tabel gebruiker.
      * @param $resetToken De resetToken van het record dat opgevraagd wordt
@@ -80,7 +80,6 @@ class Gebruiker_model extends CI_Model {
 			$this->db->set('voorkeurId', $gebruiker->voorkeurId);
             $this->db->where('id', $gebruiker->id);
 			$this->db->update('Gebruiker');
-
     }
 
     /**
@@ -195,5 +194,16 @@ class Gebruiker_model extends CI_Model {
         $this->db->update('Gebruiker', $gebruiker);
         $this->authex->meldAf();
     }
+	
+	function getCredits($id, $date){
+		$this->load->model('instelling_model');
+		$this->load->model('rit_model');
+		
+		$gebruikteCredits = $this->rit_model->getAantalRitten($id, $date);
+		$maxCredits = $this->instelling_model->getValueById(3);
+		
+		$creditsOver = $maxCredits->waarde - $gebruikteCredits;
+		return $creditsOver;
+	}
 
 }

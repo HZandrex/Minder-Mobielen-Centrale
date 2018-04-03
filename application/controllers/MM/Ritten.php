@@ -20,13 +20,12 @@ class Ritten extends CI_Controller {
 		*
 	*/	
     public function index() {
-		$lid = 9;
-        $this->load->model('rit_model');
-        $data['ritten'] = $this->rit_model->getByMMCId($lid);
-		
 		$data['titel'] = 'Ritten';
         $data['author'] = 'Michiel O.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
+		
+        $this->load->model('rit_model');
+        $data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id);
 
         $partials = array('menu' => 'main_menu','inhoud' => 'MM/ritten');
         $this->template->load('main_master', $partials, $data);
@@ -52,14 +51,34 @@ class Ritten extends CI_Controller {
 	}
 	
 	public function nieuweRit(){
+		$this->load->model('rit_model');
 		$data['titel'] = 'Nieuwe rit';
         $data['author'] = 'Michiel O.';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
+		
+		
+		$data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruiker']->id);
 		
 		$partials = array('menu' => 'main_menu','inhoud' => 'MM/nieuweRit');
         $this->template->load('main_master', $partials, $data);
 		
 	}
+	
+	public function nieuwAdres(){
+		$this->load->model('adres_model');
+		//check of adres al bestaat
+		$bestaat = $this->adres_model->bestaatAdres(htmlspecialchars(trim($_POST['huisnummer'])), htmlspecialchars(trim($_POST['straat'])), htmlspecialchars(trim($_POST['gemeente'])), htmlspecialchars(trim($_POST['postcode'])));
+		if($bestaat != false){
+			echo json_encode ($this->adres_model->getById($bestaat));
+		}else{
+			$id = $this->adres_model->addAdres(htmlspecialchars(trim($_POST['huisnummer'])), htmlspecialchars(trim($_POST['straat'])), htmlspecialchars(trim($_POST['gemeente'])), htmlspecialchars(trim($_POST['postcode'])));
+			echo json_encode ($this->adres_model->getById($id));
+		}
+		
+		 
+	}
+	
+	//$this->gebruiker_model->getCredits($data['gebruiker']->id, date("Y-m-d G:i:s", time())); --> please NIET verwijderen
 	
 }
 

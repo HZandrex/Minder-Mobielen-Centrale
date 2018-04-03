@@ -26,5 +26,34 @@ class Adres_model extends CI_Model {
         $this->db->where('id', $id);
         $query = $this->db->get('Adres');
         return $query->row();
-    }    	
+    }    
+
+	function addAdres($huisnummer, $straat, $gemeente, $postcode){
+		$data = array(
+			'huisnummer' => $huisnummer,
+			'straat' => $straat,
+			'gemeente' => $gemeente,
+			'postcode' => $postcode,
+		);
+
+		$this->db->insert('Adres', $data);
+		$insert_id = $this->db->insert_id();
+		
+		return $insert_id;
+	}
+	
+	function bestaatAdres($huisnummer, $straat, $gemeente, $postcode){
+		$this->db->where('huisnummer', $huisnummer);
+		$this->db->where('straat', $straat);
+		$this->db->where('gemeente', $gemeente);
+		$this->db->where('postcode', $postcode);
+		$query = $this->db->get('Adres');
+		$result = $query->row();
+		if($query->num_rows() > 0){
+			$result = $query->row();
+			return $result->id;
+		}else{
+			return false;
+		}
+	}
 }

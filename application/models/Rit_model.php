@@ -43,13 +43,14 @@ class Rit_model extends CI_Model {
 	*/
     function getByMMCId($mmid)
     {
+		$this->load->model('adresrit_model');
+		$this->load->model('status_model');
+		
         $this->db->where('mmid', $mmid);
 		$query = $this->db->get('Rit');
         $ritten = array();
         $ritten = $query->result();
 		
-		$this->load->model('adresrit_model');
-		$this->load->model('status_model');
 		$i =0;
 		foreach($ritten as $rit){
 			$rit->heenvertrek = $this->adresrit_model->getByRitIdAndType($rit->id, 1);
@@ -66,8 +67,7 @@ class Rit_model extends CI_Model {
 		}
 		usort($ritten, array($this, "date_compare"));
         return $ritten;
-    }	
-	
+    }		
 	
 	/**
 		*Haalt al de informatie op van een rit waar het id van de rit meegegeven is
@@ -77,16 +77,16 @@ class Rit_model extends CI_Model {
 		*@return al de opgevraagde rit
 	*/
 	function getByRitId($id){
+		$this->load->model('adresrit_model');
+		$this->load->model('status_model');	
+		$this->load->model('google_model');		
+		$this->load->model('gebruiker_model');	
+		$this->load->model('vrijwilligerrit_model');
 		
 		$this->db->where('id', $id);
 		$query = $this->db->get('Rit');
 		
-		$rit = $query->result();
-		
-		$this->load->model('adresrit_model');
-		$this->load->model('status_model');	
-		$this->load->model('google_model');		
-		$this->load->model('gebruiker_model');		
+		$rit = $query->result();		
 		
 		$rit[0]->heenvertrek = $this->adresrit_model->getByRitIdAndType($rit[0]->id, 1);
 		$rit[0]->heenaankomst = $this->adresrit_model->getByRitIdAndType($rit[0]->id, 2);
@@ -100,9 +100,64 @@ class Rit_model extends CI_Model {
 		}
 		$rit[0]->status = $this->status_model->getById($rit[0]->statusId);
 		$rit[0]->MM = $this->gebruiker_model->get($rit[0]->mmId);
-		$rit[0]->vrijwilliger = $this->gebruiker_model->get($rit[0]->mmId);
+		if($rit[0]->status->id == 2){
+			$rit[0]->vrijwilliger = $this->vrijwilligerrit_model->getByRitId($rit[0]->id);
+		}
 		
 		return $rit[0];
 	}
+	
+	function getAantalRitten($mmId, $date){
+		$this->load->model('adresrit_model');
+		$this->load->model('helper_model');
+		
+		$datum = $this->helper_model->getStartEnEindeWeek($date);
+		$aantalRitten = 0;
+		
+		$this->db->where('mmId', $mmId);
+		$query = $this->db->get('Rit');
+		$ritten = $query->result();
+		
+		foreach($ritten as $rit){
+			$rit->tijd = $this->adresrit_model->getTime($rit->id, 1);
+			if($rit->tijd > $datum['start'] && $rit->tijd < $datum['einde']){
+				$aantalRitten++;
+			}
+		}		
+		return $aantalRitten;
+	}	
+	
+	function getAllVoorGebruiker($mmId){
+		$this->load->model('gebruiker_model');
+		$this->load->model('helper_model');
+		$this->load->model('adresrit_model');
+		
+		$adressen = array();
+		$temp = array();
+		array_push($adressen, $this->gebruiker_model->getWithFunctions($mmId)->adres);
+		
+		$this->db->where('mmId', $mmId);
+		$query = $this->db->get('Rit');
+		$ritten = $query->result();
+		
+		foreach($ritten as $rit){
+			$ritAdressen = $this->adresrit_model->getAdressen($rit->id);
+			foreach($ritAdressen as $adres){
+				array_push($temp, $adres);
+			}
+		}
+
+		function cmp($a, $b)
+		{
+			return strcmp($a->straat, $b->straat);
+		}
+		usort($temp, "cmp");
+
+		$adressen = array_merge($adressen, $temp);
+
+		return $this->helper_model->unique_multidim_array($adressen, 'id');
+	}
+	
+	
                         
 }

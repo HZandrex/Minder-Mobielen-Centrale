@@ -16,21 +16,22 @@ class Ritten extends CI_Controller {
 
 
         $this->load->library('pagination');
-
-        $config['base_url'] = 'Coach/ritten';
-        $config['total_rows'] = 200;
-        $config['per_page'] = 20;
+        $this->load->library('table');
+        $config['base_url'] = '/project23_1718/index.php/coach/Ritten';
+        $config['total_rows'] = count($this->coachmindermobiele_model->getById());
+        $config['per_page'] =2;
+        $config['num_links']=3;
 
         $this->pagination->initialize($config);
 
-        echo $this->pagination->create_links();
+
 
         $data['titel'] = 'Ritten';
         $data['author'] = 'Lorenz C.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
         $partials = array('menu' => 'main_menu','inhoud' => 'Coach/ritten');
-        $this->template->load('main_master', $partials, $data);
+        $this->template->load('main_master', $partials, $data,$config);
         
     }
 
