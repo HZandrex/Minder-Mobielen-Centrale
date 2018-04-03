@@ -45,4 +45,13 @@ class GebruikersBeheren extends CI_Controller {
         $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gebruikersbeherenoverzicht');
         $this->template->load('main_master', $partials, $data);
     }
+
+    public function haalAjaxOp_GebruikersOpFunctie(){
+        $functieId = $this->input->get('functieId');
+
+        $this->load->model('functiegebruiker_model');
+        $data['gebruikers'] = $this->functiegebruiker_model->getAllGebruikersByFunction($functieId);
+
+        $this->load->view('medewerker/ajax_gebruikers', $data);
+    }
 }

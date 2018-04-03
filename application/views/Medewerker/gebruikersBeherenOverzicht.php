@@ -1,8 +1,23 @@
 <script>
+    function haalGebruikersMetFunctieOp ( functieId ) {
+        $.ajax({type : "GET",
+            url : site_url + "/medewerker/gebruikersbeheren/haalAjaxOp_GebruikersOpFunctie",
+            data : { functieId : functieId },
+            success : function(result){
+                $("#gebruikersListbox").html(result);
+            },
+            error: function (xhr, status, error) {
+                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+            }
+        });
+    }
+
+
     $(document).ready(function(){
+        $('#gebruikersForm input[name=functieRadiogroup]').
 
         $('#gebruikersForm input[name=functieRadiogroup]').change(function () {
-            console.log($('#gebruikersForm input[name=functieRadiogroup]:checked').val());
+            haalGebruikersMetFunctieOp($('#gebruikersForm input[name=functieRadiogroup]:checked').val());
         });
     });
 
@@ -19,7 +34,7 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
         <p><b>Gebruikers</b></p>
         <?php
         echo form_radiogroupFuncties('functieRadiogroup', $functies, 'id', 'naam');
-        echo form_listboxproGebruikersBeheren('gebruikersListbox', $gebruikers, 'id', 'voornaam', 'naam', 0, array('id' => 'gebruikersListbox', 'size' => 10, 'class' => 'form-control w-75'));
+        echo form_listboxproGebruikersBeheren('gebruikersListbox', array(), 'id', 'voornaam', 'naam', 0, array('id' => 'gebruikersListbox', 'size' => 10, 'class' => 'form-control w-75'));
         ?>
     </div>
 
