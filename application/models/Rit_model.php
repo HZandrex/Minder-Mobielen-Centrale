@@ -158,6 +158,37 @@ class Rit_model extends CI_Model {
 		return $this->helper_model->unique_multidim_array($adressen, 'id');
 	}
 	
+	function saveNewRit($mmId, $opmerkingKlant, $opmerkingVrijwilliger, $prijs, $extraKost, $statusId, $heenTerug, $heenStartAdresId, $heenEindeAdresId, $terugStartAdresId, $terugEindeAdresId, $startTijdHeen, $startTijdTerug, $heenDatum, $terugDatum){
+		$this->load->model('adresrit_model');
+		
+		$ritId = 0;
+		
+		$data = array(
+			'mmId' => $mmId,
+			'opmerkingKlant' => $opmerkingKlant,
+			'opmerkingVrijwilliger' => $opmerkingVrijwilliger,
+			'prijs' => $prijs,
+			'extraKost' => $extraKost,
+			'statusId' => $statusId,
+		);
+		$this->db->insert('Rit', $data);
+		$ritId = $this->db->insert_id();
+		
+
+		$tijd = substr($heenDatum, 3, 1) . substr($heenDatum, 4, 1) . "/" . substr($heenDatum, 0, 1) . substr($heenDatum, 1, 1) . "/" . substr($heenDatum, 6, 1) . substr($heenDatum, 7, 1) . substr($heenDatum,8, 1) . substr($heenDatum, 9, 1) . " " . $startTijdHeen .":00";
+		$timesStamp = date('Y-m-d G:i:s', strtotime($tijd));
+
+		$this->adresrit_model->saveAdresRit($ritId, $heenStartAdresId, "1", $timesStamp);
+		$this->adresrit_model->saveAdresRit($ritId, $heenEindeAdresId, "2", $timesStamp);
+		if($heenTerug){
+			$tijd = substr($terugDatum, 3, 1) . substr($terugDatum, 4, 1) . "/" . substr($terugDatum, 0, 1) . substr($terugDatum, 1, 1) . "/" . substr($terugDatum, 6, 1) . substr($terugDatum, 7, 1) . substr($terugDatum,8, 1) . substr($terugDatum, 9, 1) . " " . $startTijdTerug .":00";
+			$timesStamp = date('Y-m-d G:i:s', strtotime($tijd));
+			$this->adresrit_model->saveAdresRit($ritId, $terugStartAdresId, "3", $timesStamp);
+			$this->adresrit_model->saveAdresRit($ritId, $terugEindeAdresId, "4", $timesStamp);
+		}
+		
+		return $ritId;
+	}
 	
                         
 }
