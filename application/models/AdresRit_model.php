@@ -86,5 +86,15 @@ class AdresRit_model extends CI_Model {
 		
 		return $adressen;
 	}
+	
+	function saveAdresRit($ritId, $adresId, $typeAdresId, $tijd){
+		$data = array(
+			'ritId' => $ritId,
+			'adresId' => $adresId,
+			'typeAdresId' => $typeAdresId,
+			'tijd' => $tijd
+		);
+		$this->db->insert('AdresRit', $data);
+	}
                         
 }

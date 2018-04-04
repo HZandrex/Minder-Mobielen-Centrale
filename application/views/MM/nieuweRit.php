@@ -1,14 +1,10 @@
 <?php
-	// var_dump($gebruiker);
-	// var_dump($adressen);
-	
 	$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
 	foreach($adressen as $adres){
 		$selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
 	}
 
 ?>
-
 <style>
 	.pac-container{
 		z-index: 10000;
@@ -16,147 +12,155 @@
 
 </style>
 <main>
-	<div class="card">
-		<div class="card-body">
-			<div class="row">
-				<div class="col-sm-6">
-					<p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruiker->voornaam . " " . $gebruiker->naam; ?></p>
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="heenTerug">
-						<label class="custom-control-label" for="heenTerug">Heen en terug</label>
-					</div>
-					<p id="credits"></p>
-				</div>
-				<div class="col-sm-6">
-					<button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Opslaan</button>
-					<?php print anchor(array('MM/ritten'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));?>
-				</div>
-			</div>
-		</div>
+	<div id="errorPlaats">
+	
 	</div>
-	<article class="mt-2" id="heen">
+	<?php 
+		$attributes = array('name' => 'nieuweRit', 'id' => 'nieuweRit');
+		echo form_open('MM/ritten/nieuweRitOpslaan', $attributes);  
+	?>
 		<div class="card">
-			<div class="card-header">
-				<div class="row">
-					<div class="col-sm-6">
-						<h5>Heen rit</h5>
-					</div>
-					<div class="col-sm-6 text-right">
-						<p id="heenInfo"></p>
-					</div>
-				</div>
-			</div>
 			<div class="card-body">
 				<div class="row">
-					<div class="col">
-						<label for="heenDatum">Datum: </label>
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<label class="input-group-text" for='heenDatum'>
-									<i class="fas fa-calendar-alt"></i>
-								</label>
-							</div>
-							<input data-provide="datepicker" id="heenDatum" class="form-control datepicker">
-						</div>
-					</div>
-					<div class="col">
-						<label for="startTijdHeen">Start tijd: </label>
-						<input type="time" id="startTijdHeen" width="276" class="form-control" id="time"/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<label for="heenStartAdres">Start adres: </label>
-						<select class="custom-select" id="heenStartAdres">
-							<?php
-								print $selectAdressen;
-							?>
-						</select>
-					</div>
-					<div class="col">
-						<label for="heenEindeAdres">Bestemming adres: </label>
-						<select class="custom-select" id="heenEindeAdres">
-							<?php
-								print $selectAdressen;
-							?>
-						</select>
-					</div>
-				</div>
-			</div>
-		</div>
-	</article>
-	<article class="mt-2" id="terug" style="display: none;">
-		<div class="card">
-			<div class="card-header">
-				<div class="row">
 					<div class="col-sm-6">
-						<h5>Terug rit</h5>
+						<p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruiker->voornaam . " " . $gebruiker->naam; ?></p>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug">
+							<label class="custom-control-label" for="heenTerug">Heen en terug</label>
+						</div>
+						<p id="credits"></p>
 					</div>
-					<div class="col-sm-6 text-right">
-						<p id="terugInfo"></p>
+					<div class="col-sm-6">
+								<button type="button" class="btn btn-primary" id="opslaan"><i class="fas fa-save"></i> Opslaan</button>
+						<?php
+								print anchor(array('MM/ritten'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));
+						?>
 					</div>
 				</div>
 			</div>
-			<div class="card-body">
-				<div class="row">
-					<div class="col">
-						<label for="terugDatum">Datum: </label>
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<label class="input-group-text" for='terugDatum'>
-									<i class="fas fa-calendar-alt"></i>
-								</label>
-							</div>
-							<input data-provide="datepicker" id="terugDatum" class="form-control" placeholder="" disabled>
+		</div>
+		<article class="mt-2" id="heen">
+			<div class="card">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-sm-6">
+							<h5>Heen rit</h5>
+						</div>
+						<div class="col-sm-6 text-right">
+							<p id="heenInfo"></p>
 						</div>
 					</div>
-					<div class="col">
-						<label for="startTijdTerug">Start tijd: </label>
-						<input type="time" id="startTijdTerug" width="276" class="form-control" id="time"/>
-					</div>
 				</div>
-				<div class="row">
-					<div class="col">
-						<label for="terugStartAdres">Start adres: </label>
-						<select class="custom-select" id="terugStartAdres">
-							<?php
-								print $selectAdressen;
-							?>
-						</select>
-					</div>
-					<div class="col">
-						<label for="terugEindeAdres">Bestemming adres: </label>
-						<select class="custom-select" id="terugEindeAdres">
-							<?php
-								print $selectAdressen;
-							?>
-						</select>
-					</div>
-				</div>
-			</div>
-		</div>
-	</article>
-	<div class="row mt-2">
-		<div class="col-sm-6">
-			<div class="card">
 				<div class="card-body">
-					<h5>Opmerking</h5>
-					<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+					<div class="row">
+						<div class="col">
+							<label for="heenDatum">Datum: </label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for='heenDatum'>
+										<i class="fas fa-calendar-alt"></i>
+									</label>
+								</div>
+								<input data-provide="datepicker" id="heenDatum" class="form-control datepicker" name="heenDatum">
+							</div>
+						</div>
+						<div class="col">
+							<label for="startTijdHeen">Start tijd: </label>
+							<input type="time" id="startTijdHeen" width="276" class="form-control" id="time" name="startTijdHeen"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<label for="heenStartAdres">Start adres: </label>
+							<select class="custom-select" id="heenStartAdres" name="heenStartAdres">
+								<?php
+									print $selectAdressen;
+								?>
+							</select>
+						</div>
+						<div class="col">
+							<label for="heenEindeAdres">Bestemming adres: </label>
+							<select class="custom-select" id="heenEindeAdres" name="heenEindeAdres">
+								<?php
+									print $selectAdressen;
+								?>
+							</select>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-sm-6">
+		</article>
+		<article class="mt-2" id="terug" style="display: none;">
 			<div class="card">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-sm-6">
+							<h5>Terug rit</h5>
+						</div>
+						<div class="col-sm-6 text-right">
+							<p id="terugInfo"></p>
+						</div>
+					</div>
+				</div>
 				<div class="card-body">
-					<h5>Verwachte kost</h5>
-					<table id="kost"></table>
+					<div class="row">
+						<div class="col">
+							<label for="terugDatum">Datum: </label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for='terugDatum'>
+										<i class="fas fa-calendar-alt"></i>
+									</label>
+								</div>
+								<input data-provide="datepicker" id="terugDatum" class="form-control" name="terugDatum" disabled>
+							</div>
+						</div>
+						<div class="col">
+							<label for="startTijdTerug">Start tijd: </label>
+							<input type="time" id="startTijdTerug" width="276" class="form-control" id="time" name="startTijdTerug"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<label for="terugStartAdres">Start adres: </label>
+							<select class="custom-select" id="terugStartAdres" name="terugStartAdres">
+								<?php
+									print $selectAdressen;
+								?>
+							</select>
+						</div>
+						<div class="col">
+							<label for="terugEindeAdres">Bestemming adres: </label>
+							<select class="custom-select" id="terugEindeAdres" name="terugEindeAdres">
+								<?php
+									print $selectAdressen;
+								?>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<div class="row mt-2">
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						<h5>Opmerking</h5>
+						<textarea class="form-control" id="opmerkingenMM" name="opmerkingenMM" rows="3"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						<h5>Verwachte kost</h5>
+						<table id="kost"></table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	<?php echo form_close(); ?>
 </main>
-
-
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-id="">
 	<div class="modal-dialog" role="document">
@@ -212,9 +216,6 @@
 </div>
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete" async defer></script>
-	
-
-
 <script>
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
@@ -236,7 +237,19 @@ $('#heenTerug').click(function() {
 
 $('#heenDatum').change(function(){
 	$('#terugDatum').val($('#heenDatum').val());
-	//show amount of rits availble after this one
+	var timeStamp = $('#heenDatum').val() + ' 00:00:00';
+	$.ajax(
+	{
+		type:"post",
+		url: "<?php echo base_url(); ?>index.php/MM/ritten/berekenCredits",
+		data:{ userId:'<?php echo $gebruiker->id; ?>', date: timeStamp},
+		success:function(response)
+		{
+			var credits = JSON.parse(response);				
+			$('#credits').html('Je hebt nog <span id="aantalCredits">' + credits + '</span> credits, deze rit kost 1 credit.');
+		}
+	});
+
 });
 
 $('select').change(function() {
@@ -327,21 +340,6 @@ $('main select').change(function(){
 	calulateCost();
 });
 
-$('#heenDatum').change(function(){
-	var timeStamp = $('#heenDatum').val() + ' 00:00:00';
-	$.ajax(
-	{
-		type:"post",
-		url: "<?php echo base_url(); ?>index.php/MM/ritten/berekenCredits",
-		data:{ userId:'<?php echo $gebruiker->id; ?>', date: timeStamp},
-		success:function(response)
-		{
-			var credits = JSON.parse(response);				
-			$('#credits').text('Je hebt nog ' + credits + ' credits, deze rit kost 1 credit.');
-		}
-	});
-});
-
 function calulateCost(){
 	if($('#heenStartAdres').val() != null && $('#heenEindeAdres').val() != null && $('#startTijdHeen').val() != '' && $('#heenDatum').val() != ''){
 		var timeStamp = $('#heenDatum').val();
@@ -358,7 +356,6 @@ function calulateCost(){
 				success:function(response)
 				{
 					var data = JSON.parse(response);
-					console.log(data);
 					var heenPrijs = totaalPrijs = Math.round(parseFloat(data.rows[0].elements[0].distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
 					$('#kost').html('');
 					
@@ -366,7 +363,8 @@ function calulateCost(){
 					$('#heenInfo').text('Verwachte informatie: ' + data.rows[0].elements[0].distance.text + ', ' + data.rows[0].elements[0].duration.text);
 					
 					if($('#terugStartAdres').val() != null && $('#terugEindeAdres').val() != null && $('#startTijdTerug').val() != '' && $('#terugDatum').val() != '' && $('input#heenTerug').is(':checked')){
-						var timeStamp = $('#terugDatum').val() + ' ' + $('#startTijdTerug').val();
+						var timeStamp = $('#terugDatum').val();
+						var timeStamp = timeStamp.charAt(3) + timeStamp.charAt(4) + '/' + timeStamp.charAt(0) + timeStamp.charAt(1) + '/' + timeStamp.charAt(6) + timeStamp.charAt(7) + timeStamp.charAt(8) + timeStamp.charAt(9) + ' ' + $('#startTijdTerug').val();
 						$.ajax(
 						{
 							type:"post",
@@ -378,12 +376,13 @@ function calulateCost(){
 								var terugPrijs = Math.round(parseFloat(data.rows[0].elements[0].distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
 								
 								$('#kost').append('<tr id="terug"><td>Terug rit (' + data.rows[0].elements[0].distance.text + '): </td><td> € ' + terugPrijs + '</td></tr>');
-								$('#kost').append('<tr style="border-top: 1px solid grey;"><td><strong>Totale prijs: </strong></td><td> € ' + (parseFloat(totaalPrijs) + parseFloat(terugPrijs)) + '</td></tr>');
+								$('#kost').append('<tr id="totaalHeenTerug" style="border-top: 1px solid grey;"><td><strong>Totale prijs: </strong></td><td> € <span id="totaalPrijs">' + (parseFloat(totaalPrijs) + parseFloat(terugPrijs)) + '</span></td></tr>');
+								$('#totaalHeen').html('');
 								$('#terugInfo').text('Verwachte informatie: ' + data.rows[0].elements[0].distance.text + ', ' + data.rows[0].elements[0].duration.text);
 							}
 						});
 					}else{
-						$('#kost').append('<tr style="border-top: 1px solid grey;"><td><strong>Totale prijs: </strong></td><td> € ' + totaalPrijs + '</td></tr>');
+						$('#kost').append('<tr style="border-top: 1px solid grey;" id="totaalHeen"><td><strong>Totale prijs: </strong></td><td> € <span id="totaalPrijs">' + totaalPrijs + '</span></td></tr>');
 					}
 				}
 			});
@@ -454,5 +453,117 @@ function geolocate() {
       autocomplete.setBounds(circle.getBounds());
     });
   }
+}
+
+$('#opslaan').click(function(){
+	$('#errorPlaats').html('');
+	var error = false;
+	
+	//heen datum test, ingevuld, in de toekomst
+	if($('#heenDatum').val() == ''){
+		errorPlaats('Vul een geldige datum in.');
+		error = true;
+	}else{
+		var timeStamp = $('#heenDatum').val();
+		var now = new Date();
+		var timeStamp = timeStamp.charAt(3) + timeStamp.charAt(4) + '/' + timeStamp.charAt(0) + timeStamp.charAt(1) + '/' + timeStamp.charAt(6) + timeStamp.charAt(7) + timeStamp.charAt(8) + timeStamp.charAt(9) + ' 00:00:00';
+		var d = new Date(timeStamp);
+		if(d <= now){
+			errorPlaats('Vul een datum in die in de toekomst ligt.');
+			error = true;
+		}else{
+			
+			//check aantal credits
+			if(!$('span#aantalCredits').length){
+				errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
+				error = true;
+			}else{
+				if($('span#aantalCredits').text() == 0){
+					errorPlaats('Je hebt niet meer voldoende credits voor deze week.');
+					error = true;
+				}
+			}
+		}
+	}
+	
+	//start tijd, ingevuld
+	if($('#startTijdHeen').val() == ''){
+		errorPlaats('Vul een geldige startTijd in.');
+		error = true;
+	}
+	
+	//heen start adres ingevuld
+	if($('#heenStartAdres').val() == null){
+		errorPlaats('Vul een geldig heen start adres in.');
+		error = true;
+	}
+	
+	//heen eind adres ingevuld
+	if($('#heenEindeAdres').val() == null){
+		errorPlaats('Vul een geldig heen start adres in.');
+		error = true;
+	}
+	
+	//als terug rit aangevinkt is
+	if($('input#heenTerug').is(':checked')){
+		//terug datum test, ingevuld, in de toekomst
+		if($('#terugDatum').val() == ''){
+			errorPlaats('Vul een geldige datum in.');
+			error = true;
+		}else{
+			var timeStamp = $('#terugDatum').val();
+			var now = new Date();
+			var timeStamp = timeStamp.charAt(3) + timeStamp.charAt(4) + '/' + timeStamp.charAt(0) + timeStamp.charAt(1) + '/' + timeStamp.charAt(6) + timeStamp.charAt(7) + timeStamp.charAt(8) + timeStamp.charAt(9) + ' 00:00:00';
+			var d = new Date(timeStamp);
+			if(d <= now){
+				errorPlaats('Vul een datum in die in de toekomst ligt.');
+				error = true;
+			}
+		}
+		
+		//start tijd, ingevuld
+		if($('#startTijdTerug').val() == ''){
+			errorPlaats('Vul een geldige startTijd in voor de terug rit.');
+			error = true;
+		}
+		
+		//terug start adres ingevuld
+		if($('#terugStartAdres').val() == null){
+			errorPlaats('Vul een geldig terug start adres in.');
+			error = true;
+		}
+		
+		//terug eind adres ingevuld
+		if($('#terugEindeAdres').val() == null){
+			errorPlaats('Vul een geldig terug start adres in.');
+			error = true;
+		}
+	}
+	
+	if(!error){
+		//check verwachte kost
+		if(!$('span#totaalPrijs').length){
+			errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
+			error = true;
+		}else{
+			addData('kost', $('span#totaalPrijs').text());
+		}
+	}
+	
+	if(!error){
+		console.log('submit');
+		addData('userId', '<?php print $gebruiker->id; ?>');
+		$( "#nieuweRit" ).submit();
+	}
+	
+});
+
+function errorPlaats(bericht){
+	$('#errorPlaats').append('<div class="alert alert-danger" role="alert" id="errorMain">' + bericht + '</div>');
+}
+
+function addData(dataNaam, data){
+	var input = $("<input>").attr("type", "hidden").attr("name", dataNaam).val(data);
+	$('#nieuweRit').append($(input));
 }
 </script>
