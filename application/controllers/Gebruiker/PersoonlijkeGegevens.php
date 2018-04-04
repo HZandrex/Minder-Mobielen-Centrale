@@ -53,6 +53,37 @@ class PersoonlijkeGegevens extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 	
+	public function gegevensVeranderen() {
+		$data['titel'] = 'Persoonlijke Gegevens Wijzigen';
+        $data['author'] = 'Tijmen Elseviers';
+		
+		$this->load->model('gebruiker_model');
+		$this->load->model('adres_model');
+		
+		$id = $this->input->post('id');
+        
+        $gebruiker = $this->gebruiker_model->get($id);
+		
+		$gebruiker->voornaam = $this->input->post('gegevensVoornaam');
+		$gebruiker->naam = $this->input->post('gegevensNaam');
+		$gebruiker->geboorte = $this->input->post('gegevensGeboorte');
+		$gebruiker->telefoon = $this->input->post('gegevensTelefoon');
+		$gebruiker->mail = $this->input->post('gegevensMail');
+		$gebruiker->voorkeurId = $this->input->post('gegevensCommunicatie');
+		
+		
+		
+		$gegevensAdres->gemeente = $this->input->post('gegevensGemeente');
+		$gegevensAdres->postcode = $this->input->post('gegevensPostcode');
+		$gegevensAdres->straat = $this->input->post('gegevensStraat');
+		$gegevensAdres->huisnummer = $this->input->post('gegevensHuisnummer');
+		
+		$this->gebruiker_model->updateGebruiker($gebruiker);
+		$this->adres_model->updateAdres($gebruiker->id,$gegevensAdres);
+		
+		redirect('gebruiker/persoonlijkegegevens/persoonlijkegegevens');
+	}
+	
 	
     
     /**

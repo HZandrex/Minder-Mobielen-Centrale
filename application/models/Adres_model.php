@@ -26,7 +26,17 @@ class Adres_model extends CI_Model {
         $this->db->where('id', $id);
         $query = $this->db->get('Adres');
         return $query->row();
-    }    
+    }
+
+	function updateAdres($id,$adresGegevens)
+	{
+		$this->db->set('straat', $adresGegevens->straat);
+		$this->db->set('huisnummer', $adresGegevens->huisnummer);
+		$this->db->set('gemeente', $adresGegevens->gemeente);
+		$this->db->set('postcode', $adresGegevens->postcode);
+		$this->db->where('id', $id);
+		$this->db->update('Adres');
+	}
 
 	function addAdres($huisnummer, $straat, $gemeente, $postcode){
 		$data = array(
