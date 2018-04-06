@@ -5,7 +5,7 @@
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
 */
-	// var_dump($rit);
+        //var_dump($rit);
 ?>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -124,9 +124,17 @@
 						<i class="fas fa-hourglass-half"></i> <?php print $rit->heen->duration->text; ?>
 					</p>
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte afstand">
-						<i class="fas fa-road"></i></i> <?php print $rit->heen->distance->text; ?>
+						<i class="fas fa-road"></i> <?php print $rit->heen->distance->text; ?>
+					</p>
+                                        <p data-toggle="tooltip" data-placement="top" title="Toon route">
+                                            <button onclick="showMap()" class="btn-primary">
+                                                <i class=" fas fa-map"></i> Kaart
+                                            </button>
 					</p>
 				</div>
+                                <div class="col-12">
+                                    <div style="height : 300px" id="map"></div>
+                                </div>
 			</div>
 		</div>
 	</div>
@@ -204,3 +212,49 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 </script>
+<script>
+    function initMap() {
+        var pointA = '<?php echo $rit->heenvertrek->adres->straat."+".$rit->heenvertrek->adres->huisnummer."+".$rit->heenvertrek->adres->gemeente;?>',
+          pointB = '<?php echo $rit->heenaankomst->adres->straat."+".$rit->heenaankomst->adres->huisnummer."+".$rit->heenaankomst->adres->gemeente;?>',
+          myOptions = {
+            zoom: 7,
+            disableDefaultUI: true
+          },
+          map = new google.maps.Map(document.getElementById('map'), myOptions),
+          // Instantiate a directions service.
+          directionsService = new google.maps.DirectionsService,
+          directionsDisplay = new google.maps.DirectionsRenderer({
+            map: map
+          }),
+          markerA = new google.maps.Marker({
+            address: pointA,
+            title: "point A",
+            label: "A",
+            map: map
+          }),
+          markerB = new google.maps.Marker({
+            address: pointB,
+            title: "point B",
+            label: "B",
+            map: map
+          });
+
+        // get route from A to B
+        calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB);
+
+      }
+    function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
+        directionsService.route({
+          origin: pointA,
+          destination: pointB,
+          travelMode: google.maps.TravelMode.DRIVING
+        }, function(response, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABTgvmJaS7yxD1zp9NWJE4Zlg-MIsQTuI&callback=initMap"> </script>

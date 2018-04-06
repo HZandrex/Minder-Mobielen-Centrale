@@ -46,7 +46,7 @@ class Ritten extends CI_Controller {
         $data['author'] = 'Michiel O.';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
 		
-		$partials = array('menu' => 'main_menu','inhoud' => 'MM/rit');
+		$partials = array('menu' => 'main_menu','inhoud' => 'Vrijwilliger/rit');
         $this->template->load('main_master', $partials, $data);
 	}
 	

@@ -38,8 +38,7 @@ class Google_model extends CI_Model {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		$response = curl_exec($ch);
 		curl_close($ch);
-		
-		return json_decode($response);
+		return json_decode($response)->rows[0]->elements[0];
 	}
 	
 	

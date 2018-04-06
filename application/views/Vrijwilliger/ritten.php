@@ -6,7 +6,7 @@
 	* - krijgt een $ritten object binnen waar al de nodige info instaat
 	* - maakt gebruik van een tabel om alles weer te geven
 */
-	// var_dump($ritten);
+	//var_dump($ritten);
 ?>
 <div class="card">
 	<table class="table table-striped">
