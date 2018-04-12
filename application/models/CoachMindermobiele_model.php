@@ -22,10 +22,10 @@ class CoachMindermobiele_model extends CI_Model {
      *@param $id is het id van de gevraagde status
      *@return Al de informatie over de bepaalde status
      */
-    function getById()
+    function getById($id)
     {
 
-        $this->db->where('coachId', 8);
+        $this->db->where('coachId', $id);
         $query = $this->db->get('CoachMinderMobiele');
         $naam = $query->result();
         $this->load->model('rit_model');

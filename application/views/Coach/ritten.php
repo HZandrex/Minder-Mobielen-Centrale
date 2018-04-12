@@ -6,7 +6,6 @@
  * - krijgt een $ritten object binnen waar al de nodige info instaat
  * - maakt gebruik van een tabel om alles weer te geven
  */
-var_dump($ritten[0]);
 ?>
 <div class="card">
     <table class="table table-striped">
@@ -26,7 +25,9 @@ var_dump($ritten[0]);
         </tr>
         </thead>
         <tbody>
+        <table>
         <?php
+        if (!empty($ritten)){
         foreach($ritten as $rit){
             if(!empty($rit)){
                 ?>
@@ -60,10 +61,12 @@ var_dump($ritten[0]);
                 <?php
             }
         }
-
+        }
+        echo $this->pagination->create_links();
         ?>
-        <div class="pagination"><?php echo $this->pagination->create_links(); ?>
-        </div>
+        </table>
+
+
         </tbody>
     </table>
 </div>

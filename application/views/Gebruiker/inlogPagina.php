@@ -20,7 +20,7 @@
             
             <div class="form-group">
                 <?php echo form_label('E-mail:', 'email'); ?>
-                <?php echo form_input(array('name' => 'email', 'id' => 'email', 'size' => '30', 'class' => 'form-control', 'required' => 'true')); ?>
+                <?php echo form_input(array('name' => 'email', 'id' => 'email', 'size' => '30', 'class' => 'form-control', 'required' => 'true'),'','autofocus'); ?>
             </div>
             <div class="form-group">
                 <?php echo form_label('Wachtwoord:', 'wachtwoord'); ?></td>
