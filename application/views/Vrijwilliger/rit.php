@@ -6,6 +6,7 @@
 	* - krijgt een $rit object binnen
 */
         //var_dump($rit);
+		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
 ?>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -95,12 +96,12 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-2">
-                                    <p><?php print date('D, j M' , strtotime($rit->heenvertrek->tijd)); ?></p>
-                                    <p data-toggle="tooltip" data-placement="top" title="Toon route">
-                                        <button onclick="ToonVerbergKaart('#mapHeen')" class="btn-primary">
-                                            <i class=" fas fa-map"></i> Kaart
-                                        </button>
-                                    </p>
+					<p><?php echo strftime("%a, %d %b", strtotime($rit->heenvertrek->tijd)); ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Toon route">
+						<button onclick="ToonVerbergKaart('#mapHeen')" class="btn-primary">
+							<i class=" fas fa-map"></i> Kaart
+						</button>
+					</p>
 				</div>
 				<div class="col-sm-3">
 					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->heenvertrek->tijd)); ?></p>
@@ -112,26 +113,44 @@
 				<div class="col-sm-3">
 					<p class="text-left" data-toggle="tooltip" data-placement="top" title="Verwachte aankomst tijd"><i class="far fa-clock"></i>
 						<?php 
-						
-							$date = new DateTime($rit->heenvertrek->tijd);	
-							$date->add(DateInterval::createFromDateString($rit->heen->duration->value .' seconds')); 
-							echo $date->format('H:i');
-							
+						if(!empty($rit->heenvertrek->tijd)){
+								$date = new DateTime($rit->heenvertrek->tijd);	
+								$date->add(DateInterval::createFromDateString($rit->heen->duration->value .' seconds')); 
+								echo $date->format('H:i');
+							}
 						?>
 					</p>
 					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->heenaankomst->adres->straat . " " . $rit->heenaankomst->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-2">
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte reistijd">
-						<i class="fas fa-hourglass-half"></i> <?php print $rit->heen->duration->text; ?>
+						<i class="fas fa-hourglass-half"></i> 
+						<?php 
+							if(!empty($rit->heen->duration->text)){
+								$uur = floor($rit->heen->duration->value / 3600);
+								$mins = floor($rit->heen->duration->value / 60 % 60);
+								$secs = floor($rit->heen->duration->value % 60);
+								$timeFormat = sprintf('%02d:%02d:%02d', $uur, $mins, $secs);
+								if($uur > 0){
+									print $uur . "uur " . $mins . ' min';
+								}else if($mins > 0){
+									print $mins+1 . ' min';
+								}
+							}
+						?>
 					</p>
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte afstand">
-						<i class="fas fa-road"></i> <?php print $rit->heen->distance->text; ?>
+						<i class="fas fa-road"></i> 
+						<?php
+							if(!empty($rit->heen->distance->text)){
+								print $rit->heen->distance->text;
+							}
+						?>
 					</p>
 				</div>
-                                <div class="col-12">
-                                    <div style="height : 300px" id="mapHeen"></div>
-                                </div>
+				<div class="col-12">
+					<div style="height : 300px" id="mapHeen"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -149,11 +168,11 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-2">
-					<p><?php print date('D, j M' , strtotime($rit->terugvertrek->tijd)); ?></p>
-                                        <p data-toggle="tooltip" data-placement="top" title="Toon route">
-                                            <button onclick="ToonVerbergKaart('#mapTerug')" class="btn-primary">
-                                                <i class=" fas fa-map"></i> Kaart
-                                            </button>
+					<p><?php echo strftime("%a, %d %b", strtotime($rit->terugvertrek->tijd)); ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Toon route">
+						<button onclick="ToonVerbergKaart('#mapTerug')" class="btn-primary">
+							<i class=" fas fa-map"></i> Kaart
+						</button>
 					</p>
 				</div>
 				<div class="col-sm-3">
@@ -166,10 +185,11 @@
 				<div class="col-sm-3">
 					<p class="text-left" data-toggle="tooltip" data-placement="top" title="Verwachte aankomst tijd"><i class="far fa-clock"></i>
 						<?php 
-						
-							$date = new DateTime($rit->terugvertrek->tijd);	
-							$date->add(DateInterval::createFromDateString($rit->terug->duration->value .' seconds')); 
-							echo $date->format('H:i');
+							if(!empty($rit->terugvertrek->tijd)){
+								$date = new DateTime($rit->terugvertrek->tijd);	
+								$date->add(DateInterval::createFromDateString($rit->terug->duration->value .' seconds')); 
+								echo $date->format('H:i');
+							}
 							
 						?>
 					</p>
@@ -177,15 +197,34 @@
 				</div>
 				<div class="col-sm-2">
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte reistijd">
-						<i class="fas fa-hourglass-half"></i> <?php print $rit->terug->duration->text; ?>
+						<i class="fas fa-hourglass-half"></i> 
+						<?php
+							if(!empty($rit->terug->duration->text)){
+								$uur = floor($rit->terug->duration->value / 3600);
+								$mins = floor($rit->terug->duration->value / 60 % 60);
+								$secs = floor($rit->terug->duration->value % 60);
+								$timeFormat = sprintf('%02d:%02d:%02d', $uur, $mins, $secs);
+								if($uur > 0){
+									print $uur . "uur " . $mins . ' min';
+								}else if($mins > 0){
+									print $mins+1 . ' min';
+								}
+							}
+						?>
 					</p>
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte afstand">
-						<i class="fas fa-road"></i></i> <?php print $rit->terug->distance->text; ?>
+						<i class="fas fa-road"></i></i> 
+						<?php 
+							if(!empty($rit->terug->distance->text)){
+								print $rit->terug->distance->text;
+							}
+							 
+						?>
 					</p>
 				</div>
-                                <div class="col-12">
-                                    <div style="height : 300px;" id="mapTerug"></div>
-                                </div>
+				<div class="col-12">
+					<div style="height : 300px;" id="mapTerug"></div>
+				</div>
 			</div>
 		</div>
 	</div>
