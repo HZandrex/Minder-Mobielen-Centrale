@@ -16,10 +16,20 @@
 <div class="row">
 	<div class="col-sm-12">
 		<p>
-                    <?php if($rit->status->id != 4){
+                    <?php if($rit->status->id == 2){
                         echo anchor(array('Vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
-                        echo anchor("Vrijwilliger/ritten/", "Terug", 'class="btn btn-primary float-right"');
-                    } ?>
+                    } 
+                    if($rit->status->id == 3 ){
+                        echo form_submit('status', 'Goedkeuren', 'value="2" class="btn btn-success"');
+                    }
+                    if($rit->status->id == 3){
+                        echo form_submit('status', 'Weigeren', 'value="1" class="btn btn-danger"');
+                    }
+                    if($rit->status->id == 2){
+                        echo form_submit('status', 'Annuleren', 'value="1" class="btn btn-danger"');
+                    }                     
+                    echo anchor("Vrijwilliger/ritten/", "Terug", 'class="btn btn-primary float-right"');
+                    ?>
 		</p>
 	</div>
 </div>
