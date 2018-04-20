@@ -54,4 +54,13 @@ class GebruikersBeheren extends CI_Controller {
 
         $this->load->view('medewerker/ajax_gebruikers', $data);
     }
+
+    public function haalAjaxOp_GebruikerInfo(){
+        $gebruikerId = $this->input->get('gebruikerId');
+
+        $this->load->model('gebruiker_model');
+        $data['gebruiker'] = $this->gebruiker_model->getWithFunctions($gebruikerId);
+
+        $this->load->view('medewerker/ajax_gebruikerInfo', $data);
+    }
 }

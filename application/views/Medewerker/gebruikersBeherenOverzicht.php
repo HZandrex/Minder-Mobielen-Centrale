@@ -1,9 +1,10 @@
 <script>
-    function haalGebruikersMetFunctieOp ( functieId ) {
-        $.ajax({type : "GET",
-            url : site_url + "/medewerker/gebruikersbeheren/haalAjaxOp_GebruikersOpFunctie",
-            data : { functieId : functieId },
-            success : function(result){
+    function haalGebruikersMetFunctieOp(functieId) {
+        $.ajax({
+            type: "GET",
+            url: site_url + "/medewerker/gebruikersbeheren/haalAjaxOp_GebruikersOpFunctie",
+            data: {functieId: functieId},
+            success: function (result) {
                 $("#gebruikersListbox").html(result);
             },
             error: function (xhr, status, error) {
@@ -11,16 +12,32 @@
             }
         });
     }
+    function haalGebruikerInfoOp(gebruikerId) {
+        $.ajax({
+            type: "GET",
+            url: site_url + "/medewerker/gebruikersbeheren/haalAjaxOp_GebruikerInfo",
+            data: {gebruikerId: gebruikerId},
+            success: function (result) {
+                $("#gebruikerInfo").html(result);
+            },
+            error: function (xhr, status, error) {
+                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+            }
+        });
+    }
 
-
-    $(document).ready(function(){
-        $('#gebruikersForm input[name=functieRadiogroup]').
+    $(document).ready(function () {
+        $('#gebruikersForm input[id=functieRadiogroup0]').prop("checked", true);
+        haalGebruikersMetFunctieOp($('#gebruikersForm input[id=functieRadiogroup0]').val());
 
         $('#gebruikersForm input[name=functieRadiogroup]').change(function () {
             haalGebruikersMetFunctieOp($('#gebruikersForm input[name=functieRadiogroup]:checked').val());
         });
-    });
 
+        $('#gebruikersListbox').change(function () {
+            haalGebruikerInfoOp($('#gebruikersListbox option:selected').val());
+        });
+    });
 </script>
 
 
@@ -30,16 +47,16 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
 ?>
 <div class="row">
 
-    <div class="col-md-6 col-12">
+    <div class="col-5">
         <p><b>Gebruikers</b></p>
         <?php
         echo form_radiogroupFuncties('functieRadiogroup', $functies, 'id', 'naam');
-        echo form_listboxproGebruikersBeheren('gebruikersListbox', array(), 'id', 'voornaam', 'naam', 0, array('id' => 'gebruikersListbox', 'size' => 10, 'class' => 'form-control w-75'));
+        echo form_listboxproGebruikersBeheren('gebruikersListbox', array(), 'id', 'voornaam', 'naam', 0, array('id' => 'gebruikersListbox', 'size' => 10, 'class' => 'form-control'));
         ?>
     </div>
 
-    <div class="col-md-6 col-12">
-        <p><b>Contactgegevens</b></p>
+    <div class="col-7">
+        <div id="gebruikerInfo" class="row"></div>
     </div>
 
 </div>
