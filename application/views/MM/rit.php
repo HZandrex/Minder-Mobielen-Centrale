@@ -17,10 +17,15 @@
 <div class="row">
 	<div class="col-sm-12">
 		<p>
-                    <?php if($rit->status->id != 4){
+                    <?php 
+					if($rit->status->id != 1){
                         echo anchor(array('Vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
-                        echo anchor("Vrijwilliger/ritten/", "Terug", 'class="btn btn-primary float-right"');
-                    } ?>
+                    } 
+                    if($rit->status->id != 1){
+						echo anchor(array('anuleren'), '<i class="fas fa-ban"></i> Annuleren', 'class="btn btn-danger"');
+                    }                     
+                    echo anchor("MM/ritten/", "Terug", 'class="btn btn-primary float-right"');
+                    ?>
 		</p>
 	</div>
 </div>
