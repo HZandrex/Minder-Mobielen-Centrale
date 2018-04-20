@@ -30,7 +30,7 @@ class VrijwilligerRit_model extends CI_Model {
         $this->load->model('gebruiker_model');
 
         $array->status = $this->status_model->getById($array->statusId);
-        $array->vrijwilliger = $this->gebruiker_model->get($array->vrijwilligerId);
+        $array->vrijwilliger = $this->gebruiker_model->get($array->gebruikerVrijwilligerId);
         return $array;
     }
     
