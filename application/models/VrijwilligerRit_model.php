@@ -71,7 +71,7 @@ class VrijwilligerRit_model extends CI_Model {
         
         $this->db->insert('opmerkingVrijwilliger', $vrijwilligerRit->statusId);
         $this->db->insert('extraKost', $vrijwilligerRit->extraKost);
-        $this->db->where('id', $vrijwilligerRit->ridId);
+        $this->db->where('id', $vrijwilligerRit->ritId);
         $this->db->insert('adresRit');
     }
                         

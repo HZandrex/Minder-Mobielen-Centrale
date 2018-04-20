@@ -1,8 +1,19 @@
 <?php
+
+/**
+ * @file wijzigRit.php
+ *
+ * vieuw waar de mindermobiele zijn rit kan aanpassen of annuleren
+ * - krijgt een $heen object binnen waar al de nodige info instaat
+ * - krijgt een $adress object binnen waar alle adressen instaan die gebruikt zijn geweest
+ */
+
+
 $selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
-foreach($adressen as $adres){
-    $selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-}
+//foreach($adressen as $adres){
+//
+//    print($selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>');
+//}
 
 var_dump($adressen);
 var_dump($heen);
@@ -19,7 +30,8 @@ var_dump($heen);
     </div>
     <?php
     $attributes = array('name' => 'nieuweRit', 'id' => 'nieuweRit');
-    echo form_open('MM/ritten/nieuweRitOpslaan', $attributes);
+
+    echo form_open('MM/ritten/wijzigRitOpslaan', $attributes);
     ?>
     <div class="card">
         <div class="card-body">
@@ -35,6 +47,7 @@ var_dump($heen);
                 <div class="col-sm-6">
                     <button type="button" class="btn btn-primary" id="opslaan"><i class="fas fa-save"></i> Opslaan</button>
                     <?php
+
                     print anchor(array('MM/ritten'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));
                     ?>
                 </div>
@@ -76,7 +89,15 @@ var_dump($heen);
                         <label for="heenStartAdres">Start adres: </label>
                         <select class="custom-select" id="heenStartAdres" name="heenStartAdres">
                             <?php
-                            print $selectAdressen;
+                                foreach($adressen as $adres){
+
+                                    if($adres->id==$heen->heenvertrek->adres->id){
+                                        print  '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                                    }else{
+                                        print  '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                                    }
+
+                                }
                             ?>
                         </select>
                     </div>
@@ -84,7 +105,15 @@ var_dump($heen);
                         <label for="heenEindeAdres">Bestemming adres: </label>
                         <select class="custom-select" id="heenEindeAdres" name="heenEindeAdres">
                             <?php
-                            print $selectAdressen;
+                            foreach($adressen as $adres){
+
+                                if($adres->id==$heen->heenaankomst->adres->id){
+                                    print  '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                                }else{
+                                    print  '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                                }
+
+                            }
                             ?>
                         </select>
                     </div>
@@ -127,8 +156,15 @@ var_dump($heen);
                         <label for="terugStartAdres">Start adres: </label>
                         <select class="custom-select" id="terugStartAdres" name="terugStartAdres">
                             <?php
-                            print $selectAdressen;
+                            foreach($adressen as $adres){
 
+                                if($adres->id==$heen->terugvertrek->adres->id){
+                                    print  '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                                }else{
+                                    print  '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                                }
+
+                            }
                             ?>
                         </select>
                     </div>
@@ -136,7 +172,15 @@ var_dump($heen);
                         <label for="terugEindeAdres">Bestemming adres: </label>
                         <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres">
                             <?php
-                            print $selectAdressen;
+                            foreach($adressen as $adres){
+
+                                if($adres->id==$heen->terugaankomst->adres->id){
+                                    print  '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                                }else{
+                                    print  '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                                }
+
+                            }
                             ?>
                         </select>
                     </div>
@@ -220,9 +264,6 @@ var_dump($heen);
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete" async defer></script>
 <script>
-
-
-
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     })
@@ -362,12 +403,10 @@ var_dump($heen);
                         success:function(response)
                         {
                             var data = JSON.parse(response);
-                            var heenPrijs = totaalPrijs = Math.round(parseFloat(data.rows[0].elements[0].distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
+                            var heenPrijs = totaalPrijs = Math.round(parseFloat(data.distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
                             $('#kost').html('');
-
-                            $('#kost').append('<tr id="heen"><td>Heen rit (' + data.rows[0].elements[0].distance.text + '): </td><td> € ' + heenPrijs + '</td></tr>');
-                            $('#heenInfo').text('Verwachte informatie: ' + data.rows[0].elements[0].distance.text + ', ' + data.rows[0].elements[0].duration.text);
-
+                            $('#kost').append('<tr id="heen"><td>Heen rit (' + data.distance.text + '): </td><td> € ' + heenPrijs + '</td></tr>');
+                            $('#heenInfo').text('Verwachte informatie: ' + data.distance.text + ', ' + data.duration.text);
                             if($('#terugStartAdres').val() != null && $('#terugEindeAdres').val() != null && $('#startTijdTerug').val() != '' && $('#terugDatum').val() != '' && $('input#heenTerug').is(':checked')){
                                 var timeStamp = $('#terugDatum').val();
                                 var timeStamp = timeStamp.charAt(3) + timeStamp.charAt(4) + '/' + timeStamp.charAt(0) + timeStamp.charAt(1) + '/' + timeStamp.charAt(6) + timeStamp.charAt(7) + timeStamp.charAt(8) + timeStamp.charAt(9) + ' ' + $('#startTijdTerug').val();
@@ -379,12 +418,12 @@ var_dump($heen);
                                         success:function(response)
                                         {
                                             var data = JSON.parse(response);
-                                            var terugPrijs = Math.round(parseFloat(data.rows[0].elements[0].distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
+                                            var terugPrijs = Math.round(parseFloat(data.distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
 
-                                            $('#kost').append('<tr id="terug"><td>Terug rit (' + data.rows[0].elements[0].distance.text + '): </td><td> € ' + terugPrijs + '</td></tr>');
+                                            $('#kost').append('<tr id="terug"><td>Terug rit (' + data.distance.text + '): </td><td> € ' + terugPrijs + '</td></tr>');
                                             $('#kost').append('<tr id="totaalHeenTerug" style="border-top: 1px solid grey;"><td><strong>Totale prijs: </strong></td><td> € <span id="totaalPrijs">' + (parseFloat(totaalPrijs) + parseFloat(terugPrijs)) + '</span></td></tr>');
                                             $('#totaalHeen').html('');
-                                            $('#terugInfo').text('Verwachte informatie: ' + data.rows[0].elements[0].distance.text + ', ' + data.rows[0].elements[0].duration.text);
+                                            $('#terugInfo').text('Verwachte informatie: ' + data.distance.text + ', ' + data.duration.text);
                                         }
                                     });
                             }else{
