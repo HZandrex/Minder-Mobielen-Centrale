@@ -144,6 +144,39 @@ class Ritten extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
 
     }
+
+    public function wijzigRitOpslaan(){
+
+
+        $this->load->model('rit_model');
+
+        $mmId = htmlspecialchars(trim($_POST['userId']));
+        $heenDatum = htmlspecialchars(trim($_POST['heenDatum']));
+        $startTijdHeen = htmlspecialchars(trim($_POST['startTijdHeen']));
+        $heenStartAdresId = htmlspecialchars(trim($_POST['heenStartAdres']));
+        $heenEindeAdresId = htmlspecialchars(trim($_POST['heenEindeAdres']));
+        $opmerkingenMM = htmlspecialchars(trim($_POST['opmerkingenMM']));
+        $kost = htmlspecialchars(trim($_POST['kost']));
+        if(isset($_POST['heenTerug'])){
+            $heenTerug = true;
+            $terugDatum = htmlspecialchars(trim($_POST['terugDatum']));
+            $startTijdTerug = htmlspecialchars(trim($_POST['startTijdTerug']));
+            $terugStartAdresId = htmlspecialchars(trim($_POST['terugStartAdres']));
+            $terugEindeAdresId = htmlspecialchars(trim($_POST['terugEindeAdres']));
+        }else{
+            $heenTerug = false;
+            $terugDatum = '';
+            $startTijdTerug = '';
+            $terugStartAdresId = '';
+            $terugEindeAdresId = '';
+        }
+
+        $ritId = $this->rit_model->saveNewRit($mmId, $opmerkingenMM, '', $kost,  '', '3', $heenTerug, $heenStartAdresId, $heenEindeAdresId, $terugStartAdresId, $terugEindeAdresId, $startTijdHeen, $startTijdTerug, $heenDatum, $terugDatum);
+
+        redirect('MM/Ritten');
+
+    }
+
 	
 }
 
