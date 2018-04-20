@@ -19,13 +19,40 @@ class Ritten extends CI_Controller {
 		*@see Rit_model::getByMMCId()
 		*
 	*/	
-    public function index() {
+    public function index($startRij = 0) {
 		$data['titel'] = 'Ritten';
         $data['author'] = 'Michiel O.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 		
-        $this->load->model('rit_model');
-        $data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id);
+        $this->load->model('rit_model');		
+		
+		
+		
+		
+		
+		$this->load->library('pagination');
+
+		// $config['base_url'] = base_url() . 'index.php/MM/Ritten/';
+		// $config['total_rows'] = 200;
+		// $config['per_page'] = 2;
+
+		// $this->pagination->initialize($config);
+
+		// echo $this->pagination->create_links();		
+		
+		$config['base_url'] = site_url('index.php/MM/Ritten/');
+		$config['total_rows'] = count($data['ritten']);
+		$config['per_page'] = 2;
+		
+		$this->pagination->initialize($config);
+		
+		
+		data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id, $aantal, $startRij);
+		
+		
+		
+		
+		
 
         $partials = array('menu' => 'main_menu','inhoud' => 'MM/ritten');
         $this->template->load('main_master', $partials, $data);
