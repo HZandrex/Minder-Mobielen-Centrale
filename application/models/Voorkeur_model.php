@@ -14,29 +14,29 @@ class Voorkeur_model extends CI_Model {
      */
     function get($id) {
         $this->db->where('id', $id);
-        $query = $this->db->get('Voorkeur');
+        $query = $this->db->get('voorkeur');
         return $query->row();
     }
     
     function getAll()
     {
-        $query = $this->db->get('Voorkeur');
+        $query = $this->db->get('voorkeur');
         return $query->result();
     }
 
     function voegToe($voorkeur){
-        $this->db->insert('Voorkeur', $voorkeur);
+        $this->db->insert('voorkeur', $voorkeur);
         return $this->db->insert_id();
     }
 
     function wijzigen($voorkeur){
         $this->db->where('id', $voorkeur->id);
-        $this->db->update('Voorkeur', $voorkeur);
+        $this->db->update('voorkeur', $voorkeur);
     }
 
     function verwijderen($id){
         $this->db->where('id', $id);
-        if (!$this->db->delete('Voorkeur')){
+        if (!$this->db->delete('voorkeur')){
             return false;
         }
         return true;

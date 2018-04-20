@@ -22,7 +22,7 @@ class Gebruiker_model extends CI_Model {
      */
     function get($id) {
         $this->db->where('id', $id);
-        $query = $this->db->get('Gebruiker');
+        $query = $this->db->get('gebruiker');
         return $query->row();
     }
 
@@ -34,7 +34,7 @@ class Gebruiker_model extends CI_Model {
      */
     function getByMail($email) {
         $this->db->where('mail', $email);
-        $query = $this->db->get('Gebruiker');
+        $query = $this->db->get('gebruiker');
         return $query->row();
     }
 	
@@ -45,7 +45,7 @@ class Gebruiker_model extends CI_Model {
      */
     function getByResetToken($resetToken) {
         $this->db->where('resetToken', $resetToken);
-        $query = $this->db->get('Gebruiker');
+        $query = $this->db->get('gebruiker');
         return $query->row();
     }
 
@@ -57,7 +57,7 @@ class Gebruiker_model extends CI_Model {
      */
     function getWithFunctions($id) {
         $this->db->where('id', $id);
-        $query = $this->db->get('Gebruiker');
+        $query = $this->db->get('gebruiker');
         $gebruiker = $query->row();
 
         $this->load->model('functieGebruiker_model');
@@ -79,7 +79,7 @@ class Gebruiker_model extends CI_Model {
 			$this->db->set('mail', $gebruiker->mail);
 			$this->db->set('voorkeurId', $gebruiker->voorkeurId);
             $this->db->where('id', $gebruiker->id);
-			$this->db->update('Gebruiker');
+			$this->db->update('gebruiker');
     }
 
     /**
@@ -94,7 +94,7 @@ class Gebruiker_model extends CI_Model {
         // geef gebruiker-object met $email en $wachtwoord EN geactiveerd = 1
         $this->db->where('mail', $email);
         $this->db->where('active', 1);
-        $query = $this->db->get('Gebruiker');
+        $query = $this->db->get('gebruiker');
 
         if ($query->num_rows() == 1) {
             $gebruiker = $query->row();
@@ -118,7 +118,7 @@ class Gebruiker_model extends CI_Model {
     function controleerEmailVrij($email) {
         // is email al dan niet aanwezig
         $this->db->where('mail', $email);
-        $query = $this->db->get('Gebruiker');
+        $query = $this->db->get('gebruiker');
 
         if ($query->num_rows() == 0) {
             return true;
@@ -134,7 +134,7 @@ class Gebruiker_model extends CI_Model {
      */
     function controleerResetToken($resetToken) {
         $this->db->where('resetToken', $resetToken);
-        $query = $this->db->get('Gebruiker');
+        $query = $this->db->get('gebruiker');
 
         if ($query->num_rows() == 0) {
             return FALSE;
@@ -144,7 +144,7 @@ class Gebruiker_model extends CI_Model {
     }
     
     /**
-     * Wijzigt de waarde van resetToken waar mail=$email in de tabel Gebruiker.
+     * Wijzigt de waarde van resetToken waar mail=$email in de tabel gebruiker.
      * @param $email Het mailadres van wie de token moet worden gewijzigt
      * @param $resetToken De resetToken dat wordt gecontroleerd
      */
@@ -152,7 +152,7 @@ class Gebruiker_model extends CI_Model {
         $gebruiker = new stdClass();
         $gebruiker->resetToken = $resetToken;
         $this->db->where('mail', $email);
-        $this->db->update('Gebruiker', $gebruiker);
+        $this->db->update('gebruiker', $gebruiker);
     }
     
     /**
@@ -163,14 +163,14 @@ class Gebruiker_model extends CI_Model {
         $gebruiker = new stdClass();
         $gebruiker->resetToken = null;
         $this->db->where('resetToken', $resetToken);
-        $this->db->update('Gebruiker', $gebruiker);
+        $this->db->update('gebruiker', $gebruiker);
     }
     
     /**
      * Wijzigt het wachtwoord na een nieuw aan te vragen waar resetToken = $resetToken,
      * vervolgens wordt de resetToken verwijderd via Gebruiker_model::verwijderResetToken().
      * @param $resetToken De resetToken waarvan het wachtwoord wordt veranderd
-     * @param $wachtwoord Het nieuwe wachtwoord dat werd opgeven in Gebruiker/wachtwoordVergetenWijzigen.php
+     * @param $wachtwoord Het nieuwe wachtwoord dat werd opgeven in gebruiker/wachtwoordVergetenWijzigen.php
      * 
      * @see Gebruiker_model::verwijderResetToken()
      */
@@ -178,7 +178,7 @@ class Gebruiker_model extends CI_Model {
         $gebruiker = new stdClass();
         $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
         $this->db->where('resetToken', $resetToken);
-        $this->db->update('Gebruiker', $gebruiker);
+        $this->db->update('gebruiker', $gebruiker);
         $this->verwijderResetToken($resetToken);
     }
     
@@ -191,7 +191,7 @@ class Gebruiker_model extends CI_Model {
         $gebruiker = new stdClass();
         $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
         $this->db->where('id', $id);
-        $this->db->update('Gebruiker', $gebruiker);
+        $this->db->update('gebruiker', $gebruiker);
         $this->authex->meldAf();
     }
 	

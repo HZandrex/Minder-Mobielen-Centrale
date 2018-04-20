@@ -20,7 +20,7 @@ class Instelling_model extends CI_Model {
      */
     /*function getAll()
     {
-        $query = $this->db->get('Instelling');
+        $query = $this->db->get('instelling');
         $instellingen = array();
         foreach($query->result() as $instelling){
             $instellingen["$instelling->naam"] = "$instelling->waarde";
@@ -29,20 +29,20 @@ class Instelling_model extends CI_Model {
     }*/
     function getAll()
     {
-        $query = $this->db->get('Instelling');
+        $query = $this->db->get('instelling');
         return $query->result();
     }
 
     function wijzig($instellingen){
         foreach ($instellingen as $instelling){
             $this->db->where('id', $instelling->id);
-            $this->db->update('Instelling', $instelling);
+            $this->db->update('instelling', $instelling);
         }
     }
 	
 	function getValueById($id){
 		$this->db->where('id', $id);
-		$query = $this->db->get('Instelling');
+		$query = $this->db->get('instelling');
 		return $query->row();
 	}
 }

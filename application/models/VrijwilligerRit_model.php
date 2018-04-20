@@ -22,7 +22,7 @@ class VrijwilligerRit_model extends CI_Model {
 	$this->db->select('*');
         $this->db->where('ritid', $id);
 	$this->db->where('statusId', '2');
-        $query = $this->db->get('VrijwilligerRit');
+        $query = $this->db->get('vrijwilligerRit');
         $array = array();
         $array = $query->row();
 
@@ -48,7 +48,7 @@ class VrijwilligerRit_model extends CI_Model {
         
 	$this->db->select('*');
         $this->db->where('vrijwilligerId', $id);
-        $query = $this->db->get('VrijwilligerRit');
+        $query = $this->db->get('vrijwilligerRit');
         $ritten = array();
         $ritten = $query->result();
 

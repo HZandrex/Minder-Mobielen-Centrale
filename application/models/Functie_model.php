@@ -21,13 +21,13 @@ class Functie_model extends CI_Model {
     function get($id)
     {
         $this->db->where('id', $id);
-        $query = $this->db->get('Functie');
+        $query = $this->db->get('functie');
         return $query->row();
     }
 
     function getAll($totId){
         $this->db->where('id <', $totId);
-        $query = $this->db->get('Functie');
+        $query = $this->db->get('functie');
         return $query->result();
     }
                         

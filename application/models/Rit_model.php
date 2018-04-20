@@ -47,7 +47,7 @@ class Rit_model extends CI_Model {
         $this->load->model('status_model');
 
         $this->db->where('mmid', $mmid);
-        $query = $this->db->get('Rit');
+        $query = $this->db->get('rit');
         $ritten = array();
         $ritten = $query->result();
 
@@ -84,7 +84,7 @@ class Rit_model extends CI_Model {
 		$this->load->model('vrijwilligerrit_model');
 		
 		$this->db->where('id', $id);
-		$query = $this->db->get('Rit');
+		$query = $this->db->get('rit');
 		
 		$rit = $query->result()[0];
 		
@@ -116,7 +116,7 @@ class Rit_model extends CI_Model {
 		$aantalRitten = 0;
 		
 		$this->db->where('mmId', $mmId);
-		$query = $this->db->get('Rit');
+		$query = $this->db->get('rit');
 		$ritten = $query->result();
 		
 		foreach($ritten as $rit){
@@ -138,7 +138,7 @@ class Rit_model extends CI_Model {
 		array_push($adressen, $this->gebruiker_model->getWithFunctions($mmId)->adres);
 		
 		$this->db->where('mmId', $mmId);
-		$query = $this->db->get('Rit');
+		$query = $this->db->get('rit');
 		$ritten = $query->result();
 		
 		foreach($ritten as $rit){
@@ -172,7 +172,7 @@ class Rit_model extends CI_Model {
 			'extraKost' => $extraKost,
 			'statusId' => $statusId,
 		);
-		$this->db->insert('Rit', $data);
+		$this->db->insert('rit', $data);
 		$ritId = $this->db->insert_id();
 		
 

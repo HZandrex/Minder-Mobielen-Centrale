@@ -1,7 +1,7 @@
 <?php
 /**
  * @class CoachMindermobiele_model
- * @brief Model-klasse voor CoachMinderMobiele
+ * @brief Model-klasse voor coachMinderMobiele
  *
  * Model-klasse die alle methodes bevat om te data uit de database-tabel status te halen.
  */
@@ -25,7 +25,7 @@ class CoachMindermobiele_model extends CI_Model {
     {
 
         $this->db->where('coachId', $id);
-        $query = $this->db->get('CoachMinderMobiele');
+        $query = $this->db->get('coachMinderMobiele');
         $naam = $query->result();
         $this->load->model('rit_model');
         $this->load->model('gebruiker_model');
@@ -45,7 +45,7 @@ class CoachMindermobiele_model extends CI_Model {
 	function getMMById($id)
 	{
 		$this->db->where('coachId', $id);
-		$query = $this->db->get('CoachMinderMobiele');
+		$query = $this->db->get('coachMinderMobiele');
 		$mmIds = $query->result();
 		$this->load->model('gebruiker_model');
 		$minderMobielen = [];

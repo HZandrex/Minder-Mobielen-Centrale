@@ -26,7 +26,7 @@ class Status_model extends CI_Model {
     {
 		$this->db->select('*');
         $this->db->where('id', $id);
-        $query = $this->db->get('Status');
+        $query = $this->db->get('status');
         return $query->row();
     }
 

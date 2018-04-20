@@ -30,7 +30,7 @@ class AdresRit_model extends CI_Model {
 		$this->db->select('*');
         $this->db->where('ritid', $ritId);
 		$this->db->where('typeAdresId', $type);
-        $query = $this->db->get('AdresRit');
+        $query = $this->db->get('adresRit');
 		$array = array();
 		$array = $query->row();
 		
@@ -46,7 +46,7 @@ class AdresRit_model extends CI_Model {
 	*/
 	function terugRit($ritId){
         $this->db->where('RitId', $ritId);
-		$query = $this->db->get('AdresRit');
+		$query = $this->db->get('adresRit');
 		
 		$rows = array();
 		$check = 0;
@@ -68,7 +68,7 @@ class AdresRit_model extends CI_Model {
 	function getTime($ritId, $typeId){
 		$this->db->where('RitId', $ritId);
 		$this->db->where('typeAdresId', $typeId);
-		$query = $this->db->get('AdresRit');
+		$query = $this->db->get('adresRit');
 		
 		return $query->row()->tijd;
 	}
@@ -77,7 +77,7 @@ class AdresRit_model extends CI_Model {
 		$this->load->model('adres_model');
 		$adressen = array();
 		$this->db->where('RitId', $ritId);
-		$query = $this->db->get('AdresRit');
+		$query = $this->db->get('adresRit');
 		$rows = $query->result();
 		
 		foreach($rows as $row){
@@ -94,7 +94,7 @@ class AdresRit_model extends CI_Model {
 			'typeAdresId' => $typeAdresId,
 			'tijd' => $tijd
 		);
-		$this->db->insert('AdresRit', $data);
+		$this->db->insert('adresRit', $data);
 	}
                         
 }

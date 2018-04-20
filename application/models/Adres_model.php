@@ -24,7 +24,7 @@ class Adres_model extends CI_Model {
     function getById($id)
     {
         $this->db->where('id', $id);
-        $query = $this->db->get('Adres');
+        $query = $this->db->get('adres');
         return $query->row();
     }
 
@@ -35,7 +35,7 @@ class Adres_model extends CI_Model {
 		$this->db->set('gemeente', $adresGegevens->gemeente);
 		$this->db->set('postcode', $adresGegevens->postcode);
 		$this->db->where('id', $id);
-		$this->db->update('Adres');
+		$this->db->update('adres');
 	}
 
 	function addAdres($huisnummer, $straat, $gemeente, $postcode){
@@ -46,7 +46,7 @@ class Adres_model extends CI_Model {
 			'postcode' => $postcode,
 		);
 
-		$this->db->insert('Adres', $data);
+		$this->db->insert('adres', $data);
 		$insert_id = $this->db->insert_id();
 		
 		return $insert_id;
@@ -57,7 +57,7 @@ class Adres_model extends CI_Model {
 		$this->db->where('straat', $straat);
 		$this->db->where('gemeente', $gemeente);
 		$this->db->where('postcode', $postcode);
-		$query = $this->db->get('Adres');
+		$query = $this->db->get('adres');
 		$result = $query->row();
 		if($query->num_rows() > 0){
 			$result = $query->row();
