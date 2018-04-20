@@ -6,6 +6,7 @@
 	* - krijgt een $rit object binnen
 */
         //var_dump($rit);
+		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
 ?>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -16,10 +17,20 @@
 <div class="row">
 	<div class="col-sm-12">
 		<p>
-			<button type="button" class="btn btn-primary"><i class="fas fa-pen-square"></i> Wijzigen</button>
-			<?php if($rit->status->id != 1){ ?>
-			<button type="button" class="btn btn-primary"><i class="fas fa-ban"></i> Rit anuleren</button>
-			<?php } ?>
+                    <?php if($rit->status->id == 2){
+                        echo anchor(array('Vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
+                    } 
+                    if($rit->status->id == 3 ){
+                        echo form_submit('status', 'Goedkeuren', 'value="2" class="btn btn-success"');
+                    }
+                    if($rit->status->id == 3){
+                        echo form_submit('status', 'Weigeren', 'value="1" class="btn btn-danger"');
+                    }
+                    if($rit->status->id == 2){
+                        echo form_submit('status', 'Annuleren', 'value="1" class="btn btn-danger"');
+                    }                     
+                    echo anchor("Vrijwilliger/ritten/", "Terug", 'class="btn btn-primary float-right"');
+                    ?>
 		</p>
 	</div>
 </div>
@@ -87,18 +98,20 @@
 	<div class="card">
 		<div class="card-header">
 			<div class="row">
-				<div class="col-sm-6">
-					<h5>Heen rit</h5>
-				</div>
-				<div class="col-sm-6 text-right">
-					<a href="#" class="text-danger"><i class="fas fa-times" data-toggle="tooltip" data-placement="top" title="Anuleren"></i></a>
-				</div>
+                            <div class="col-sm-6">
+                                    <h5>Heen rit</h5>
+                            </div>
 			</div>
 		</div>
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-2">
-					<?php print date('D, j M' , strtotime($rit->heenvertrek->tijd)); ?>
+					<p><?php echo strftime("%a, %d %b", strtotime($rit->heenvertrek->tijd)); ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Toon route">
+						<button onclick="ToonVerbergKaart('#mapHeen')" class="btn-primary">
+							<i class=" fas fa-map"></i> Kaart
+						</button>
+					</p>
 				</div>
 				<div class="col-sm-3">
 					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->heenvertrek->tijd)); ?></p>
@@ -110,31 +123,44 @@
 				<div class="col-sm-3">
 					<p class="text-left" data-toggle="tooltip" data-placement="top" title="Verwachte aankomst tijd"><i class="far fa-clock"></i>
 						<?php 
-						
-							$date = new DateTime($rit->heenvertrek->tijd);	
-							$date->add(DateInterval::createFromDateString($rit->heen->duration->value .' seconds')); 
-							echo $date->format('H:i');
-							
+						if(!empty($rit->heenvertrek->tijd)){
+								$date = new DateTime($rit->heenvertrek->tijd);	
+								$date->add(DateInterval::createFromDateString($rit->heen->duration->value .' seconds')); 
+								echo $date->format('H:i');
+							}
 						?>
 					</p>
 					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->heenaankomst->adres->straat . " " . $rit->heenaankomst->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-2">
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte reistijd">
-						<i class="fas fa-hourglass-half"></i> <?php print $rit->heen->duration->text; ?>
+						<i class="fas fa-hourglass-half"></i> 
+						<?php 
+							if(!empty($rit->heen->duration->text)){
+								$uur = floor($rit->heen->duration->value / 3600);
+								$mins = floor($rit->heen->duration->value / 60 % 60);
+								$secs = floor($rit->heen->duration->value % 60);
+								$timeFormat = sprintf('%02d:%02d:%02d', $uur, $mins, $secs);
+								if($uur > 0){
+									print $uur . "uur " . $mins . ' min';
+								}else if($mins > 0){
+									print $mins+1 . ' min';
+								}
+							}
+						?>
 					</p>
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte afstand">
-						<i class="fas fa-road"></i> <?php print $rit->heen->distance->text; ?>
-					</p>
-                                        <p data-toggle="tooltip" data-placement="top" title="Toon route">
-                                            <button onclick="showMap()" class="btn-primary">
-                                                <i class=" fas fa-map"></i> Kaart
-                                            </button>
+						<i class="fas fa-road"></i> 
+						<?php
+							if(!empty($rit->heen->distance->text)){
+								print $rit->heen->distance->text;
+							}
+						?>
 					</p>
 				</div>
-                                <div class="col-12">
-                                    <div style="height : 300px" id="map"></div>
-                                </div>
+				<div class="col-12">
+					<div style="height : 300px" id="mapHeen"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -147,15 +173,17 @@
 				<div class="col-sm-6">
 					<h5>Terug rit</h5>
 				</div>
-				<div class="col-sm-6 text-right">
-					<a href="#" class="text-danger"><i class="fas fa-times" data-toggle="tooltip" data-placement="top" title="Anuleren"></i></a>
-				</div>
 			</div>
 		</div>
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-2">
-					<?php print date('D, j M' , strtotime($rit->terugvertrek->tijd)); ?>
+					<p><?php echo strftime("%a, %d %b", strtotime($rit->terugvertrek->tijd)); ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Toon route">
+						<button onclick="ToonVerbergKaart('#mapTerug')" class="btn-primary">
+							<i class=" fas fa-map"></i> Kaart
+						</button>
+					</p>
 				</div>
 				<div class="col-sm-3">
 					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->terugvertrek->tijd)); ?></p>
@@ -167,10 +195,11 @@
 				<div class="col-sm-3">
 					<p class="text-left" data-toggle="tooltip" data-placement="top" title="Verwachte aankomst tijd"><i class="far fa-clock"></i>
 						<?php 
-						
-							$date = new DateTime($rit->terugvertrek->tijd);	
-							$date->add(DateInterval::createFromDateString($rit->terug->duration->value .' seconds')); 
-							echo $date->format('H:i');
+							if(!empty($rit->terugvertrek->tijd)){
+								$date = new DateTime($rit->terugvertrek->tijd);	
+								$date->add(DateInterval::createFromDateString($rit->terug->duration->value .' seconds')); 
+								echo $date->format('H:i');
+							}
 							
 						?>
 					</p>
@@ -178,11 +207,33 @@
 				</div>
 				<div class="col-sm-2">
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte reistijd">
-						<i class="fas fa-hourglass-half"></i> <?php print $rit->terug->duration->text; ?>
+						<i class="fas fa-hourglass-half"></i> 
+						<?php
+							if(!empty($rit->terug->duration->text)){
+								$uur = floor($rit->terug->duration->value / 3600);
+								$mins = floor($rit->terug->duration->value / 60 % 60);
+								$secs = floor($rit->terug->duration->value % 60);
+								$timeFormat = sprintf('%02d:%02d:%02d', $uur, $mins, $secs);
+								if($uur > 0){
+									print $uur . "uur " . $mins . ' min';
+								}else if($mins > 0){
+									print $mins+1 . ' min';
+								}
+							}
+						?>
 					</p>
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte afstand">
-						<i class="fas fa-road"></i></i> <?php print $rit->terug->distance->text; ?>
+						<i class="fas fa-road"></i></i> 
+						<?php 
+							if(!empty($rit->terug->distance->text)){
+								print $rit->terug->distance->text;
+							}
+							 
+						?>
 					</p>
+				</div>
+				<div class="col-12">
+					<div style="height : 300px;" id="mapTerug"></div>
 				</div>
 			</div>
 		</div>
@@ -207,20 +258,27 @@
 		</div>
 	</div>
 </div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABTgvmJaS7yxD1zp9NWJE4Zlg-MIsQTuI&callback=initMaps"> </script>
 <script>
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-</script>
-<script>
-    function initMap() {
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+    //Verberg kaarten
+    //$("#mapHeen").add($("#mapTerug").css("display", "none");
+    //Toon/verberg kaarten
+    function ToonVerbergKaart(content){
+        $(content).slideToggle("slow");
+    }
+    
+    //Toon heen route op google maps
+    function initMaps() {
         var pointA = '<?php echo $rit->heenvertrek->adres->straat."+".$rit->heenvertrek->adres->huisnummer."+".$rit->heenvertrek->adres->gemeente;?>',
           pointB = '<?php echo $rit->heenaankomst->adres->straat."+".$rit->heenaankomst->adres->huisnummer."+".$rit->heenaankomst->adres->gemeente;?>',
           myOptions = {
             zoom: 7,
             disableDefaultUI: true
           },
-          map = new google.maps.Map(document.getElementById('map'), myOptions),
+          map = new google.maps.Map(document.getElementById('mapHeen'), myOptions),
           // Instantiate a directions service.
           directionsService = new google.maps.DirectionsService,
           directionsDisplay = new google.maps.DirectionsRenderer({
@@ -237,12 +295,39 @@ $(function () {
             title: "point B",
             label: "B",
             map: map
-          });
-
-        // get route from A to B
+        });
         calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB);
+        
+        //Toon terug route op google maps
+        <?php if(!empty($rit->terugvertrek)){ ?>
+        var pointA = '<?php echo $rit->terugvertrek->adres->straat."+".$rit->terugvertrek->adres->huisnummer."+".$rit->terugvertrek->adres->gemeente;?>',
+            pointB = '<?php echo $rit->terugaankomst->adres->straat."+".$rit->terugaankomst->adres->huisnummer."+".$rit->terugaankomst->adres->gemeente;?>',
+          myOptions = {
+            zoom: 7,
+            disableDefaultUI: true
+          },
+          map = new google.maps.Map(document.getElementById('mapTerug'), myOptions),
+          // Instantiate a directions service.
+          directionsService = new google.maps.DirectionsService,
+          directionsDisplay = new google.maps.DirectionsRenderer({
+            map: map
+          }),
+          markerA = new google.maps.Marker({
+            address: pointA,
+            title: "point A",
+            label: "A",
+            map: map
+          }),
+          markerB = new google.maps.Marker({
+            address: pointB,
+            title: "point B",
+            label: "B",
+            map: map
+        });
+        calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB);
+        <?php } ?>
+    }
 
-      }
     function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
         directionsService.route({
           origin: pointA,
@@ -255,6 +340,5 @@ $(function () {
             window.alert('Directions request failed due to ' + status);
           }
         });
-      }
+    }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABTgvmJaS7yxD1zp9NWJE4Zlg-MIsQTuI&callback=initMap"> </script>

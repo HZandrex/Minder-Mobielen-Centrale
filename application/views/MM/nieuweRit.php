@@ -356,12 +356,12 @@ function calulateCost(){
 				success:function(response)
 				{
 					var data = JSON.parse(response);
-					var heenPrijs = totaalPrijs = Math.round(parseFloat(data.rows[0].elements[0].distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
+					console.log(response);
+					console.log(data);
+					var heenPrijs = totaalPrijs = Math.round(parseFloat(data.distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
 					$('#kost').html('');
-					
-					$('#kost').append('<tr id="heen"><td>Heen rit (' + data.rows[0].elements[0].distance.text + '): </td><td> € ' + heenPrijs + '</td></tr>');
-					$('#heenInfo').text('Verwachte informatie: ' + data.rows[0].elements[0].distance.text + ', ' + data.rows[0].elements[0].duration.text);
-					
+					$('#kost').append('<tr id="heen"><td>Heen rit (' + data.distance.text + '): </td><td> € ' + heenPrijs + '</td></tr>');
+					$('#heenInfo').text('Verwachte informatie: ' + data.distance.text + ', ' + data.duration.text);
 					if($('#terugStartAdres').val() != null && $('#terugEindeAdres').val() != null && $('#startTijdTerug').val() != '' && $('#terugDatum').val() != '' && $('input#heenTerug').is(':checked')){
 						var timeStamp = $('#terugDatum').val();
 						var timeStamp = timeStamp.charAt(3) + timeStamp.charAt(4) + '/' + timeStamp.charAt(0) + timeStamp.charAt(1) + '/' + timeStamp.charAt(6) + timeStamp.charAt(7) + timeStamp.charAt(8) + timeStamp.charAt(9) + ' ' + $('#startTijdTerug').val();
@@ -373,12 +373,12 @@ function calulateCost(){
 							success:function(response)
 							{
 								var data = JSON.parse(response);
-								var terugPrijs = Math.round(parseFloat(data.rows[0].elements[0].distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
+								var terugPrijs = Math.round(parseFloat(data.distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
 								
-								$('#kost').append('<tr id="terug"><td>Terug rit (' + data.rows[0].elements[0].distance.text + '): </td><td> € ' + terugPrijs + '</td></tr>');
+								$('#kost').append('<tr id="terug"><td>Terug rit (' + data.distance.text + '): </td><td> € ' + terugPrijs + '</td></tr>');
 								$('#kost').append('<tr id="totaalHeenTerug" style="border-top: 1px solid grey;"><td><strong>Totale prijs: </strong></td><td> € <span id="totaalPrijs">' + (parseFloat(totaalPrijs) + parseFloat(terugPrijs)) + '</span></td></tr>');
 								$('#totaalHeen').html('');
-								$('#terugInfo').text('Verwachte informatie: ' + data.rows[0].elements[0].distance.text + ', ' + data.rows[0].elements[0].duration.text);
+								$('#terugInfo').text('Verwachte informatie: ' + data.distance.text + ', ' + data.duration.text);
 							}
 						});
 					}else{

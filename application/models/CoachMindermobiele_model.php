@@ -15,7 +15,6 @@ class CoachMindermobiele_model extends CI_Model {
         parent::__construct();
     }
 
-    //Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
     /**
      *Haalt de status naam op waar het id $id is
      *
@@ -38,14 +37,24 @@ class CoachMindermobiele_model extends CI_Model {
                     $rit->persoon = $this->gebruiker_model->get($mm->mmId);
                     array_push($ritten, $rit);
                 }
-
-
             }
-
-
         }
         return $ritten;
     }
+	
+	function getMMById($id)
+	{
+		$this->db->where('coachId', $id);
+		$query = $this->db->get('CoachMinderMobiele');
+		$mmIds = $query->result();
+		$this->load->model('gebruiker_model');
+		$minderMobielen = [];
+		foreach ($mmIds as $mmId){
+			array_push($minderMobielen,$this->gebruiker_model->get($mmId->mmId));
+		}
+		
+		return $minderMobielen;
+	}
 
 
 

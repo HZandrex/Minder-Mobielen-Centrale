@@ -25,6 +25,7 @@ if ($gebruiker == null) { // niet aangemeld
 				
             case 'Coach':
                 echo divAnchor('Coach/Ritten','MM beheren','class="nav-item nav-link"');
+				echo divAnchor('Coach/MijnMM/mijnMMLijst','Mijn MM','class="nav-item nav-link"');
                 break;
 				
             case 'Vrijwilliger':

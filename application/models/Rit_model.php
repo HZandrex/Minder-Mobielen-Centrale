@@ -190,6 +190,8 @@ class Rit_model extends CI_Model {
 		
 		return $ritId;
 	}
+
+
 	
                         
 }
