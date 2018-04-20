@@ -62,6 +62,12 @@ class VrijwilligerRit_model extends CI_Model {
         }
         return $ritten;
     }
-
+    
+    function updateVrijwilligerRit($vrijwilligerRit)
+    {
+        $this->load->model('rit_model');
+        $this->load->model('status_model');
+        
+    }
                         
 }
