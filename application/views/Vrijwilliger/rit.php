@@ -98,9 +98,9 @@
 	<div class="card">
 		<div class="card-header">
 			<div class="row">
-                            <div class="col-sm-6">
-                                    <h5>Heen rit</h5>
-                            </div>
+				<div class="col-sm-6">
+						<h5>Heen rit</h5>
+				</div>
 			</div>
 		</div>
 		<div class="card-body">

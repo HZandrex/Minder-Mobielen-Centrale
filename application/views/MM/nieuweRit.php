@@ -3,6 +3,8 @@
 	foreach($adressen as $adres){
 		$selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
 	}
+	
+	var_dump($gebruiker);
 
 ?>
 <style>
@@ -356,8 +358,6 @@ function calulateCost(){
 				success:function(response)
 				{
 					var data = JSON.parse(response);
-					console.log(response);
-					console.log(data);
 					var heenPrijs = totaalPrijs = Math.round(parseFloat(data.distance.value) * parseFloat(data.kostPerKm.waarde) /1000).toFixed(2);
 					$('#kost').html('');
 					$('#kost').append('<tr id="heen"><td>Heen rit (' + data.distance.text + '): </td><td> € ' + heenPrijs + '</td></tr>');

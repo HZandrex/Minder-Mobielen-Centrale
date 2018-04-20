@@ -46,7 +46,7 @@ class Rit_model extends CI_Model {
         $this->load->model('adresrit_model');
         $this->load->model('status_model');
 
-        $this->db->where('mmid', $mmid);
+        $this->db->where('gebruikerMinderMobieleId', $mmid);
         $query = $this->db->get('rit');
         $ritten = array();
         $ritten = $query->result();
@@ -100,7 +100,7 @@ class Rit_model extends CI_Model {
 			$rit->terug = $this->google_model->getReisTijd($rit->terugvertrek->adresId, $rit->terugaankomst->adresId, $rit->terugvertrek->tijd);
 		}
 		$rit->status = $this->status_model->getById($rit->statusId);
-		$rit->MM = $this->gebruiker_model->get($rit->mmId);
+		$rit->MM = $this->gebruiker_model->get($rit->gebruikerMinderMobieleId);
 		if($rit->status->id == 2){
 			$rit->vrijwilliger = $this->vrijwilligerrit_model->getByRitId($rit->id);
 		}
@@ -115,7 +115,7 @@ class Rit_model extends CI_Model {
 		$datum = $this->helper_model->getStartEnEindeWeek($date);
 		$aantalRitten = 0;
 		
-		$this->db->where('mmId', $mmId);
+		$this->db->where('gebruikerMinderMobieleId', $mmId);
 		$query = $this->db->get('rit');
 		$ritten = $query->result();
 		
@@ -137,7 +137,7 @@ class Rit_model extends CI_Model {
 		$temp = array();
 		array_push($adressen, $this->gebruiker_model->getWithFunctions($mmId)->adres);
 		
-		$this->db->where('mmId', $mmId);
+		$this->db->where('gebruikerMinderMobieleId', $mmId);
 		$query = $this->db->get('rit');
 		$ritten = $query->result();
 		
@@ -165,7 +165,7 @@ class Rit_model extends CI_Model {
 		$ritId = 0;
 		
 		$data = array(
-			'mmId' => $mmId,
+			'gebruikerMinderMobieleId' => $mmId,
 			'opmerkingKlant' => $opmerkingKlant,
 			'opmerkingVrijwilliger' => $opmerkingVrijwilliger,
 			'prijs' => $prijs,

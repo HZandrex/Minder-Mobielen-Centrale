@@ -23,7 +23,6 @@ class CoachMindermobiele_model extends CI_Model {
      */
     function getById($id)
     {
-
         $this->db->where('coachId', $id);
         $query = $this->db->get('coachMinderMobiele');
         $naam = $query->result();

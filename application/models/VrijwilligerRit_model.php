@@ -19,9 +19,9 @@ class VrijwilligerRit_model extends CI_Model {
     */
     function getByRitId($id)
     {
-	$this->db->select('*');
-        $this->db->where('ritid', $id);
-	$this->db->where('statusId', '2');
+		$this->db->select('*');
+        $this->db->where('ritId', $id);
+		$this->db->where('statusId', '2');
         $query = $this->db->get('vrijwilligerRit');
         $array = array();
         $array = $query->row();
@@ -46,8 +46,8 @@ class VrijwilligerRit_model extends CI_Model {
         $this->load->model('rit_model');
         $this->load->model('status_model');
         
-	$this->db->select('*');
-        $this->db->where('vrijwilligerId', $id);
+		$this->db->select('*');
+        $this->db->where('gebruikerVrijwilligerId', $id);
         $query = $this->db->get('vrijwilligerRit');
         $ritten = array();
         $ritten = $query->result();
