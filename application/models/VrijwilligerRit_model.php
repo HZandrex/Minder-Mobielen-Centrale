@@ -30,7 +30,7 @@ class VrijwilligerRit_model extends CI_Model {
         $this->load->model('gebruiker_model');
 
         $array->status = $this->status_model->getById($array->statusId);
-        $array->vrijwilliger = $this->gebruiker_model->get($array->vrijwilligerId);
+        $array->vrijwilliger = $this->gebruiker_model->get($array->gebruikerVrijwilligerId);
         return $array;
     }
     
@@ -65,9 +65,14 @@ class VrijwilligerRit_model extends CI_Model {
     
     function updateVrijwilligerRit($vrijwilligerRit)
     {
-        $this->load->model('rit_model');
-        $this->load->model('status_model');
+        $this->db->insert('statusId', $vrijwilligerRit->statusId);
+        $this->db->where('id', $vrijwilligerRit->id);
+        $this->db->insert('vrijwilligerRit');
         
+        $this->db->insert('opmerkingVrijwilliger', $vrijwilligerRit->statusId);
+        $this->db->insert('extraKost', $vrijwilligerRit->extraKost);
+        $this->db->where('id', $vrijwilligerRit->ritId);
+        $this->db->insert('adresRit');
     }
                         
 }

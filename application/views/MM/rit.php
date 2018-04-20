@@ -5,7 +5,7 @@
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
 */
-        //var_dump($rit);
+        var_dump($rit);
 		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
 ?>
 <nav aria-label="breadcrumb">
@@ -22,7 +22,7 @@
                         echo anchor(array('Vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
                     } 
                     if($rit->status->id != 1){
-						echo anchor(array('anuleren'), '<i class="fas fa-ban"></i> Annuleren', 'class="btn btn-danger"');
+						echo anchor(array('anuleren'), '<i class="fas fa-ban"></i> Rit annuleren', 'class="btn btn-danger"');
                     }                     
                     echo anchor("MM/ritten/", "Terug", 'class="btn btn-primary float-right"');
                     ?>

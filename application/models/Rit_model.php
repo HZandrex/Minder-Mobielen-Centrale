@@ -14,9 +14,7 @@ class Rit_model extends CI_Model {
     function __construct()
     {
         parent::__construct();
-    }
-
-	
+    }	
 	
 	/**
 		*Helpt met het sorteren van de ritten op datum
