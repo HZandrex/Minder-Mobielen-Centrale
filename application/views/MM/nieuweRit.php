@@ -3,8 +3,6 @@
 	foreach($adressen as $adres){
 		$selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
 	}
-	
-	var_dump($gebruiker);
 
 ?>
 <style>
