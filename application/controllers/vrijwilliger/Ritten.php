@@ -24,7 +24,7 @@ class Ritten extends CI_Controller {
         $data['author'] = 'Nico C.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 		
-        $this->load->model('vrijwilligerrit_model');
+        $this->load->model('vrijwilligerRit_model');
         $data['ritten'] = $this->vrijwilligerrit_model->getByVrijwilligerId($data['gebruiker']->id);
 
         $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/ritten');

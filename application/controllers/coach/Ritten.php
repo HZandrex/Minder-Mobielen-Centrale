@@ -13,7 +13,7 @@ class Ritten extends CI_Controller {
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null){
-            $this->load->model('coachmindermobiele_model');
+            $this->load->model('coachMindermobiele_model');
             $data['gebruiker'] = $this->authex->getGebruikerInfo();
             $id = $data['gebruiker']->id;
 
