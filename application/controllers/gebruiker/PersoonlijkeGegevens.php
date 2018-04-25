@@ -16,6 +16,11 @@ class PersoonlijkeGegevens extends CI_Controller
         parent::__construct();
     }
 
+	/**
+     * Haalt de persoonlijke gegevens van de ingelogde gebruiker op.
+     *
+     * @see Gebruiker::persoonlijkeGegevens()
+     */
     public function persoonlijkeGegevens(){
         $data['titel'] = 'Persoonlijke Gegevens';
         $data['author'] = 'Tijmen Elseviers';
@@ -33,7 +38,14 @@ class PersoonlijkeGegevens extends CI_Controller
         $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/persoonlijkeGegevens');
         $this->template->load('main_master', $partials, $data);
     }
-
+	
+	/**
+     * Gaat de gegevens van een persoon doorgeven naar de gegevens wijzigen pagina.
+     *
+     * @see Gebruiker_model::getWithFunctions()
+	 * @see Voorkeur_model::getAll()
+     * @see Gebruiker::gegevensWijzigen()
+     */
     public function gegevensWijzigen($id = 0){
         $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
         $data['author'] = 'Tijmen Elseviers';
@@ -57,7 +69,16 @@ class PersoonlijkeGegevens extends CI_Controller
         $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/gegevensWijzigen');
         $this->template->load('main_master', $partials, $data);
     }
-
+	
+	/**
+     * Gaat de gegevens van de gebruiker in de databank veranderen.
+     *
+     * @see Gebruiker_model::get()
+	 * @see Gebruiker_model::updateGebruiker()
+     * @see Adres_model::updateAdres()
+     * @see Medewerker::gebruikersBeheren()
+     * @see PersoonlijkeGegevens::persoonlijkeGegevens()
+     */
     public function gegevensVeranderen(){
         $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
         $data['author'] = 'Tijmen Elseviers';
