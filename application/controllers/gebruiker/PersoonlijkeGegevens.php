@@ -16,8 +16,7 @@ class PersoonlijkeGegevens extends CI_Controller
         parent::__construct();
     }
 
-    public function persoonlijkeGegevens()
-    {
+    public function persoonlijkeGegevens(){
         $data['titel'] = 'Persoonlijke Gegevens';
         $data['author'] = 'Tijmen Elseviers';
 
@@ -31,12 +30,11 @@ class PersoonlijkeGegevens extends CI_Controller
         $this->load->model('gebruiker_model');
         $data['gegevens'] = $gebruiker;
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/persoonlijkeGegevens');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/persoonlijkeGegevens');
         $this->template->load('main_master', $partials, $data);
     }
 
-    public function gegevensWijzigen($id = 0)
-    {
+    public function gegevensWijzigen($id = 0){
         $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
         $data['author'] = 'Tijmen Elseviers';
 
@@ -60,8 +58,7 @@ class PersoonlijkeGegevens extends CI_Controller
         $this->template->load('main_master', $partials, $data);
     }
 
-    public function gegevensVeranderen()
-    {
+    public function gegevensVeranderen(){
         $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
         $data['author'] = 'Tijmen Elseviers';
 
