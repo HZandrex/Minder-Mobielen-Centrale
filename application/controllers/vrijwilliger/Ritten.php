@@ -64,7 +64,8 @@ class Ritten extends CI_Controller {
         
         public function accepterenAnnuleren($vrijwilligerRitId){
             $this->load->model('vrijwilligerRit_model');
-            
+
+            $vrijwilligerRit = new stdClass();
             $vrijwilligerRit->statusId = (int)$this->input->post('statusId');
             $vrijwilligerRit->id = $vrijwilligerRitId;
             var_dump($vrijwilligerRit);

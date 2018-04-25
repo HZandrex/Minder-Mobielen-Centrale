@@ -116,6 +116,20 @@ class Instellingen extends CI_Controller {
      *
      * @see Inloggen::toonMelding()
      */
+    public function toonFoutVoorkeurToevoegen() {
+        $titel = "Fout!";
+        $boodschap = "Er is iets foutgelopen bij het toevoegen.</br>"
+            . "Probeer het opnieuw!";
+        $link = array("url" => "admin/instellingen", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
     public function toonInstellingGewijzigd() {
         $titel = "Succes!";
         $boodschap = "De instellingen zijn succesvol gewijzigd!";
@@ -158,13 +172,12 @@ class Instellingen extends CI_Controller {
                     $this->voorkeur_model->voegToe($voorkeur);
                 }
                 else{
-                    echo "fout";
-                    exit();
+                    redirect('admin/instellingen/toonfoutvoorkeurtoevoegen');
                 }
 
                 redirect('admin/instellingen');
             } else{
-                echo "leeg";
+                redirect('admin/instellingen/toonfoutvoorkeurtoevoegen');
             }
 
         }
@@ -184,7 +197,7 @@ class Instellingen extends CI_Controller {
         }
 
         if(!$gewijzigd){
-            redirect('admin/instellingen/toonFoutGeenWaardes');
+            redirect('admin/instellingen/toonfoutgeenwaardes');
         }
 
         $this->instelling_model->wijzig($instellingen);
