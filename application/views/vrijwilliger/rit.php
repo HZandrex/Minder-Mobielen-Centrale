@@ -5,7 +5,7 @@
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
 */
-        //var_dump($rit);
+        var_dump($rit);
 		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
 ?>
 <nav aria-label="breadcrumb">
@@ -18,7 +18,7 @@
 	<div class="col-sm-12">
 		<p><?php
                     if($rit->status->id == 2){
-                        echo anchor(array('Vrijwilliger/ritten/wijzigen', $rit->->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
+                        echo anchor(array('Vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
                     } 
                     
                     $attributes = array('name' => 'vrij', 'id' => 'nieuweRit');
@@ -46,7 +46,7 @@
 				<p>
 				<i class="fas fa-car"></i> chauffeur: 
 				<?php 
-					if(!empty($rit->vrijwilliger)){
+					if(!empty($rit->rit->vrijwilliger)){
 						print $rit->rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->rit->vrijwilliger->vrijwilliger->naam; 
 					}else{
 						print "Nog geen vrijwilliger gevonden";
@@ -83,15 +83,15 @@
 						<td> € <?php print $rit->prijs; ?></td>
 						
 					</tr>
-					<?php if(!empty($rit->extraKost)){ ?>
+					<?php if(!empty($rit->rit->extraKost)){ ?>
 					<tr>
 						<td>Extra kost: </td>
-						<td> € <?php print $rit->extraKost; ?></td>
+						<td> € <?php print $rit->rit->extraKost; ?></td>
 					</tr>
 					<?php } ?>
 					<tr style="border-top: 1px solid grey;">
 						<td><strong>Totale prijs: </strong></td>
-						<td> € <?php print ($rit->prijs + $rit->extraKost); ?></td>
+						<td> € <?php print ($rit->rit->prijs + $rit->rit->extraKost); ?></td>
 					</tr>
 				</table>
 			</div>
@@ -119,7 +119,7 @@
 				</div>
 				<div class="col-sm-3">
 					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->rit->heenvertrek->tijd)); ?></p>
-					<p data-toggle="tooltip" data-placement="top" title="Vertrek adres"><i class="fas fa-map-marker"></i> <?php print $rit->rit->heenvertrek->adres->straat . " " . $rit->heenvertrek->adres->huisnummer; ?> </p>
+					<p data-toggle="tooltip" data-placement="top" title="Vertrek adres"><i class="fas fa-map-marker"></i> <?php print $rit->rit->heenvertrek->adres->straat . " " . $rit->rit->heenvertrek->adres->huisnummer; ?> </p>
 				</div>
 				<div class="col-sm-2">
 					<div class="mt-4"><i class="far fa-arrow-alt-circle-right"></i>-------<i class="far fa-arrow-alt-circle-right"></i></div>
@@ -134,7 +134,7 @@
 							}
 						?>
 					</p>
-					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->rit->heenaankomst->adres->straat . " " . $rit->heenaankomst->adres->huisnummer; ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->rit->heenaankomst->adres->straat . " " . $rit->rit->heenaankomst->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-2">
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte reistijd">
@@ -169,7 +169,7 @@
 		</div>
 	</div>
 </article>
-<?php if(!empty($rit->terugvertrek)){ ?>
+<?php if(!empty($rit->rit->terugvertrek)){ ?>
 <article class="mt-2">
 	<div class="card">
 		<div class="card-header">
@@ -190,8 +190,8 @@
 					</p>
 				</div>
 				<div class="col-sm-3">
-					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->terugvertrek->tijd)); ?></p>
-					<p data-toggle="tooltip" data-placement="top" title="Vertrek adres"><i class="fas fa-map-marker"></i> <?php print $rit->terugvertrek->adres->straat . " " . $rit->terugvertrek->adres->huisnummer; ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->rit->terugvertrek->tijd)); ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Vertrek adres"><i class="fas fa-map-marker"></i> <?php print $rit->rit->terugvertrek->adres->straat . " " . $rit->rit->terugvertrek->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-2">
 					<div class="mt-4"><i class="far fa-arrow-alt-circle-right"></i>-------<i class="far fa-arrow-alt-circle-right"></i></div>
@@ -199,21 +199,21 @@
 				<div class="col-sm-3">
 					<p class="text-left" data-toggle="tooltip" data-placement="top" title="Verwachte aankomst tijd"><i class="far fa-clock"></i>
 						<?php 
-							if(!empty($rit->terugvertrek->tijd)){
-								$date = new DateTime($rit->terugvertrek->tijd);	
-								$date->add(DateInterval::createFromDateString($rit->terug->duration->value .' seconds')); 
+							if(!empty($rit->rit->terugvertrek->tijd)){
+								$date = new DateTime($rit->rit->terugvertrek->tijd);	
+								$date->add(DateInterval::createFromDateString($rit->rit->terug->duration->value .' seconds')); 
 								echo $date->format('H:i');
 							}
 							
 						?>
 					</p>
-					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->terugaankomst->adres->straat . " " . $rit->terugaankomst->adres->huisnummer; ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->rit->terugaankomst->adres->straat . " " . $rit->rit->terugaankomst->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-2">
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte reistijd">
 						<i class="fas fa-hourglass-half"></i> 
 						<?php
-							if(!empty($rit->terug->duration->text)){
+							if(!empty($rit->rit->terug->duration->text)){
 								$uur = floor($rit->rit->terug->duration->value / 3600);
 								$mins = floor($rit->rit->terug->duration->value / 60 % 60);
 								$secs = floor($rit->rit->terug->duration->value % 60);
@@ -303,7 +303,7 @@
         calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB);
         
         //Toon terug route op google maps
-        <?php if(!empty($rit->terugvertrek)){ ?>
+        <?php if(!empty($rit->rit->terugvertrek)){ ?>
         var pointA = '<?php echo $rit->rit->terugvertrek->adres->straat."+".$rit->rit->terugvertrek->adres->huisnummer."+".$rit->rit->terugvertrek->adres->gemeente;?>',
             pointB = '<?php echo $rit->rit->terugaankomst->adres->straat."+".$rit->rit->terugaankomst->adres->huisnummer."+".$rit->rit->terugaankomst->adres->gemeente;?>',
           myOptions = {
