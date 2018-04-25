@@ -39,8 +39,8 @@ class Ritten extends CI_Controller {
 		*
 	*/
 	public function eenRit($ritId){		
-            $this->load->model('rit_model');
-            $data['rit'] = $this->rit_model->getByRitId($ritId);
+            $this->load->model('vrijwilligerrit_model');
+            $data['rit'] = $this->vrijwilligerrit_model->getByVrijwilligerId($ritId);
 
             $data['titel'] = 'Details rit';
             $data['author'] = 'Nico C.';
@@ -60,7 +60,18 @@ class Ritten extends CI_Controller {
 
             $partials = array('menu' => 'main_menu','inhoud' => 'Vrijwilliger/ritWijzigen');
             $this->template->load('main_master', $partials, $data);
-		
+	}
+        
+        public function accepterenAnnuleren($vrijwilligerRitId){
+            $this->load->model('vrijwilligerRit_model');
+            
+            $vrijwilligerRit->statusId = (int)$this->input->post('statusId');
+            $vrijwilligerRit->id = $vrijwilligerRitId;
+            var_dump($vrijwilligerRit);
+            
+            $this->vrijwilligerRit_model->updateStatusVrijwilligerRit($vrijwilligerRit);
+
+            redirect('Vrijwilliger/ritten');
 	}
 }
 

@@ -8,7 +8,7 @@
         <div class="col-lg-6 col-sm-12">
 		<h4>Contactgegevens</h4>
 					<?php echo form_label('Voornaam:', 'gegevensVoornaam'); ?>
-					<input style="{width:auto} type="text" class="form-control" name="gegevensVoornaam" value= "<?php echo $gegevens->voornaam?>" required>
+					<input style="width:auto;" type="text" class="form-control" name="gegevensVoornaam" value= "<?php echo $gegevens->voornaam?>" required>
 					<?php echo form_label('Naam:', 'gegevensNaam'); ?>
 					<input type="text" class="form-control" name="gegevensNaam" value= "<?php echo $gegevens->naam?>" required>
 					<?php echo form_label('Geboorte:', 'gegevensGeboorte'); ?>
@@ -35,9 +35,9 @@
 			<div class="col-lg-6 col-sm-12">
 			<h4>Adresgegevens</h4>
 					<?php echo form_label('Gemeente:', 'gegevensGemeente'); ?>
-					<input style="{width:auto} type="text" class="form-control" name="gegevensGemeente" value= "<?php echo $gegevens->adres->gemeente?>" required>
+					<input style="width:auto" type="text" class="form-control" name="gegevensGemeente" value= "<?php echo $gegevens->adres->gemeente?>" required>
 					<?php echo form_label('Postcode:', 'gegevensPostcode'); ?>
-					<input style="{width:auto} type="text" class="form-control" name="gegevensPostcode" value= "<?php echo $gegevens->adres->postcode?>" required>
+					<input style="width:auto" type="text" class="form-control" name="gegevensPostcode" value= "<?php echo $gegevens->adres->postcode?>" required>
 					<?php echo form_label('Straat + Nr:', 'gegevensStraat'); ?>
 					<div class="row">
 						<div class="col-8">

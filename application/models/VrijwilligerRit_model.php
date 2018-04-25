@@ -74,5 +74,12 @@ class VrijwilligerRit_model extends CI_Model {
         $this->db->where('id', $vrijwilligerRit->ritId);
         $this->db->insert('adresRit');
     }
+    
+    function updateStatusVrijwilligerRit($vrijwilligerRitId)
+    {
+        $data = array('statusId' => $vrijwilligerRitId->statusId);
+        $this->db->where('id', $vrijwilligerRitId->id);
+        $this->db->update('vrijwilligerRit', $data);
+    }
                         
 }
