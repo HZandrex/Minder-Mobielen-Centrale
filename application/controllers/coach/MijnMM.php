@@ -18,8 +18,6 @@ class MijnMM extends CI_Controller {
             redirect('gebruiker/inloggen');
         }
 		
-		$minderMobielen = [];
-		
 		
 		$this->load->model('CoachMindermobiele_model');
 		$data['minderMobielen'] = $this->CoachMindermobiele_model->getMMById($gebruiker->id);

@@ -48,8 +48,10 @@ class CoachMindermobiele_model extends CI_Model {
 		$mmIds = $query->result();
 		$this->load->model('gebruiker_model');
 		$minderMobielen = [];
+		
+		
 		foreach ($mmIds as $mmId){
-			array_push($minderMobielen,$this->gebruiker_model->get($mmId->mmId));
+			array_push($minderMobielen,$this->gebruiker_model->get($mmId->gebruikerMinderMobieleId));
 		}
 		
 		return $minderMobielen;
