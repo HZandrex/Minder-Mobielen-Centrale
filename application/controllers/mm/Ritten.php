@@ -30,11 +30,7 @@ class Ritten extends CI_Controller {
 
 		
 		$data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id);
-		
-		
-		
-		
-		
+
 
         $partials = array('menu' => 'main_menu','inhoud' => 'mm/ritten');
         $this->template->load('main_master', $partials, $data);

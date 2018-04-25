@@ -30,6 +30,7 @@ class Google_model extends CI_Model {
 		
 		$url='https://maps.googleapis.com/maps/api/distancematrix/json?origins=' . str_replace(' ', '%20', $adresStart->huisnummer) . '+' . str_replace(' ', '%20', $adresStart->straat) . '+' . str_replace(' ', '%20', $adresStart->gemeente) .'&destinations=' . str_replace(' ', '%20', $adresEinde->huisnummer) . '+' . str_replace(' ', '%20', $adresEinde->straat) . '+' . str_replace(' ', '%20', $adresEinde->gemeente) .'&departure_time=' . date('U', strtotime($startTime)) . '&traffic_model=best_guess&key=AIzaSyDeN_rP-G7r2WxkhdPv5dUFwEnyMe1oDbg';
 
+		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
