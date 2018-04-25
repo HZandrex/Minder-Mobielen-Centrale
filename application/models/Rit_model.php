@@ -188,6 +188,12 @@ class Rit_model extends CI_Model {
 		
 		return $ritId;
 	}
+    function updateStatusRit($RitId)
+    {
+        $data = array('statusId' => $RitId->statusId);
+        $this->db->where('id', $RitId->id);
+        $this->db->update('rit', $data);
+    }
 
 
 	
