@@ -27,7 +27,7 @@ class Ritten extends CI_Controller {
         $this->load->model('vrijwilligerrit_model');
         $data['ritten'] = $this->vrijwilligerrit_model->getByVrijwilligerId($data['gebruiker']->id);
 
-        $partials = array('menu' => 'main_menu','inhoud' => 'Vrijwilliger/ritten');
+        $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/ritten');
         $this->template->load('main_master', $partials, $data);
     }
 
@@ -46,7 +46,7 @@ class Ritten extends CI_Controller {
             $data['author'] = 'Nico C.';
             $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
-            $partials = array('menu' => 'main_menu','inhoud' => 'Vrijwilliger/rit');
+            $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/rit');
             $this->template->load('main_master', $partials, $data);
 	}
 	
@@ -58,7 +58,7 @@ class Ritten extends CI_Controller {
             $data['author'] = 'Nico C.';
             $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
-            $partials = array('menu' => 'main_menu','inhoud' => 'Vrijwilliger/ritWijzigen');
+            $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/ritWijzigen');
             $this->template->load('main_master', $partials, $data);
 	}
         
@@ -71,7 +71,7 @@ class Ritten extends CI_Controller {
             
             $this->vrijwilligerRit_model->updateStatusVrijwilligerRit($vrijwilligerRit);
 
-            redirect('Vrijwilliger/ritten');
+            redirect('vrijwilliger/ritten');
 	}
 }
 
