@@ -9,7 +9,7 @@
 	// var_dump($ritten);
 ?>
 <p>
-	<?php print anchor(array('MM/ritten/nieuweRit'), '<i class="fa fa-plus"></i> Nieuwe rit boeken', array('class' => 'btn btn-primary'));?>
+	<?php print anchor(array('mm/ritten/nieuweRit'), '<i class="fa fa-plus"></i> Nieuwe rit boeken', array('class' => 'btn btn-primary'));?>
 </p>
 <div class="card">
 	<table class="table table-striped">
@@ -52,7 +52,7 @@
                                 print '<i class="fa fa-minus-circle fa-2x text-warning" data-toggle="tooltip" data-placement="top" title="' . $rit->status->naam . '"></i>';
                             }
                         ?></td>
-						<td><?php print anchor(array('MM/ritten/eenRit', $rit->id), '<i class="fa fa-eye fa-2x" data-toggle="tooltip" data-placement="top" title="Bekijken"></i>'); ?></td>
+						<td><?php print anchor(array('mm/ritten/eenRit', $rit->id), '<i class="fa fa-eye fa-2x" data-toggle="tooltip" data-placement="top" title="Bekijken"></i>'); ?></td>
 					</tr>
 		<?php
 				}

@@ -31,7 +31,7 @@ var_dump($heen);
     <?php
     $attributes = array('name' => 'nieuweRit', 'id' => 'nieuweRit');
 
-    echo form_open('MM/ritten/wijzigRitOpslaan', $attributes);
+    echo form_open('mm/ritten/wijzigRitOpslaan', $attributes);
     ?>
     <div class="card">
         <div class="card-body">
@@ -48,7 +48,7 @@ var_dump($heen);
                     <button type="button" class="btn btn-primary" id="opslaan"><i class="fas fa-save"></i> Opslaan</button>
                     <?php
 
-                    print anchor(array('MM/ritten'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));
+                    print anchor(array('mm/ritten'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));
                     ?>
                 </div>
             </div>
@@ -288,7 +288,7 @@ var_dump($heen);
         $.ajax(
             {
                 type:"post",
-                url: "<?php echo base_url(); ?>index.php/MM/ritten/berekenCredits",
+                url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenCredits",
                 data:{ userId:'<?php echo $gebruiker->id; ?>', date: timeStamp},
                 success:function(response)
                 {
@@ -344,7 +344,7 @@ var_dump($heen);
                 $.ajax(
                     {
                         type:"post",
-                        url: "<?php echo base_url(); ?>index.php/MM/ritten/nieuwAdres",
+                        url: "<?php echo base_url(); ?>index.php/mm/ritten/nieuwAdres",
                         data:{ huisnummer:huisnummer, straat:straat, gemeente:gemeente, postcode:postcode},
                         success:function(response)
                         {
@@ -398,7 +398,7 @@ var_dump($heen);
                 $.ajax(
                     {
                         type:"post",
-                        url: "<?php echo base_url(); ?>index.php/MM/ritten/berekenKost",
+                        url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenKost",
                         data:{ startAdres:$('#heenStartAdres').val(), eindAdres:$('#heenEindeAdres').val(), timeStamp:timeStamp},
                         success:function(response)
                         {
@@ -413,7 +413,7 @@ var_dump($heen);
                                 $.ajax(
                                     {
                                         type:"post",
-                                        url: "<?php echo base_url(); ?>index.php/MM/ritten/berekenKost",
+                                        url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenKost",
                                         data:{ startAdres:$('#terugStartAdres').val(), eindAdres:$('#terugEindeAdres').val(), timeStamp:timeStamp},
                                         success:function(response)
                                         {
