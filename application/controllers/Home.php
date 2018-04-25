@@ -32,7 +32,7 @@ class Home extends CI_Controller {
         
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/homePagina');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/homePagina');
         $this->template->load('main_master', $partials, $data);
     }
     /*
