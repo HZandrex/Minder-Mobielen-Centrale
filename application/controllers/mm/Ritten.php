@@ -138,8 +138,8 @@ class Ritten extends CI_Controller {
 		redirect('mm/ritten');
 	}
 
-    public function wijzigRit(){
-	    $id = 1;
+    public function wijzigRit($id){
+
         $this->load->model('rit_model');
         $data['titel'] = 'Wijzig rit';
         $data['author'] = 'Lorenz C.';
@@ -185,7 +185,17 @@ class Ritten extends CI_Controller {
         redirect('mm/ritten');
 
     }
+    public function accepterenAnnuleren($ritId){
+        $this->load->model('rit_model');
 
+        $rit->statusId = (int)$this->input->post('statusId');
+        $rit->id = $ritId;
+        var_dump($rit);
+
+        $this->vrijwilligerRit_model->updateStatusVrijwilligerRit($rit);
+
+        redirect('mm/ritten');
+    }
 	
 }
 

@@ -48,7 +48,7 @@ var_dump($heen);
                     <button type="button" class="btn btn-primary" id="opslaan"><i class="fas fa-save"></i> Opslaan</button>
                     <?php
 
-                    print anchor(array('MM/ritten'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));
+                    print anchor(array('MM/ritten/annulerenaccepteren'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));
                     ?>
                 </div>
             </div>
