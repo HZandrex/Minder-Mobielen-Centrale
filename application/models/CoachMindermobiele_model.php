@@ -30,7 +30,7 @@ class CoachMindermobiele_model extends CI_Model {
         $this->load->model('gebruiker_model');
         $ritten = array();
         foreach ($naam as $mm){
-            $temp= $this->rit_model->getByMMCId($mm->mmId);
+            $temp= $this->rit_model->getByMMCId($mm->gebruikerMinderMobieleId);
             if (!empty($temp)){
                 foreach ($temp as $rit){
                     $rit->persoon = $this->gebruiker_model->get($mm->mmId);
