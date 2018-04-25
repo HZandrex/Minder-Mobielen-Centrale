@@ -13,28 +13,28 @@ class Ritten extends CI_Controller {
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null){
-            $this->load->model('coachmindermobiele_model');
+            $this->load->model('coachMindermobiele_model');
             $data['gebruiker'] = $this->authex->getGebruikerInfo();
             $id = $data['gebruiker']->id;
 
             $data['test']=count($this->coachmindermobiele_model->getById($id));
 
-            $this->load->library('pagination');
-            $this->load->library('table');
+//            $this->load->library('pagination');
+//            $this->load->library('table');
+//
+//
+//            $config['base_url'] = 'http://localhost/project23_1718/index.php/Coach/Ritten/index';
+//
+//            $config['total_rows'] = count($this->coachmindermobiele_model->getById($id));
+//            $config['per_page'] =2;
 
-
-            $config['base_url'] = 'http://localhost/project23_1718/index.php/Coach/Ritten/index';
-
-            $config['total_rows'] = count($this->coachmindermobiele_model->getById($id));
-            $config['per_page'] =2;
-
-            $this->pagination->initialize($config);
+//            $this->pagination->initialize($config);
             $data['ritten']= $this->coachmindermobiele_model->getById($id);
             $data['titel'] = 'Ritten';
             $data['author'] = 'Lorenz C.';
 
 
-            $partials = array('menu' => 'main_menu','inhoud' => 'Coach/ritten');
+            $partials = array('menu' => 'main_menu','inhoud' => 'coach/ritten');
             $this->template->load('main_master', $partials, $data);
 
         } else{

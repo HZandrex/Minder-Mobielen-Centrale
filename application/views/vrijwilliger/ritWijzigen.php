@@ -19,7 +19,7 @@
 	<div class="col-sm-12">
 		<?php
                     echo form_submit('knop', 'Opslaan', 'class="btn btn-primary"');
-                    echo anchor(array('Vrijwilliger/ritten/eenrit', $rit->id), "Terug", 'class="btn btn-primary float-right"');
+                    echo anchor(array('vrijwilliger/ritten/eenrit', $rit->id), "Terug", 'class="btn btn-primary float-right"');
                 ?>
 	</div>
 </div>
