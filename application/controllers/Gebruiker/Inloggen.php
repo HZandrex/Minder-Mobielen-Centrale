@@ -24,7 +24,7 @@ class Inloggen extends CI_Controller {
         $data['author'] = 'Geffrey W.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/inlogpagina');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/inlogpagina'); 
         $this->template->load('main_master', $partials, $data);
     }
 
