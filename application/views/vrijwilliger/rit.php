@@ -18,11 +18,11 @@
 	<div class="col-sm-12">
 		<p><?php
                     if($rit->status->id == 2){
-                        echo anchor(array('Vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
+                        echo anchor(array('vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
                     } 
                     
                     $attributes = array('name' => 'vrij', 'id' => 'nieuweRit');
-                    echo form_open('Vrijwilliger/ritten/accepterenAnnuleren/'. $rit->id,$attributes);
+                    echo form_open('vrijwilliger/ritten/accepterenAnnuleren/'. $rit->id,$attributes);
                     
                     if($rit->status->id == 3 ){
                         echo '<button class="btn-success" name="statusId" type="submit" value="2">Goedkeuren</button>';
@@ -33,7 +33,7 @@
                     if($rit->status->id == 2){
                         echo '<button class="btn-danger" name="statusId" type="submit" value="1">Annuleren</button>';
                     }                     
-                    echo anchor("Vrijwilliger/ritten/", "Terug", 'class="btn btn-primary float-right"');
+                    echo anchor("vrijwilliger/ritten/", "Terug", 'class="btn btn-primary float-right"');
                     echo form_close(); ?>
 		</p>
 	</div>
