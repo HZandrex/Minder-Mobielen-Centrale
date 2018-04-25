@@ -27,34 +27,16 @@ class Ritten extends CI_Controller {
         $this->load->model('rit_model');		
 		
 		
-		
-		
-		
-		$this->load->library('pagination');
 
-		// $config['base_url'] = base_url() . 'index.php/MM/Ritten/';
-		// $config['total_rows'] = 200;
-		// $config['per_page'] = 2;
-
-		// $this->pagination->initialize($config);
-
-		// echo $this->pagination->create_links();		
 		
-		$config['base_url'] = site_url('index.php/MM/Ritten/');
-		$config['total_rows'] = count($data['ritten']);
-		$config['per_page'] = 2;
-		
-		$this->pagination->initialize($config);
-		
-		
-		$data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id, $aantal, $startRij);
+		$data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id);
 		
 		
 		
 		
 		
 
-        $partials = array('menu' => 'main_menu','inhoud' => 'MM/ritten');
+        $partials = array('menu' => 'main_menu','inhoud' => 'mm/ritten');
         $this->template->load('main_master', $partials, $data);
     }
 
@@ -73,7 +55,7 @@ class Ritten extends CI_Controller {
         $data['author'] = 'Michiel O.';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
 		
-		$partials = array('menu' => 'main_menu','inhoud' => 'MM/rit');
+		$partials = array('menu' => 'main_menu','inhoud' => 'mm/rit');
         $this->template->load('main_master', $partials, $data);
 	}
 	
@@ -85,7 +67,7 @@ class Ritten extends CI_Controller {
 		
 		$data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruiker']->id);
 		
-		$partials = array('menu' => 'main_menu','inhoud' => 'MM/nieuweRit');
+		$partials = array('menu' => 'main_menu','inhoud' => 'mm/nieuweRit');
         $this->template->load('main_master', $partials, $data);
 		
 	}
@@ -153,7 +135,7 @@ class Ritten extends CI_Controller {
 		
 		$ritId = $this->rit_model->saveNewRit($mmId, $opmerkingenMM, '', $kost,  '', '3', $heenTerug, $heenStartAdresId, $heenEindeAdresId, $terugStartAdresId, $terugEindeAdresId, $startTijdHeen, $startTijdTerug, $heenDatum, $terugDatum);
 		
-		redirect('MM/Ritten');
+		redirect('mm/ritten');
 	}
 
     public function wijzigRit(){
@@ -167,7 +149,7 @@ class Ritten extends CI_Controller {
 
         $data['heen'] = $this->rit_model->getByRitId($id);
 
-        $partials = array('menu' => 'main_menu','inhoud' => 'MM/wijzigRit');
+        $partials = array('menu' => 'main_menu','inhoud' => 'mm/wijzigRit');
         $this->template->load('main_master', $partials, $data);
 
     }
@@ -200,7 +182,7 @@ class Ritten extends CI_Controller {
 
         $ritId = $this->rit_model->saveNewRit($mmId, $opmerkingenMM, '', $kost,  '', '3', $heenTerug, $heenStartAdresId, $heenEindeAdresId, $terugStartAdresId, $terugEindeAdresId, $startTijdHeen, $startTijdTerug, $heenDatum, $terugDatum);
 
-        redirect('MM/Ritten');
+        redirect('mm/ritten');
 
     }
 

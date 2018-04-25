@@ -39,13 +39,13 @@ class Rit_model extends CI_Model {
 		*@see vrijwilligerrit_model::getByRitId()
 		*@return al de opgevraagde ritten
 	*/
-    function getByMMCId($mmid, $aantal, $startRij)
+    function getByMMCId($mmid)
     {
         $this->load->model('adresrit_model');
         $this->load->model('status_model');
 
         $this->db->where('gebruikerMinderMobieleId', $mmid);
-        $query = $this->db->get('rit', $aantal, $startRij);
+        $query = $this->db->get('rit');
         $ritten = array();
         $ritten = $query->result();
 

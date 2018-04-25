@@ -20,15 +20,15 @@
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
 				<?php	
 					if($rit->status->id != 1){
-                        echo anchor(array('Vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
+                        echo anchor(array('Vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", data-placement="top", title="Klik hier om deze rit aan te passen"');
                     } 
                     if($rit->status->id != 1){
-						echo anchor(array('anuleren'), '<i class="fas fa-ban"></i> Rit annuleren', 'class="btn btn-danger"');
+						echo anchor(array('anuleren'), '<i class="fas fa-ban"></i> Rit annuleren', 'class="btn btn-danger", data-toggle="tooltip", data-placement="top", title="Klik hier om de rit af te zeggen"');
                     }    
 				?>
 			</div>
 			<?php 						 
-				echo anchor("MM/ritten/", '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right"');
+				echo anchor("MM/ritten/", '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right", data-toggle="tooltip", data-placement="top", title="Klik hier om terug te gaan naar de vorige pagina"');
 			?>
 		</p>
 	</div>

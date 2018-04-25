@@ -20,16 +20,16 @@ if ($gebruiker == null) { // niet aangemeld
     foreach ($gebruiker->functies as $functie) {
         switch ($functie->naam) {
             case 'Minder mobiele':
-                    echo divAnchor('MM/Ritten','Ritten beheren','class="nav-item nav-link"');
+                    echo divAnchor('mm/ritten','Ritten beheren','class="nav-item nav-link"');
                     break;
 				
             case 'Coach':
-                echo divAnchor('Coach/Ritten','MM beheren','class="nav-item nav-link"');
-				echo divAnchor('Coach/MijnMM/mijnMMLijst','Mijn MM','class="nav-item nav-link"');
+                echo divAnchor('coach/ritten','MM beheren','class="nav-item nav-link"');
+				echo divAnchor('coach/mijnMM/mijnMMLijst','Mijn MM','class="nav-item nav-link"');
                 break;
 				
             case 'Vrijwilliger':
-                echo divAnchor('Vrijwilliger/Ritten','Ritten','class="nav-item nav-link"');
+                echo divAnchor('vrijwilliger/ritten','Ritten','class="nav-item nav-link"');
                 break;
 				
             case 'Medewerker':
