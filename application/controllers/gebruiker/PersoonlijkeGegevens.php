@@ -28,7 +28,7 @@ class PersoonlijkeGegevens extends CI_Controller
             redirect('gebruiker/inloggen');
         }
 
-        $this->load->model('Gebruiker_model');
+        $this->load->model('gebruiker_model');
         $data['gegevens'] = $gebruiker;
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/persoonlijkeGegevens');
@@ -56,7 +56,7 @@ class PersoonlijkeGegevens extends CI_Controller
         $this->load->model('voorkeur_model');
         $data['communicatiemiddelen'] = $this->voorkeur_model->getAll();
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/gegevensWijzigen');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/gegevensWijzigen');
         $this->template->load('main_master', $partials, $data);
     }
 
@@ -113,7 +113,7 @@ class PersoonlijkeGegevens extends CI_Controller
             redirect('gebruiker/inloggen');
         }
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'Gebruiker/wachtwoordWijzigen');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordWijzigen');
         $this->template->load('main_master', $partials, $data);
     }
 
