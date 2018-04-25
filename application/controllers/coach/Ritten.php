@@ -13,7 +13,7 @@ class Ritten extends CI_Controller {
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null){
-            $this->load->model('CoachMinderMobiele_model');
+            $this->load->model('coachMinderMobiele_model');
             $data['gebruiker'] = $this->authex->getGebruikerInfo();
             $id = $data['gebruiker']->id;
 
@@ -29,7 +29,7 @@ class Ritten extends CI_Controller {
 //            $config['per_page'] =2;
 
 //            $this->pagination->initialize($config);
-            $data['ritten']= $this->coachMindermMobiele_model->getById($id);
+            $data['ritten']= $this->coachMinderMobiele_model->getById($id);
             $data['titel'] = 'Ritten';
             $data['author'] = 'Lorenz C.';
 
