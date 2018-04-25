@@ -13,7 +13,7 @@
     <?php
     $attributes = array('name' => 'wachtwoordVergetenWijzigenForm');
     $hidden = array('id' => $editGebruiker->id);
-    echo form_open('medewerker/gebruikersbeheren/wachtwoordVeranderen', $attributes, $hidden);
+    echo form_open('medewerker/gebruikersBeheren/wachtwoordVeranderen', $attributes, $hidden);
     ?>
     <div class="card" id="inlogscherm">
         <div class="card-body">
