@@ -100,7 +100,7 @@ class Rit_model extends CI_Model {
 		$rit->status = $this->status_model->getById($rit->statusId);
 		$rit->MM = $this->gebruiker_model->get($rit->gebruikerMinderMobieleId);
 		if($rit->status->id == 2){
-			$rit->vrijwilliger = $this->vrijwilligerrit_model->getByRitId($rit->id);
+			$rit->vrijwilliger = $this->vrijwilligerRit_model->getByRitId($rit->id);
 		}
 		
 		return $rit;

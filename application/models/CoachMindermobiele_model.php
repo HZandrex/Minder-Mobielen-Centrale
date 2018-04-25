@@ -24,7 +24,7 @@ class CoachMindermobiele_model extends CI_Model {
     function getById($id)
     {
         $this->db->where('coachId', $id);
-        $query = $this->db->get('coachMinderMobiele');
+        $query = $this->db->get('coachMindermobiele');
         $naam = $query->result();
         $this->load->model('rit_model');
         $this->load->model('gebruiker_model');
