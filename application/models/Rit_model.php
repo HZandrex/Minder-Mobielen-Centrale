@@ -41,7 +41,7 @@ class Rit_model extends CI_Model {
 	*/
     function getByMMCId($mmid)
     {
-        $this->load->model('adresrit_model');
+        $this->load->model('adresRit_model');
         $this->load->model('status_model');
 
         $this->db->where('gebruikerMinderMobieleId', $mmid);
@@ -75,7 +75,7 @@ class Rit_model extends CI_Model {
 		*@return al de opgevraagde rit
 	*/
 	function getByRitId($id){
-		$this->load->model('adresrit_model');
+		$this->load->model('adresRit_model');
 		$this->load->model('status_model');	
 		$this->load->model('google_model');		
 		$this->load->model('gebruiker_model');	
@@ -107,7 +107,7 @@ class Rit_model extends CI_Model {
 	}
 	
 	function getAantalRitten($mmId, $date){
-		$this->load->model('adresrit_model');
+		$this->load->model('adresRit_model');
 		$this->load->model('helper_model');
 		
 		$datum = $this->helper_model->getStartEnEindeWeek($date);
@@ -129,7 +129,7 @@ class Rit_model extends CI_Model {
 	function getAllVoorGebruiker($mmId){
 		$this->load->model('gebruiker_model');
 		$this->load->model('helper_model');
-		$this->load->model('adresrit_model');
+		$this->load->model('adresRit_model');
 		
 		$adressen = array();
 		$temp = array();
@@ -158,7 +158,7 @@ class Rit_model extends CI_Model {
 	}
 	
 	function saveNewRit($mmId, $opmerkingKlant, $opmerkingVrijwilliger, $prijs, $extraKost, $statusId, $heenTerug, $heenStartAdresId, $heenEindeAdresId, $terugStartAdresId, $terugEindeAdresId, $startTijdHeen, $startTijdTerug, $heenDatum, $terugDatum){
-		$this->load->model('adresrit_model');
+		$this->load->model('adresRit_model');
 		
 		$ritId = 0;
 		
