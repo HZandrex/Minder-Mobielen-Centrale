@@ -111,7 +111,8 @@ class GebruikersBeheren extends CI_Controller
         }
     }
 
-    public function nieuweGebruikerMaken(){
+    public function nieuweGebruikerMaken()
+    {
         $data['titel'] = 'Gebruiker toevoegen';
         $data['author'] = 'Geffrey W.';
 
@@ -138,7 +139,8 @@ class GebruikersBeheren extends CI_Controller
         $this->template->load('main_master', $partials, $data);
     }
 
-    public function gebruikerToevoegen(){
+    public function gebruikerToevoegen()
+    {
         $this->load->model('gebruiker_model');
         $this->load->model('adres_model');
 
@@ -155,14 +157,14 @@ class GebruikersBeheren extends CI_Controller
         $adres->postcode = $this->input->post('postcode');
         $adres->straat = $this->input->post('straat');
         $adres->huisnummer = $this->input->post('huisnummer');
-        if($this->gebruiker_model->getByMail($gebruiker->mail)){
+        if ($this->gebruiker_model->getByMail($gebruiker->mail)) {
             redirect('medewerker/gebruikersbeheren/toonfoutbestaandemail');
         }
 
         $bestaandAdres = $this->adres_model->bestaatAdresAl($adres);
-        if(!$bestaandAdres){
+        if (!$bestaandAdres) {
             $gebruiker->adresId = $this->adres_model->insertAdres($adres);
-        } else{
+        } else {
             $gebruiker->adresId = $bestaandAdres;
         }
         $this->gebruiker_model->insertGebruiker($gebruiker);
@@ -180,7 +182,8 @@ class GebruikersBeheren extends CI_Controller
      *
      * @see main_melding.php
      */
-    public function toonMelding($foutTitel, $boodschap, $link) {
+    public function toonMelding($foutTitel, $boodschap, $link)
+    {
         $data['titel'] = '';
         $data['author'] = 'Geffrey W.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
@@ -198,7 +201,8 @@ class GebruikersBeheren extends CI_Controller
      *
      * @see Inloggen::toonMelding()
      */
-    public function toonFoutWachtwoordWijzigen($id) {
+    public function toonFoutWachtwoordWijzigen($id)
+    {
         $titel = "Fout!";
         $boodschap = "De opgegeven wachtwoorden komen niet overeen.</br>"
             . "Probeer opnieuw!";
@@ -212,7 +216,8 @@ class GebruikersBeheren extends CI_Controller
      *
      * @see Inloggen::toonMelding()
      */
-    public function toonFoutBestaandeMail() {
+    public function toonFoutBestaandeMail()
+    {
         $titel = "Fout!";
         $boodschap = "U probeerde een gebruiker te maken met een mail dat al in gebruik is.</br>"
             . "Probeer een andere mail!";
@@ -226,7 +231,8 @@ class GebruikersBeheren extends CI_Controller
      *
      * @see Inloggen::toonMelding()
      */
-    public function toonWachtwoordGewijzigd() {
+    public function toonWachtwoordGewijzigd()
+    {
         $titel = "Wachtwoord succesvol veranderd";
         $boodschap = "het wachtwoord werd succesvol gewijzigd.</br>"
             . "De gebruiker kan nu gewoon inloggen met het nieuwe wachtwoord.";

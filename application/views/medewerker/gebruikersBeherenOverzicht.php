@@ -2,7 +2,7 @@
     function haalGebruikersMetFunctieOp(functieId) {
         $.ajax({
             type: "GET",
-            url: site_url + "/medewerker/gebruikersbeheren/haalAjaxOp_GebruikersOpFunctie",
+            url: site_url + "/medewerker/gebruikersBeheren/haalAjaxOp_GebruikersOpFunctie",
             data: {functieId: functieId},
             success: function (result) {
                 $("#gebruikersListbox").html(result);
@@ -15,7 +15,7 @@
     function haalGebruikerInfoOp(gebruikerId) {
         $.ajax({
             type: "GET",
-            url: site_url + "/medewerker/gebruikersbeheren/haalAjaxOp_GebruikerInfo",
+            url: site_url + "/medewerker/gebruikersBeheren/haalAjaxOp_GebruikerInfo",
             data: {gebruikerId: gebruikerId},
             success: function (result) {
                 $("#gebruikerInfo").html(result);
