@@ -1,6 +1,8 @@
-<?php
-    ?>
-
+<script>
+	$(document).ready(function(){
+		
+	});
+</script>
 <div>
 	
 	<div class="row">
@@ -16,7 +18,7 @@
 			</div>
 		</div>
 		<div class="col-lg-12">
-		<select class="col-lg-4 form-control" name="cars" size="15">
+		<select class="col-lg-4 form-control" name="listBoxMinderMobielen" size="15">
 		<?php foreach($minderMobielen as $minderMobiel){?>
 			<option value="<?php echo $minderMobiel->id?>"><?php echo $minderMobiel->voornaam." ".$minderMobiel->naam ?></option
 		</select>
@@ -24,5 +26,3 @@
 		</div>
 	</div>
 </div>
-
-<?php  ?>
