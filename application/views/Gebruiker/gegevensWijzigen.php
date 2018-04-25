@@ -1,6 +1,6 @@
 <?php
         $attributen = array('name' => 'wijzigenGegevensFormulier', 'class' => 'form-horizontal');
-		$hidden = array('id' => $gebruiker->id);
+		$hidden = array('id' => $gegevens->id);
         echo form_open('gebruiker/persoonlijkegegevens/gegevensVeranderen', $attributen, $hidden);
     ?>
 <div class="col-lg-12">

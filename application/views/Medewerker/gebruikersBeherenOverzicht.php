@@ -53,6 +53,7 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
         echo form_radiogroupFuncties('functieRadiogroup', $functies, 'id', 'naam');
         echo form_listboxproGebruikersBeheren('gebruikersListbox', array(), 'id', 'voornaam', 'naam', 0, array('id' => 'gebruikersListbox', 'size' => 10, 'class' => 'form-control'));
         ?>
+        <?php print anchor("medewerker/gebruikersbeheren/nieuweGebruikerMaken", '+ Nieuwe gebruiker', 'class="btn btn-primary"'); ?>
     </div>
 
     <div class="col-7">

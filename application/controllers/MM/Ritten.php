@@ -47,7 +47,7 @@ class Ritten extends CI_Controller {
 		$this->pagination->initialize($config);
 		
 		
-		data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id, $aantal, $startRij);
+		$data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id, $aantal, $startRij);
 		
 		
 		

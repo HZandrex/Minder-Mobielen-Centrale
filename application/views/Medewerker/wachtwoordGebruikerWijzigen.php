@@ -12,15 +12,15 @@
 <div class="row justify-content-center align-self-center">
     <?php
     $attributes = array('name' => 'wachtwoordVergetenWijzigenForm');
-    $hidden = array('resetToken' => $resetToken);
-    echo form_open('gebruiker/inloggen/wachtwoordVeranderen', $attributes, $hidden);
+    $hidden = array('id' => $editGebruiker->id);
+    echo form_open('medewerker/gebruikersbeheren/wachtwoordVeranderen', $attributes, $hidden);
     ?>
     <div class="card" id="inlogscherm">
         <div class="card-body">
-            <?php echo anchor('gebruiker/inloggen', '< Terug', 'class="card-link"'); ?>
+            <?php echo anchor('medewerker/gebruikersbeheren', '< Terug', 'class="card-link"'); ?>
         </div>
         <div class="card-body">
-            <h5 class="card-title">Nieuw wachtwoord instellen</h5>
+            <h5 class="card-title">Wachtwoord wijzigen</h5>
             <div class="form-group">
                 <?php echo form_label('Wachtwoord:', 'wachtwoord'); ?></td>
                 <?php

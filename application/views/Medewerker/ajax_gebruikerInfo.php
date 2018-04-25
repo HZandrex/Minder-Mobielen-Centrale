@@ -45,7 +45,7 @@
     </table>
 </div>
 <div class="col-sm-12">
-    <?php print anchor('gebruiker/persoonlijkegegevens/wachtwoordWijzigen', 'Wachtwoord wijzigen', 'class="btn btn-primary"'); ?>
-    <?php print anchor('gebruiker/persoonlijkegegevens/gegevensWijzigen', 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
+    <?php print anchor("medewerker/gebruikersbeheren/wachtwoordWijzigen/$gebruiker->id", 'Wachtwoord wijzigen', 'class="btn btn-primary"'); ?>
+    <?php print anchor("gebruiker/persoonlijkegegevens/gegevensWijzigen/$gebruiker->id", 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
 </div>
 
