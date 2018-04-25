@@ -17,21 +17,21 @@
 <div class="row">
 	<div class="col-sm-12">
 		<p><?php
-                    if($rit->status->id == 2){
-                        echo anchor(array('vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
-                    } 
                     
                     $attributes = array('name' => 'vrij', 'id' => 'nieuweRit');
                     echo form_open('vrijwilliger/ritten/accepterenAnnuleren/'. $rit->id,$attributes);
                     
+                    if($rit->status->id == 2){
+                        echo anchor(array('vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
+                    } 
                     if($rit->status->id == 3 ){
-                        echo '<button class="btn-success" name="statusId" type="submit" value="2">Goedkeuren</button>';
+                        echo '<button class="btn btn-success" name="statusId" type="submit" value="2">Goedkeuren</button>';
                     }
                     if($rit->status->id == 3){
-                        echo '<button class="btn-danger" name="statusId" type="submit" value="1">Weigeren</button>';
+                        echo '<button class="btn btn-danger" name="statusId" type="submit" value="1">Weigeren</button>';
                     }
                     if($rit->status->id == 2){
-                        echo '<button class="btn-danger" name="statusId" type="submit" value="1">Annuleren</button>';
+                        echo '<button class="btn btn-danger" name="statusId" type="submit" value="1">Annuleren</button>';
                     }                     
                     echo anchor("vrijwilliger/ritten/", "Terug", 'class="btn btn-primary float-right"');
                     echo form_close(); ?>
@@ -80,7 +80,7 @@
 				<table class="mt-3">
 					<tr>
 						<td>Km kost: </td>
-						<td> € <?php print $rit->prijs; ?></td>
+						<td> € <?php print $rit->rit->prijs; ?></td>
 						
 					</tr>
 					<?php if(!empty($rit->rit->extraKost)){ ?>
