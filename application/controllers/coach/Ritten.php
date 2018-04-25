@@ -29,7 +29,7 @@ class Ritten extends CI_Controller {
 //            $config['per_page'] =2;
 
 //            $this->pagination->initialize($config);
-            $data['ritten']= $this->coachmindermobiele_model->getById($id);
+            $data['ritten']= $this->coachMindermobiele_model->getById($id);
             $data['titel'] = 'Ritten';
             $data['author'] = 'Lorenz C.';
 
