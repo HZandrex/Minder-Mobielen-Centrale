@@ -43,7 +43,7 @@ class CoachMindermobiele_model extends CI_Model {
 	
 	function getMMById($id)
 	{
-		$this->db->where('coachId', $id);
+		$this->db->where('gebruikerCoachId', $id);
 		$query = $this->db->get('coachMinderMobiele');
 		$mmIds = $query->result();
 		$this->load->model('gebruiker_model');

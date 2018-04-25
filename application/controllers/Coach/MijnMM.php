@@ -20,10 +20,10 @@ class MijnMM extends CI_Controller {
 		
 		$minderMobielen = [];
 		
+		
 		$this->load->model('CoachMindermobiele_model');
 		$data['minderMobielen'] = $this->CoachMindermobiele_model->getMMById($gebruiker->id);
 		
-
 		$partials = array('menu' => 'main_menu', 'inhoud' => 'Coach/mijnMM');
         $this->template->load('main_master', $partials, $data);
 	}
