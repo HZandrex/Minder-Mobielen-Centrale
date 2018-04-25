@@ -55,7 +55,7 @@ class GebruikersBeheren extends CI_Controller
         $functieId = $this->input->get('functieId');
 
         $this->load->model('functieGebruiker_model');
-        $data['gebruikers'] = $this->functiegebruiker_model->getAllGebruikersByFunction($functieId);
+        $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersByFunction($functieId);
 
         $this->load->view('medewerker/ajax_gebruikers', $data);
     }
