@@ -2,7 +2,7 @@
 /**
 	* @class Adres_model
 	* @brief Model-klasse voor adres
-	* 
+	*
 	* Model-klasse die alle methodes bevat om te data uit de database-tabel adres te halen.
 */
 class Adres_model extends CI_Model {
@@ -38,6 +38,20 @@ class Adres_model extends CI_Model {
 		$this->db->update('adres');
 	}
 
+    function insertAdres($adres){
+        $data = array(
+            'huisnummer' => $adres->huisnummer,
+            'straat' => $adres->straat,
+            'gemeente' => $adres->gemeente,
+            'postcode' => $adres->postcode,
+        );
+
+        $this->db->insert('adres', $data);
+        $insert_id = $this->db->insert_id();
+
+        return $insert_id;
+    }
+
 	function addAdres($huisnummer, $straat, $gemeente, $postcode){
 		$data = array(
 			'huisnummer' => $huisnummer,
@@ -48,10 +62,28 @@ class Adres_model extends CI_Model {
 
 		$this->db->insert('adres', $data);
 		$insert_id = $this->db->insert_id();
-		
+
 		return $insert_id;
 	}
-	
+
+    function bestaatAdresAl($adres){
+        $data = array(
+            'huisnummer' => $adres->huisnummer,
+            'straat' => $adres->straat,
+            'gemeente' => $adres->gemeente,
+            'postcode' => $adres->postcode,
+        );
+        $this->db->where($data);
+        $query = $this->db->get('adres');
+        $query->row();
+        if($query->num_rows() > 0){
+            $result = $query->row();
+            return $result->id;
+        }else{
+            return false;
+        }
+    }
+
 	function bestaatAdres($huisnummer, $straat, $gemeente, $postcode){
 		$this->db->where('huisnummer', $huisnummer);
 		$this->db->where('straat', $straat);

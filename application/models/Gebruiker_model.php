@@ -36,6 +36,12 @@ class Gebruiker_model extends CI_Model {
         $this->db->where('mail', $email);
         $query = $this->db->get('gebruiker');
         return $query->row();
+        if($query->num_rows() > 0){
+            $result = $query->row();
+            return $result;
+        }else{
+            return false;
+        }
     }
 	
     /**
@@ -80,6 +86,20 @@ class Gebruiker_model extends CI_Model {
 			$this->db->set('voorkeurId', $gebruiker->voorkeurId);
             $this->db->where('id', $gebruiker->id);
 			$this->db->update('gebruiker');
+    }
+
+    function insertGebruiker($gebruiker){
+        $data = array(
+            'voornaam' => $gebruiker->voornaam,
+            'naam' => $gebruiker->naam,
+            'geboorte' => $gebruiker->geboorte,
+            'telefoon' => $gebruiker->telefoon,
+            'mail' => $gebruiker->mail,
+            'voorkeurId' => $gebruiker->voorkeurId,
+            'adresId' => $gebruiker->adresId
+        );
+
+        $this->db->insert('gebruiker', $data);
     }
 
     /**
@@ -194,7 +214,18 @@ class Gebruiker_model extends CI_Model {
         $this->db->update('gebruiker', $gebruiker);
         $this->authex->meldAf();
     }
-	
+
+    /**
+     * Wijzigt het wachtwoord waar id = $id en meld de gebruiker af.
+     * @param $wachtwoord Het nieuwe wachtwoord dat werd opgeven in Gebruiker/wachtwoordWijzigen.php
+     */
+    function wijzigWachtwoordGebruiker($id, $wachtwoord){
+        $gebruiker = new stdClass();
+        $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
+        $this->db->where('id', $id);
+        $this->db->update('gebruiker', $gebruiker);
+    }
+
 	function getCredits($id, $date){
 		$this->load->model('instelling_model');
 		$this->load->model('rit_model');
