@@ -86,15 +86,15 @@ class Rit_model extends CI_Model {
 		
 		$rit = $query->result()[0];
 		
-		$rit->heenvertrek = $this->adresrit_model->getByRitIdAndType($rit->id, 1);
-		$rit->heenaankomst = $this->adresrit_model->getByRitIdAndType($rit->id, 2);
+		$rit->heenvertrek = $this->adresRit_model->getByRitIdAndType($rit->id, 1);
+		$rit->heenaankomst = $this->adresRit_model->getByRitIdAndType($rit->id, 2);
                 
                 //Bij ritId 5 krijg ik errors (zie ritten overzicht vrijwilliger) dat er iets mis is met de index van rows (zie 2 regels in commentaar hieronder)
 		$rit->heen = $this->google_model->getReisTijd($rit->heenvertrek->adresId, $rit->heenaankomst->adresId, $rit->heenvertrek->tijd);
 		
-		if($this->adresrit_model->terugRit($rit->id)){
-			$rit->terugvertrek = $this->adresrit_model->getByRitIdAndType($rit->id, 3);
-			$rit->terugaankomst = $this->adresrit_model->getByRitIdAndType($rit->id, 4);
+		if($this->adresRit_model->terugRit($rit->id)){
+			$rit->terugvertrek = $this->adresRit_model->getByRitIdAndType($rit->id, 3);
+			$rit->terugaankomst = $this->adresRit_model->getByRitIdAndType($rit->id, 4);
 			$rit->terug = $this->google_model->getReisTijd($rit->terugvertrek->adresId, $rit->terugaankomst->adresId, $rit->terugvertrek->tijd);
 		}
 		$rit->status = $this->status_model->getById($rit->statusId);
@@ -140,7 +140,7 @@ class Rit_model extends CI_Model {
 		$ritten = $query->result();
 		
 		foreach($ritten as $rit){
-			$ritAdressen = $this->adresrit_model->getAdressen($rit->id);
+			$ritAdressen = $this->adresRit_model->getAdressen($rit->id);
 			foreach($ritAdressen as $adres){
 				array_push($temp, $adres);
 			}
