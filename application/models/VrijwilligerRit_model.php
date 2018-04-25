@@ -41,7 +41,7 @@ class VrijwilligerRit_model extends CI_Model {
         *@see Status_model::getById()
         *@return Al de statussen van een rit ivm de vrijwilliger
     */
-    function getByVrijwilligerId($id)
+    function getVrijwilligerRittenByVrijwilligerId($id)
     {
         $this->load->model('rit_model');
         $this->load->model('status_model');
@@ -61,6 +61,21 @@ class VrijwilligerRit_model extends CI_Model {
             $i++;
         }
         return $ritten;
+    }
+    
+    function getVrijwilligerRitByVrijwilligerRitId($ritId)
+    {
+        $this->load->model('rit_model');
+        $this->load->model('status_model');
+        
+	$this->db->select('*');
+        $this->db->where('ritId', $ritId);
+        $query = $this->db->get('vrijwilligerRit');
+        $vrijwilligerRit = $query->result()[0];
+        
+        $vrijwilligerRit->rit = $this->rit_model->getByRitId($vrijwilligerRit->ritId);
+        $vrijwilligerRit->status = $this->status_model->getById($vrijwilligerRit->statusId);
+        return $vrijwilligerRit;
     }
     
     function updateVrijwilligerRit($vrijwilligerRit)
