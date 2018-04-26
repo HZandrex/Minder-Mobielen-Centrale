@@ -17,7 +17,7 @@
     ?>
     <div class="card" id="inlogscherm">
         <div class="card-body">
-            <?php echo anchor('medewerker/gebruikersbeheren', '< Terug', 'class="card-link"'); ?>
+            <?php echo anchor('medewerker/gebruikersBeheren', '< Terug', 'class="card-link"'); ?>
         </div>
         <div class="card-body">
             <h5 class="card-title">Wachtwoord wijzigen</h5>

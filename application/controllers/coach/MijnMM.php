@@ -19,8 +19,8 @@ class MijnMM extends CI_Controller {
         }
 		
 		
-		$this->load->model('coachMindermobiele_model');
-		$data['minderMobielen'] = $this->coachMindermobiele_model->getMMById($gebruiker->id);
+		$this->load->model('coachMinderMobiele_model');
+		$data['minderMobielen'] = $this->coachMinderMobiele_model->getMMById($gebruiker->id);
 		
 		$partials = array('menu' => 'main_menu', 'inhoud' => 'coach/mijnMM');
         $this->template->load('main_master', $partials, $data);

@@ -13,11 +13,11 @@ class Ritten extends CI_Controller {
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null){
-            $this->load->model('coachMindermobiele_model');
+            $this->load->model('coachMinderMobiele_model');
             $data['gebruiker'] = $this->authex->getGebruikerInfo();
             $id = $data['gebruiker']->id;
 
-            $data['test']=count($this->coachMindermobiele_model->getById($id));
+            $data['test']=count($this->coachMinderMobiele_model->getById($id));
 
 //            $this->load->library('pagination');
 //            $this->load->library('table');
@@ -29,7 +29,7 @@ class Ritten extends CI_Controller {
 //            $config['per_page'] =2;
 
 //            $this->pagination->initialize($config);
-            $data['ritten']= $this->coachMindermobiele_model->getById($id);
+            $data['ritten']= $this->coachMinderMobiele_model->getById($id);
             $data['titel'] = 'Ritten';
             $data['author'] = 'Lorenz C.';
 
@@ -38,8 +38,7 @@ class Ritten extends CI_Controller {
             $this->template->load('main_master', $partials, $data);
 
         } else{
-            $data['titel'] = 'Geen gebruiker ingelogd';
-            redirect('coach/ritten/toonFoutUrl');
+            redirect('coach/ritten/toonfouturl');
         }
 
 

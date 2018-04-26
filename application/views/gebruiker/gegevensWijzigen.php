@@ -1,7 +1,7 @@
 <?php
 $attributen = array('name' => 'wijzigenGegevensFormulier', 'class' => 'form-horizontal');
 $hidden = array('id' => $gegevens->id);
-echo form_open('gebruiker/persoonlijkegegevens/gegevensVeranderen', $attributen, $hidden);
+echo form_open('gebruiker/persoonlijkeGegevens/gegevensVeranderen', $attributen, $hidden);
 ?>
 <div class=row>
     <div class="col-lg-6 col-sm-12">
@@ -75,6 +75,6 @@ echo form_open('gebruiker/persoonlijkegegevens/gegevensVeranderen', $attributen,
 </div>
 <div class="text-right col-12">
     <?php echo form_submit('knop', 'Opslaan', 'class="btn btn-primary"'); ?>
-    <?php echo anchor('gebruiker/persoonlijkegegevens/persoonlijkegegevens', 'Annuleren', 'class="btn btn-primary"'); ?>
+    <?php echo anchor('gebruiker/persoonlijkeGegevens/persoonlijkeGegevens', 'Annuleren', 'class="btn btn-primary"'); ?>
     <?php echo form_close(); ?>
 </div>

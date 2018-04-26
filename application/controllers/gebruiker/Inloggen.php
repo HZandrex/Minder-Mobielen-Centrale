@@ -72,7 +72,7 @@ class Inloggen extends CI_Controller {
         $data['author'] = 'Geffrey W.';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordvergeten');
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordVergeten');
         $this->template->load('main_master', $partials, $data);
     }
     

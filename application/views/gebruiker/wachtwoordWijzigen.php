@@ -13,11 +13,11 @@
     <?php
     $attributes = array('name' => 'wachtwoordVeranderenForm');
     $hidden = array('id' => $gebruiker->id);
-    echo form_open('gebruiker/persoonlijkegegevens/wachtwoordveranderen', $attributes, $hidden);
+    echo form_open('gebruiker/persoonlijkegegevens/wachtwoordVeranderen', $attributes, $hidden);
     ?>
     <div class="card" id="inlogscherm">
         <div class="card-body">
-            <?php echo anchor('gebruiker/persoonlijkegegevens/persoonlijkegegevens', '< Terug', 'class="card-link"'); ?>
+            <?php echo anchor('gebruiker/persoonlijkeGegevens/persoonlijkeGegevens', '< Terug', 'class="card-link"'); ?>
         </div>
         <div class="card-body">
             <h5 class="card-title">Wachtwoord veranderen</h5>

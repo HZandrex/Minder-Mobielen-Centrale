@@ -82,7 +82,17 @@ class Ritten extends CI_Controller {
                 redirect('gebruiker/inloggen');
             }
             $this->load->model('vrijwilligerRit_model');
+<<<<<<< HEAD
             $this->vrijwilligerRit_model->updateStatusRitten($ritId, (int)$this->input->post('statusId'));
+=======
+
+            $vrijwilligerRit = new stdClass();
+            $vrijwilligerRit->statusId = (int)$this->input->post('statusId');
+            $vrijwilligerRit->id = $vrijwilligerRitId;
+            var_dump($vrijwilligerRit);
+            
+            $this->vrijwilligerRit_model->updateStatusVrijwilligerRit($vrijwilligerRit);
+>>>>>>> a321d759099cdbbd216990e42872c1a2f77b32ea
 
             redirect('vrijwilliger/ritten');
 	}

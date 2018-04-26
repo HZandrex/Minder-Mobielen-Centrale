@@ -44,6 +44,6 @@ class Webinfo extends CI_Controller {
         
         $this->webinfo_model->update($webinfo);
         
-        redirect('admin/webinfo/index');
+        redirect('admin/webinfo');
     }
 }

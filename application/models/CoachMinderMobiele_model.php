@@ -1,11 +1,11 @@
 <?php
 /**
- * @class CoachMindermobiele_model
+ * @class CoachMinderMobiele_model
  * @brief Model-klasse voor coachMinderMobiele
  *
  * Model-klasse die alle methodes bevat om te data uit de database-tabel status te halen.
  */
-class CoachMindermobiele_model extends CI_Model {
+class CoachMinderMobiele_model extends CI_Model {
 
     /**
      *Constructor
@@ -47,7 +47,7 @@ class CoachMindermobiele_model extends CI_Model {
 		$query = $this->db->get('coachMinderMobiele');
 		$mmIds = $query->result();
 		$this->load->model('gebruiker_model');
-		$minderMobielen = [];
+		$minderMobielen = array();
 		
 		
 		foreach ($mmIds as $mmId){
