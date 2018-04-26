@@ -22,10 +22,15 @@ class Ritten extends CI_Controller {
     public function index() {
 	$data['titel'] = 'Ritten';
         $data['author'] = 'Nico C.';
-        $data['gebruiker'] = $this->authex->getGebruikerInfo();
+        $gebruiker = $this->authex->getGebruikerInfo();
+        if ($gebruiker != null) {
+            $data['gebruiker'] = $gebruiker;
+        } else {
+            redirect('gebruiker/inloggen');
+        }
 		
         $this->load->model('vrijwilligerRit_model');
-        $data['ritten'] = $this->vrijwilligerRit_model->getVrijwilligerRittenByVrijwilligerId($data['gebruiker']->id);
+        $data['ritten'] = $this->vrijwilligerRit_model->getVrijwilligerRittenByVrijwilligerId($gebruiker->id);
 
         $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/ritten');
         $this->template->load('main_master', $partials, $data);
@@ -44,32 +49,40 @@ class Ritten extends CI_Controller {
 
             $data['titel'] = 'Details rit';
             $data['author'] = 'Nico C.';
-            $data['gebruiker'] = $this->authex->getGebruikerInfo();
+            $gebruiker = $this->authex->getGebruikerInfo();
+            if ($gebruiker != null) {
+                $data['gebruiker'] = $gebruiker;
+            } else {
+                redirect('gebruiker/inloggen');
+            }
 
             $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/rit');
             $this->template->load('main_master', $partials, $data);
 	}
 	
-	public function wijzigen($ritId){
+	public function wijzigen($ritId){$data['titel'] = 'Wijzig rit';
+            $data['author'] = 'Nico C.';
+            $gebruiker = $this->authex->getGebruikerInfo();
+            if ($gebruiker != null) {
+                $data['gebruiker'] = $gebruiker;
+            } else {
+                redirect('gebruiker/inloggen');
+            }
+
             $this->load->model('vrijwilligerRit_model');
             $data['rit'] = $this->vrijwilligerRit_model->getByVrijwilligerId($ritId);
-
-            $data['titel'] = 'Wijzig rit';
-            $data['author'] = 'Nico C.';
-            $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
             $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/ritWijzigen');
             $this->template->load('main_master', $partials, $data);
 	}
         
-        public function accepterenAnnuleren($vrijwilligerRitId){
+        public function statusAanpassen($ritId){
+            $gebruiker = $this->authex->getGebruikerInfo();
+            if ($gebruiker == null) {
+                redirect('gebruiker/inloggen');
+            }
             $this->load->model('vrijwilligerRit_model');
-            
-            $vrijwilligerRit->statusId = (int)$this->input->post('statusId');
-            $vrijwilligerRit->id = $vrijwilligerRitId;
-            var_dump($vrijwilligerRit);
-            
-            $this->vrijwilligerRit_model->updateStatusVrijwilligerRit($vrijwilligerRit);
+            $this->vrijwilligerRit_model->updateStatusRitten($ritId, (int)$this->input->post('statusId'));
 
             redirect('vrijwilliger/ritten');
 	}

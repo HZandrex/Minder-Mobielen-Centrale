@@ -181,13 +181,13 @@ class Ritten extends CI_Controller {
         redirect('mm/ritten');
 
     }
-    public function accepterenAnnuleren($ritId){
+    public function statusAanpassen($ritId){
+        $gebruiker = $this->authex->getGebruikerInfo();
+        if ($gebruiker == null) {
+            redirect('gebruiker/inloggen');
+        }
         $this->load->model('rit_model');
-
-        $ritstatusId = (int)$this->input->post('statusId');
-
-
-        $this->vrijwilligerRit_model->updateStatusVrijwilligerRit($ritId, $ritstatusId);
+        $this->rit_model->updateStatusRitten($ritId, (int)$this->input->post('statusId'));
 
         redirect('mm/ritten');
     }

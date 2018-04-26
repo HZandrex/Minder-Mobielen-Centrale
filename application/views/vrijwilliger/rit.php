@@ -5,7 +5,7 @@
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
 */
-        var_dump($rit);
+        //var_dump($rit);
 		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
 ?>
 <nav aria-label="breadcrumb">
@@ -15,28 +15,25 @@
   </ol>
 </nav>
 <div class="row">
-	<div class="col-sm-12">
-		<p><?php
-                    
-                    $attributes = array('name' => 'vrij', 'id' => 'nieuweRit');
-                    echo form_open('vrijwilliger/ritten/accepterenAnnuleren/'. $rit->id,$attributes);
-                    
-                    if($rit->status->id == 2){
-                        echo anchor(array('vrijwilliger/ritten/wijzigen', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary"');
-                    } 
-                    if($rit->status->id == 3 ){
-                        echo '<button class="btn btn-success" name="statusId" type="submit" value="2">Goedkeuren</button>';
-                    }
-                    if($rit->status->id == 3){
-                        echo '<button class="btn btn-danger" name="statusId" type="submit" value="1">Weigeren</button>';
-                    }
-                    if($rit->status->id == 2){
-                        echo '<button class="btn btn-danger" name="statusId" type="submit" value="1">Annuleren</button>';
-                    }                     
-                    echo anchor("vrijwilliger/ritten/", "Terug", 'class="btn btn-primary float-right"');
-                    echo form_close(); ?>
-		</p>
-	</div>
+    <div class="col-sm-12">
+        <?php
+            echo form_open('vrijwilliger/ritten/statusAanpassen/'. $rit->rit->id);
+            echo '<p>';
+            echo '<div class="btn-group">';
+            if($rit->status->id == 2){
+                echo anchor(array('vrijwilliger/ritten/wijzigen', $rit->rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om deze rit aan te passen"');
+                echo '<button class="btn btn-danger" name="statusId" data-toggle="tooltip" data-placement="top" title="Klik hier om de rit af te zeggen" type="submit" value="1"><i class="fas fa-ban"></i> Annuleren</button>';
+            }              
+            if($rit->status->id == 3 ){
+                echo '<button class="btn btn-success" name="statusId" data-toggle="tooltip" data-placement="top" title="Klik hier om de rit goed te keuren" type="submit" value="2"><i class="fas fa-check"></i> Goedkeuren</button>';
+                echo '<button class="btn btn-danger" name="statusId" data-toggle="tooltip" type="submit" data-placement="top" title="Klik hier om de rit af te zeggen" value="1"><i class="fas fa-ban"></i> Weigeren</button>';
+            }
+            echo '</div>';
+            echo anchor("vrijwilliger/ritten/", '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right", data-toggle="tooltip", data-placement="top", title="Klik hier om terug te gaan naar de vorige pagina"');
+            echo '</p>';
+            echo form_close(); 
+        ?>
+    </div>  
 </div>
 <div class="card">
 	<div class="card-body">
@@ -83,7 +80,7 @@
 						<td> € <?php print $rit->rit->prijs; ?></td>
 						
 					</tr>
-					<?php if(!empty($rit->rit->extraKost)){ ?>
+					<?php if(!(empty($rit->rit->extraKost) || $rit->rit->extraKost == 0)){ ?>
 					<tr>
 						<td>Extra kost: </td>
 						<td> € <?php print $rit->rit->extraKost; ?></td>

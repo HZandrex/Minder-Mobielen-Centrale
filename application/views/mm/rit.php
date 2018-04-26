@@ -15,23 +15,21 @@
   </ol>
 </nav>
 <div class="row">
-	<div class="col-sm-12">
-		<p>
-			<div class="btn-group btn-group-toggle" data-toggle="buttons">
-				<?php	
-					if($rit->status->id != 1){
-                        echo anchor(array('mm/ritten/wijzigRit', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", data-placement="top", title="Klik hier om deze rit aan te passen"');
-                    } 
-                    if($rit->status->id != 1){
-						echo anchor(array('anuleren'), '<i class="fas fa-ban"></i> Rit annuleren', 'class="btn btn-danger", data-toggle="tooltip", data-placement="top", title="Klik hier om de rit af te zeggen"');
-                    }    
-				?>
-			</div>
-			<?php 						 
-				echo anchor("mm/ritten/", '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right", data-toggle="tooltip", data-placement="top", title="Klik hier om terug te gaan naar de vorige pagina"');
-			?>
-		</p>
-	</div>
+    <div class="col-sm-12">
+        <?php
+            echo form_open('mm/ritten/statusAanpassen/'. $rit->id);
+            echo '<p>';
+            echo '<div class="btn-group">';
+            if($rit->status->id == 2 || $rit->status->id == 3){
+                echo anchor(array('mm/ritten/wijzigRit', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om deze rit aan te passen"');
+                echo '<button class="btn btn-danger" name="statusId" data-toggle="tooltip" data-placement="top" title="Klik hier om de rit af te zeggen" type="submit" value="1"><i class="fas fa-ban"></i> Annuleren</button>';
+            }
+            echo '</div>';
+            echo anchor("mm/ritten/", '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right", data-toggle="tooltip", data-placement="top", title="Klik hier om terug te gaan naar de vorige pagina"');
+            echo '</p>';
+            echo form_close(); 
+        ?> 
+    </div>  
 </div>
 <div class="card">
 	<div class="card-body">
@@ -78,7 +76,7 @@
 						<td> € <?php print $rit->prijs; ?></td>
 						
 					</tr>
-					<?php if(!empty($rit->extraKost)){ ?>
+					<?php if(!(empty($rit->rit->extraKost) || $rit->rit->extraKost == 0)){ ?>
 					<tr>
 						<td>Extra kost: </td>
 						<td> € <?php print $rit->extraKost; ?></td>

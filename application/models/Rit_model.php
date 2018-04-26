@@ -188,11 +188,22 @@ class Rit_model extends CI_Model {
 		
 		return $ritId;
 	}
-    function updateStatusRit($RitId)
+    function updateStatusVrijwilligerRit($vrijwilligerRitId, $statusId)
     {
-        $data = array('statusId' => $RitId->statusId);
-        $this->db->where('id', $RitId->id);
+        $data = array('statusId' => $statusId);
+        $this->db->where('id', $vrijwilligerRitId);
         $this->db->update('rit', $data);
+    }
+    
+    function updateStatusRitten($ritId,$ritStatusId)
+    {
+        $data = array('statusId' => $ritStatusId);
+        $this->db->where('id', $ritId);
+        $this->db->update('rit', $data);
+        
+        $data = array('statusId' => $ritStatusId);
+        $this->db->where('ritId', $ritId);
+        $this->db->update('vrijwilligerRit', $data);
     }
 
 
