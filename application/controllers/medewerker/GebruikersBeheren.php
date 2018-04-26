@@ -173,6 +173,109 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
+     * Gaat de gegevens van een persoon doorgeven naar de gegevens wijzigen pagina.
+     *
+     * @see Gebruiker_model::getWithFunctions()
+     * @see Voorkeur_model::getAll()
+     * @see Gebruiker::gegevensWijzigen()
+     */
+    public function gegevensWijzigen($id = 0){
+        $data['titel'] = 'Gebruiker Gegevens Wijzigen';
+        $data['author'] = 'Geffrey Wuyts';
+
+        $gebruiker = $this->authex->getGebruikerInfo();
+        if ($gebruiker != null) {
+            $data['gebruiker'] = $gebruiker;
+        } else {
+            redirect('gebruiker/inloggen');
+        }
+        foreach ($gebruiker->functies as $functie) {
+            if ($functie->id != 4) {//id=4 -> Medewerker
+                redirect('admin/instellingen/toonfoutonbevoegd');
+            }
+        }
+
+        if ($id == 0) {
+            redirect('medewerker/gebruikersbeheren/toonfouturl');
+        } else {
+            $this->load->model('gebruiker_model');
+            $data['editGebruiker'] = $this->gebruiker_model->getWithFunctions($id);
+        }
+
+        $this->load->model('functie_model');
+        $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+
+        $this->load->model('voorkeur_model');
+        $data['voorkeuren'] = $this->voorkeur_model->getAll();
+
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gegevensWijzigen');
+        $this->template->load('main_master', $partials, $data);
+    }
+
+    /**
+     * Gaat de gegevens van de gebruiker in de databank veranderen.
+     *
+     * @see Gebruiker_model::get()
+     * @see Gebruiker_model::updateGebruiker()
+     * @see Adres_model::updateAdres()
+     * @see Medewerker::gebruikersBeheren()
+     * @see PersoonlijkeGegevens::persoonlijkeGegevens()
+     */
+    public function gegevensVeranderen(){
+        $this->load->model('gebruiker_model');
+        $this->load->model('adres_model');
+        $this->load->model('functie_model');
+
+        $gebruiker = $this->gebruiker_model->get($this->input->post('id'));
+        foreach ($gebruiker as $attribut => $waarde){
+            $post = $this->input->post($attribut);
+            if($post != null) {
+                $gebruiker->$attribut = $post;
+            }
+        }
+
+        $gegevensAdres = new stdClass();
+        $gegevensAdres->gemeente = $this->input->post('gemeente');
+        $gegevensAdres->postcode = $this->input->post('postcode');
+        $gegevensAdres->straat = $this->input->post('straat');
+        $gegevensAdres->huisnummer = $this->input->post('huisnummer');
+
+        $allFuncties = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+
+        foreach ($allFuncties as $functie){
+            $this->pasFunctieGebruikerAan($gebruiker, $functie, $this->input->post('functie'.$functie->id));
+        }
+        $this->gebruiker_model->updateGebruiker($gebruiker);
+        $this->adres_model->updateAdres($gebruiker->id, $gegevensAdres);
+
+        redirect('medewerker/gebruikersbeheren/toongegevensgewijzigd');
+    }
+
+    private function pasFunctieGebruikerAan($gebruiker, $functie, $checkbox){
+        $this->load->model('functieGebruiker_model');
+
+        if ($checkbox == null){
+            $functieGebruikerId = $this->functieGebruiker_model->functieGebruikerBestaat($gebruiker->id, $functie->id);
+            if ($functieGebruikerId != false){
+                if (!$this->functieGebruiker_model->verwijderen($functieGebruikerId)){
+                    redirect('medewerker/gebruikersbeheren/toonfoutopslaan/'.$gebruiker->id);
+                }
+            }
+        }
+        else{
+            $functieGebruikerId = $this->functieGebruiker_model->functieGebruikerBestaat($gebruiker->id, $functie->id);
+            if ($functieGebruikerId == false){
+                $functieGebruiker = new stdClass();
+                $functieGebruiker->functieId = $functie->id;
+                $functieGebruiker->gebruikerId = $gebruiker->id;
+                if (!$this->functieGebruiker_model->voegToe($functieGebruiker)){
+                    redirect('medewerker/gebruikersbeheren/toonfoutopslaan/'.$gebruiker->id);
+                }
+            }
+        }
+    }
+
+    /**
      * Toont de melding pagina met de opgeven parrameters foutTitel=$foutTitel, boodschap=$boodschap & link=$link
      * in de view main_melding.php.
      *
@@ -231,11 +334,56 @@ class GebruikersBeheren extends CI_Controller
      *
      * @see Inloggen::toonMelding()
      */
+    public function toonFoutUrl()
+    {
+        $titel = "Fout!";
+        $boodschap = "U heeft een ongeldige URL opgegeven.</br>"
+            . "Probeer opnieuw!";
+        $link = array("url" => "home", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
+    public function toonFoutOpslaan($id)
+    {
+        $titel = "Fout!";
+        $boodschap = "Er heeft zich een probleem opgetreden bij het opslaan.</br>"
+            . "Probeer opnieuw! Als dit blijft voorvallen neemt u best contact op met de systeembeheerder.";
+        $link = array("url" => "medewerker/gebruikersBeheren/gegevensWijzigen/$id", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
     public function toonWachtwoordGewijzigd()
     {
         $titel = "Wachtwoord succesvol veranderd";
         $boodschap = "het wachtwoord werd succesvol gewijzigd.</br>"
             . "De gebruiker kan nu gewoon inloggen met het nieuwe wachtwoord.";
+        $link = array("url" => "medewerker/gebruikersbeheren", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
+    public function toonGegevensGewijzigd()
+    {
+        $titel = "Gegevens succesvol veranderd";
+        $boodschap = "De gebruiker zijn gegevens werden succesvol veranderd.</br>"
+            . "De gebruiker kan deze veranderingen ook zien.";
         $link = array("url" => "medewerker/gebruikersbeheren", "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);

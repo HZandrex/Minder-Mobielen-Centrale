@@ -17,6 +17,7 @@ class FunctieGebruiker_model extends CI_Model {
     function getWithName($gebruikerId)
     {
         $this->db->where('gebruikerId', $gebruikerId);
+        $this->db->where('eindTijd', null);
         $query = $this->db->get('functieGebruiker');
         $functiesGebruiker = $query->result();
         
@@ -29,9 +30,45 @@ class FunctieGebruiker_model extends CI_Model {
         return $functies;
     }
 
+    function functieGebruikerBestaat($gebruikerId, $functieId)
+    {
+        $this->db->where('gebruikerId', $gebruikerId);
+        $this->db->where('functieId', $functieId);
+        $this->db->where('eindTijd', null);
+        $query = $this->db->get('functieGebruiker');;
+        $functiesGebruiker = $query->row();
+
+        if ($query->num_rows() == 0) {
+            return false;
+        } else {
+            return $functiesGebruiker->id;
+        }
+    }
+
+    function voegToe($functieGebruiker){
+        if(!$this->db->insert('functieGebruiker', $functieGebruiker)){
+            return false;
+        }
+        return true;
+
+    }
+
+    function verwijderen($id){
+        $functieGebruiker = new stdClass();
+        $functieGebruiker->eindTijd = date("Y-m-d H:i:s");
+
+        $this->db->where('id', $id);
+        if(!$this->db->update('functieGebruiker', $functieGebruiker)){
+            return false;
+        }
+        return true;
+    }
+
+
     function getAllGebruikersByFunction($functieId)
     {
         $this->db->where('functieId', $functieId);
+        $this->db->where('eindTijd', null);
         $query = $this->db->get('functieGebruiker');
         $functies =  $query->result();
         $this->load->model('gebruiker_model');

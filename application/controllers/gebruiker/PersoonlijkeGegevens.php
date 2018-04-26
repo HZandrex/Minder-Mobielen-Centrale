@@ -46,7 +46,7 @@ class PersoonlijkeGegevens extends CI_Controller
 	 * @see Voorkeur_model::getAll()
      * @see Gebruiker::gegevensWijzigen()
      */
-    public function gegevensWijzigen($id = 0){
+    public function gegevensWijzigen(){
         $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
         $data['author'] = 'Tijmen Elseviers';
 
@@ -56,12 +56,7 @@ class PersoonlijkeGegevens extends CI_Controller
         } else {
             redirect('gebruiker/inloggen');
         }
-        if ($id == 0) {
-            $data['gegevens'] = $gebruiker;
-        } else {
-            $this->load->model('gebruiker_model');
-            $data['gegevens'] = $this->gebruiker_model->getWithFunctions($id);
-        }
+        $data['gegevens'] = $gebruiker;
 
         $this->load->model('voorkeur_model');
         $data['communicatiemiddelen'] = $this->voorkeur_model->getAll();
@@ -96,7 +91,7 @@ class PersoonlijkeGegevens extends CI_Controller
         $gebruiker->telefoon = $this->input->post('gegevensTelefoon');
         $gebruiker->mail = $this->input->post('gegevensMail');
         $gebruiker->voorkeurId = $this->input->post('gegevensCommunicatie');
-
+        $gegevensAdres = new stdClass();
         $gegevensAdres->gemeente = $this->input->post('gegevensGemeente');
         $gegevensAdres->postcode = $this->input->post('gegevensPostcode');
         $gegevensAdres->straat = $this->input->post('gegevensStraat');
@@ -105,12 +100,7 @@ class PersoonlijkeGegevens extends CI_Controller
         $this->gebruiker_model->updateGebruiker($gebruiker);
         $this->adres_model->updateAdres($gebruiker->id, $gegevensAdres);
 
-        $ingelogdeGebruiker = $this->authex->getGebruikerInfo();
-        if ($ingelogdeGebruiker->id != $id) {
-            redirect('medewerker/gebruikersbeheren');
-        } else {
-            redirect('gebruiker/persoonlijkegegevens/persoonlijkegegevens');
-        }
+        redirect('gebruiker/persoonlijkegegevens/persoonlijkegegevens');
     }
 
 
