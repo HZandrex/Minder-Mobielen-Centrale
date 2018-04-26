@@ -43,10 +43,7 @@ class Ritten extends CI_Controller {
 		*@see Rit_model::getByRitId()
 		*
 	*/
-	public function eenRit($ritId){		
-            $this->load->model('vrijwilligerRit_model');
-            $data['rit'] = $this->vrijwilligerRit_model->getVrijwilligerRitByVrijwilligerRitId($ritId);
-
+	public function eenRit($vrijwilligerRitId){	
             $data['titel'] = 'Details rit';
             $data['author'] = 'Nico C.';
             $gebruiker = $this->authex->getGebruikerInfo();
@@ -55,12 +52,16 @@ class Ritten extends CI_Controller {
             } else {
                 redirect('gebruiker/inloggen');
             }
+	
+            $this->load->model('vrijwilligerRit_model');
+            $data['rit'] = $this->vrijwilligerRit_model->getVrijwilligerRitByVrijwilligerRitId($vrijwilligerRitId);
 
             $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/rit');
             $this->template->load('main_master', $partials, $data);
 	}
 	
-	public function wijzigen($ritId){$data['titel'] = 'Wijzig rit';
+	public function wijzigen($vrijwilligerRitId){
+            $data['titel'] = 'Wijzig rit';
             $data['author'] = 'Nico C.';
             $gebruiker = $this->authex->getGebruikerInfo();
             if ($gebruiker != null) {
@@ -68,32 +69,40 @@ class Ritten extends CI_Controller {
             } else {
                 redirect('gebruiker/inloggen');
             }
-
+	
             $this->load->model('vrijwilligerRit_model');
-            $data['rit'] = $this->vrijwilligerRit_model->getByVrijwilligerId($ritId);
+            $data['rit'] = $this->vrijwilligerRit_model->getVrijwilligerRitByVrijwilligerRitId($vrijwilligerRitId);
 
             $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/ritWijzigen');
             $this->template->load('main_master', $partials, $data);
 	}
         
-        public function statusAanpassen($ritId){
+	public function update($vrijwilligerRitId){
+            $gebruiker = $this->authex->getGebruikerInfo();
+            if ($gebruiker == null) {
+                redirect('gebruiker/inloggen');
+            }
+
+            $this->load->model('vrijwilligerRit_model');
+            
+            $vrijwilligerRit = new stdClass();
+            $vrijwilligerRit->id = $vrijwilligerRitId;
+            $vrijwilligerRit->ritId = $this->vrijwilligerRit_model->getVrijwilligerRitByVrijwilligerRitId($vrijwilligerRitId)->ritId;
+            $vrijwilligerRit->statusId = $this->input->post('statusId');
+            $vrijwilligerRit->extraKost = $this->input->post('extraKost');
+            $vrijwilligerRit->opmerkingVrijwilliger = $this->input->post('opmerkingVrijwilliger');
+            $this->vrijwilligerRit_model->updateVrijwilligerRit($vrijwilligerRit);
+
+            redirect('vrijwilliger/ritten/eenRit/'.$vrijwilligerRitId);
+	}
+        
+        public function statusAanpassen($vrijwilligerRitId){
             $gebruiker = $this->authex->getGebruikerInfo();
             if ($gebruiker == null) {
                 redirect('gebruiker/inloggen');
             }
             $this->load->model('vrijwilligerRit_model');
-<<<<<<< HEAD
-            $this->vrijwilligerRit_model->updateStatusRitten($ritId, (int)$this->input->post('statusId'));
-=======
-
-            $vrijwilligerRit = new stdClass();
-            $vrijwilligerRit->statusId = (int)$this->input->post('statusId');
-            $vrijwilligerRit->id = $vrijwilligerRitId;
-            var_dump($vrijwilligerRit);
-            
-            $this->vrijwilligerRit_model->updateStatusVrijwilligerRit($vrijwilligerRit);
->>>>>>> a321d759099cdbbd216990e42872c1a2f77b32ea
-
+            $this->vrijwilligerRit_model->updateStatusRitten(getVrijwilligerRitByVrijwilligerRitId($this->vrijwilligerRit_model->$vrijwilligerRitId)->ritId, (int)$this->input->post('statusId'));
             redirect('vrijwilliger/ritten');
 	}
 }

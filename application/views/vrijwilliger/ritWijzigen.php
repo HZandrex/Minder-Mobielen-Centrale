@@ -7,27 +7,29 @@
 */
         //var_dump($rit);
         $attributen = array('name' => 'mijnFormulier', 'class' => 'form-horizontal');
-        echo form_open('admin/webinfo/wijzig', $attributen);
+        echo form_open('vrijwilliger/ritten/update/'.$rit->id, $attributen);
 ?>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="..">Overzicht ritten</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Rit bekijken</li>
+    <li class="breadcrumb-item active" aria-current="page">Rit wijzigen</li>
   </ol>
 </nav>
 <div class="row">
 	<div class="col-sm-12">
+            <p>
 		<?php
-                    echo form_submit('knop', 'Opslaan', 'class="btn btn-primary"');
-                    echo anchor(array('vrijwilliger/ritten/eenRit', $rit->id), "Terug", 'class="btn btn-primary float-right"');
+                    echo '<button class="btn btn-primary" name="statusId" data-toggle="tooltip" data-placement="top" title="Klik hier om de ritwijzigingen op te slaan" type="submit"><i class="fas fa-save"></i> Opslaan</button>';
+                    echo anchor("vrijwilliger/ritten/eenRit/".$rit->id, '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right", data-toggle="tooltip", data-placement="top", title="Klik hier om terug te gaan naar de vorige pagina"');
                 ?>
+            </p>
 	</div>
 </div>
 <div class="card">
 	<div class="card-body">
 		<div class="row">
 			<div class="col-sm-6">
-				<p><i class="fas fa-shopping-cart"></i> klant: <?php print $rit->MM->voornaam . " " . $rit->MM->naam; ?></p>
+				<p><i class="fas fa-shopping-cart"></i> klant: <?php print $rit->rit->MM->voornaam . " " . $rit->rit->MM->naam; ?></p>
 				<p>
 				<i class="fas fa-car"></i> chauffeur: 
 				<?php 
@@ -65,7 +67,7 @@
 				<table class="mt-3">
 					<tr>
 						<td>Km kost: </td>
-						<td> € <?php print $rit->prijs; ?></td>
+						<td> € <?php print $rit->rit->prijs; ?></td>
 						
 					</tr>
 					<tr>
@@ -73,8 +75,8 @@
 						<td>
                                                     <div class="row">
                                                         <div class="col-2">€</div>
-                                                        <?php if(!empty($rit->extraKost))
-                                                            print '<input type="number" class="form-control input-sm col-10" name="extraKost" value="'.$rit->extraKost.'"/>';
+                                                        <?php if(!empty($rit->rit->extraKost))
+                                                            print '<input type="number" class="form-control input-sm col-10" name="extraKost" value="'.$rit->rit->extraKost.'"/>';
                                                         else
                                                             print '<input type="number" class="form-control input-sm col-8" name="extraKost" value="0"/>'; ?>
                                                     </div>
@@ -83,7 +85,7 @@
 					
 					<tr style="border-top: 1px solid grey;">
 						<td><strong>Totale prijs: </strong></td>
-						<td> € <?php print ($rit->prijs + $rit->extraKost); ?></td>
+						<td> € <?php print ($rit->rit->prijs + $rit->rit->extraKost); ?></td>
 					</tr>
 				</table>
 			</div>
@@ -102,11 +104,11 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-2">
-                                    <p><?php print date('D, j M' , strtotime($rit->heenvertrek->tijd)); ?></p>
+                                    <p><?php print date('D, j M' , strtotime($rit->rit->heenvertrek->tijd)); ?></p>
 				</div>
 				<div class="col-sm-3">
-					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->heenvertrek->tijd)); ?></p>
-					<p data-toggle="tooltip" data-placement="top" title="Vertrek adres"><i class="fas fa-map-marker"></i> <?php print $rit->heenvertrek->adres->straat . " " . $rit->heenvertrek->adres->huisnummer; ?> </p>
+					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->rit->heenvertrek->tijd)); ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Vertrek adres"><i class="fas fa-map-marker"></i> <?php print $rit->rit->heenvertrek->adres->straat . " " . $rit->rit->heenvertrek->adres->huisnummer; ?> </p>
 				</div>
 				<div class="col-sm-2">
 					<div class="mt-4"><i class="far fa-arrow-alt-circle-right"></i>-------<i class="far fa-arrow-alt-circle-right"></i></div>
@@ -115,27 +117,27 @@
 					<p class="text-left" data-toggle="tooltip" data-placement="top" title="Verwachte aankomst tijd"><i class="far fa-clock"></i>
 						<?php 
 						
-							$date = new DateTime($rit->heenvertrek->tijd);	
-							$date->add(DateInterval::createFromDateString($rit->heen->duration->value .' seconds')); 
+							$date = new DateTime($rit->rit->heenvertrek->tijd);	
+							$date->add(DateInterval::createFromDateString($rit->rit->heen->duration->value .' seconds')); 
 							echo $date->format('H:i');
 							
 						?>
 					</p>
-					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->heenaankomst->adres->straat . " " . $rit->heenaankomst->adres->huisnummer; ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->rit->heenaankomst->adres->straat . " " . $rit->rit->heenaankomst->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-2">
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte reistijd">
-						<i class="fas fa-hourglass-half"></i> <?php print $rit->heen->duration->text; ?>
+						<i class="fas fa-hourglass-half"></i> <?php print $rit->rit->heen->duration->text; ?>
 					</p>
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte afstand">
-						<i class="fas fa-road"></i> <?php print $rit->heen->distance->text; ?>
+						<i class="fas fa-road"></i> <?php print $rit->rit->heen->distance->text; ?>
 					</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </article>
-<?php if(!empty($rit->terugvertrek)){ ?>
+<?php if(!empty($rit->rit->terugvertrek)){ ?>
 <article class="mt-2">
 	<div class="card">
 		<div class="card-header">
@@ -148,11 +150,11 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-2">
-					<p><?php print date('D, j M' , strtotime($rit->terugvertrek->tijd)); ?></p>
+					<p><?php print date('D, j M' , strtotime($rit->rit->terugvertrek->tijd)); ?></p>
 				</div>
 				<div class="col-sm-3">
-					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->terugvertrek->tijd)); ?></p>
-					<p data-toggle="tooltip" data-placement="top" title="Vertrek adres"><i class="fas fa-map-marker"></i> <?php print $rit->terugvertrek->adres->straat . " " . $rit->terugvertrek->adres->huisnummer; ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Vertrek tijd"><i class="far fa-clock"></i> <?php print date('G:i' , strtotime($rit->rit->terugvertrek->tijd)); ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Vertrek adres"><i class="fas fa-map-marker"></i> <?php print $rit->rit->terugvertrek->adres->straat . " " . $rit->rit->terugvertrek->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-2">
 					<div class="mt-4"><i class="far fa-arrow-alt-circle-right"></i>-------<i class="far fa-arrow-alt-circle-right"></i></div>
@@ -161,20 +163,20 @@
 					<p class="text-left" data-toggle="tooltip" data-placement="top" title="Verwachte aankomst tijd"><i class="far fa-clock"></i>
 						<?php 
 						
-							$date = new DateTime($rit->terugvertrek->tijd);	
-							$date->add(DateInterval::createFromDateString($rit->terug->duration->value .' seconds')); 
+							$date = new DateTime($rit->rit->terugvertrek->tijd);	
+							$date->add(DateInterval::createFromDateString($rit->rit->terug->duration->value .' seconds')); 
 							echo $date->format('H:i');
 							
 						?>
 					</p>
-					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->terugaankomst->adres->straat . " " . $rit->terugaankomst->adres->huisnummer; ?></p>
+					<p data-toggle="tooltip" data-placement="top" title="Aankomst adres"><i class="fas fa-flag-checkered"></i> <?php print $rit->rit->terugaankomst->adres->straat . " " . $rit->rit->terugaankomst->adres->huisnummer; ?></p>
 				</div>
 				<div class="col-sm-2">
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte reistijd">
-						<i class="fas fa-hourglass-half"></i> <?php print $rit->terug->duration->text; ?>
+						<i class="fas fa-hourglass-half"></i> <?php print $rit->rit->terug->duration->text; ?>
 					</p>
 					<p data-toggle="tooltip" data-placement="top" title="Verwachte afstand">
-						<i class="fas fa-road"></i></i> <?php print $rit->terug->distance->text; ?>
+						<i class="fas fa-road"></i></i> <?php print $rit->rit->terug->distance->text; ?>
 					</p>
 				</div>
 			</div>
@@ -187,7 +189,7 @@
 		<div class="card">
 			<div class="card-body">
 				<h5>Opmerking Klant</h5>
-				<p><?php print $rit->opmerkingKlant; ?></p>
+				<p><?php print $rit->rit->opmerkingKlant; ?></p>
 			</div>
 		</div>
 	</div>
@@ -197,9 +199,9 @@
                             <div class="form-group">
                                 <h5>Opmerking Chauffeur</h5>
                                 <?php if($rit->status->id == 2 || $rit->status->id == 3){ ?>
-                                    <textarea rows="8" class="form-control" name="openingsurenOpmerking"><?php print $rit->opmerkingVrijwilliger; ?></textarea>
+                                    <textarea rows="2" class="form-control" name="opmerkingVrijwilliger"><?php print $rit->rit->opmerkingVrijwilliger; ?></textarea>
                                 <?php } else { ?>
-                                <p><?php print $rit->opmerkingVrijwilliger; ?></p>
+                                <p><?php print $rit->rit->opmerkingVrijwilliger; ?></p>
                                 <?php } ?>
                             </div>
 			</div>

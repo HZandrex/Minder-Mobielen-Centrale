@@ -56,13 +56,13 @@ class VrijwilligerRit_model extends CI_Model {
         return $ritten;
     }
     
-    function getVrijwilligerRitByVrijwilligerRitId($ritId)
+    function getVrijwilligerRitByVrijwilligerRitId($id)
     {
         $this->load->model('rit_model');
         $this->load->model('status_model');
         
 	$this->db->select('*');
-        $this->db->where('ritId', $ritId);
+        $this->db->where('id', $id);
         $query = $this->db->get('vrijwilligerRit');
         $vrijwilligerRit = $query->result()[0];
         
@@ -73,17 +73,15 @@ class VrijwilligerRit_model extends CI_Model {
     
     function updateVrijwilligerRit($vrijwilligerRit)
     {
-        $this->db->set('statusId', $vrijwilligerRit->statusId);
-        $this->db->where('id', $vrijwilligerRit->id);
-        $this->db->insert('vrijwilligerRit');
-        
-        $this->db->set('opmerkingVrijwilliger', $vrijwilligerRit->statusId);
-        $this->db->set('extraKost', $vrijwilligerRit->extraKost);
+        $data = array('opmerkingVrijwilliger' => $vrijwilligerRit->opmerkingVrijwilliger);
+        if($vrijwilligerRit->extraKost != 0){
+            $data += ['extraKost' => $vrijwilligerRit->extraKost];
+        }
         if($vrijwilligerRit->statusId == 1){
-            $this->db->insert('statusId', 3);
+            $data += ['statusId'=> 3];
         }
         $this->db->where('id', $vrijwilligerRit->ritId);
-        $this->db->insert('rit');
+        $this->db->update('rit', $data);
     }
     
     function updateStatusRitten($ritId,$ritStatusId)
