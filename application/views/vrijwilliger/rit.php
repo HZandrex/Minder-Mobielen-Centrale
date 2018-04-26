@@ -17,11 +17,11 @@
 <div class="row">
     <div class="col-sm-12">
         <?php
-            echo form_open('vrijwilliger/ritten/statusAanpassen/'. $rit->rit->id);
+            echo form_open('vrijwilliger/ritten/statusAanpassen/'. $rit->id);
             echo '<p>';
             echo '<div class="btn-group">';
             if($rit->status->id == 2){
-                echo anchor(array('vrijwilliger/ritten/wijzigen', $rit->rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om deze rit aan te passen"');
+                echo anchor(array('vrijwilliger/ritten/wijzigen/', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om deze rit aan te passen"');
                 echo '<button class="btn btn-danger" name="statusId" data-toggle="tooltip" data-placement="top" title="Klik hier om de rit af te zeggen" type="submit" value="1"><i class="fas fa-ban"></i> Annuleren</button>';
             }              
             if($rit->status->id == 3 ){
