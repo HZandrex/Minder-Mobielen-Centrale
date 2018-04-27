@@ -26,11 +26,7 @@ class Ritten extends CI_Controller {
 		
         $this->load->model('rit_model');		
 		
-		
-
-		
 		$data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id);
-
 
         $partials = array('menu' => 'main_menu','inhoud' => 'mm/ritten');
         $this->template->load('main_master', $partials, $data);
@@ -65,7 +61,6 @@ class Ritten extends CI_Controller {
 		
 		$partials = array('menu' => 'main_menu','inhoud' => 'mm/nieuweRit');
         $this->template->load('main_master', $partials, $data);
-		
 	}
 	
 	public function nieuwAdres(){
@@ -98,6 +93,7 @@ class Ritten extends CI_Controller {
 		$this->load->model('gebruiker_model');
 		
 		$userId = htmlspecialchars(trim($_POST['userId']));
+
 		$date = str_replace('/', '-', htmlspecialchars(trim($_POST['date'])));
 		
 		$credits = $this->gebruiker_model->getCredits($userId, date("Y-m-d G:i:s", strtotime($date)));
