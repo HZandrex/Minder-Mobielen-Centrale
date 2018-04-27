@@ -20,7 +20,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-
+        <link rel="stylesheet" href="">
         <title>Minder Mobiele Centrale</title>
 
         <!-- Bootstrap Core CSS -->
