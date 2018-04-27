@@ -1,4 +1,4 @@
-<div class="col-sm-12">
+<div class="col-sm-8">
     <h4>Contactgegevens</h4>
     <table class="table">
         <tr>
@@ -27,6 +27,14 @@
         </tr>
     </table>
 </div>
+<div class="col-sm-4">
+    <h4>Functies</h4>
+    <ul>
+        <?php foreach ($gebruiker->functies as $functie){
+            echo "<li>$functie->naam</li>";
+        }?>
+    </ul>
+</div>
 <div class="col-sm-12">
     <h4>Adresgegevens</h4>
     <table class="table">
@@ -40,12 +48,12 @@
         </tr>
         <tr>
             <td>Straat + nr:</td>
-            <td><?php print $gebruiker->adres->straat; ?><?php print $gebruiker->adres->huisnummer ?></td>
+            <td><?php print $gebruiker->adres->straat; ?> <?php print $gebruiker->adres->huisnummer ?></td>
         </tr>
     </table>
 </div>
 <div class="col-sm-12">
     <?php print anchor("medewerker/gebruikersBeheren/wachtwoordWijzigen/$gebruiker->id", 'Wachtwoord wijzigen', 'class="btn btn-primary"'); ?>
-    <?php print anchor("gebruiker/persoonlijkeGegevens/gegevensWijzigen/$gebruiker->id", 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
+    <?php print anchor("medewerker/gebruikersBeheren/gegevensWijzigen/$gebruiker->id", 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
 </div>
 
