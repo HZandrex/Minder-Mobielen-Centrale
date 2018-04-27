@@ -9,7 +9,7 @@
 	// var_dump($ritten);
 ?>
 <p>
-	<?php print anchor(array('mm/ritten/nieuweRit'), '<i class="fa fa-plus"></i> Nieuwe rit boeken', array('class' => 'btn btn-primary'));?>
+	<?php print anchor(array('mm/ritten/nieuweRit'), '<i class="fa fa-plus"></i> Nieuwe rit boeken', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om een nieuwe rit te boeken"');?>
 </p>
 <div class="card">
 	<table class="table table-striped">
