@@ -28,6 +28,26 @@ class Adres_model extends CI_Model {
         return $query->row();
     }
 
+    function getAll()
+    {
+        $query = $this->db->get('adres');
+        return $query->result();
+    }
+
+    function getEmpty(){
+        $adres = new stdClass();
+
+        $this->db->where('id', 1);
+        $query = $this->db->get('adres');
+        $voorbeeldAdres = $query->row();
+
+        foreach ($voorbeeldAdres as $attribut => $waarde){
+            $adres->$attribut = null;
+        }
+
+        return $adres;
+    }
+
 	function updateAdres($id,$adresGegevens)
 	{
 		$this->db->set('straat', $adresGegevens->straat);

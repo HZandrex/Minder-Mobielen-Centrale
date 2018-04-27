@@ -39,6 +39,14 @@ class GebruikersBeheren extends CI_Controller
             }
         }
 
+        if(!get_cookie('FirstVisit', TRUE)){
+            set_cookie('FirstVisit', 'set', (10 * 365 * 24 * 60 * 60));
+            $data['firstVisit'] = true;
+        }
+        else{
+            $data['firstVisit'] = false;
+        }
+
         $this->load->model('functieGebruiker_model');
         $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersByFunction(1);
 
@@ -65,8 +73,7 @@ class GebruikersBeheren extends CI_Controller
         $gebruikerId = $this->input->get('gebruikerId');
 
         $this->load->model('gebruiker_model');
-        $data['gebruiker'] = $this->gebruiker_model->getWithFunctions($gebruikerId);
-
+        $data['selectedGebruiker'] = $this->gebruiker_model->getWithFunctions($gebruikerId);
         $this->load->view('medewerker/ajax_gebruikerInfo', $data);
     }
 
@@ -105,9 +112,9 @@ class GebruikersBeheren extends CI_Controller
 
         if ($Wachtwoord == $wachtwoordBevestigen) {
             $this->gebruiker_model->wijzigWachtwoordGebruiker($id, $Wachtwoord);
-            redirect('medewerker/gebruikersbeheren/toonwachtwoordgewijzigd');
+            redirect('medewerker/gebruikersBeheren/toonwachtwoordgewijzigd');
         } else {
-            redirect('medewerker/gebruikersbeheren/toonfoutwachtwoordwijzigen/' . $id);
+            redirect('medewerker/gebruikersBeheren/toonfoutwachtwoordwijzigen/' . $id);
         }
     }
 
@@ -169,7 +176,7 @@ class GebruikersBeheren extends CI_Controller
         }
         $this->gebruiker_model->insertGebruiker($gebruiker);
 
-        redirect('medewerker/gebruikersbeheren');
+        redirect('medewerker/gebruikersBeheren');
     }
 
     /**
@@ -196,11 +203,15 @@ class GebruikersBeheren extends CI_Controller
         }
 
         if ($id == 0) {
-            redirect('medewerker/gebruikersbeheren/toonfouturl');
+            $this->load->model('gebruiker_model');
+            $data['editGebruiker'] = $this->gebruiker_model->getEmpty();
         } else {
             $this->load->model('gebruiker_model');
             $data['editGebruiker'] = $this->gebruiker_model->getWithFunctions($id);
         }
+
+        $this->load->model('adres_model');
+        $data['adressen'] = $this->adres_model->getAll();
 
         $this->load->model('functie_model');
         $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
@@ -226,29 +237,29 @@ class GebruikersBeheren extends CI_Controller
         $this->load->model('adres_model');
         $this->load->model('functie_model');
 
-        $gebruiker = $this->gebruiker_model->get($this->input->post('id'));
+        $gebruiker = $this->gebruiker_model->getEmpty();
         foreach ($gebruiker as $attribut => $waarde){
             $post = $this->input->post($attribut);
             if($post != null) {
                 $gebruiker->$attribut = $post;
             }
         }
-
-        $gegevensAdres = new stdClass();
-        $gegevensAdres->gemeente = $this->input->post('gemeente');
-        $gegevensAdres->postcode = $this->input->post('postcode');
-        $gegevensAdres->straat = $this->input->post('straat');
-        $gegevensAdres->huisnummer = $this->input->post('huisnummer');
+        if($gebruiker->id == null){
+            $gebruiker->id = $this->gebruiker_model->insertGebruiker($gebruiker);
+        }
+        else{
+            $this->gebruiker_model->updateGebruiker($gebruiker);
+        }
 
         $allFuncties = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
 
         foreach ($allFuncties as $functie){
             $this->pasFunctieGebruikerAan($gebruiker, $functie, $this->input->post('functie'.$functie->id));
         }
-        $this->gebruiker_model->updateGebruiker($gebruiker);
-        $this->adres_model->updateAdres($gebruiker->id, $gegevensAdres);
+        /*print_r($gebruiker);
+        exit();*/
 
-        redirect('medewerker/gebruikersbeheren/toongegevensgewijzigd');
+        redirect('medewerker/gebruikersBeheren/toongegevensgewijzigd');
     }
 
     private function pasFunctieGebruikerAan($gebruiker, $functie, $checkbox){
@@ -258,7 +269,7 @@ class GebruikersBeheren extends CI_Controller
             $functieGebruikerId = $this->functieGebruiker_model->functieGebruikerBestaat($gebruiker->id, $functie->id);
             if ($functieGebruikerId != false){
                 if (!$this->functieGebruiker_model->verwijderen($functieGebruikerId)){
-                    redirect('medewerker/gebruikersbeheren/toonfoutopslaan/'.$gebruiker->id);
+                    redirect('medewerker/gebruikersBeheren/toonfoutopslaan/'.$gebruiker->id);
                 }
             }
         }
@@ -269,7 +280,7 @@ class GebruikersBeheren extends CI_Controller
                 $functieGebruiker->functieId = $functie->id;
                 $functieGebruiker->gebruikerId = $gebruiker->id;
                 if (!$this->functieGebruiker_model->voegToe($functieGebruiker)){
-                    redirect('medewerker/gebruikersbeheren/toonfoutopslaan/'.$gebruiker->id);
+                    redirect('medewerker/gebruikersBeheren/toonfoutopslaan/'.$gebruiker->id);
                 }
             }
         }
@@ -309,7 +320,7 @@ class GebruikersBeheren extends CI_Controller
         $titel = "Fout!";
         $boodschap = "De opgegeven wachtwoorden komen niet overeen.</br>"
             . "Probeer opnieuw!";
-        $link = array("url" => "medewerker/gebruikersbeheren/wachtwoordwijzigen/" . $id, "tekst" => "Terug");
+        $link = array("url" => "medewerker/gebruikersBeheren/wachtwoordWijzigen/" . $id, "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);
     }
@@ -324,7 +335,7 @@ class GebruikersBeheren extends CI_Controller
         $titel = "Fout!";
         $boodschap = "U probeerde een gebruiker te maken met een mail dat al in gebruik is.</br>"
             . "Probeer een andere mail!";
-        $link = array("url" => "medewerker/gebruikersbeheren/nieuwegebruikermaken", "tekst" => "Terug");
+        $link = array("url" => "medewerker/gebruikersBeheren/nieuweGebruikerMaken", "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);
     }
@@ -369,7 +380,7 @@ class GebruikersBeheren extends CI_Controller
         $titel = "Wachtwoord succesvol veranderd";
         $boodschap = "het wachtwoord werd succesvol gewijzigd.</br>"
             . "De gebruiker kan nu gewoon inloggen met het nieuwe wachtwoord.";
-        $link = array("url" => "medewerker/gebruikersbeheren", "tekst" => "Terug");
+        $link = array("url" => "medewerker/gebruikersBeheren", "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);
     }
@@ -384,7 +395,7 @@ class GebruikersBeheren extends CI_Controller
         $titel = "Gegevens succesvol veranderd";
         $boodschap = "De gebruiker zijn gegevens werden succesvol veranderd.</br>"
             . "De gebruiker kan deze veranderingen ook zien.";
-        $link = array("url" => "medewerker/gebruikersbeheren", "tekst" => "Terug");
+        $link = array("url" => "medewerker/gebruikersBeheren", "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);
     }

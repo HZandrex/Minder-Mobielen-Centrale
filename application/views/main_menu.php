@@ -51,13 +51,9 @@ if ($gebruiker == null) { // niet aangemeld
                 <?php echo $gebruiker->voornaam . ' ' . $gebruiker->naam; ?>
             </a>
         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-          <li class="dropdown-submenu"><?php echo anchor('#', 'Mijn gegevens', 'class="dropdown-toggle nav-link"'); ?>
-            <ul class="dropdown-menu">
-              <li><?php echo anchor('gebruiker/persoonlijkeGegevens/persoonlijkeGegevens', 'Tonen', 'class="nav-link"'); ?></li>
-              <li><a class="nav-link" id="handleiding" href="#">Handleiding</a></li>
-            </ul>
-          </li>
-          <li><?php echo divAnchor('gebruiker/inloggen/loguit', 'Uitloggen', 'class="nav-link"'); ?></li>
+            <li><?php echo divAnchor('gebruiker/persoonlijkeGegevens/persoonlijkeGegevens', 'Mijn gegevens', 'class="nav-link"'); ?></li>
+            <li><?php echo divAnchor('gebruiker/help', 'Help', 'class="nav-link"'); ?></li>
+            <li><?php echo divAnchor('gebruiker/inloggen/loguit', 'Uitloggen', 'class="nav-link"'); ?></li>
         </ul>
       </li>
     </ul>

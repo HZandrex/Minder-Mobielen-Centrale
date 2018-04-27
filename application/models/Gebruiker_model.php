@@ -70,22 +70,42 @@ class Gebruiker_model extends CI_Model {
 		$this->load->model('adres_model');
 		$this->load->model('voorkeur_model');
 		$gebruiker->voorkeur = $this->voorkeur_model->get($gebruiker->voorkeurId);
-		$gebruiker->adres = $this->adres_model->getById($gebruiker->id);
+		$gebruiker->adres = $this->adres_model->getById($gebruiker->adresId);
         $gebruiker->functies = $this->functieGebruiker_model->getWithName($gebruiker->id);
 
+        return $gebruiker;
+    }
+
+    /**
+     * Retourneert het record met id=$id uit de tabel gebruiker.
+     * hierbij worden ook zijn functies megegeven (MinderMobiele, coach, ...)
+     * @param $id De id van het record dat opgevraagd wordt
+     * @return het opgevraagde record
+     */
+    function getEmpty() {
+        $gebruiker = new stdClass();
+
+        $this->db->where('id', 1);
+        $query = $this->db->get('gebruiker');
+        $voorbeeldGebruiker = $query->row();
+
+        foreach ($voorbeeldGebruiker as $attribut => $waarde){
+            $gebruiker->$attribut = null;
+        }
+
+        $this->load->model('functieGebruiker_model');
+        $this->load->model('adres_model');
+        $this->load->model('voorkeur_model');
+        $gebruiker->voorkeur = $this->voorkeur_model->getEmpty();
+        $gebruiker->adres = $this->adres_model->getEmpty();
+        $gebruiker->functies = $this->functieGebruiker_model->getEmpty();
         return $gebruiker;
     }
 	
 	function updateGebruiker($gebruiker)
     {
-			$this->db->set('voornaam', $gebruiker->voornaam);
-			$this->db->set('naam', $gebruiker->naam);
-			$this->db->set('geboorte', $gebruiker->geboorte);
-			$this->db->set('telefoon', $gebruiker->telefoon);
-			$this->db->set('mail', $gebruiker->mail);
-			$this->db->set('voorkeurId', $gebruiker->voorkeurId);
-            $this->db->where('id', $gebruiker->id);
-			$this->db->update('gebruiker');
+        $this->db->where('id', $gebruiker->id);
+        $this->db->update('gebruiker', $gebruiker);
     }
 
     function insertGebruiker($gebruiker){
@@ -100,6 +120,7 @@ class Gebruiker_model extends CI_Model {
         );
 
         $this->db->insert('gebruiker', $data);
+        return $this->db->insert_id();
     }
 
     /**

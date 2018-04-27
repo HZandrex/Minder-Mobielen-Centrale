@@ -3,6 +3,12 @@ $attributen = array('name' => 'wijzigenGegevensFormulier', 'class' => 'form-hori
 $hidden = array('id' => $editGebruiker->id);
 echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $hidden);
 ?>
+<style>
+    .pac-container {
+        z-index: 10000;
+    }
+
+</style>
 <div class=row>
     <div class="col-lg-6 col-sm-12">
         <div class="row">
@@ -48,43 +54,39 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
     <div class="col-lg-6 col-sm-12">
         <div class="row">
             <h4 class="col-12">Adresgegevens</h4>
-            <div class="col-8">
-                <?php echo form_label('Gemeente:', 'gemeente'); ?>
-                <input type="text" class="form-control" name="gemeente"
-                       value="<?php echo $editGebruiker->adres->gemeente ?>" required>
-            </div>
-            <div class="col-4">
-                <?php echo form_label('Postcode:', 'postcode'); ?>
-                <input type="text" class="form-control" name="postcode"
-                       value="<?php echo $editGebruiker->adres->postcode ?>" required>
-            </div>
-            <div class="col-8">
-                <?php echo form_label('Straat:', 'straat'); ?>
-                <input type="text" maxlength="4" class="form-control" name="straat"
-                       value="<?php echo $editGebruiker->adres->straat ?>" required>
-            </div>
-            <div class="col-4">
-                <?php echo form_label('Nr:', 'huisnummer'); ?>
-                <input type="text" class="form-control" name="huisnummer"
-                       value="<?php echo $editGebruiker->adres->huisnummer ?>" required>
-            </div>
             <div class="col-12">
+                <label for="adres">Thuis adres: </label>
+                <select class="custom-select" id="adres" name="adresId">
+                    <?php
+                    $selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
+                    foreach ($adressen as $adres) {
+                        if ($adres->id == $editGebruiker->adres->id) {
+                            $selectAdressen .= '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                        } else {
+                            $selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                        }
+                    }
+                    echo $selectAdressen;
+                    ?>
+                </select>
+            </div>
+            <div class="col-12" style="margin-top: 20px;">
                 <h4>Functies</h4>
-                <?php foreach ($functies as $functie){
+                <?php foreach ($functies as $functie) {
                     echo '<div class="form-check">';
                     $temp = false;
                     foreach ($editGebruiker->functies as $gebruikerFunctie) {
                         if ($gebruikerFunctie->id == $functie->id) {
-                            echo form_checkbox("functie" . $functie->id, $functie->id, TRUE, 'class="form-check-input" id="'.$functie->naam.'"');
+                            echo form_checkbox("functie" . $functie->id, $functie->id, TRUE, 'class="form-check-input" id="' . $functie->naam . '"');
                             $temp = true;
                         }
                     }
-                    if(!$temp){
-                        echo form_checkbox("functie" . $functie->id, $functie->id, FALSE, 'class="form-check-input" id="'.$functie->naam.'"');
+                    if (!$temp) {
+                        echo form_checkbox("functie" . $functie->id, $functie->id, FALSE, 'class="form-check-input" id="' . $functie->naam . '"');
                     }
                     echo form_label($functie->naam, $functie->naam, 'class="form-check-label"');
                     echo "</div>";
-                }?>
+                } ?>
             </div>
         </div>
     </div>
@@ -94,3 +96,200 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
     <?php echo anchor('medewerker/gebruikersBeheren', 'Annuleren', 'class="btn btn-primary"'); ?>
     <?php echo form_close(); ?>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" data-id="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="adres" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nieuw adres</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" id="errorModal" style="display: none;"></div>
+                    <div id="locationField">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="autocomplete"
+                                   placeholder="Vul hier het adres in" onFocus="geolocate()">
+                        </div>
+                    </div>
+                    <div id="address">
+                        <div class="form-group">
+                            <label for="street_number">Nummer</label>
+                            <input type="text" class="form-control" id="street_number" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="route">Straat</label>
+                            <input type="text" class="form-control" id="route" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="locality">Gemeente</label>
+                            <input type="text" class="form-control" id="locality" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="postal_code">Postcode</label>
+                            <input type="text" class="form-control" id="postal_code" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="administrative_area_level_1">Staat</label>
+                            <input type="text" class="form-control" id="administrative_area_level_1" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Land</label>
+                            <input type="text" class="form-control" id="country" disabled="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="anuleerAdres">Anuleren</button>
+                    <button type="button" class="btn btn-primary" id="saveAdres">Opslaan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete"
+        async defer></script>
+<script>
+    $('select').change(function () {
+        if ($(this).val() == 'nieuwAdres') {
+            $('#exampleModal').attr('data-id', $(this).attr('id'));
+            $('#exampleModal').modal('show');
+        }
+    });
+
+    $('#anuleerAdres').click(function () {
+        $('#' + $('#exampleModal').attr('data-id')).val('default');
+        $('#exampleModal').modal('hide');
+        $("form#adres :input").each(function () {
+            $(this).val('');
+        });
+        $('#errorModal').hide();
+    });
+
+    $("#exampleModal").on('hide.bs.modal', function () {
+        $('#' + $('#exampleModal').attr('data-id')).val('default');
+        $("form#adres :input").each(function () {
+            $(this).val('');
+        });
+        $('#errorModal').hide();
+    });
+
+    $('#saveAdres').click(function () {
+        //uitlezen adres
+        var huisnummer = $('#street_number').val();
+        var straat = $('#route').val();
+        var gemeente = $('#locality').val();
+        var postcode = $('#postal_code').val();
+
+        if (huisnummer == '' || straat == '' || gemeente == '' || postcode == '') {
+            errorModal('Vul een volledig adres in! huisnummer, straat, gemeente, postcode');
+        } else {
+            //kijk of adres al ingeladen is
+            var bestaat = checkOfAdresIngeladenIs(huisnummer, straat, gemeente);
+            if (bestaat != false) {
+                $('#exampleModal').modal('hide');
+                $('#' + $('#exampleModal').attr('data-id')).val(bestaat);
+
+            } else {
+                // ajaxrequest
+                $.ajax(
+                    {
+                        type: "post",
+                        url: "<?php echo base_url(); ?>index.php/mm/ritten/nieuwAdres",
+                        data: {huisnummer: huisnummer, straat: straat, gemeente: gemeente, postcode: postcode},
+                        success: function (response) {
+                            console.log(response);//Stationsstraat 177, Geel, België
+                            var adres = JSON.parse(response);
+                            //toevoegen aan adressen lijst
+                            $('select').each(function () {
+                                $(this).children().eq(1).after('<option value="' + adres.id + '">' + adres.straat + ' ' + adres.huisnummer + ' (' + adres.gemeente + ')</option>');
+                            });
+                            $('#exampleModal').modal('hide');
+                            $('#' + $('#exampleModal').attr('data-id')).val(adres.id);
+                        }
+                    }
+                );
+            }
+        }
+    });
+
+    function errorModal(bericht) {
+        $('#errorModal').html(bericht);
+        $('#errorModal').slideDown();
+    }
+
+    function checkOfAdresIngeladenIs(huisnummer, straat, gemeente) {
+        var result = false;
+        $('select#heenStartAdres option').each(function () {
+            if ($(this).text() == (straat + " " + huisnummer + " (" + gemeente + ")")) {
+                result = $(this).val();
+                return false;
+            }
+        });
+        return result;
+    }
+
+    //autocomplete van google
+    var placeSearch, autocomplete;
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+            document.getElementById(component).value = '';
+            // document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            if (componentForm[addressType]) {
+                var val = place.address_components[i][componentForm[addressType]];
+                document.getElementById(addressType).value = val;
+            }
+        }
+    }
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+</script>

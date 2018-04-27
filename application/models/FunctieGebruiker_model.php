@@ -45,6 +45,14 @@ class FunctieGebruiker_model extends CI_Model {
         }
     }
 
+    function getEmpty(){
+        $this->load->model('functie_model');
+        $functies = array();
+        array_push($functies, $this->functie_model->getEmpty());
+
+        return $functies;
+    }
+
     function voegToe($functieGebruiker){
         if(!$this->db->insert('functieGebruiker', $functieGebruiker)){
             return false;

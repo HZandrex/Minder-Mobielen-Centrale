@@ -17,6 +17,20 @@ class Voorkeur_model extends CI_Model {
         $query = $this->db->get('voorkeur');
         return $query->row();
     }
+
+    function getEmpty(){
+        $voorkeur = new stdClass();
+
+        $this->db->where('id', 1);
+        $query = $this->db->get('voorkeur');
+        $voorbeeldVoorkeur = $query->row();
+
+        foreach ($voorbeeldVoorkeur as $attribut => $waarde){
+            $voorkeur->$attribut = null;
+        }
+
+        return $voorkeur;
+    }
     
     function getAll()
     {
