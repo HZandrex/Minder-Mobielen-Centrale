@@ -28,10 +28,11 @@
         <?php echo pasStylesheetAan("../fontawesome/css/fontawesome-all.min.css"); ?>
 
         <?php echo haalJavascriptOp("jquery-3.3.1.min.js"); ?>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<?php echo haalJavascriptOp("popper.min.js"); ?>
 		<?php echo haalJavascriptOp("bootstrap-datepicker.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.min.js"); ?>
-
         <script type="text/javascript">
             var site_url = '<?php echo site_url(); ?>';
             var base_url = '<?php echo base_url(); ?>';
@@ -47,7 +48,7 @@
                 <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+                <div class="navbar-collapse collapse" id="navbarCollapse">
                     <?php echo $menu ?>
                 </div>
             </nav>

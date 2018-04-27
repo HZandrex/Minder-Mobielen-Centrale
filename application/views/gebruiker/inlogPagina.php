@@ -30,6 +30,7 @@
                 ?>
             </div>
             <?php echo form_submit(array('name' => 'inlogKnop', 'value' => 'Inloggen', 'class' => 'btn btn-primary')); ?>
+            <?php echo anchor('', '<i class="fas fa-question"></i>', 'id="opener" class="card-link"') ; ?>
         </div>
         <div class="card-body">
             <?php echo anchor('gebruiker/inloggen/wachtwoordVergeten', 'Wachtwoord vergeten?', 'class="card-link"') ; ?>
@@ -38,3 +39,27 @@
 
     <?php echo form_close(); ?>
 </div>
+
+<div id="dialog" title="Inlog/uitloggen handleiding">
+    <h5>Inloggen</h5>
+    <ul>
+        <li>Hoofdletter gevoelig!</li>
+        <li>Geen spaties!</li>
+    </ul>
+    
+    <h5>Uitloggen</h5>
+    <p>Rechts bovenaan in menu</p>
+    <?php echo toonAfbeelding('helpUitloggen.png', $attributen = 'alt="afbeelding uitloggen"');?>
+
+</div>
+
+<script>
+  $( "#dialog" ).dialog({
+      autoOpen: false
+   });
+
+    $( "#opener" ).click(function(e) {
+        e.preventDefault();
+        $( "#dialog" ).dialog( "open" );
+    });
+</script>

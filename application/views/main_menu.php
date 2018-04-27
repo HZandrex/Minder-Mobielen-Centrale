@@ -44,15 +44,84 @@ if ($gebruiker == null) { // niet aangemeld
     }
     echo '</div>';
     ?>
-    <div class="navbar-nav">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?php echo $gebruiker->voornaam . ' ' . $gebruiker->naam; ?>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <?php echo divAnchor('gebruiker/persoonlijkeGegevens/persoonlijkeGegevens', 'Mijn gegevens', 'class="nav-link"'); ?>
-                <?php echo divAnchor('gebruiker/inloggen/loguit', 'Uitloggen', 'class="nav-link"'); ?>
-            </div>
-        </li>
-    </div>
+        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <li class="dropdown-submenu"><?php echo anchor('#', 'Mijn gegevens', 'class="dropdown-toggle nav-link"'); ?>
+            <ul class="dropdown-menu">
+              <li><?php echo anchor('gebruiker/persoonlijkeGegevens/persoonlijkeGegevens', 'Tonen', 'class="nav-link"'); ?></li>
+              <li><a class="nav-link" id="handleiding" href="#">Handleiding</a></li>
+            </ul>
+          </li>
+          <li><?php echo divAnchor('gebruiker/inloggen/loguit', 'Uitloggen', 'class="nav-link"'); ?></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+<div id="handleidingDialog"></div>
 <?php } ?>
+<!-- Dialoogvenster -->
+<div class="modal fade" id="mijnDialoogscherm" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Inhoud dialoogvenster-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Handleiding</h4>
+            </div>
+            <div class="modal-body">
+                <p><div id="resultaat"></div></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Sluit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+      if (!$(this).next().hasClass('show')) {
+        $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+      }
+      var $subMenu = $(this).next(".dropdown-menu");
+      $subMenu.toggleClass('show');
+
+
+      $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+        $('.dropdown-submenu .show').removeClass("show");
+      });
+
+
+      return false;
+    });
+ 
+    function toonHandleiding()
+    {
+        $.ajax({type: "GET",
+                url : site_url + "/gebruiker/persoonlijkeGegevens/toonHandleiding",
+                success: function(result){
+                    $("#resultaat").html(result);
+                    $('#mijnDialoogscherm').modal('show');
+                },
+                error: function (xhr, status, eroor) {
+                    alert("-- ERROR IN AJAX -- \n\n" + xhr.responseText)
+                }
+            });
+    }
+
+    $(document).ready(function () {
+
+        $("#handleiding").click(function (e) {
+            e.preventDefault();
+            toonHandleiding();
+        });
+
+    });
+</script>

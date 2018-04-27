@@ -15,8 +15,8 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 //    print($selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>');
 //}
 
-var_dump($adressen);
-var_dump($heen);
+//var_dump($adressen);
+//var_dump($heen);
 ?>
 <style>
     .pac-container{

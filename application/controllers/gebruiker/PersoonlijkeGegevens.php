@@ -277,5 +277,9 @@ class PersoonlijkeGegevens extends CI_Controller
 
         $this->toonMelding($titel, $boodschap, $link);
     }
+    
+    public function toonHandleiding() {
+        $this->load->view("gebruiker/handleiding");
+    }
 
 }
