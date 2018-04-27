@@ -31,7 +31,6 @@
         if($("input[name=firstVisit]").val() == 1){
             $('#tutorialModal').modal('show');
         }
-        $('#tutorialModal').modal('show');
         $('#gebruikersForm input[id=functieRadiogroup0]').prop("checked", true);
         haalGebruikersMetFunctieOp($('#gebruikersForm input[id=functieRadiogroup0]').val());
 
@@ -72,8 +71,8 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
 </div>
 <?php echo form_close(); ?>
 <div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="tutorialModalLabel"
-     aria-hidden="true" data-id="">
-    <div class="modal-dialog" role="document">
+     aria-hidden="true" data-id="" >
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tutorialModalLabel">Hoe werkt Gebruikers beheren?</h5>
@@ -100,12 +99,12 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
                             }
                         ?>
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" style="color: black;">
+                        <span><i class="fas fa-angle-left fa-2x"></i></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next" style="color: black;">
+                        <span><i class="fas fa-angle-right fa-2x"></i></span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
