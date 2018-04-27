@@ -49,7 +49,7 @@
     
     <h5>Uitloggen</h5>
     <p>Rechts bovenaan in menu</p>
-    <?php echo toonAfbeelding('helpUitloggen.png', $attributen = 'alt="afbeelding uitloggen"');?>
+    <?php echo toonAfbeelding('/handleiding/helpUitloggen.png', $attributen = 'alt="afbeelding uitloggen"');?>
 
 </div>
 
