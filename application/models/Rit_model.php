@@ -116,9 +116,9 @@ class Rit_model extends CI_Model {
 		$this->db->where('gebruikerMinderMobieleId', $mmId);
 		$query = $this->db->get('rit');
 		$ritten = $query->result();
-		
+
 		foreach($ritten as $rit){
-			$rit->tijd = $this->adresrit_model->getTime($rit->id, 1);
+			$rit->tijd = $this->adresRit_model->getTime($rit->id, 1);
 			if($rit->tijd > $datum['start'] && $rit->tijd < $datum['einde']){
 				$aantalRitten++;
 			}

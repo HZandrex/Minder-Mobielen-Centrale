@@ -153,7 +153,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 <div class="row">
                     <div class="col">
                         <label for="terugStartAdres">Start adres: </label>
-                        <select class="custom-select" id="terugStartAdres" name="terugStartAdres">
+                        <select class="custom-select" id="terugStartAdres" name="terugStartAdres" disabled>
                             <?php
                             foreach($adressen as $adres){
 
