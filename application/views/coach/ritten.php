@@ -7,6 +7,9 @@
  * - maakt gebruik van een tabel om alles weer te geven
  */
 ?>
+<p>
+    <?php print anchor(array('coach/ritten/nieuweRit/9'), '<i class="fa fa-plus"></i> Nieuwe rit boeken', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om een nieuwe rit te boeken"');?>
+</p>
 <div class="card">
     <table class="table table-striped">
         <thead>
@@ -25,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        <table>
+
         <?php
         if (!empty($ritten)){
         foreach($ritten as $rit){
@@ -54,7 +57,7 @@
                             print '<i class="fa fa-minus-circle fa-2x text-warning" data-toggle="tooltip" data-placement="top" title="' . $rit->status->naam . '"></i>';
                         }
                         ?></td>
-                    <td><?php print anchor(array('mm/ritten/eenRit', $rit->id), '<i class="fa fa-eye fa-2x" data-toggle="tooltip" data-placement="top" title="Bekijken"></i>'); ?></td>
+                    <td><?php print anchor(array('mm/ritten/eenRit', $rit->id), '<i class="fab fa-leanpub fa-2x" data-toggle="tooltip" data-placement="top" title="Bekijken"></i>'); ?></td>
 
                 </tr>
 
@@ -64,7 +67,7 @@
         }
         echo $this->pagination->create_links();
         ?>
-        </table>
+
 
 
         </tbody>

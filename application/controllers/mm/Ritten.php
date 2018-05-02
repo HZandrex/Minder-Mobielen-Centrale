@@ -56,8 +56,9 @@ class Ritten extends CI_Controller {
 		$data['titel'] = 'Nieuwe rit';
         $data['author'] = 'Michiel O.';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
-		
-		$data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruiker']->id);
+		$data['gebruikerMM'] = $data['gebruiker'];
+
+		$data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruikerMM']->id);
 		
 		$partials = array('menu' => 'main_menu','inhoud' => 'mm/nieuweRit');
         $this->template->load('main_master', $partials, $data);

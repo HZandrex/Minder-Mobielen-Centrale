@@ -23,7 +23,7 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-6">
-						<p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruiker->voornaam . " " . $gebruiker->naam; ?></p>
+						<p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruikerMM->voornaam . " " . $gebruikerMM->naam; ?></p>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug">
 							<label class="custom-control-label" for="heenTerug">Heen en terug</label>
@@ -243,7 +243,7 @@ $('#heenDatum').change(function(){
 	{
 		type:"post",
 		url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenCredits",
-		data:{ userId:'<?php echo $gebruiker->id; ?>', date: timeStamp},
+		data:{ userId:'<?php echo $gebruikerMM->id; ?>', date: timeStamp},
 		success:function(response)
 		{
 			var credits = JSON.parse(response);				
@@ -551,7 +551,7 @@ $('#opslaan').click(function(){
 	
 	if(!error){
 		console.log('submit');
-		addData('userId', '<?php print $gebruiker->id; ?>');
+		addData('userId', '<?php print $gebruikerMM->id; ?>');
 		$( "#nieuweRit" ).submit();
 	}
 	
