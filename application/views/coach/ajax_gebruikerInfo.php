@@ -1,4 +1,4 @@
-<div class="col-sm-8">
+<div class="col-sm-12">
     <h4>Contactgegevens</h4>
     <table class="table">
         <tr>
@@ -48,5 +48,6 @@
 <div class="col-sm-12">
     <?php print anchor("coach/mijnMM/wachtwoordWijzigen/$selectedGebruiker->id", 'Wachtwoord wijzigen', 'class="btn btn-primary"'); ?>
     <?php print anchor("coach/mijnMM/gegevensWijzigen/$selectedGebruiker->id", 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
+	<?php print anchor(array("coach/ritten/nieuweRit/$selectedGebruiker->id"), '<i class="fa fa-plus"></i> Nieuwe rit boeken', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om een nieuwe rit te boeken"');?>
 </div>
 
