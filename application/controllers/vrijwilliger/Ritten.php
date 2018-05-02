@@ -102,7 +102,7 @@ class Ritten extends CI_Controller {
                 redirect('gebruiker/inloggen');
             }
             $this->load->model('vrijwilligerRit_model');
-            $this->vrijwilligerRit_model->updateStatusRitten(getVrijwilligerRitByVrijwilligerRitId($this->vrijwilligerRit_model->$vrijwilligerRitId)->ritId, (int)$this->input->post('statusId'));
+            $this->vrijwilligerRit_model->updateStatusRitten($this->vrijwilligerRit_model->getVrijwilligerRitByVrijwilligerRitId($vrijwilligerRitId)->ritId, $this->input->post('statusId'));
             redirect('vrijwilliger/ritten');
 	}
 }
