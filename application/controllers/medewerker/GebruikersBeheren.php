@@ -286,6 +286,31 @@ class GebruikersBeheren extends CI_Controller
         }
     }
 
+    public function pasStatusGebruikerAan($id){
+        $this->load->model('gebruiker_model');
+        $gebruiker = $this->authex->getGebruikerInfo();
+        if ($gebruiker != null) {
+            $data['gebruiker'] = $gebruiker;
+        } else {
+            redirect('gebruiker/inloggen');
+        }
+        foreach ($gebruiker->functies as $functie) {
+            if ($functie->id != 4) {//id=4 -> Medewerker
+                redirect('admin/instellingen/toonfoutonbevoegd');
+            }
+        }
+
+        $editGebruiker = $this->gebruiker_model->get($id);
+
+        if($editGebruiker->active == 0){
+            $this->gebruiker_model->activeerGebruiker($id);
+            redirect('medewerker/gebruikersBeheren/toonstatusveranderd/'."geactiveerd");
+        } else{
+            $this->gebruiker_model->deactiveerGebruiker($id);
+            redirect('medewerker/gebruikersBeheren/toonstatusveranderd/'."gedeactiveerd");
+        }
+    }
+
     /**
      * Toont de melding pagina met de opgeven parrameters foutTitel=$foutTitel, boodschap=$boodschap & link=$link
      * in de view main_melding.php.
@@ -395,6 +420,20 @@ class GebruikersBeheren extends CI_Controller
         $titel = "Gegevens succesvol veranderd";
         $boodschap = "De gebruiker zijn gegevens werden succesvol veranderd.</br>"
             . "De gebruiker kan deze veranderingen ook zien.";
+        $link = array("url" => "medewerker/gebruikersBeheren", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
+    public function toonStatusVeranderd($status)
+    {
+        $titel = "Status succesvol veranderd";
+        $boodschap = "De gebruiker is succesvol $status.";
         $link = array("url" => "medewerker/gebruikersBeheren", "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);

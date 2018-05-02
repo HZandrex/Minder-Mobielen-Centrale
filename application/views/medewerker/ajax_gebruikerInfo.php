@@ -27,12 +27,12 @@
         </tr>
     </table>
 </div>
-<div class="col-sm-4"">
+<div class="col-sm-4">
     <h4>Functies</h4>
     <ul>
-        <?php foreach ($selectedGebruiker->functies as $functie){
+        <?php foreach ($selectedGebruiker->functies as $functie) {
             echo "<li>$functie->naam</li>";
-        }?>
+        } ?>
     </ul>
 </div>
 <div class="col-sm-12">
@@ -48,12 +48,19 @@
         </tr>
         <tr>
             <td>Straat + nr:</td>
-            <td><?php print $selectedGebruiker->adres->straat; ?> <?php print $selectedGebruiker->adres->huisnummer ?></td>
+            <td><?php print $selectedGebruiker->adres->straat; ?><?php print $selectedGebruiker->adres->huisnummer ?></td>
         </tr>
     </table>
 </div>
 <div class="col-sm-12">
-    <?php print anchor("medewerker/gebruikersBeheren/wachtwoordWijzigen/$selectedGebruiker->id", 'Wachtwoord wijzigen', 'class="btn btn-primary"'); ?>
-    <?php print anchor("medewerker/gebruikersBeheren/gegevensWijzigen/$selectedGebruiker->id", 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
+    <?php
+    print anchor("medewerker/gebruikersBeheren/gegevensWijzigen/$selectedGebruiker->id", 'Gegevens wijzigen', 'class="btn btn-primary" style="margin-right:10px"');
+    print anchor("medewerker/gebruikersBeheren/wachtwoordWijzigen/$selectedGebruiker->id", 'Wachtwoord wijzigen', 'class="btn btn-primary"');
+    if (!$selectedGebruiker->active) {
+        print anchor("medewerker/gebruikersBeheren/pasStatusGebruikerAan/$selectedGebruiker->id", 'Activeren', 'class="btn btn-success" style="margin-left:10px"');
+    } else {
+        print anchor("medewerker/gebruikersBeheren/pasStatusGebruikerAan/$selectedGebruiker->id", 'Deactiveren', 'class="btn btn-danger" style="margin-left:10px"');
+    }
+    ?>
 </div>
 

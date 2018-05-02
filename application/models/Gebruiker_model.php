@@ -104,8 +104,22 @@ class Gebruiker_model extends CI_Model {
 	
 	function updateGebruiker($gebruiker)
     {
-        $this->db->where('id', $gebruiker->id);
+        $this->db->where('id', $id);
         $this->db->update('gebruiker', $gebruiker);
+    }
+
+    function activeerGebruiker($id)
+    {
+        $this->db->set('active', 1);
+        $this->db->where('id', $id);
+        $this->db->update('gebruiker');
+    }
+
+    function deactiveerGebruiker($id)
+    {
+        $this->db->set('active', 0);
+        $this->db->where('id', $id);
+        $this->db->update('gebruiker');
     }
 
     function insertGebruiker($gebruiker){
