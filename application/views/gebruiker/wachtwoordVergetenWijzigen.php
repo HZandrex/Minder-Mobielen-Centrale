@@ -20,7 +20,7 @@
             <?php echo anchor('gebruiker/inloggen', '< Terug', 'class="card-link"'); ?>
         </div>
         <div class="card-body">
-            <h5 class="card-title">Nieuw wachtwoord instellen</h5>
+            <h5 class="card-title">Wachtwoord instellen</h5>
             <div class="form-group">
                 <?php echo form_label('Wachtwoord:', 'wachtwoord'); ?></td>
                 <?php
@@ -35,7 +35,7 @@
                 echo form_password($data);
                 ?>
             </div>
-            <?php echo form_submit(array('name' => 'wachtwoordWijzigenKnop', 'value' => 'Wachtwoord wijzigen', 'class' => 'btn btn-primary')); ?>
+            <?php echo form_submit(array('name' => 'wachtwoordWijzigenKnop', 'value' => 'Wachtwoord opslaan', 'class' => 'btn btn-primary')); ?>
         </div>
     </div>
 

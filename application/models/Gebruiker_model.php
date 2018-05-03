@@ -104,7 +104,7 @@ class Gebruiker_model extends CI_Model {
 	
 	function updateGebruiker($gebruiker)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id', $gebruiker->id);
         $this->db->update('gebruiker', $gebruiker);
     }
 
@@ -118,6 +118,7 @@ class Gebruiker_model extends CI_Model {
     function deactiveerGebruiker($id)
     {
         $this->db->set('active', 0);
+        $this->db->set('wachtwoord', null);
         $this->db->where('id', $id);
         $this->db->update('gebruiker');
     }
@@ -170,7 +171,7 @@ class Gebruiker_model extends CI_Model {
      * @param $email Het mailadres dat wordt gecontroleerd
      * @return true bij nog niet bestaan & false bij het al bestaan
      */
-    function controleerEmailVrij($email) {
+    /*function controleerEmailVrij($email) {
         // is email al dan niet aanwezig
         $this->db->where('mail', $email);
         $query = $this->db->get('gebruiker');
@@ -180,7 +181,7 @@ class Gebruiker_model extends CI_Model {
         } else {
             return false;
         }
-    }
+    }*/
     
     /**
      * Retourneert true wanneer de resetToken bestaat en false wanneer hij niet bestaat.

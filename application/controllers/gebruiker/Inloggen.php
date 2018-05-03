@@ -107,7 +107,7 @@ class Inloggen extends CI_Controller {
 
         $this->load->model('gebruiker_model');
 
-        if ($this->gebruiker_model->controleerEmailVrij($email)) {
+        if (!$this->gebruiker_model->getByMail($email)) {
             redirect('gebruiker/inloggen/toonfoutwachtwoordveranderen');
         } else {
             $resetToken = $this->random_resetToken();
@@ -118,31 +118,32 @@ class Inloggen extends CI_Controller {
             $titel = "Minder Mobiele Centrale aanvraag nieuw wachtwoord";
             $boodschap = '<p>U heeft een nieuw wachtwoord aangevraagd. Druk op onderstaande link om een nieuw wachtwoord aan te vragen.</p>'
                     . '<p>Wanneer u zelf geen nieuw wachtwoord hebt aangevraagd hoeft u deze mail simpel te negeren.</p>'
-                    . '<p>Verander wachtwoord: ' . anchor('http://localhost/project23_1718/index.php/gebruiker/inloggen/wachtwoordvergetenwijzigen/' . $resetToken, 'Link om wachtwoord te veranderen') . '</p>';
+                    . '<p>Verander wachtwoord: ' . anchor(base_url() . 'index.php/gebruiker/inloggen/wachtwoordvergetenwijzigen/' . $resetToken, 'Link om wachtwoord te veranderen') . '</p>';
             $this->stuurMail($email, $boodschap, $titel);
 
             redirect('gebruiker/inloggen/toonmailnieuwwachtwoordverstuurd');
         }
     }
-    
+
     /**
      * Stuurt een E-mail naar het ogegeven mailadres $geadresseerde, de mail wordt opgesteld
      * met de parameters $titel en $boodschap. Dit gebeurd via de email library.
      * De parameters komen van een andere functie waar deze functie wordt opgeroepen bv. inloggen::nieuwWachtwoordAanvragen().
-     * 
+     *
      * De configuratie van het mail adres waar me wordt verzonden is email.php dat zich bevind in de config map.
-     * 
+     *
      * @param $geadresseerde Het mailadres waar de mail naar wordt gestuurd
      * @param $boodschap De inhoud van de mail
      * @param $titel De titel van de mail
-     * 
+     *
      * @see email.php
      * @see inloggen::nieuwWachtwoordAanvragen()
+     * @return bool
      */
     private function stuurMail($geadresseerde, $boodschap, $titel) {
         $this->load->library('email');
 
-        $this->email->from('atworkteam23@gmail.com', 'tv-shop');
+        $this->email->from('atworkteam23@gmail.com', 'Minder Mobielen Centrale');
         $this->email->to(/*$geadresseerde*/'atworkteam23@gmail.com');
         $this->email->subject($titel);
         $this->email->message($boodschap);
@@ -261,6 +262,20 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
+    public function toonGeactiveerd() {
+        $titel = "Account succesvol geactiveerd";
+        $boodschap = "Uw account werd succesvol geactiveerd.</br>"
+            . "U kan nu gewoon inloggen met het ingestelde wachtwoord.";
+        $link = array("url" => "gebruiker/inloggen", "tekst" => "Inloggen");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
     
     /**
      * Wanneer de $resetToken bestaat in de tabel gebruiker zal de view Gebruiker/wachtwoordVergetenWijzigen.php getoond worden,
@@ -318,15 +333,42 @@ class Inloggen extends CI_Controller {
             if ($Wachtwoord == $wachtwoordBevestigen) {
                 $gebruiker = $this->gebruiker_model->getByResetToken($resetToken);
                 $this->gebruiker_model->wijzigWachtwoordReset($resetToken, $Wachtwoord);
-                $titel = "Minder Mobiele Centrale wachtwoord veranderd";
-                $boodschap = "<p>U heeft zojuist uw wachtwoord veranderd. Noteer dit wachtwoord ergens of onthoud dit goed.</p>"
+                if ($gebruiker->active){
+                    $titel = "Minder Mobiele Centrale wachtwoord veranderd";
+                    $boodschap = "<p>U heeft zojuist uw wachtwoord veranderd. Noteer dit wachtwoord ergens of onthoud dit goed.</p>"
                         . "<p>Heeft u het wachtwoord niet veranderd en krijgd u deze mail, neem dan snel contact met ons op."
-                        . " U vindt deze gegevens op onze site.<p>" . anchor('home', "Link naar de site van de Minder Mobiele Centrale");
-                $this->stuurMail($gebruiker->mail, $boodschap, $titel);
-                redirect('gebruiker/inloggen/toonwachtwoordveranderd');
+                        . " U vindt deze gegevens op onze site.<p>" . anchor(base_url(), "Link naar de site van de Minder Mobiele Centrale");
+                    $this->stuurMail($gebruiker->mail, $boodschap, $titel);
+                    redirect('gebruiker/inloggen/toonwachtwoordveranderd');
+                } else {
+                    $this->gebruiker_model->activeerGebruiker($gebruiker->id);
+                    $titel = "Minder Mobiele Centrale wachtwoord ingesteld";
+                    $boodschap = "<p>U heeft zojuist uw account geactiveerd en het wachtwoord ingesteld. Noteer dit wachtwoord ergens of onthoud dit goed.</p>"
+                        . "<p>Heeft u geen account geactiveerd en krijgd u deze mail, neem dan snel contact met ons op."
+                        . " U vindt deze gegevens op onze site.<p>" . anchor(base_url(), "Link naar de site van de Minder Mobiele Centrale");
+                    $this->stuurMail($gebruiker->mail, $boodschap, $titel);
+                    redirect('gebruiker/inloggen/toongeactiveerd');
+                }
+
             } else {
                 redirect('gebruiker/inloggen/toonfoutnieuwwachtwoord/' . $resetToken);
             }
+        } else {
+            redirect('gebruiker/inloggen/toonfoutlinkverlopen');
+        }
+    }
+
+    public function gebruikerActiveren($resetToken){
+        $this->load->model('gebruiker_model');
+        if ($this->gebruiker_model->controleerResetToken($resetToken)) {
+            $data['titel'] = '';
+            $data['author'] = 'Geffrey W.';
+            $data['gebruiker'] = $this->authex->getGebruikerInfo();
+
+            $data['resetToken'] = $resetToken;
+
+            $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordvergetenwijzigen');
+            $this->template->load('main_master', $partials, $data);
         } else {
             redirect('gebruiker/inloggen/toonfoutlinkverlopen');
         }
