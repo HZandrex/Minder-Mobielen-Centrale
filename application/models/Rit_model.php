@@ -65,7 +65,39 @@ class Rit_model extends CI_Model {
         }
         usort($ritten, array($this, "date_compare"));
         return $ritten;
-    }		
+    }	
+
+	function getAllRitten(){
+		$this->load->model('adresRit_model');
+        $this->load->model('status_model');
+		$this->load->model('gebruiker_model');	
+		$this->load->model('vrijwilligerRit_model');
+		
+		$query = $this->db->get('rit');
+        $ritten = array();
+        $ritten = $query->result();
+		
+		$i =0;
+        foreach($ritten as $rit){
+            $rit->heenvertrek = $this->adresRit_model->getByRitIdAndType($rit->id, 1);
+            $rit->heenaankomst = $this->adresRit_model->getByRitIdAndType($rit->id, 2);
+            if($this->adresRit_model->terugRit($rit->id)){
+                $rit->terugvertrek = $this->adresRit_model->getByRitIdAndType($rit->id, 3);
+                $rit->terugaankomst = $this->adresRit_model->getByRitIdAndType($rit->id, 4);
+            }
+            $rit->status = $this->status_model->getById($rit->statusId);
+			$rit->MM = $this->gebruiker_model->get($rit->gebruikerMinderMobieleId);
+			if($rit->status->id == 2){
+				$rit->vrijwilliger = $this->vrijwilligerRit_model->getByRitId($rit->id);
+			}
+            if(new DateTime() > new DateTime($rit->heenvertrek->tijd)){
+                unset($ritten[$i]);
+            }
+            $i++;
+        }
+		
+		return $ritten;
+	}
 	
 	/**
 		*Haalt al de informatie op van een rit waar het id van de rit meegegeven is
@@ -188,6 +220,7 @@ class Rit_model extends CI_Model {
 		
 		return $ritId;
 	}
+	
     function updateStatusVrijwilligerRit($vrijwilligerRitId, $statusId)
     {
         $data = array('statusId' => $statusId);
