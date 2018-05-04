@@ -21,11 +21,11 @@
             echo '<p>';
             echo '<div class="btn-group">';
             if($rit->status->id == 2 || $rit->status->id == 3){
-                echo anchor(array('mm/ritten/wijzigRit', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om deze rit aan te passen"');
+                echo anchor(array('coach/ritten/wijzigRit', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om deze rit aan te passen"');
                 echo '<button class="btn btn-danger" name="statusId" data-toggle="tooltip" data-placement="top" title="Klik hier om de rit af te zeggen" type="submit" value="1"><i class="fas fa-ban"></i> Annuleren</button>';
             }
             echo '</div>';
-            echo anchor("mm/ritten/", '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right", data-toggle="tooltip", data-placement="top", title="Klik hier om terug te gaan naar de vorige pagina"');
+            echo anchor("coach/ritten/", '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right", data-toggle="tooltip", data-placement="top", title="Klik hier om terug te gaan naar de vorige pagina"');
             echo '</p>';
             echo form_close(); 
         ?> 
