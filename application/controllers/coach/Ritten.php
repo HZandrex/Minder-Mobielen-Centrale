@@ -80,6 +80,23 @@ class Ritten extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
+    public function wijzigRit($id){
+
+        $this->load->model('rit_model');
+        $data['titel'] = 'Wijzig rit';
+        $data['author'] = 'Lorenz C.';
+        $data['gebruiker'] = $this->authex->getGebruikerInfo();
+
+        $data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruiker']->id);
+
+        $data['heen'] = $this->rit_model->getByRitId($id);
+
+        $partials = array('menu' => 'main_menu','inhoud' => 'mm/wijzigRit');
+        $this->template->load('main_master', $partials, $data);
+
+    }
+
+
 
 
 
