@@ -3,49 +3,51 @@
     <table class="table">
         <tr>
             <td>Voornaam:</td>
-            <td><?php print $gebruiker->voornaam; ?></td>
+            <td><?php print $selectedGebruiker->voornaam; ?></td>
         </tr>
         <tr>
             <td>Naam:</td>
-            <td><?php print $gebruiker->naam; ?></td>
+            <td><?php print $selectedGebruiker->naam; ?></td>
         </tr>
         <tr>
             <td>Geboorte:</td>
-            <td><?php print date("d/m/Y", strtotime($gebruiker->geboorte)) ?></td>
+            <td><?php print date("d/m/Y", strtotime($selectedGebruiker->geboorte)) ?></td>
         </tr>
         <tr>
             <td>Telefoonnummer:</td>
-            <td><?php print $gebruiker->telefoon; ?></td>
+            <td><?php print $selectedGebruiker->telefoon; ?></td>
         </tr>
         <tr>
             <td>Email:</td>
-            <td><?php print $gebruiker->mail; ?></td>
+            <td><?php print $selectedGebruiker->mail; ?></td>
         </tr>
         <tr>
             <td>Gewenst communicatiemiddel:</td>
-            <td><?php print $gebruiker->voorkeur->naam; ?></td>
+            <td><?php print $selectedGebruiker->voorkeur->naam; ?></td>
         </tr>
     </table>
 </div>
+
 <div class="col-sm-12">
     <h4>Adresgegevens</h4>
     <table class="table">
         <tr>
             <td>Gemeente:</td>
-            <td><?php print $gebruiker->adres->gemeente; ?></td>
+            <td><?php print $selectedGebruiker->adres->gemeente; ?></td>
         </tr>
         <tr>
             <td>Postcode:</td>
-            <td><?php print $gebruiker->adres->postcode; ?></td>
+            <td><?php print $selectedGebruiker->adres->postcode; ?></td>
         </tr>
         <tr>
             <td>Straat + nr:</td>
-            <td><?php print $gebruiker->adres->straat; ?><?php print $gebruiker->adres->huisnummer ?></td>
+            <td><?php print $selectedGebruiker->adres->straat; ?> <?php print $selectedGebruiker->adres->huisnummer ?></td>
         </tr>
     </table>
 </div>
 <div class="col-sm-12">
-    <?php print anchor("medewerker/gebruikersBeheren/wachtwoordWijzigen/$gebruiker->id", 'Wachtwoord wijzigen', 'class="btn btn-primary"'); ?>
-    <?php print anchor("gebruiker/persoonlijkegegevens/gegevensWijzigen/$gebruiker->id", 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
+    <?php print anchor("coach/mijnMM/wachtwoordWijzigen/$selectedGebruiker->id", 'Wachtwoord wijzigen', 'class="btn btn-primary"'); ?>
+    <?php print anchor("coach/mijnMM/gegevensWijzigen/$selectedGebruiker->id", 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
+	<?php print anchor(array("coach/ritten/nieuweRit/$selectedGebruiker->id"), '<i class="fa fa-plus"></i> Nieuwe rit boeken', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om een nieuwe rit te boeken"');?>
 </div>
 
