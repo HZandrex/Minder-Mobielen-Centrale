@@ -24,7 +24,7 @@ class GebruikersBeheren extends CI_Controller
     public function index()
     {
         $data['titel'] = 'Gebruikers beheren';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
@@ -90,7 +90,7 @@ class GebruikersBeheren extends CI_Controller
     public function wachtwoordWijzigen($id)
     {
         $data['titel'] = '';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
@@ -275,12 +275,18 @@ class GebruikersBeheren extends CI_Controller
         $editGebruiker = $this->gebruiker_model->get($id);
 
         if($editGebruiker->active == 0){
-            $resetToken = $this->random_resetToken();
-            while ($this->gebruiker_model->controleerResetToken($resetToken)) {
+            if ($editGebruiker->mail != null){
                 $resetToken = $this->random_resetToken();
+                while ($this->gebruiker_model->controleerResetToken($resetToken)) {
+                    $resetToken = $this->random_resetToken();
+                }
+                $this->gebruiker_model->wijzigResetToken($editGebruiker->mail, $resetToken);
+                redirect('gebruiker/inloggen/gebruikerActiveren/'.$resetToken);
+            } else{
+                $this->gebruiker_model->activeerGebruiker($id);
+                redirect('medewerker/gebruikersBeheren/toonstatusveranderd/'."geactiveerd");
             }
-            $this->gebruiker_model->wijzigResetToken($editGebruiker->mail, $resetToken);
-            redirect('gebruiker/inloggen/gebruikerActiveren/'.$resetToken);
+
         } else{
             $this->gebruiker_model->deactiveerGebruiker($id);
             redirect('medewerker/gebruikersBeheren/toonstatusveranderd/'."gedeactiveerd");
@@ -331,7 +337,7 @@ class GebruikersBeheren extends CI_Controller
     public function toonMelding($foutTitel, $boodschap, $link)
     {
         $data['titel'] = '';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
         $data['foutTitel'] = $foutTitel;

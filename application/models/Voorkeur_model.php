@@ -18,6 +18,17 @@ class Voorkeur_model extends CI_Model {
         return $query->row();
     }
 
+    /**
+     * Retourneert het record met id=$id uit de tabel gebruiker.
+     * @param $id De id van het record dat opgevraagd wordt
+     * @return het opgevraagde record
+     */
+    function getByNaam($naam) {
+        $this->db->where('naam', $naam);
+        $query = $this->db->get('voorkeur');
+        return $query->row();
+    }
+
     function getEmpty(){
         $voorkeur = new stdClass();
 

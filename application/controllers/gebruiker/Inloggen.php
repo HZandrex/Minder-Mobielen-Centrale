@@ -21,7 +21,7 @@ class Inloggen extends CI_Controller {
      */
     public function index() {
         $data['titel'] = '';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/inlogPagina'); 
@@ -69,7 +69,7 @@ class Inloggen extends CI_Controller {
      */
     public function wachtwoordVergeten() {
         $data['titel'] = '';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordVergeten');
@@ -168,7 +168,7 @@ class Inloggen extends CI_Controller {
      */
     public function toonMelding($foutTitel, $boodschap, $link) {
         $data['titel'] = '';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
         $data['foutTitel'] = $foutTitel;
@@ -307,7 +307,7 @@ class Inloggen extends CI_Controller {
         $this->load->model('gebruiker_model');
         if ($this->gebruiker_model->controleerResetToken($resetToken)) {
             $data['titel'] = '';
-            $data['author'] = 'Geffrey W.';
+            $data['author'] = 'G. Wuyts';
             $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
             $data['resetToken'] = $resetToken;
@@ -387,7 +387,7 @@ class Inloggen extends CI_Controller {
         $this->load->model('gebruiker_model');
         if ($this->gebruiker_model->controleerResetToken($resetToken)) {
             $data['titel'] = '';
-            $data['author'] = 'Geffrey W.';
+            $data['author'] = 'G. Wuyts';
             $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
             $data['resetToken'] = $resetToken;

@@ -14,7 +14,7 @@ class Help extends CI_Controller {
     }
     public function index() {
         $data['titel'] = 'Help';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
 
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 

@@ -23,7 +23,7 @@ class PersoonlijkeGegevens extends CI_Controller
      */
     public function persoonlijkeGegevens(){
         $data['titel'] = 'Persoonlijke Gegevens';
-        $data['author'] = 'Tijmen Elseviers';
+        $data['author'] = 'T. Elseviers';
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
@@ -48,7 +48,7 @@ class PersoonlijkeGegevens extends CI_Controller
      */
     public function gegevensWijzigen(){
         $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
-        $data['author'] = 'Tijmen Elseviers';
+        $data['author'] = 'T. Elseviers';
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
@@ -76,7 +76,7 @@ class PersoonlijkeGegevens extends CI_Controller
      */
     public function gegevensVeranderen(){
         $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
-        $data['author'] = 'Tijmen Elseviers';
+        $data['author'] = 'T. Elseviers';
 
         $this->load->model('gebruiker_model');
         $this->load->model('adres_model');
@@ -112,7 +112,7 @@ class PersoonlijkeGegevens extends CI_Controller
     public function wachtwoordWijzigen()
     {
         $data['titel'] = '';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
@@ -212,7 +212,7 @@ class PersoonlijkeGegevens extends CI_Controller
     public function toonMelding($foutTitel, $boodschap, $link)
     {
         $data['titel'] = '';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
         $data['foutTitel'] = $foutTitel;

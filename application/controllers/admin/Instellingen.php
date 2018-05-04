@@ -21,7 +21,7 @@ class Instellingen extends CI_Controller {
      */
     public function index() {
         $data['titel'] = 'Instellingen';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null){
@@ -58,7 +58,7 @@ class Instellingen extends CI_Controller {
      */
     public function toonMelding($foutTitel, $boodschap, $link) {
         $data['titel'] = '';
-        $data['author'] = 'Geffrey W.';
+        $data['author'] = 'G. Wuyts';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
         $data['foutTitel'] = $foutTitel;
@@ -130,6 +130,20 @@ class Instellingen extends CI_Controller {
      *
      * @see Inloggen::toonMelding()
      */
+    public function toonFoutBestaatAl() {
+        $titel = "Fout!";
+        $boodschap = "U probeerde een voorkeur toe te voegen die al bestaat.</br>"
+            . "Probeer het opnieuw met een andere naam!";
+        $link = array("url" => "admin/instellingen", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
     public function toonInstellingGewijzigd() {
         $titel = "Succes!";
         $boodschap = "De instellingen zijn succesvol gewijzigd!";
@@ -169,7 +183,11 @@ class Instellingen extends CI_Controller {
 
                 $this->load->model('voorkeur_model');
                 if ($voorkeur->id == 0){
-                    $this->voorkeur_model->voegToe($voorkeur);
+                    if ($this->voorkeur_model->getByNaam($voorkeur->naam) == null){
+                        $this->voorkeur_model->voegToe($voorkeur);
+                    } else{
+                        redirect('admin/instellingen/toonfoutbestaatal');
+                    }
                 }
                 else{
                     redirect('admin/instellingen/toonfoutvoorkeurtoevoegen');

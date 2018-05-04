@@ -9,7 +9,7 @@ class Webinfo extends CI_Controller {
 
     public function index() {
         $data['titel'] = 'Webinfo wijzigen';
-        $data['author'] = 'Nico C.';
+        $data['author'] = 'N. Claes';
         
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {

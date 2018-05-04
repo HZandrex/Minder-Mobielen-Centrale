@@ -72,11 +72,11 @@
         <footer class="footer">
             <div class="container">
                 <div class="row footText">
-                    <span>Nico C.</span>
-                    <span class="footerNaam">Lorenz C.</span>
-                    <span class="footerNaam">Tijmen E.</span>
-                    <span class="footerNaam">Michiel O.</span>
-                    <span class="mr-auto">Geffrey W.</span>
+                    <span>N. Claes,</span>
+                    <span class="footerNaam">L. Cleymans,</span>
+                    <span class="footerNaam">T. Elseviers,</span>
+                    <span class="footerNaam">M. Olijslagers,</span>
+                    <span class="mr-auto">G. Wuyts</span>
 
                     <span id="footerTeam">Team 23 Christel Maes</span>
 

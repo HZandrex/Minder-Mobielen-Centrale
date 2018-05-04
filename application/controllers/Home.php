@@ -25,7 +25,7 @@ class Home extends CI_Controller {
      */
     public function index() {
         $data['titel'] = 'Home';
-        $data['author'] = 'Nico C.';
+        $data['author'] = 'N. Claes';
          
         $this->load->model('webinfo_model');
         $data['webinfo'] = $this->webinfo_model->getAll();
