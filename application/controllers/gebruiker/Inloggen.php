@@ -276,6 +276,21 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
+    public function toonGeactiveerdDoorMedewerker() {
+        $titel = "Account succesvol geactiveerd";
+        $boodschap = "Uw heeft de gebruiker succesvol geactiveerd.</br>"
+            . "De gebruiker zal een mail krijgen dat dit gebeurt is.</br>"
+            . "Wanneer u zelf een wachtwoord heeft gekozen verwitig de gebruiker dan zelf!";
+        $link = array("url" => "medewerker/gebruikersBeheren", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
     
     /**
      * Wanneer de $resetToken bestaat in de tabel gebruiker zal de view Gebruiker/wachtwoordVergetenWijzigen.php getoond worden,
@@ -328,6 +343,7 @@ class Inloggen extends CI_Controller {
         $wachtwoordBevestigen = $this->input->post('wachtwoordBevestigen');
 
         $this->load->model('gebruiker_model');
+        $ingelogdeGebruiker = $this->authex->getGebruikerInfo();
 
         if ($this->gebruiker_model->controleerResetToken($resetToken)) {
             if ($Wachtwoord == $wachtwoordBevestigen) {
@@ -340,7 +356,7 @@ class Inloggen extends CI_Controller {
                         . " U vindt deze gegevens op onze site.<p>" . anchor(base_url(), "Link naar de site van de Minder Mobiele Centrale");
                     $this->stuurMail($gebruiker->mail, $boodschap, $titel);
                     redirect('gebruiker/inloggen/toonwachtwoordveranderd');
-                } else {
+                } elseif ($gebruiker->id == $ingelogdeGebruiker->id){
                     $this->gebruiker_model->activeerGebruiker($gebruiker->id);
                     $titel = "Minder Mobiele Centrale wachtwoord ingesteld";
                     $boodschap = "<p>U heeft zojuist uw account geactiveerd en het wachtwoord ingesteld. Noteer dit wachtwoord ergens of onthoud dit goed.</p>"
@@ -348,6 +364,15 @@ class Inloggen extends CI_Controller {
                         . " U vindt deze gegevens op onze site.<p>" . anchor(base_url(), "Link naar de site van de Minder Mobiele Centrale");
                     $this->stuurMail($gebruiker->mail, $boodschap, $titel);
                     redirect('gebruiker/inloggen/toongeactiveerd');
+                } else{
+                    $this->gebruiker_model->activeerGebruiker($gebruiker->id);
+                    $titel = "Minder Mobiele Centrale wachtwoord ingesteld";
+                    $boodschap = "<p>Uw account werd zonet geactiveerd en er werd wachtwoord ingesteld. Als u dit zelf heeft doorgegeven noteer dit wachtwoord dan ergens of onthoud dit goed.</p>"
+                        . "<p>Wanneer u zelf geen wachtwoord hebt opgegeven neem dan even contact op met een medewerker.</p>"
+                        . "<p>Weet u niets van dit account of deze activatie en krijgd u deze mail, neem dan snel contact met ons op."
+                        . " U vindt deze gegevens op onze site.<p>" . anchor(base_url(), "Link naar de site van de Minder Mobiele Centrale");
+                    $this->stuurMail($gebruiker->mail, $boodschap, $titel);
+                    redirect('gebruiker/inloggen/toongeactiveerddoormedewerker');
                 }
 
             } else {

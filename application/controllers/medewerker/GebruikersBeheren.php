@@ -52,6 +52,12 @@ class GebruikersBeheren extends CI_Controller
 
         $this->load->model('functie_model');
         $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+        $inActive = $this->functie_model->getEmpty();
+        $inActive->naam = "Non-actief";
+        array_push($data['functies'], $inActive);
+
+        /*print_r($data['functies']);
+        exit();*/
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gebruikersBeherenOverzicht');
 
@@ -61,9 +67,13 @@ class GebruikersBeheren extends CI_Controller
     public function haalAjaxOp_GebruikersOpFunctie()
     {
         $functieId = $this->input->get('functieId');
-
-        $this->load->model('functieGebruiker_model');
-        $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersByFunction($functieId);
+        if ($functieId != null){
+            $this->load->model('functieGebruiker_model');
+            $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersByFunction($functieId);
+        } else{
+            $this->load->model('gebruiker_model');
+            $data['gebruikers'] = $this->gebruiker_model->getAllInActive();
+        }
 
         $this->load->view('medewerker/ajax_gebruikers', $data);
     }
@@ -265,8 +275,12 @@ class GebruikersBeheren extends CI_Controller
         $editGebruiker = $this->gebruiker_model->get($id);
 
         if($editGebruiker->active == 0){
-            $this->gebruiker_model->activeerGebruiker($id);
-            redirect('medewerker/gebruikersBeheren/toonstatusveranderd/'."geactiveerd");
+            $resetToken = $this->random_resetToken();
+            while ($this->gebruiker_model->controleerResetToken($resetToken)) {
+                $resetToken = $this->random_resetToken();
+            }
+            $this->gebruiker_model->wijzigResetToken($editGebruiker->mail, $resetToken);
+            redirect('gebruiker/inloggen/gebruikerActiveren/'.$resetToken);
         } else{
             $this->gebruiker_model->deactiveerGebruiker($id);
             redirect('medewerker/gebruikersBeheren/toonstatusveranderd/'."gedeactiveerd");

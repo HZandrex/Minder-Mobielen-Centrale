@@ -26,6 +26,17 @@ class Gebruiker_model extends CI_Model {
         return $query->row();
     }
 
+    /**
+     * Retourneert het record met id=$id uit de tabel gebruiker.
+     * @param $id De id van het record dat opgevraagd wordt
+     * @return het opgevraagde record
+     */
+    function getAllInActive() {
+        $this->db->where('active', 0);
+        $query = $this->db->get('gebruiker');
+        return $query->result();
+    }
+
     
     /**
      * Retourneert het record met mail=$email uit de tabel gebruiker.
