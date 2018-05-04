@@ -32,7 +32,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
     <?php
     $attributes = array('name' => 'nieuweRit', 'id' => 'nieuweRit');
 
-    echo form_open('mm/ritten/wijzigRitOpslaan', $attributes);
+    echo form_open('coach/ritten/wijzigRitOpslaan', $attributes);
     ?>
     <div class="card">
         <div class="card-body">
@@ -288,7 +288,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
         $.ajax(
             {
                 type:"post",
-                url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenCredits",
+                url: "<?php echo base_url(); ?>index.php/coach/ritten/berekenCredits",
                 data:{ userId:'<?php echo $gebruikerMM->id; ?>', date: timeStamp},
                 success:function(response)
                 {
@@ -344,7 +344,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 $.ajax(
                     {
                         type:"post",
-                        url: "<?php echo base_url(); ?>index.php/mm/ritten/nieuwAdres",
+                        url: "<?php echo base_url(); ?>index.php/coach/ritten/nieuwAdres",
                         data:{ huisnummer:huisnummer, straat:straat, gemeente:gemeente, postcode:postcode},
                         success:function(response)
                         {
@@ -398,7 +398,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 $.ajax(
                     {
                         type:"post",
-                        url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenKost",
+                        url: "<?php echo base_url(); ?>index.php/coach/ritten/berekenKost",
                         data:{ startAdres:$('#heenStartAdres').val(), eindAdres:$('#heenEindeAdres').val(), timeStamp:timeStamp},
                         success:function(response)
                         {
@@ -413,7 +413,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                                 $.ajax(
                                     {
                                         type:"post",
-                                        url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenKost",
+                                        url: "<?php echo base_url(); ?>index.php/coach/ritten/berekenKost",
                                         data:{ startAdres:$('#terugStartAdres').val(), eindAdres:$('#terugEindeAdres').val(), timeStamp:timeStamp},
                                         success:function(response)
                                         {

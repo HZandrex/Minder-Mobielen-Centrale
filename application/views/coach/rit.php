@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-sm-12">
         <?php
-            echo form_open('mm/ritten/statusAanpassen/'. $rit->id);
+            echo form_open('coach/ritten/statusAanpassen/'. $rit->id);
             echo '<p>';
             echo '<div class="btn-group">';
             if($rit->status->id == 2 || $rit->status->id == 3){
