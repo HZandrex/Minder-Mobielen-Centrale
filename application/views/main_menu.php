@@ -34,6 +34,7 @@ if ($gebruiker == null) { // niet aangemeld
 				
             case 'Medewerker':
                 echo divAnchor('medewerker/gebruikersBeheren','Gebruikers beheren','class="nav-item nav-link"');
+				echo divAnchor('medewerker/rittenAfhandelen','Ritten afhandelen','class="nav-item nav-link"');
                 break;
 
             case 'Admin':

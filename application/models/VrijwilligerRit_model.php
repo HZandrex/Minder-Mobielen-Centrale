@@ -21,6 +21,9 @@ class VrijwilligerRit_model extends CI_Model {
     {
 	$this->db->select('*');
         $this->db->where('ritId', $id);
+		$this->db->where('ritId', $id);
+		$this->db->order_by('id', 'DESC');
+		$this->db->limit(1);
         $query = $this->db->get('vrijwilligerRit');
         $vrijwilligerRit = $query->row();
 
