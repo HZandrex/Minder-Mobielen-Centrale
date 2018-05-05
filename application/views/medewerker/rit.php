@@ -5,9 +5,34 @@
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
 */
-        // var_dump($rit);
+        var_dump($rit);
+		var_dump($vrijwilligers);
 		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
-?>
+		
+		$niks = "";
+		$geanuleerd = "";
+		$gelselecteerd = "Er is nog geen vrijwilliger geselecteerd";
+		foreach($vrijwilligers as $vrijwilliger){			
+			switch ($vrijwilliger->mening){
+				case "0":
+					$niks .= "<option value='" . $vrijwilliger->id . "'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</option>";
+					break;
+				case "1":
+					$geanuleerd .= "<li class='list-group-item'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</li>";
+					break;
+				case "2":
+					$geselecteerd = '<p>Heeft goedgekeurd: <i class="fas fa-user"></i> ' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
+					break;
+				case "3":
+					$geselecteerd = '<p>In afwachting op reactie: <i class="fas fa-user"></i>' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
+					break;
+				case "4":
+					$geanuleerd .= "<li class='list-group-item'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</li>";
+					break;
+			}
+				
+		}
+?>						
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="..">Overzicht ritten</a></li>
@@ -42,7 +67,8 @@
 					if(!empty($rit->vrijwilliger)){
 						print $rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->vrijwilliger->vrijwilliger->naam; 
 					}else{
-						print "Nog geen vrijwilliger gevonden";
+						print "<div id='voegVrijwilligerToe'>Button</div>";
+						
 					}
 				?>
 				</p>
@@ -95,9 +121,9 @@
 	<div class="card">
 		<div class="card-header">
 			<div class="row">
-                            <div class="col-sm-6">
-                                    <h5>Heen rit</h5>
-                            </div>
+				<div class="col-sm-6">
+						<h5>Heen rit</h5>
+				</div>
 			</div>
 		</div>
 		<div class="card-body">
@@ -255,13 +281,70 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-id="">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form id="adres" novalidate>
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Voeg vrijwilliger toe</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-danger" role="alert" id="errorModal" style="display: none;"></div>
+					<div>
+						<div class="form-group">
+							<label for="selectedVrijwilliger">Selecteer een vrijwilliger</label>
+							<select class="form-control" id="selectedVrijwilliger">
+								<option value="default" selected disabled>Selecteer een vrijwilliger</option>
+							<?php
+								print $niks;							
+							?>
+							</select>
+						</div>
+					</div>
+					<div>
+						<p id="geselecteerd">
+						<?php
+							print $gelselecteerd;
+						?>
+						</p>
+					</div>
+					<?php
+						if($geanuleerd != ""){
+					
+					?>
+						<div class="card">
+							<div class="card-header">
+								Vrijwilligers die afgezegd hebben:
+							</div>
+							<ul class="list-group list-group-flush">
+								<?php
+									
+										print $geanuleerd;
+								?>
+							</ul>
+						</div>
+					<?php
+						}
+					?>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="anuleerVrijwilliger">Anuleren</button>
+					<button type="button" class="btn btn-primary" id="saveVrijwilliger">Opslaan</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABTgvmJaS7yxD1zp9NWJE4Zlg-MIsQTuI&callback=initMaps"> </script>
 <script>
     $(function () {
       $('[data-toggle="tooltip"]').tooltip();
     });
     //Verberg kaarten
-    //$("#mapHeen").add($("#mapTerug").css("display", "none");
+
     //Toon/verberg kaarten
     function ToonVerbergKaart(content){
         $(content).slideToggle("slow");
@@ -338,4 +421,21 @@
           }
         });
     }
+	
+	//vrijwilliger koppelen aan een rit
+	$("#voegVrijwilligerToe").click(function(){
+		$('#exampleModal').modal('show');
+	});
+	
+	$('#selectedVrijwilliger').change(function(){
+		$('#geselecteerd').html('In afwachting op reactie: <i class="fas fa-user"></i> ' + $("#selectedVrijwilliger option:selected").text());
+	})
+	
+	$('#anuleerVrijwilliger').click(function(){
+		$('#exampleModal').modal('hide');
+	});
+
+	$('#saveVrijwilliger').click(function(){
+		$('#exampleModal').modal('hide');
+	});
 </script>

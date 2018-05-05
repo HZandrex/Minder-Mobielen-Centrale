@@ -34,11 +34,13 @@ class RittenAfhandelen extends CI_Controller {
 	
 	public function eenRit($ritId){		
 		$this->load->model('rit_model');
-		$data['rit'] = $this->rit_model->getByRitId($ritId);
-		
+		$this->load->model('vrijwilligerRit_model');
+	
 		$data['titel'] = 'Details rit';
         $data['author'] = 'Michiel O.';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
+		$data['rit'] = $this->rit_model->getByRitId($ritId);
+		$data['vrijwilligers'] = $this->vrijwilligerRit_model->getVrijwilligerByRit($ritId);
 		
 		$partials = array('menu' => 'main_menu','inhoud' => 'medewerker/rit');
         $this->template->load('main_master', $partials, $data);

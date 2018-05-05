@@ -47,7 +47,7 @@ class VrijwilligerRit_model extends CI_Model {
         $this->load->model('rit_model');
         $this->load->model('status_model');
         
-	$this->db->select('*');
+		$this->db->select('*');
         $this->db->where('gebruikerVrijwilligerId', $id);
         $query = $this->db->get('vrijwilligerRit');
         $ritten = $query->result();
@@ -64,7 +64,7 @@ class VrijwilligerRit_model extends CI_Model {
         $this->load->model('rit_model');
         $this->load->model('status_model');
         
-	$this->db->select('*');
+		$this->db->select('*');
         $this->db->where('id', $id);
         $query = $this->db->get('vrijwilligerRit');
         $vrijwilligerRit = $query->result()[0];
@@ -83,7 +83,7 @@ class VrijwilligerRit_model extends CI_Model {
         if($vrijwilligerRit->statusId == 1){
             $data += ['statusId'=> 3];
         }
-        $this->db->where('id', $vrijwilligerRit->ritId);
+        
         $this->db->update('rit', $data);
     }
     
@@ -101,5 +101,29 @@ class VrijwilligerRit_model extends CI_Model {
         $this->db->where('ritId', $ritId);
         $this->db->update('vrijwilligerRit', $data);
     }
+	
+	function getVrijwilligerByRit($ritId){
+		$this->load->model('functieGebruiker_model');
+		$vrijwilligers = $this->functieGebruiker_model->getAllGebruikersByFunction(3);
+		
+		foreach($vrijwilligers as $vrijwilliger){
+			$this->db->where('ritId', $ritId);
+			$this->db->where('gebruikerVrijwilligerId', $vrijwilliger->id);
+			$data = array();
+			$query = $this->db->get('vrijwilligerRit');
+			$data = $query->result();
+			if(count($data) > 0){
+				$this->db->where('ritId', $ritId);
+				$query = $this->db->get('vrijwilligerRit');
+				$mening = $query->row();
+				$vrijwilliger->mening = $mening->statusId;
+			}else{
+				$vrijwilliger->mening = "0";
+			}
+			
+		}
+
+        return $vrijwilligers;
+	}
                         
 }

@@ -283,5 +283,4 @@ class Gebruiker_model extends CI_Model {
 		$creditsOver = $maxCredits->waarde - $gebruikteCredits;
 		return $creditsOver;
 	}
-
 }
