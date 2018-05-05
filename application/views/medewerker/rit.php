@@ -12,6 +12,7 @@
 		$niks = "";
 		$geanuleerd = "";
 		$gelselecteerd = "Er is nog geen vrijwilliger geselecteerd";
+		$alEen = false;
 		foreach($vrijwilligers as $vrijwilliger){			
 			switch ($vrijwilliger->mening){
 				case "0":
@@ -21,18 +22,25 @@
 					$geanuleerd .= "<li class='list-group-item'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</li>";
 					break;
 				case "2":
-					$geselecteerd = '<p>Heeft goedgekeurd: <i class="fas fa-user"></i> ' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
+					$gelselecteerd = '<p id="geselecteerd">Heeft goedgekeurd: <i class="fas fa-user"></i> ' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
+					$niks .= "<option selected value='" . $vrijwilliger->id . "'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</option>";
+					$alEen = true;
 					break;
 				case "3":
-					$geselecteerd = '<p>In afwachting op reactie: <i class="fas fa-user"></i>' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
+					$gelselecteerd = '<p id="geselecteerd">In afwachting op reactie: <i class="fas fa-user"></i>' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
+					$niks .= "<option selected value='" . $vrijwilliger->id . "'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</option>";
+					$alEen = true;
 					break;
 				case "4":
 					$geanuleerd .= "<li class='list-group-item'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</li>";
 					break;
 			}
-				
 		}
-?>						
+		
+		if(!$alEen){
+			$niks = "<option value='default' selected disabled>Selecteer een vrijwilliger</option>	" . $niks;
+		}
+?>				
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="..">Overzicht ritten</a></li>
@@ -65,9 +73,14 @@
 				<i class="fas fa-car"></i> chauffeur: 
 				<?php 
 					if(!empty($rit->vrijwilliger)){
-						print $rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->vrijwilliger->vrijwilliger->naam; 
+						if($rit->vrijwilliger->statusId != 1){
+							print $rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->vrijwilliger->vrijwilliger->naam; 
+						}
+						if($rit->vrijwilliger->statusId != 2){
+							print " <button id='voegVrijwilligerToe' type='button' class='btn btn-outline-primary'>Selecteer vrijwilliger</button>";
+						}
 					}else{
-						print "<div id='voegVrijwilligerToe'>Button</div>";
+						print "<button id='voegVrijwilligerToe' type='button' class='btn btn-outline-primary'>Selecteer vrijwilliger</button>";
 						
 					}
 				?>
@@ -297,7 +310,7 @@
 						<div class="form-group">
 							<label for="selectedVrijwilliger">Selecteer een vrijwilliger</label>
 							<select class="form-control" id="selectedVrijwilliger">
-								<option value="default" selected disabled>Selecteer een vrijwilliger</option>
+								
 							<?php
 								print $niks;							
 							?>
@@ -436,6 +449,17 @@
 	});
 
 	$('#saveVrijwilliger').click(function(){
-		$('#exampleModal').modal('hide');
+		var ritId = "<?php print $rit->id; ?>";
+		var vrijwilligerId = $("#selectedVrijwilliger option:selected").val();
+		var alEen = "<?php print $alEen; ?>";
+		$.ajax({
+			type:"post",
+			url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/koppelVrijwilliger",
+			data:{ ritId:ritId, vrijwilligerId:vrijwilligerId, alEen:alEen},
+			success:function(response)
+			{
+			}
+		});
+		location.reload();
 	});
 </script>

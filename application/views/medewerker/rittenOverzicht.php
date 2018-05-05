@@ -47,7 +47,11 @@
 						<td><?php print date("G:i", strtotime($rit->heenvertrek->tijd));?></td>
 						<td><?php print $rit->MM->voornaam . " " . $rit->MM->naam;?></td>
 						<td><?php if(!empty($rit->vrijwilliger->vrijwilliger->voornaam)){
-							print $rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->vrijwilliger->vrijwilliger->naam;
+							if($rit->vrijwilliger->statusId != 1){
+								print $rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->vrijwilliger->vrijwilliger->naam;
+							}else{
+								print "N/A";
+							}
 						}else{
 							print "N/A";
 						} ?></td>

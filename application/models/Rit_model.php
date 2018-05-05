@@ -87,7 +87,7 @@ class Rit_model extends CI_Model {
             }
             $rit->status = $this->status_model->getById($rit->statusId);
 			$rit->MM = $this->gebruiker_model->get($rit->gebruikerMinderMobieleId);
-			if($rit->status->id == 2){
+			if(count($this->vrijwilligerRit_model->getByRitId($rit->id)) > 0){
 				$rit->vrijwilliger = $this->vrijwilligerRit_model->getByRitId($rit->id);
 			}
             if(new DateTime() > new DateTime($rit->heenvertrek->tijd)){
@@ -121,7 +121,7 @@ class Rit_model extends CI_Model {
 		$rit->heenvertrek = $this->adresRit_model->getByRitIdAndType($rit->id, 1);
 		$rit->heenaankomst = $this->adresRit_model->getByRitIdAndType($rit->id, 2);
                 
-                //Bij ritId 5 krijg ik errors (zie ritten overzicht vrijwilliger) dat er iets mis is met de index van rows (zie 2 regels in commentaar hieronder)
+		//Bij ritId 5 krijg ik errors (zie ritten overzicht vrijwilliger) dat er iets mis is met de index van rows (zie 2 regels in commentaar hieronder)
 		$rit->heen = $this->google_model->getReisTijd($rit->heenvertrek->adresId, $rit->heenaankomst->adresId, $rit->heenvertrek->tijd);
 		
 		if($this->adresRit_model->terugRit($rit->id)){
@@ -131,7 +131,7 @@ class Rit_model extends CI_Model {
 		}
 		$rit->status = $this->status_model->getById($rit->statusId);
 		$rit->MM = $this->gebruiker_model->get($rit->gebruikerMinderMobieleId);
-		if($rit->status->id == 2){
+		if(count($this->vrijwilligerRit_model->getByRitId($rit->id)) > 0){
 			$rit->vrijwilliger = $this->vrijwilligerRit_model->getByRitId($rit->id);
 		}
 		

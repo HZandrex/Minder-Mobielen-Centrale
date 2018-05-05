@@ -15,7 +15,7 @@ class RittenAfhandelen extends CI_Controller {
     }
 
     public function index() {
-        $data['titel'] = 'Gebruikers beheren';
+        $data['titel'] = 'Ritten beheren';
         $data['author'] = 'Michiel O.';
 		
 		$gebruiker = $this->authex->getGebruikerInfo();
@@ -44,5 +44,15 @@ class RittenAfhandelen extends CI_Controller {
 		
 		$partials = array('menu' => 'main_menu','inhoud' => 'medewerker/rit');
         $this->template->load('main_master', $partials, $data);
+	}
+	
+	public function koppelVrijwilliger(){
+		$this->load->model('vrijwilligerRit_model');
+		
+		$ritId = htmlspecialchars(trim($_POST['ritId']));
+		$vrijwilligerId = htmlspecialchars(trim($_POST['vrijwilligerId']));
+		$alEen = htmlspecialchars(trim($_POST['alEen']));
+		
+		return $this->vrijwilligerRit_model->koppelVrijwilliger($ritId, $vrijwilligerId, $alEen);
 	}
 }
