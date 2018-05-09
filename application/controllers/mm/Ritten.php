@@ -132,7 +132,6 @@ class Ritten extends CI_Controller {
 	}
 
     public function wijzigRit($id){
-
         $this->load->model('rit_model');
         $data['titel'] = 'Wijzig rit';
         $data['author'] = 'L. Cleymans';
@@ -144,7 +143,6 @@ class Ritten extends CI_Controller {
 
         $partials = array('menu' => 'main_menu','inhoud' => 'mm/wijzigRit');
         $this->template->load('main_master', $partials, $data);
-
     }
 
     public function wijzigRitOpslaan(){
