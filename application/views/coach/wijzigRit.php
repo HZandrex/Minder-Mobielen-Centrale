@@ -40,7 +40,15 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 <div class="col-sm-6">
                     <p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruikerMM->voornaam . " " . $gebruikerMM->naam; ?></p>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug">
+                        <?php
+
+                        if ($heen->terugaankomst->adres->id) { ?>
+
+                            <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug" checked >
+                        <?php } else { ?>
+
+                            <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug"  >
+                        <?php } ?>
                         <label class="custom-control-label" for="heenTerug">Heen en terug</label>
                     </div>
                     <p id="credits"></p>
@@ -170,7 +178,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                     </div>
                     <div class="col">
                         <label for="terugEindeAdres">Bestemming adres: </label>
-                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres">
+                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres" disabled>
                             <?php
                             foreach($adressen as $adres){
 
@@ -264,6 +272,11 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete" async defer></script>
 <script>
+
+    $("#heenStartAdres").click(function () {
+
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     })
@@ -274,12 +287,13 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
         language: 'nl'
     });
 
-    $('#heenTerug').click(function() {
-        if (!$(this).is(':checked')) {
+    $(document).ready(function() {
+        if (!$('#heenTerug').is(':checked')) {
             $('#terug').slideUp();
         }else{
             $('#terug').slideDown();
         }
+
     });
 
     $('#heenDatum').change(function(){
