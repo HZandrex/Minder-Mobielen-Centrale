@@ -5,8 +5,8 @@
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
 */
-        var_dump($rit);
-		var_dump($vrijwilligers);
+        // var_dump($rit);
+		// var_dump($vrijwilligers);
 		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
 		
 		$niks = "";
@@ -22,12 +22,12 @@
 					$geanuleerd .= "<li class='list-group-item'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</li>";
 					break;
 				case "2":
-					$gelselecteerd = '<p id="geselecteerd">Heeft goedgekeurd: <i class="fas fa-user"></i> ' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
+					$gelselecteerd = '<p id="geselecteerdeVrijwilliger">Heeft goedgekeurd: <i class="fas fa-user"></i> ' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
 					$niks .= "<option selected value='" . $vrijwilliger->id . "'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</option>";
 					$alEen = true;
 					break;
 				case "3":
-					$gelselecteerd = '<p id="geselecteerd">In afwachting op reactie: <i class="fas fa-user"></i>' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
+					$gelselecteerd = '<p id="geselecteerdeVrijwilliger">In afwachting op reactie: <i class="fas fa-user"></i>' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
 					$niks .= "<option selected value='" . $vrijwilliger->id . "'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</option>";
 					$alEen = true;
 					break;
@@ -50,15 +50,15 @@
 <div class="row">
     <div class="col-sm-12">
         <?php
-            echo form_open('mm/ritten/statusAanpassen/'. $rit->id);
+            echo form_open('medewerker/rittenAfhandelen/statusAanpassen/'. $rit->id);
             echo '<p>';
             echo '<div class="btn-group">';
             if($rit->status->id == 2 || $rit->status->id == 3){
-                echo anchor(array('medewerker/ritten/wijzigRit', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om deze rit aan te passen"');
+                echo anchor(array('medewerker/rittenAfhandelen/wijzigRit', $rit->id), '<i class="fas fa-pen-square"></i> Wijzigen', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om deze rit aan te passen"');
                 echo '<button class="btn btn-danger" name="statusId" data-toggle="tooltip" data-placement="top" title="Klik hier om de rit af te zeggen" type="submit" value="1"><i class="fas fa-ban"></i> Annuleren</button>';
             }
             echo '</div>';
-            echo anchor("mm/ritten/", '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right", data-toggle="tooltip", data-placement="top", title="Klik hier om terug te gaan naar de vorige pagina"');
+            echo anchor("medewerker/rittenAfhandelen/", '<i class="fas fa-long-arrow-alt-left"></i> Terug', 'class="btn btn-primary float-right", data-toggle="tooltip", data-placement="top", title="Klik hier om terug te gaan naar de vorige pagina"');
             echo '</p>';
             echo form_close(); 
         ?> 
@@ -441,7 +441,7 @@
 	});
 	
 	$('#selectedVrijwilliger').change(function(){
-		$('#geselecteerd').html('In afwachting op reactie: <i class="fas fa-user"></i> ' + $("#selectedVrijwilliger option:selected").text());
+		$('#geselecteerdeVrijwilliger').replaceWith('<div id="geselecteerdeVrijwilliger">In afwachting op reactie: <i class="fas fa-user"></i> ' + $("#selectedVrijwilliger option:selected").text() +'</div>');
 	})
 	
 	$('#anuleerVrijwilliger').click(function(){
@@ -458,8 +458,8 @@
 			data:{ ritId:ritId, vrijwilligerId:vrijwilligerId, alEen:alEen},
 			success:function(response)
 			{
+				location.reload();
 			}
 		});
-		location.reload();
 	});
 </script>

@@ -14,9 +14,11 @@
 			<div class="col-sm-6">
 				<p>
 					Naam minder mobiele filter
+					<input id="mindermobieleZoeken" type="text"/>
 				</p>
 				<p>
 					Naam vrijwilliger filter
+					<input id="vrijwilligerZoeken" type="text"/>
 				</p>
 			</div>
 			<div class="col-sm-6">
@@ -45,8 +47,8 @@
 					<tr>
 						<td><?php print date("d.m.y", strtotime($rit->heenvertrek->tijd));?></td>
 						<td><?php print date("G:i", strtotime($rit->heenvertrek->tijd));?></td>
-						<td><?php print $rit->MM->voornaam . " " . $rit->MM->naam;?></td>
-						<td><?php if(!empty($rit->vrijwilliger->vrijwilliger->voornaam)){
+						<td id="mindermobiele"><?php print $rit->MM->voornaam . " " . $rit->MM->naam;?></td>
+						<td id="vrijwilliger"><?php if(!empty($rit->vrijwilliger->vrijwilliger->voornaam)){
 							if($rit->vrijwilliger->statusId != 1){
 								print $rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->vrijwilliger->vrijwilliger->naam;
 							}else{
@@ -79,4 +81,57 @@
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+
+$(function() {
+	// voeg data-g atribuut toe, hier komt de naam in kleine letters in te staan zodat we hier op kunnen filteren
+    $('tr').each(function(){
+        $(this).attr('data-g', $(this).find("#mindermobiele").text().toLowerCase());
+		$(this).attr('data-v', $(this).find("#vrijwilliger").text().toLowerCase());
+    })
+    
+	//als er iets aangepast wordt in het zoek veldje dan word er opnieuw gefilterd
+	$('#mindermobieleZoeken').keyup(function(){
+		groteFilter();
+	});
+	
+	//als er iets aangepast wordt 
+	$('#vrijwilligerZoeken').keyup(function(){
+		groteFilter();
+	});
+	
+	//grote filter functie, deze gaat alles filteren
+	function groteFilter(){
+        var mindermobiele = $('#mindermobieleZoeken').val().toLowerCase();
+		var vrijwilliger = $('#vrijwilligerZoeken').val().toLowerCase();
+		$('tr').hide();
+		if(mindermobiele != '' && vrijwilliger == ""){
+            $('tr[data-g *= ' + mindermobiele + ']').show();
+        }else if(mindermobiele == '' && vrijwilliger != ""){
+			gLen = vrijwilliger.length;
+			for(i = 0; i< gLen; i++){
+				$('tr').each(function(){
+					if($(this).attr('data-v').indexOf(vrijwilliger)> -1){
+						$(this).show();
+					}
+				})
+			}
+		}else if(mindermobiele != '' && vrijwilliger != ""){
+			gLen = vrijwilliger.length;
+			for(i = 0; i< gLen; i++){
+				$('tr').each(function(){
+					if($(this).attr('data-v').indexOf(vrijwilliger)> -1){
+						console.log();
+						if($(this).attr('data-g').indexOf(mindermobiele)> -1){
+							$(this).show();
+						}
+					}
+				})
+			}
+		}else{
+            $('tr').show();
+        }
+	}	
+});
+
 </script>	

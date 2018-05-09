@@ -95,7 +95,7 @@ class Rit_model extends CI_Model {
             }
             $i++;
         }
-		
+		usort($ritten, array($this, "date_compare"));
 		return $ritten;
 	}
 	
