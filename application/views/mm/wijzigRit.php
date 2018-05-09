@@ -39,7 +39,16 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 <div class="col-sm-6">
                     <p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruiker->voornaam . " " . $gebruiker->naam; ?></p>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug">
+                        <?php
+
+                            if ($heen->terugaankomst->adres->id) { ?>
+                                <p>piemel</p>
+                                <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug" checked >
+                            <?php } else { ?>
+
+                                <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug"  >
+                        <?php } ?>
+
                         <label class="custom-control-label" for="heenTerug">Heen en terug</label>
                     </div>
                     <p id="credits"></p>
@@ -169,7 +178,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                     </div>
                     <div class="col">
                         <label for="terugEindeAdres">Bestemming adres: </label>
-                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres">
+                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres" disabled>
                             <?php
                             foreach($adressen as $adres){
 

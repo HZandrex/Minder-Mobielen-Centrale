@@ -42,7 +42,7 @@
                 </tr>
                 <tr>
                     <td class="col-3">Straat + nr:</td>
-                    <td class="col-3"><?php print $gegevens->adres->straat; ?><?php print $gegevens->adres->huisnummer ?></td>
+                    <td class="col-3"><?php print $gegevens->adres->straat; ?><?php print ' '.$gegevens->adres->huisnummer ?></td>
                 </tr>
             </table>
         </div>

@@ -46,7 +46,7 @@
         <li>Hoofdletter gevoelig!</li>
         <li>Geen spaties!</li>
     </ul>
-    
+
     <h5>Uitloggen</h5>
     <p>Rechts bovenaan in menu</p>
     <?php echo toonAfbeelding('/handleiding/helpUitloggen.png', $attributen = 'alt="afbeelding uitloggen"');?>
@@ -55,7 +55,8 @@
 
 <script>
   $( "#dialog" ).dialog({
-      autoOpen: false
+      autoOpen: false,
+      position: { my: "left top", at: "left bottom", of: "#opener" }
    });
 
     $( "#opener" ).click(function(e) {
