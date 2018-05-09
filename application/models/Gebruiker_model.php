@@ -22,6 +22,7 @@ class Gebruiker_model extends CI_Model {
      */
     function get($id) {
         $this->db->where('id', $id);
+		$this->db->where('active',1);
         $query = $this->db->get('gebruiker');
         return $query->row();
     }

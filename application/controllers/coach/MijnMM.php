@@ -10,7 +10,7 @@ class MijnMM extends CI_Controller {
 	    public function toonMelding($foutTitel, $boodschap, $link)
     {
         $data['titel'] = '';
-        $data['author'] = 'Tijmen E.';
+        $data['author'] = 'T. Elseviers';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 
         $data['foutTitel'] = $foutTitel;
@@ -23,7 +23,7 @@ class MijnMM extends CI_Controller {
 
     public function mijnMMLijst() {
 		$data['titel'] = 'Mijn MM';
-        $data['author'] = 'Tijmen E.';
+        $data['author'] = 'T. Elseviers';
 		
 		$gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null){
@@ -51,7 +51,7 @@ class MijnMM extends CI_Controller {
 	
 	public function gegevensWijzigen($id = 0){
         $data['titel'] = 'Gebruiker Gegevens Wijzigen';
-        $data['author'] = 'G. Wuyts';
+        $data['author'] = 'T. Elseviers';
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
@@ -106,7 +106,7 @@ class MijnMM extends CI_Controller {
 	public function wachtwoordWijzigen($id)
     {
         $data['titel'] = '';
-        $data['author'] = 'Tijmen E.';
+        $data['author'] = 'T. Elseviers';
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
