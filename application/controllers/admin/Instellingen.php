@@ -157,6 +157,7 @@ class Instellingen extends CI_Controller {
 
         $wijzigenKnop = $this->input->post('voorkeurWijzigen');
         $verwijderKnop = $this->input->post('voorkeurVerwijderen');
+
         if (isset($wijzigenKnop)){
             $voorkeur = new stdClass();
             $voorkeur->id = $this->input->post('voorkeurId');

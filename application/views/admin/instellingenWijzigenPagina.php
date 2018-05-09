@@ -11,6 +11,8 @@
         $("#soort option").click(function() {
             $('#voorkeurAdd').hide(aniTijd);
             $('#teWijzigeVoorkeur').prop('disabled', false);
+            $('#voorkeurWijzigen').prop('disabled', false);
+            $('#voorkeurVerwijderen').prop('disabled', false);
             $('#nieuweVoorkeur').prop('disabled', true);
             $('#voorkeurEdit').show(aniTijd);
             $('#voorkeurNew').show(aniTijd);
@@ -23,6 +25,8 @@
             $('#voorkeurEdit').hide(aniTijd);
             $('#voorkeurAdd').show(aniTijd);
             $('#nieuweVoorkeur').prop('disabled', false);
+            $('#voorkeurWijzigen').prop('disabled', true);
+            $('#voorkeurVerwijderen').prop('disabled', true);
             $('#teWijzigeVoorkeur').prop('disabled', true);
         });
 
@@ -34,12 +38,9 @@
     <?php
         $attributes = array('name' => 'instellingenForm');
         echo form_open('admin/instellingen/wijzigInstellingen', $attributes);
-        /*
-         * input field komt bij klein scherm lelijk te staan
-         */
         foreach ($instellingen as $instelling) {
             echo '<div class="form-group row">';
-                echo form_label($instelling->beschrijving, $instelling->naam, array('class' => 'col-sm-12 col-md-7 col-form-label'));
+                echo form_label($instelling->beschrijving, $instelling->naam, array('class' => 'col-sm-12 col-md-8 col-form-label'));
                 echo form_input(array('name' => $instelling->naam, 'id' => $instelling->naam, 'placeholder' => $instelling->waarde, 'type' => 'numeric', 'size' => '30', 'class' => 'form-control col-sm-12 col-md-2'));
             echo '</div>';
         }
@@ -79,10 +80,10 @@
                     </div>
                     <div class="col-6" style="padding-left: 0">
                         <?php
-                        echo form_submit(array('name' => 'voorkeurWijzigen', 'value' => 'Wijzigen', 'class' => 'btn btn-primary'));
+                        echo form_submit(array('name' => 'voorkeurWijzigen', 'id' => 'voorkeurWijzigen', 'value' => 'Wijzigen', 'class' => 'btn btn-primary'));
                         ?>
                         <?php
-                        echo form_submit(array('name' => 'voorkeurVerwijderen', 'value' => 'Verwijderen', 'class' => 'btn btn-danger'));
+                        echo form_submit(array('name' => 'voorkeurVerwijderen', 'id' => 'voorkeurVerwijderen', 'value' => 'Verwijderen', 'class' => 'btn btn-danger'));
                         ?>
                     </div>
                 </div>
