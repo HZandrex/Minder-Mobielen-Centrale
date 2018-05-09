@@ -57,6 +57,9 @@ class PersoonlijkeGegevens extends CI_Controller
             redirect('gebruiker/inloggen');
         }
         $data['gegevens'] = $gebruiker;
+		
+		$this->load->model('adres_model');
+        $data['adressen'] = $this->adres_model->getAll();
 
         $this->load->model('voorkeur_model');
         $data['communicatiemiddelen'] = $this->voorkeur_model->getAll();
@@ -91,14 +94,9 @@ class PersoonlijkeGegevens extends CI_Controller
         $gebruiker->telefoon = $this->input->post('gegevensTelefoon');
         $gebruiker->mail = $this->input->post('gegevensMail');
         $gebruiker->voorkeurId = $this->input->post('gegevensCommunicatie');
-        $gegevensAdres = new stdClass();
-        $gegevensAdres->gemeente = $this->input->post('gegevensGemeente');
-        $gegevensAdres->postcode = $this->input->post('gegevensPostcode');
-        $gegevensAdres->straat = $this->input->post('gegevensStraat');
-        $gegevensAdres->huisnummer = $this->input->post('gegevensHuisnummer');
+		$gebruiker->adresId = $this->input->post('adresId');
 
         $this->gebruiker_model->updateGebruiker($gebruiker);
-        $this->adres_model->updateAdres($gebruiker->id, $gegevensAdres);
 
         redirect('gebruiker/persoonlijkegegevens/persoonlijkegegevens');
     }
