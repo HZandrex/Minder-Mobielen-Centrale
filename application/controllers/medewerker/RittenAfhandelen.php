@@ -55,4 +55,18 @@ class RittenAfhandelen extends CI_Controller {
 		
 		return $this->vrijwilligerRit_model->koppelVrijwilliger($ritId, $vrijwilligerId, $alEen);
 	}
+	
+	public function wijzigRit($id){
+		$this->load->model('rit_model');
+        $data['titel'] = 'Wijzig rit';
+        $data['author'] = 'Michiel O.';
+		$data['gebruiker'] = $this->authex->getGebruikerInfo();
+		
+		$data['heen'] = $this->rit_model->getByRitId($id);
+		
+        $data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['heen']->gebruikerMinderMobieleId);
+
+        $partials = array('menu' => 'main_menu','inhoud' => 'medewerker/wijzigRit');
+        $this->template->load('main_master', $partials, $data);
+	}
 }
