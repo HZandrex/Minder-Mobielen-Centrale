@@ -72,7 +72,7 @@
         <footer class="footer">
             <div class="container">
                 <div class="row footText">
-                    <span>N. Claes,</span>
+                    <span>N. Claes</span>
                     <span class="footerNaam">L. Cleymans</span>
                     <span class="footerNaam">T. Elseviers</span>
                     <span class="footerNaam">M. Olijslagers</span>
