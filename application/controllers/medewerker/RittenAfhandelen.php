@@ -26,7 +26,9 @@ class RittenAfhandelen extends CI_Controller {
         }
 		
 		$this->load->model('rit_model');
+		$this->load->model('status_model');
 		$data['ritten'] = $this->rit_model->getAllRitten();
+		$data['statussen'] = $this->status_model->getAll();
 		
         $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/rittenOverzicht');
         $this->template->load('main_master', $partials, $data);

@@ -7,6 +7,7 @@
 	* - maakt gebruik van een tabel om alles weer te geven
 */
 	// var_dump($ritten);
+	// var_dump($statussen);
 ?>
 <div class="card">
 	<div class="card-body">
@@ -23,6 +24,14 @@
 			</div>
 			<div class="col-sm-6">
 				Status
+				<select id="statusZoeken">
+					<option value="empty"></option>
+					<?php
+						foreach($statussen as $status){
+							print "<option value='" . $status->id . "'>" . $status->naam . "</option>";
+						}
+					?>	
+				</select>
 			</div>
 		</div>
 	</div>
@@ -44,7 +53,7 @@
 			foreach($ritten as $rit){
 				if(!empty($rit)){
 		?>
-					<tr>
+					<tr data-s="<?php print $rit->status->id; ?>">
 						<td><?php print date("d.m.y", strtotime($rit->heenvertrek->tijd));?></td>
 						<td><?php print date("G:i", strtotime($rit->heenvertrek->tijd));?></td>
 						<td id="mindermobiele"><?php print $rit->MM->voornaam . " " . $rit->MM->naam;?></td>
@@ -82,11 +91,10 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 
-
 $(function() {
 	// voeg data-g atribuut toe, hier komt de naam in kleine letters in te staan zodat we hier op kunnen filteren
     $('tr').each(function(){
-        $(this).attr('data-g', $(this).find("#mindermobiele").text().toLowerCase());
+        $(this).attr('data-m', $(this).find("#mindermobiele").text().toLowerCase());
 		$(this).attr('data-v', $(this).find("#vrijwilliger").text().toLowerCase());
     })
     
@@ -95,8 +103,13 @@ $(function() {
 		groteFilter();
 	});
 	
-	//als er iets aangepast wordt 
+	//als er iets aangepast wordt in het andere zoekveld
 	$('#vrijwilligerZoeken').keyup(function(){
+		groteFilter();
+	});
+	
+	//als er iets aangepast wordt in het status veld
+	$('#statusZoeken').change(function(){
 		groteFilter();
 	});
 	
@@ -104,33 +117,27 @@ $(function() {
 	function groteFilter(){
         var mindermobiele = $('#mindermobieleZoeken').val().toLowerCase();
 		var vrijwilliger = $('#vrijwilligerZoeken').val().toLowerCase();
-		$('tr').hide();
-		if(mindermobiele != '' && vrijwilliger == ""){
-            $('tr[data-g *= ' + mindermobiele + ']').show();
-        }else if(mindermobiele == '' && vrijwilliger != ""){
-			gLen = vrijwilliger.length;
-			for(i = 0; i< gLen; i++){
-				$('tr').each(function(){
-					if($(this).attr('data-v').indexOf(vrijwilliger)> -1){
-						$(this).show();
-					}
-				})
+		var status = $('#statusZoeken').val();
+		$('tr').show();
+		
+		//status check
+		if(status != ""){
+			if(status == 'empty'){
+				$('tr').show();
+			}else{
+				$('tr[data-s != ' + status + ']').hide();
 			}
-		}else if(mindermobiele != '' && vrijwilliger != ""){
-			gLen = vrijwilliger.length;
-			for(i = 0; i< gLen; i++){
-				$('tr').each(function(){
-					if($(this).attr('data-v').indexOf(vrijwilliger)> -1){
-						console.log();
-						if($(this).attr('data-g').indexOf(mindermobiele)> -1){
-							$(this).show();
-						}
-					}
-				})
-			}
-		}else{
-            $('tr').show();
-        }
+		}
+		
+		//minder mobiele check
+		if(mindermobiele != ""){
+			$('tr').not('[data-m *= ' + mindermobiele + ']').hide();
+		}
+		
+		//vrijwilliger check
+		if(vrijwilliger != ""){
+			$('tr').not('[data-v *= ' + vrijwilliger + ']').hide();
+		}
 	}	
 });
 

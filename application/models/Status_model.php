@@ -24,11 +24,16 @@ class Status_model extends CI_Model {
 	*/
     function getById($id)
     {
-	$this->db->select('*');
+		$this->db->select('*');
         $this->db->where('id', $id);
         $query = $this->db->get('status');
         return $query->row();
     }
+	
+	function getAll(){
+		$query = $this->db->get('status');
+        return $query->result();
+	}
 
                         
 }
