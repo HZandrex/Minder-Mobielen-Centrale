@@ -6,7 +6,7 @@
 	* - krijgt een $rit object binnen
 */
         // var_dump($rit);
-		var_dump($vrijwilligers);
+		// var_dump($vrijwilligers);
 		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
 		
 		$niks = "";

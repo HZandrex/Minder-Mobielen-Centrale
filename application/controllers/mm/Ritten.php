@@ -114,7 +114,7 @@ class Ritten extends CI_Controller {
 		$kost = htmlspecialchars(trim($_POST['kost']));
 		if(isset($_POST['heenTerug'])){
 			$heenTerug = true;
-			$terugDatum = htmlspecialchars(trim($_POST['terugDatum']));
+			$terugDatum = htmlspecialchars(trim($_POST['heenDatum']));
 			$startTijdTerug = htmlspecialchars(trim($_POST['startTijdTerug']));
 			$terugStartAdresId = htmlspecialchars(trim($_POST['terugStartAdres']));
 			$terugEindeAdresId = htmlspecialchars(trim($_POST['terugEindeAdres']));
@@ -159,7 +159,7 @@ class Ritten extends CI_Controller {
         $kost = htmlspecialchars(trim($_POST['kost']));
         if(isset($_POST['heenTerug'])){
             $heenTerug = true;
-            $terugDatum = htmlspecialchars(trim($_POST['terugDatum']));
+            $terugDatum = htmlspecialchars(trim($_POST['heenDatum']));
             $startTijdTerug = htmlspecialchars(trim($_POST['startTijdTerug']));
             $terugStartAdresId = htmlspecialchars(trim($_POST['terugStartAdres']));
             $terugEindeAdresId = htmlspecialchars(trim($_POST['terugEindeAdres']));
