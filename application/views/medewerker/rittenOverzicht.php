@@ -9,37 +9,40 @@
 	// var_dump($ritten);
 	// var_dump($statussen);
 ?>
-<div class="card">
+<div class="card row mt-2">
 	<div class="card-body">
+		<h3>Filteren</h3>
 		<div class="row">
 			<div class="col-sm-6">
-				<p>
-					Naam minder mobiele filter
-					<input id="mindermobieleZoeken" type="text"/>
-				</p>
-				<p>
-					Naam vrijwilliger filter
-					<input id="vrijwilligerZoeken" type="text"/>
-				</p>
+				<div class="form-group">
+					<label for="mindermobieleZoeken">Minder mobiele</label>
+					<input type="text" class="form-control" id="mindermobieleZoeken" placeholder="Geef een naam in">
+				</div>
+				<div class="form-group">
+					<label for="vrijwilligerZoeken">Vrijwilliger</label>
+					<input type="text" class="form-control" id="vrijwilligerZoeken" placeholder="Geef een naam in">
+				</div>
 			</div>
 			<div class="col-sm-6">
-				Status
-				<select id="statusZoeken">
-					<option value="empty"></option>
-					<?php
-						foreach($statussen as $status){
-							print "<option value='" . $status->id . "'>" . $status->naam . "</option>";
-						}
-					?>	
-				</select>
+				<div class="form-group">
+					<label for="statusZoeken">Status</label>
+					<select class="form-control" id="statusZoeken">
+						<option value="empty"><strong>Al de ritten</strong></option>
+						<?php
+							foreach($statussen as $status){
+								print "<option value='" . $status->id . "'>" . $status->naam . "</option>";
+							}
+						?>	
+					</select>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="card">
+<div class="card row mt-2">
 	<table class="table table-striped">
 	  <thead>
-		<tr>
+		<tr id="inhoud">
 		  <th scope="col">Datum</th>
 		  <th scope="col">Vertrek uur</th>
 		  <th scope="col">Minder mobiele</th>
@@ -138,6 +141,8 @@ $(function() {
 		if(vrijwilliger != ""){
 			$('tr').not('[data-v *= ' + vrijwilliger + ']').hide();
 		}
+		
+		$('tr#inhoud').show();
 	}	
 });
 

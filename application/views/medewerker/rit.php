@@ -6,7 +6,7 @@
 	* - krijgt een $rit object binnen
 */
         // var_dump($rit);
-		// var_dump($vrijwilligers);
+		var_dump($vrijwilligers);
 		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
 		
 		$niks = "";
@@ -19,7 +19,7 @@
 					$niks .= "<option value='" . $vrijwilliger->id . "'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</option>";
 					break;
 				case "1":
-					$geanuleerd .= "<li class='list-group-item'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</li>";
+					$geanuleerd .= "<li class='list-group-item' data-id='" . $vrijwilliger->id . "'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . " <span id='reset'>x</span></li>";
 					break;
 				case "2":
 					$gelselecteerd = '<p id="geselecteerdeVrijwilliger">Heeft goedgekeurd: <i class="fas fa-user"></i> ' . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . '</p>';
@@ -32,7 +32,7 @@
 					$alEen = true;
 					break;
 				case "4":
-					$geanuleerd .= "<li class='list-group-item'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . "</li>";
+					$geanuleerd .= "<li class='list-group-item' data-id='" . $vrijwilliger->id . "'>" . $vrijwilliger->voornaam . " " . $vrijwilliger->naam . " <span id='reset'>x</span></li>";
 					break;
 			}
 		}
@@ -334,8 +334,7 @@
 							</div>
 							<ul class="list-group list-group-flush">
 								<?php
-									
-										print $geanuleerd;
+									print $geanuleerd;
 								?>
 							</ul>
 						</div>
@@ -456,6 +455,20 @@
 			type:"post",
 			url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/koppelVrijwilliger",
 			data:{ ritId:ritId, vrijwilligerId:vrijwilligerId, alEen:alEen},
+			success:function(response)
+			{
+				location.reload();
+			}
+		});
+	});
+	
+	$('#reset').click(function(){
+		var id = $(this).parent().attr('data-id');
+		var ritId = "<?php print $rit->id; ?>";
+		$.ajax({
+			type:"post",
+			url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/resetVrijwilliger",
+			data:{ ritId:ritId, vrijwilligerId:id},
 			success:function(response)
 			{
 				location.reload();

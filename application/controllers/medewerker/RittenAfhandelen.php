@@ -71,4 +71,13 @@ class RittenAfhandelen extends CI_Controller {
         $partials = array('menu' => 'main_menu','inhoud' => 'medewerker/wijzigRit');
         $this->template->load('main_master', $partials, $data);
 	}
+	
+	public function resetVrijwilliger(){
+		$this->load->model('vrijwilligerRit_model');
+		
+		$ritId = htmlspecialchars(trim($_POST['ritId']));
+		$vrijwilligerId = htmlspecialchars(trim($_POST['vrijwilligerId']));
+		
+		return $this->vrijwilligerRit_model->resetVrijwilliger($ritId, $vrijwilligerId);
+	}
 }

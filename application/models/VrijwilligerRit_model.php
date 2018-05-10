@@ -145,5 +145,11 @@ class VrijwilligerRit_model extends CI_Model {
 		
 		return 'done';
 	}
+	
+	function resetVrijwilliger($ritId, $vrijwilligerId){
+		$this->db->where('ritId', $ritId);
+		$this->db->where('gebruikerVrijwilligerId', $vrijwilligerId);
+		$this->db->delete('vrijwilligerRit');
+	}
                         
 }
