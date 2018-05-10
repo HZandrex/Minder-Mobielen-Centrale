@@ -144,7 +144,7 @@ class Inloggen extends CI_Controller {
         $this->load->library('email');
 
         $this->email->from('atworkteam23@gmail.com', 'Minder Mobielen Centrale');
-        $this->email->to(/*$geadresseerde*/'atworkteam23@gmail.com');
+        $this->email->to($geadresseerde);
         $this->email->subject($titel);
         $this->email->message($boodschap);
 
