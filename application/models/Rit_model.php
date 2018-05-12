@@ -165,8 +165,10 @@ class Rit_model extends CI_Model {
 		
 		$adressen = array();
 		$temp = array();
-		array_push($adressen, $this->gebruiker_model->getWithFunctions($mmId)->adres);
-		
+		$huisadres = $this->gebruiker_model->getWithFunctions($mmId)->adres;
+		if(!empty($huisadres)){
+			array_push($adressen, $huisadres);
+		}
 		$this->db->where('gebruikerMinderMobieleId', $mmId);
 		$query = $this->db->get('rit');
 		$ritten = $query->result();
@@ -185,8 +187,12 @@ class Rit_model extends CI_Model {
 		usort($temp, "cmp");
 
 		$adressen = array_merge($adressen, $temp);
-
-		return $this->helper_model->unique_multidim_array($adressen, 'id');
+		if(!empty($adressen[0])){
+			return $this->helper_model->unique_multidim_array($adressen, 'id');
+		}else{
+			return $adressen;
+		}
+		
 	}
 	
 	function saveNewRit($mmId, $opmerkingKlant, $opmerkingVrijwilliger, $prijs, $extraKost, $statusId, $heenTerug, $heenStartAdresId, $heenEindeAdresId, $terugStartAdresId, $terugEindeAdresId, $startTijdHeen, $startTijdTerug, $heenDatum, $terugDatum){

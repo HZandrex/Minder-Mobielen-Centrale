@@ -29,7 +29,7 @@ class helper_model extends CI_Model {
 		$temp_array = array(); 
 		$i = 0; 
 		$key_array = array(); 
-		
+
 		foreach($array as $val) { 
 			if (!in_array($val->$key, $key_array)) { 
 				$key_array[$i] = $val->$key; 
