@@ -1,9 +1,13 @@
 <?php
-	$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
-	foreach($adressen as $adres){
-		$selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-	}
+	// var_dump($adressen);
 
+	$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
+	if(!empty($adressen[0])){
+		foreach($adressen as $adres){
+			$selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+		}
+	}
+	
 ?>
 <style>
 	.pac-container{
@@ -361,6 +365,7 @@ function calulateCost(){
 					$('#kost').html('');
 					$('#kost').append('<tr id="heen"><td>Heen rit (' + data.distance.text + '): </td><td> € ' + heenPrijs + '</td></tr>');
 					$('#heenInfo').text('Verwachte informatie: ' + data.distance.text + ', ' + data.duration.text);
+					$('#heenInfo').attr("data-tijd", data.duration.value);
 					if($('#terugStartAdres').val() != null && $('#terugEindeAdres').val() != null && $('#startTijdTerug').val() != '' && $('#terugDatum').val() != '' && $('input#heenTerug').is(':checked')){
 						var timeStamp = $('#terugDatum').val();
 						var timeStamp = timeStamp.charAt(3) + timeStamp.charAt(4) + '/' + timeStamp.charAt(0) + timeStamp.charAt(1) + '/' + timeStamp.charAt(6) + timeStamp.charAt(7) + timeStamp.charAt(8) + timeStamp.charAt(9) + ' ' + $('#startTijdTerug').val();
@@ -535,6 +540,17 @@ $('#opslaan').click(function(){
 		//terug eind adres ingevuld
 		if($('#terugEindeAdres').val() == null){
 			errorPlaats('Vul een geldig terug start adres in.');
+			error = true;
+		}
+		
+		var d = new Date();
+		var theDate = d.getFullYear() + '-' + ( d.getMonth() + 1 ) + '-' + d.getDate();
+		var heenTijd = new Date( Date.parse( theDate + " " + $('#startTijdHeen').val() ) + $('#heenInfo').attr("data-tijd")*1000 );
+		var terugTijd = new Date( Date.parse( theDate + " " + $('#startTijdTerug').val() ));
+		
+		if(terugTijd < heenTijd){
+			
+			errorPlaats('Vul een start tijd in voor de terugrit die later is dan de heen rit.');
 			error = true;
 		}
 	}

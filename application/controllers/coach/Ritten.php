@@ -14,8 +14,10 @@ class Ritten extends CI_Controller {
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null){
             $this->load->model('coachMinderMobiele_model');
+			$this->load->model('status_model');
             $data['gebruiker'] = $this->authex->getGebruikerInfo();
             $id = $data['gebruiker']->id;
+			$data['statussen'] = $this->status_model->getAll();
 
             $data['test']=count($this->coachMinderMobiele_model->getById($id));
 
@@ -112,6 +114,7 @@ class Ritten extends CI_Controller {
         $partials = array('menu' => 'main_menu','inhoud' => 'coach/rit');
         $this->template->load('main_master', $partials, $data);
     }
+	
     public function statusAanpassen($ritId){
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker == null) {
@@ -122,6 +125,7 @@ class Ritten extends CI_Controller {
 
         redirect('coach/ritten');
     }
+	
     public function berekenCredits(){
         $this->load->model('gebruiker_model');
 
@@ -133,6 +137,7 @@ class Ritten extends CI_Controller {
 
         echo json_encode($credits);
     }
+	
     public function berekenKost(){
         $this->load->model('google_model');
         $this->load->model('instelling_model');
@@ -146,6 +151,7 @@ class Ritten extends CI_Controller {
 
         echo json_encode ($afstand);
     }
+	
     public function nieuwAdres(){
         $this->load->model('adres_model');
         //check of adres al bestaat
@@ -157,6 +163,7 @@ class Ritten extends CI_Controller {
             echo json_encode ($this->adres_model->getById($id));
         }
     }
+	
     public function wijzigRitOpslaan(){
 
 

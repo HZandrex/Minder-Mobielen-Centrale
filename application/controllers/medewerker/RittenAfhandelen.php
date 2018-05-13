@@ -26,7 +26,9 @@ class RittenAfhandelen extends CI_Controller {
         }
 		
 		$this->load->model('rit_model');
+		$this->load->model('status_model');
 		$data['ritten'] = $this->rit_model->getAllRitten();
+		$data['statussen'] = $this->status_model->getAll();
 		
         $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/rittenOverzicht');
         $this->template->load('main_master', $partials, $data);
@@ -68,5 +70,14 @@ class RittenAfhandelen extends CI_Controller {
 
         $partials = array('menu' => 'main_menu','inhoud' => 'medewerker/wijzigRit');
         $this->template->load('main_master', $partials, $data);
+	}
+	
+	public function resetVrijwilliger(){
+		$this->load->model('vrijwilligerRit_model');
+		
+		$ritId = htmlspecialchars(trim($_POST['ritId']));
+		$vrijwilligerId = htmlspecialchars(trim($_POST['vrijwilligerId']));
+		
+		return $this->vrijwilligerRit_model->resetVrijwilliger($ritId, $vrijwilligerId);
 	}
 }

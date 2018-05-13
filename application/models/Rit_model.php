@@ -165,8 +165,10 @@ class Rit_model extends CI_Model {
 		
 		$adressen = array();
 		$temp = array();
-		array_push($adressen, $this->gebruiker_model->getWithFunctions($mmId)->adres);
-		
+		$huisadres = $this->gebruiker_model->getWithFunctions($mmId)->adres;
+		if(!empty($huisadres)){
+			array_push($adressen, $huisadres);
+		}
 		$this->db->where('gebruikerMinderMobieleId', $mmId);
 		$query = $this->db->get('rit');
 		$ritten = $query->result();
@@ -185,8 +187,12 @@ class Rit_model extends CI_Model {
 		usort($temp, "cmp");
 
 		$adressen = array_merge($adressen, $temp);
-
-		return $this->helper_model->unique_multidim_array($adressen, 'id');
+		if(!empty($adressen[0])){
+			return $this->helper_model->unique_multidim_array($adressen, 'id');
+		}else{
+			return $adressen;
+		}
+		
 	}
 	
 	function saveNewRit($mmId, $opmerkingKlant, $opmerkingVrijwilliger, $prijs, $extraKost, $statusId, $heenTerug, $heenStartAdresId, $heenEindeAdresId, $terugStartAdresId, $terugEindeAdresId, $startTijdHeen, $startTijdTerug, $heenDatum, $terugDatum){
@@ -208,11 +214,12 @@ class Rit_model extends CI_Model {
 
 		$tijd = substr($heenDatum, 3, 1) . substr($heenDatum, 4, 1) . "/" . substr($heenDatum, 0, 1) . substr($heenDatum, 1, 1) . "/" . substr($heenDatum, 6, 1) . substr($heenDatum, 7, 1) . substr($heenDatum,8, 1) . substr($heenDatum, 9, 1) . " " . $startTijdHeen .":00";
 		$timesStamp = date('Y-m-d G:i:s', strtotime($tijd));
-
+		var_dump($tijd);
 		$this->adresRit_model->saveAdresRit($ritId, $heenStartAdresId, "1", $timesStamp);
 		$this->adresRit_model->saveAdresRit($ritId, $heenEindeAdresId, "2", $timesStamp);
 		if($heenTerug){
 			$tijd = substr($terugDatum, 3, 1) . substr($terugDatum, 4, 1) . "/" . substr($terugDatum, 0, 1) . substr($terugDatum, 1, 1) . "/" . substr($terugDatum, 6, 1) . substr($terugDatum, 7, 1) . substr($terugDatum,8, 1) . substr($terugDatum, 9, 1) . " " . $startTijdTerug .":00";
+			var_dump($tijd);
 			$timesStamp = date('Y-m-d G:i:s', strtotime($tijd));
 			$this->adresRit_model->saveAdresRit($ritId, $terugStartAdresId, "3", $timesStamp);
 			$this->adresRit_model->saveAdresRit($ritId, $terugEindeAdresId, "4", $timesStamp);

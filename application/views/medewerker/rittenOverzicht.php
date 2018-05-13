@@ -7,30 +7,42 @@
 	* - maakt gebruik van een tabel om alles weer te geven
 */
 	// var_dump($ritten);
+	// var_dump($statussen);
 ?>
-<div class="card">
+<div class="card row mt-2">
 	<div class="card-body">
+		<h3>Filteren</h3>
 		<div class="row">
 			<div class="col-sm-6">
-				<p>
-					Naam minder mobiele filter
-					<input id="mindermobieleZoeken" type="text"/>
-				</p>
-				<p>
-					Naam vrijwilliger filter
-					<input id="vrijwilligerZoeken" type="text"/>
-				</p>
+				<div class="form-group">
+					<label for="mindermobieleZoeken">Minder mobiele</label>
+					<input type="text" class="form-control" id="mindermobieleZoeken" placeholder="Geef een naam in">
+				</div>
+				<div class="form-group">
+					<label for="vrijwilligerZoeken">Vrijwilliger</label>
+					<input type="text" class="form-control" id="vrijwilligerZoeken" placeholder="Geef een naam in">
+				</div>
 			</div>
 			<div class="col-sm-6">
-				Status
+				<div class="form-group">
+					<label for="statusZoeken">Status</label>
+					<select class="form-control" id="statusZoeken">
+						<option value="empty"><strong>Al de ritten</strong></option>
+						<?php
+							foreach($statussen as $status){
+								print "<option value='" . $status->id . "'>" . $status->naam . "</option>";
+							}
+						?>	
+					</select>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="card">
+<div class="card row mt-2">
 	<table class="table table-striped">
 	  <thead>
-		<tr>
+		<tr id="inhoud">
 		  <th scope="col">Datum</th>
 		  <th scope="col">Vertrek uur</th>
 		  <th scope="col">Minder mobiele</th>
@@ -44,7 +56,7 @@
 			foreach($ritten as $rit){
 				if(!empty($rit)){
 		?>
-					<tr>
+					<tr data-s="<?php print $rit->status->id; ?>">
 						<td><?php print date("d.m.y", strtotime($rit->heenvertrek->tijd));?></td>
 						<td><?php print date("G:i", strtotime($rit->heenvertrek->tijd));?></td>
 						<td id="mindermobiele"><?php print $rit->MM->voornaam . " " . $rit->MM->naam;?></td>
@@ -82,11 +94,10 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 
-
 $(function() {
 	// voeg data-g atribuut toe, hier komt de naam in kleine letters in te staan zodat we hier op kunnen filteren
     $('tr').each(function(){
-        $(this).attr('data-g', $(this).find("#mindermobiele").text().toLowerCase());
+        $(this).attr('data-m', $(this).find("#mindermobiele").text().toLowerCase());
 		$(this).attr('data-v', $(this).find("#vrijwilliger").text().toLowerCase());
     })
     
@@ -95,8 +106,13 @@ $(function() {
 		groteFilter();
 	});
 	
-	//als er iets aangepast wordt 
+	//als er iets aangepast wordt in het andere zoekveld
 	$('#vrijwilligerZoeken').keyup(function(){
+		groteFilter();
+	});
+	
+	//als er iets aangepast wordt in het status veld
+	$('#statusZoeken').change(function(){
 		groteFilter();
 	});
 	
@@ -104,33 +120,29 @@ $(function() {
 	function groteFilter(){
         var mindermobiele = $('#mindermobieleZoeken').val().toLowerCase();
 		var vrijwilliger = $('#vrijwilligerZoeken').val().toLowerCase();
-		$('tr').hide();
-		if(mindermobiele != '' && vrijwilliger == ""){
-            $('tr[data-g *= ' + mindermobiele + ']').show();
-        }else if(mindermobiele == '' && vrijwilliger != ""){
-			gLen = vrijwilliger.length;
-			for(i = 0; i< gLen; i++){
-				$('tr').each(function(){
-					if($(this).attr('data-v').indexOf(vrijwilliger)> -1){
-						$(this).show();
-					}
-				})
+		var status = $('#statusZoeken').val();
+		$('tr').show();
+		
+		//status check
+		if(status != ""){
+			if(status == 'empty'){
+				$('tr').show();
+			}else{
+				$('tr[data-s != ' + status + ']').hide();
 			}
-		}else if(mindermobiele != '' && vrijwilliger != ""){
-			gLen = vrijwilliger.length;
-			for(i = 0; i< gLen; i++){
-				$('tr').each(function(){
-					if($(this).attr('data-v').indexOf(vrijwilliger)> -1){
-						console.log();
-						if($(this).attr('data-g').indexOf(mindermobiele)> -1){
-							$(this).show();
-						}
-					}
-				})
-			}
-		}else{
-            $('tr').show();
-        }
+		}
+		
+		//minder mobiele check
+		if(mindermobiele != ""){
+			$('tr').not('[data-m *= ' + mindermobiele + ']').hide();
+		}
+		
+		//vrijwilliger check
+		if(vrijwilliger != ""){
+			$('tr').not('[data-v *= ' + vrijwilliger + ']').hide();
+		}
+		
+		$('tr#inhoud').show();
 	}	
 });
 
