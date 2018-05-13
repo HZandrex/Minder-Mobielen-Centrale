@@ -1,17 +1,17 @@
 <?php
     /**
-     * @file Gebruiker/wachtwoordVergetenWijzigen.php
+     * @file medewerker/wachtwoordGebruikerWijzigen.php
      * 
-     * View waarin het wachtwoord veranderd kan worden na wachtwoord vergeten te doen
-     * - geeft via wachtwoordVergetenWijzigenForm wachtwoord & wachtwoordBevestigen door naar Inloggen::wachtwoordVeranderen()
+     * View waarin het wachtwoord veranderd kan worden van een gebruiker
+     * - geeft via wachtwoordWijzigenForm wachtwoord & wachtwoordBevestigen door naar GebruikersBeheren::wachtwoordVeranderen()
      * 
-     * @see Inloggen::wachtwoordVeranderen()
+     * @see GebruikersBeheren::wachtwoordVeranderen()
      */
 ?>
 
 <div class="row justify-content-center align-self-center">
     <?php
-    $attributes = array('name' => 'wachtwoordVergetenWijzigenForm');
+    $attributes = array('name' => 'wachtwoordWijzigenForm');
     $hidden = array('id' => $editGebruiker->id);
     echo form_open('medewerker/gebruikersBeheren/wachtwoordVeranderen', $attributes, $hidden);
     ?>

@@ -1,6 +1,6 @@
 <?php
     /**
-     * @file Gebruiker/wachtwoordVergeten.php
+     * @file gebruiker/wachtwoordVergeten.php
      * 
      * View waarin een nieuw wachtwoord kan worden aangevraagd via mail
      * - stuurd naar het opgegeven mail adres in wachtwoordVergetenForm een link om het wachtwoord te wijzigen via Inloggen::nieuwWachtwoordAanvragen()

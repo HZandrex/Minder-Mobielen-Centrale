@@ -1,3 +1,11 @@
+<?php
+/**
+ * @file medewerker/gebruikersBeherenOverzicht.php
+ *
+ * View waarin gebruikers in kunnen worden beheerd
+ */
+?>
+
 <script>
     function haalGebruikersMetFunctieOp(functieId) {
         $.ajax({

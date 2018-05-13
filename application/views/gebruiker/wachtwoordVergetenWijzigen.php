@@ -1,6 +1,6 @@
 <?php
     /**
-     * @file Gebruiker/wachtwoordVergetenWijzigen.php
+     * @file gebruiker/wachtwoordVergetenWijzigen.php
      * 
      * View waarin het wachtwoord veranderd kan worden na wachtwoord vergeten te doen
      * - geeft via wachtwoordVergetenWijzigenForm wachtwoord & wachtwoordBevestigen door naar Inloggen::wachtwoordVeranderen()

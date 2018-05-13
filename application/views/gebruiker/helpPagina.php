@@ -1,8 +1,9 @@
 <?php
 /**
- * @file Gebruiker/helpPagina.php
+ * @file gebruiker/helpPagina.php
  *
  * View waarin de helpPagina wordt weergegeven
+ *  - Wanneer een medewerker op deze pagina komt krijgt hij een extra stuk te zien voor gebruikers te beheren
  */
 ?>
     <style>

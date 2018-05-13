@@ -17,9 +17,9 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Toont het startscherm met alle gebruikers in de view Medewerker/gebruikersBeherenOverzicht.php.
+     * Toont het startscherm om gebruikers te beheren in de view medewerker/gebruikersBeherenOverzicht.php.
      *
-     * @see Medewerker/gebruikersBeherenOverzicht.php
+     * @see medewerker/gebruikersBeherenOverzicht.php
      */
     public function index()
     {
@@ -56,14 +56,21 @@ class GebruikersBeheren extends CI_Controller
         $inActive->naam = "Non-actief";
         array_push($data['functies'], $inActive);
 
-        /*print_r($data['functies']);
-        exit();*/
-
         $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gebruikersBeherenOverzicht');
 
         $this->template->load('main_master', $partials, $data);
     }
 
+    /**
+     * Haalt alle gebruikers op met een bepaalde functie via het FunctieGebruiker_model. Het functieId wordt doorgegeven via de view medewerker/gebruikersBeherenOverzicht.php.
+     * Wanneer er geen functie wordt meegegeven zullen alle gebruikers worden getoond die niet actief zijn via het Gebruiker_model.
+     * Al de gebruikers worden getoond via de view medewerker/ajax_Gebruikers.php
+     *
+     * @see FunctieGebruiker_model::getAllGebruikersByFunction()
+     * @see Gebruiker_model::getAllInActive()
+     * @see medewerker/gebruikersBeherenOverzicht.php
+     * @see medewerker/ajax_Gebruikers.php
+     */
     public function haalAjaxOp_GebruikersOpFunctie()
     {
         $functieId = $this->input->get('functieId');
@@ -78,6 +85,14 @@ class GebruikersBeheren extends CI_Controller
         $this->load->view('medewerker/ajax_gebruikers', $data);
     }
 
+    /**
+     * Haalt al de informatie op van een geselecteerde gebruiker via het Gebruiker_model. Het gebruikerId wordt doorgegeven via de view medewerker/gebruikersBeherenOverzicht.php.
+     * Al de info wordt getoond via de view medewerker/ajax_GebruikerInfo.php
+     *
+     * @see Gebruiker_model::getWithFunctions()
+     * @see medewerker/gebruikersBeherenOverzicht.php
+     * @see medewerker/ajax_GebruikerInfo.php
+     */
     public function haalAjaxOp_GebruikerInfo()
     {
         $gebruikerId = $this->input->get('gebruikerId');
@@ -228,7 +243,7 @@ class GebruikersBeheren extends CI_Controller
         $titel = "Welkom bij de Minder Mobiele Centrale";
         $boodschap = '<p>Er werd zonet een account voor u aangemaakt voor onze site.</p>'
             . "<p>Uw kan na het activeren van uw account deze gegevens controleren en eventueel aanpassen.</p><br>"
-            . "<p>Activeer uw account via volgende link: " . anchor(base_url() . 'index.php/gebruiker/inloggen/gebruikerActiveren/' . $resetToken, 'Link om uw account te activeren') . "</p><br>"
+            . "<p>Activeer uw account via volgende link: " . anchor(base_url() . 'index.php/gebruiker/inloggen/wachtwoordVergetenWijzigen/' . $resetToken, 'Link om uw account te activeren') . "</p><br>"
             . '<p>Wanneer u zelf geen nieuw account heeft aangevraagd neem dan zo snel mogelijk contact op. Voor onze contactgegevens kan u terecht op onze site: '
             . anchor(base_url(), 'Link naar de Minder Mobielen Centrale') . '</p>';
         $this->stuurMail($gebruiker->mail, $boodschap, $titel);
@@ -281,7 +296,7 @@ class GebruikersBeheren extends CI_Controller
                     $resetToken = $this->random_resetToken();
                 }
                 $this->gebruiker_model->wijzigResetToken($editGebruiker->mail, $resetToken);
-                redirect('gebruiker/inloggen/gebruikerActiveren/'.$resetToken);
+                redirect('gebruiker/inloggen/wachtwoordVergetenWijzigen/'.$resetToken);
             } else{
                 $this->gebruiker_model->activeerGebruiker($id);
                 redirect('medewerker/gebruikersBeheren/toonstatusveranderd/'."geactiveerd");

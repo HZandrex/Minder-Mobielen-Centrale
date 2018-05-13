@@ -15,9 +15,9 @@ class Inloggen extends CI_Controller {
     }
 
     /**
-     * Toont het inlogscherm in de view Gebruiker/inlogPagina.php.
+     * Toont het inlogscherm in de view gebruiker/inlogPagina.php.
      * 
-     * @see Gebruiker/inlogPagina.php
+     * @see gebruiker/inlogPagina.php
      */
     public function index() {
         $data['titel'] = '';
@@ -31,7 +31,7 @@ class Inloggen extends CI_Controller {
     /**
      * Logt in met de Authex library door de methode meldAan($email, $wachtwoord)
      * de inloggegevens worden via de post methode binnengehaald vanuit de form
-     * in de view Gebruiker/inlogPagina.php.
+     * in de view gebruiker/inlogPagina.php.
      * 
      * Wanneer het inloggen lukt zal Home::index() worden opgeroepen
      * wanner de gegevens fout zijn zal er een foutmelding worden getoond via Inloggen::toonFoutInloggen().
@@ -41,6 +41,7 @@ class Inloggen extends CI_Controller {
      * 
      * @see Inloggen::toonFoutInloggen()
      * @see Home::index()
+     * @see gebruiker/inlogPagina.php
      */
     public function controleerLogin() {
         $email = strtolower($this->input->post('email'));
@@ -63,9 +64,9 @@ class Inloggen extends CI_Controller {
     }
     
     /**
-     * Toont het scherm om een nieuw wachtwoord aan te vragen in de view Gebruiker/wachtwoordVergeten.php.
+     * Toont het scherm om een nieuw wachtwoord aan te vragen in de view gebruiker/wachtwoordVergeten.php.
      * 
-     * @see Gebruiker/wachtwoordVergeten.php
+     * @see gebruiker/wachtwoordVergeten.php
      */
     public function wachtwoordVergeten() {
         $data['titel'] = '';
@@ -90,17 +91,18 @@ class Inloggen extends CI_Controller {
      * dit een geldig verzoek is en voor wie het nieuwe wachtwoord bedoeld is, het verzenden van de mail gebeurt via de private functie
      * stuurMail. Vervolgens wordt ook een bevesteging getoond via Inloggen:toonMailNieuwWachtwoordVerstuurd().
      * 
-     * De link zal de view Gebruiker/wachtwoordVergetenWijzigen.php openen.
+     * De link zal de view gebruiker/wachtwoordVergetenWijzigen.php openen.
      * 
-     * @param $email Het mail adres dat werd opgeven in de view inlogPagina.php
+     * @param $email Het mail adres dat werd opgeven in de view gebruiker/inlogPagina.php
      * @param $resetToken een toekn van 20 willekeurige karrakters lang om het proces vijlig te maken
+     *
      * @see Inloggen::toonFoutWachtwoordVeranderen()
      * @see Inloggen::toonMailNieuwWachtwoordVerstuurd()
      * @see Inloggen::wachtwoordVergetenWijzigen()
-     * @see Gebruiker_model::controleerEmailVrij()
+     * @see Gebruiker_model::getByMail()
      * @see Gebruiker_model::controleerResetToken()
      * @see Gebruiker_model::wijzigResetToken()
-     * @see Gebruiker/wachtwoordVergetenWijzigen.php
+     * @see gebruiker/wachtwoordVergetenWijzigen.php
      */
     public function nieuwWachtwoordAanvragen() {
         $email = $this->input->post('email');
@@ -128,7 +130,7 @@ class Inloggen extends CI_Controller {
     /**
      * Stuurt een E-mail naar het ogegeven mailadres $geadresseerde, de mail wordt opgesteld
      * met de parameters $titel en $boodschap. Dit gebeurd via de email library.
-     * De parameters komen van een andere functie waar deze functie wordt opgeroepen bv. inloggen::nieuwWachtwoordAanvragen().
+     * De parameters komen van een andere functie waar deze functie wordt opgeroepen bv. Inloggen::nieuwWachtwoordAanvragen().
      *
      * De configuratie van het mail adres waar me wordt verzonden is email.php dat zich bevind in de config map.
      *
@@ -137,7 +139,7 @@ class Inloggen extends CI_Controller {
      * @param $titel De titel van de mail
      *
      * @see email.php
-     * @see inloggen::nieuwWachtwoordAanvragen()
+     * @see Inloggen::nieuwWachtwoordAanvragen()
      * @return bool
      */
     private function stuurMail($geadresseerde, $boodschap, $titel) {
@@ -192,10 +194,10 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-    
+
     /**
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     * 
+     *
      * @see Inloggen::toonMelding()
      */
     public function toonFoutWachtwoordVeranderen() {
@@ -206,10 +208,10 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-    
+
     /**
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     * 
+     *
      * @see Inloggen::toonMelding()
      */
     public function toonFoutLinkVerlopen() {
@@ -220,10 +222,10 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-    
+
     /**
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     * 
+     *
      * @see Inloggen::toonMelding()
      */
     public function toonFoutNieuwWachtwoord($token) {
@@ -234,10 +236,10 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-    
+
     /**
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     * 
+     *
      * @see Inloggen::toonMelding()
      */
     public function toonMailNieuwWachtwoordVerstuurd() {
@@ -248,10 +250,10 @@ class Inloggen extends CI_Controller {
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-    
+
     /**
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     * 
+     *
      * @see Inloggen::toonMelding()
      */
     public function toonWachtwoordVeranderd() {
@@ -293,7 +295,7 @@ class Inloggen extends CI_Controller {
     }
     
     /**
-     * Wanneer de $resetToken bestaat in de tabel gebruiker zal de view Gebruiker/wachtwoordVergetenWijzigen.php getoond worden,
+     * Wanneer de $resetToken bestaat in de tabel gebruiker zal de view gebruiker/wachtwoordVergetenWijzigen.php getoond worden,
      * wanneer deze niet bestaat zal er een melding worden getoond via Inloggen::toonFoutLinkVerlopen().
      * De resetToken word gecontroleerd via Gebruiker_model.
      * 
@@ -301,7 +303,7 @@ class Inloggen extends CI_Controller {
      * 
      * @see Gebruiker_model::controleerResetToken()
      * @see Inloggen::toonFoutLinkVerlopen()
-     * @see Gebruiker/wachtwoordVergetenWijzigen.php
+     * @see gebruiker/wachtwoordVergetenWijzigen.php
      */
     public function wachtwoordVergetenWijzigen($resetToken) {
         $this->load->model('gebruiker_model');
@@ -328,7 +330,15 @@ class Inloggen extends CI_Controller {
      * Wanneer de twee voordaan zijn voldaan zal eerst de gebruiker worden opgehaald waarvan het wachtwoord wordt veranderd via het Gebruiker_model,
      * hierna zal van deze gebruiker het wachtwoord worden vervangen door het nieuwe via het Gebruiker_model.
      * Tenslotten wordt er een mail gestuurd zoals bij Inloggen::nieuwWachtwoordAanvragen() en wordt
-     * de er melding getoond via Inloggen::toonWachtwoordVeranderd.
+     * er een melding getoond via Inloggen::toonWachtwoordVeranderd wanneer deze functie wordt opgeroepen bij wachtwoord vergeten.
+     *
+     * Wanneer een gebruiker zijn account wilt activeren zal hij ook deze functie gebruiken, nu zal dus zoals hierboven het wachtwoord worden ingesteld.
+     * Vervolgens gaat het systeem voor een mail te versturen eerst deze gebruiker activeren via het Gebruiker_model, na het sturen van de mail zal de
+     * er een melding getoond worden via Inloggen::toonGeactiveerd.
+     *
+     * Wanneer een gebruiker wordt geactiveerd door een medewerker of admin zal dit analoog verlopen als hierboven alleen wordt er een aangepaste boodschap
+     * getoond en mail verstuurd. De boodschapt wordt getoond via Inloggen::toonGeactiveerdDoorMedewerker
+     *
      *  
      * @see Gebruiker_model::controleerResetToken()
      * @see Gebruiker_model::getByResetToken()
@@ -378,22 +388,6 @@ class Inloggen extends CI_Controller {
             } else {
                 redirect('gebruiker/inloggen/toonfoutnieuwwachtwoord/' . $resetToken);
             }
-        } else {
-            redirect('gebruiker/inloggen/toonfoutlinkverlopen');
-        }
-    }
-
-    public function gebruikerActiveren($resetToken){
-        $this->load->model('gebruiker_model');
-        if ($this->gebruiker_model->controleerResetToken($resetToken)) {
-            $data['titel'] = '';
-            $data['author'] = 'G. Wuyts';
-            $data['gebruiker'] = $this->authex->getGebruikerInfo();
-
-            $data['resetToken'] = $resetToken;
-
-            $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordvergetenwijzigen');
-            $this->template->load('main_master', $partials, $data);
         } else {
             redirect('gebruiker/inloggen/toonfoutlinkverlopen');
         }

@@ -1,4 +1,15 @@
 <?php
+/**
+ * @file medewerker/gegevensWijzigen.php
+ *
+ * View waarin een gebruiker zijn gegevens veranderd kunnen worden
+ * - geeft via wijzigenGegevensFormulier alle gegevens door naar GebruikersBeheren::gegevensVeranderen()
+ *
+ * @see GebruikersBeheren::gegevensVeranderen()
+ */
+?>
+
+<?php
 $attributen = array('name' => 'wijzigenGegevensFormulier', 'class' => 'form-horizontal');
 $hidden = array('id' => $editGebruiker->id);
 echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $hidden);

@@ -1,6 +1,6 @@
 <?php
     /**
-     * @file Gebruiker/homePagina.php
+     * @file gebruiker/homePagina.php
      * 
      * View waarin de beginpagina wordt weergegeven (info, contact gegevens, ...)
      * - krijgt een $webinfo-array binnen

@@ -1,6 +1,6 @@
 <?php
     /**
-     * @file Gebruiker/wachtwoordWijzigen.php
+     * @file gebruiker/wachtwoordWijzigen.php
      * 
      * View waarin het wachtwoord veranderd kan worden
      * - geeft via wachtwoordVeranderenForm oudwachtwoord, nieuwWachtwoord & wachtwoordBevestigen door naar PersoonlijkeGegevens::wachtwoordVeranderen()

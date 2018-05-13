@@ -1,6 +1,6 @@
 <?php
     /**
-     * @file Gebruiker/inlogPagina.php
+     * @file gebruiker/inlogPagina.php
      * 
      * View waarin de inlogpagina wordt weergegeven
      * - geeft via loginForm email & wachtwoord door naar Inloggen::controleerLogin()
