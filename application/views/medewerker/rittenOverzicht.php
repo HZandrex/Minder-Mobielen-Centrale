@@ -39,6 +39,11 @@
 		</div>
 	</div>
 </div>
+<?php
+if (!empty($ritten)){
+?>
+
+
 <div class="card row mt-2">
 	<table class="table table-striped">
 	  <thead>
@@ -89,6 +94,23 @@
 	  </tbody>
 	</table>
 </div>
+
+    <?php
+} else {
+?>
+
+    <div class="col-12 justify-content-center align-self-center">
+        <div class="card" style="margin-top: 20px">
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <p class="font-weight-bold">Er zijn geen ritten voor jou</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>
 <script>
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()

@@ -50,23 +50,37 @@
         echo form_close();
     ?>
     </div>
-    
+
+
     <div class="col-sm-12 col-md-6">
         <?php
         $attributes = array('name' => 'voorkeurForm');
         echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
         ?>
         <div class="row">
-            <div class="col-12">
-                <p>Communicatie mogenlijkheden:</p>
-                <?php
-                $lengte = count($voorkeuren);
-                if(count($voorkeuren) > 10){
-                    $lengte = 10;
-                }
-                echo form_listboxpro('soort', $voorkeuren, 'id', 'naam', 0, array('id' => 'soort', 'size' => $lengte, 'class' => 'form-control'));
-                ?>
-            </div>
+            <?php if (!empty($voorkeuren)) {?>
+                <div class="col-12">
+                    <p>Communicatie mogenlijkheden:</p>
+                    <?php
+                    $lengte = count($voorkeuren);
+                    if(count($voorkeuren) > 10){
+                        $lengte = 10;
+                    }
+                    echo form_listboxpro('soort', $voorkeuren, 'id', 'naam', 0, array('id' => 'soort', 'size' => $lengte, 'class' => 'form-control'));
+                    ?>
+                </div>
+            <?php } else {?>
+            <div class="col-12 ">
+                <div class="card" style="margin-top: 20px">
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <p class="font-weight-bold">Er zijn geen mindermobiele waar jij verantwoordelijk voor bent</p>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
+
             <div class="col-12" id="voorkeurEdit">
                 <div class="row" style="padding-top: 10px">
                     <div class="col-12">
