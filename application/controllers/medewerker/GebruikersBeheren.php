@@ -34,7 +34,14 @@ class GebruikersBeheren extends CI_Controller
         }
 
         foreach ($gebruiker->functies as $functie) {
-            if ($functie->id != 4) {//id=4 -> Medewerker
+            $this->load->model('functie_model');
+            if ($functie->id == 4){
+                $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+            }
+            if ($functie->id == 5){
+                $data['functies'] = $this->functie_model->getAll(5); //5 = alle functies buiten admin
+            }
+            if ($functie->id < 4) {//id=4 -> Medewerker
                 redirect('admin/instellingen/toonfoutonbevoegd');
             }
         }
@@ -50,8 +57,6 @@ class GebruikersBeheren extends CI_Controller
         $this->load->model('functieGebruiker_model');
         $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersByFunction(1);
 
-        $this->load->model('functie_model');
-        $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
         $inActive = $this->functie_model->getEmpty();
         $inActive->naam = "Non-actief";
         array_push($data['functies'], $inActive);
@@ -115,7 +120,7 @@ class GebruikersBeheren extends CI_Controller
         }
 
         foreach ($gebruiker->functies as $functie) {
-            if ($functie->id != 4) {//id=4 -> Medewerker
+            if ($functie->id < 4) {//id=4 -> Medewerker
                 redirect('admin/instellingen/toonfoutonbevoegd');
             }
         }
@@ -161,7 +166,14 @@ class GebruikersBeheren extends CI_Controller
             redirect('gebruiker/inloggen');
         }
         foreach ($gebruiker->functies as $functie) {
-            if ($functie->id != 4) {//id=4 -> Medewerker
+            $this->load->model('functie_model');
+            if ($functie->id == 4){
+                $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+            }
+            if ($functie->id == 5){
+                $data['functies'] = $this->functie_model->getAll(5); //5 = alle functies buiten admin
+            }
+            if ($functie->id < 4) {//id=4 -> Medewerker
                 redirect('admin/instellingen/toonfoutonbevoegd');
             }
         }
@@ -178,9 +190,6 @@ class GebruikersBeheren extends CI_Controller
 
         $this->load->model('adres_model');
         $data['adressen'] = $this->adres_model->getAll();
-
-        $this->load->model('functie_model');
-        $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
 
         $this->load->model('voorkeur_model');
         $data['voorkeuren'] = $this->voorkeur_model->getAll();
@@ -202,8 +211,14 @@ class GebruikersBeheren extends CI_Controller
         $this->load->model('gebruiker_model');
         $this->load->model('adres_model');
         $this->load->model('functie_model');
+        $id = $this->input->post('id');
 
-        $gebruiker = $this->gebruiker_model->getEmpty();
+        if ($id != 0){
+            $gebruiker = $this->gebruiker_model->get($id);
+        } else{
+            $gebruiker = $this->gebruiker_model->getEmpty();
+        }
+
         foreach ($gebruiker as $attribut => $waarde){
             $post = $this->input->post($attribut);
             if($post != null) {
@@ -282,7 +297,7 @@ class GebruikersBeheren extends CI_Controller
             redirect('gebruiker/inloggen');
         }
         foreach ($gebruiker->functies as $functie) {
-            if ($functie->id != 4) {//id=4 -> Medewerker
+            if ($functie->id < 4) {//id=4 -> Medewerker
                 redirect('admin/instellingen/toonfoutonbevoegd');
             }
         }

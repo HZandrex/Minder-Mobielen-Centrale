@@ -35,6 +35,7 @@
 		<?php echo haalJavascriptOp("popper.min.js"); ?>
 		<?php echo haalJavascriptOp("bootstrap-datepicker.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.min.js"); ?>
+        <?php echo haalJavascriptOp("validator.js"); ?>
         <script type="text/javascript">
             var site_url = '<?php echo site_url(); ?>';
             var base_url = '<?php echo base_url(); ?>';
@@ -73,9 +74,13 @@
             <div class="container">
                 <div class="row footText">
                     <span>N. Claes</span>
+                    <span>, </span>
                     <span class="footerNaam">L. Cleymans</span>
+                    <span>, </span>
                     <span class="footerNaam">T. Elseviers</span>
+                    <span>, </span>
                     <span class="footerNaam">M. Olijslagers</span>
+                    <span>, </span>
                     <span class="mr-auto">G. Wuyts</span>
 
                     <span id="footerTeam">Team 23 Christel Maes</span>

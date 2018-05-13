@@ -62,7 +62,7 @@ $attributes = array('name' => 'gebruikersForm', 'id' => 'gebruikersForm');
 echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
 ?>
 <div class="row">
-    <div class="col-5">
+    <div class="col-6">
         <p><b>Gebruikers</b></p>
         <?php
         echo form_hidden('firstVisit', $firstVisit);
@@ -72,7 +72,7 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
         <div style="margin-top: 10px;"><?php print anchor("medewerker/gebruikersBeheren/gegevensWijzigen", '+ Nieuwe gebruiker', 'class="btn btn-primary"'); ?></div>
     </div>
 
-    <div class="col-7">
+    <div class="col-6">
         <div id="gebruikerInfo" class="row"></div>
     </div>
 

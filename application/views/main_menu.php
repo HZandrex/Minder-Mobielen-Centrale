@@ -32,14 +32,13 @@ if ($gebruiker == null) { // niet aangemeld
                 echo divAnchor('vrijwilliger/ritten','Mijn ritten','class="nav-item nav-link"');
                 break;
 				
-            case 'Medewerker':
+            case 'Medewerker' || 'Admin':
                 echo divAnchor('medewerker/rittenAfhandelen','Ritten afhandelen','class="nav-item nav-link"');
                 echo divAnchor('medewerker/gebruikersBeheren','Gebruikers beheren','class="nav-item nav-link"');
-                break;
-
-            case 'Admin':
-                echo divAnchor('admin/webinfo', 'Webinfo wijzigen', 'class="nav-item nav-link"');
-                echo divAnchor('admin/instellingen', 'Instellingen', 'class="nav-item nav-link"');
+                if ($functie->naam == 'Admin'){
+                    echo divAnchor('admin/webinfo', 'Webinfo wijzigen', 'class="nav-item nav-link"');
+                    echo divAnchor('admin/instellingen', 'Instellingen', 'class="nav-item nav-link"');
+                }
                 break;
         }
     }

@@ -119,8 +119,8 @@ class Inloggen extends CI_Controller {
             $this->gebruiker_model->wijzigResetToken($email, $resetToken);
             $titel = "Minder Mobiele Centrale aanvraag nieuw wachtwoord";
             $boodschap = '<p>U heeft een nieuw wachtwoord aangevraagd. Druk op onderstaande link om een nieuw wachtwoord aan te vragen.</p>'
-                    . '<p>Wanneer u zelf geen nieuw wachtwoord hebt aangevraagd hoeft u deze mail simpel te negeren.</p>'
-                    . '<p>Verander wachtwoord: ' . anchor(base_url() . 'index.php/gebruiker/inloggen/wachtwoordvergetenwijzigen/' . $resetToken, 'Link om wachtwoord te veranderen') . '</p>';
+                    . '<p>Wanneer u zelf geen nieuw wachtwoord heeft aangevraagd hoeft u deze mail simpel te negeren.</p>'
+                    . '<p>Verander wachtwoord: ' . anchor(base_url() . 'index.php/gebruiker/inloggen/wachtwoordVergetenWijzigen/' . $resetToken, 'Link om wachtwoord te veranderen') . '</p>';
             $this->stuurMail($email, $boodschap, $titel);
 
             redirect('gebruiker/inloggen/toonmailnieuwwachtwoordverstuurd');
@@ -242,6 +242,20 @@ class Inloggen extends CI_Controller {
      *
      * @see Inloggen::toonMelding()
      */
+    public function toonFoutMail() {
+        $titel = "Fout!";
+        $boodschap = "Er is iets foutgelopen bij het versturen van een mail.</br>"
+            . "Probeer later opnieuw! Wanneer dit blijft voorvallen neem dan contact op met ons.";
+        $link = array("url" => "home", "tekst" => "Home");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
     public function toonMailNieuwWachtwoordVerstuurd() {
         $titel = "Mail verstuurd";
         $boodschap = "Er wordt een mail gestuurd naar het opgegevens E-mail adres.</br>"
@@ -314,7 +328,7 @@ class Inloggen extends CI_Controller {
 
             $data['resetToken'] = $resetToken;
 
-            $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordvergetenwijzigen');
+            $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/wachtwoordVergetenWijzigen');
             $this->template->load('main_master', $partials, $data);
         } else {
             redirect('gebruiker/inloggen/toonfoutlinkverlopen');
@@ -362,15 +376,17 @@ class Inloggen extends CI_Controller {
                 if ($gebruiker->active){
                     $titel = "Minder Mobiele Centrale wachtwoord veranderd";
                     $boodschap = "<p>U heeft zojuist uw wachtwoord veranderd. Noteer dit wachtwoord ergens of onthoud dit goed.</p>"
-                        . "<p>Heeft u het wachtwoord niet veranderd en krijgd u deze mail, neem dan snel contact met ons op."
+                        . "<p>Heeft u het wachtwoord niet veranderd en ontvangt u deze mail, neem dan snel contact met ons op."
                         . " U vindt deze gegevens op onze site.<p>" . anchor(base_url(), "Link naar de site van de Minder Mobiele Centrale");
-                    $this->stuurMail($gebruiker->mail, $boodschap, $titel);
+                    if(!$this->stuurMail($gebruiker->mail, $boodschap, $titel)){
+                        redirect('gebruiker/inloggen/toonfoutmail');
+                    }
                     redirect('gebruiker/inloggen/toonwachtwoordveranderd');
                 } elseif ($gebruiker->id == $ingelogdeGebruiker->id){
                     $this->gebruiker_model->activeerGebruiker($gebruiker->id);
                     $titel = "Minder Mobiele Centrale wachtwoord ingesteld";
                     $boodschap = "<p>U heeft zojuist uw account geactiveerd en het wachtwoord ingesteld. Noteer dit wachtwoord ergens of onthoud dit goed.</p>"
-                        . "<p>Heeft u geen account geactiveerd en krijgd u deze mail, neem dan snel contact met ons op."
+                        . "<p>Heeft u geen account geactiveerd en ontvangt u deze mail, neem dan snel contact met ons op."
                         . " U vindt deze gegevens op onze site.<p>" . anchor(base_url(), "Link naar de site van de Minder Mobiele Centrale");
                     $this->stuurMail($gebruiker->mail, $boodschap, $titel);
                     redirect('gebruiker/inloggen/toongeactiveerd');
@@ -379,7 +395,7 @@ class Inloggen extends CI_Controller {
                     $titel = "Minder Mobiele Centrale wachtwoord ingesteld";
                     $boodschap = "<p>Uw account werd zonet geactiveerd en er werd wachtwoord ingesteld. Als u dit zelf heeft doorgegeven noteer dit wachtwoord dan ergens of onthoud dit goed.</p>"
                         . "<p>Wanneer u zelf geen wachtwoord hebt opgegeven neem dan even contact op met een medewerker.</p>"
-                        . "<p>Weet u niets van dit account of deze activatie en krijgd u deze mail, neem dan snel contact met ons op."
+                        . "<p>Weet u niets van dit account of deze activatie en ontvangt u deze mail, neem dan snel contact met ons op."
                         . " U vindt deze gegevens op onze site.<p>" . anchor(base_url(), "Link naar de site van de Minder Mobiele Centrale");
                     $this->stuurMail($gebruiker->mail, $boodschap, $titel);
                     redirect('gebruiker/inloggen/toongeactiveerddoormedewerker');
