@@ -56,13 +56,13 @@ class PersoonlijkeGegevens extends CI_Controller
         } else {
             redirect('gebruiker/inloggen');
         }
-        $data['gegevens'] = $gebruiker;
+        $data['editGebruiker'] = $gebruiker;
 		
 		$this->load->model('adres_model');
         $data['adressen'] = $this->adres_model->getAll();
 
         $this->load->model('voorkeur_model');
-        $data['communicatiemiddelen'] = $this->voorkeur_model->getAll();
+        $data['voorkeuren'] = $this->voorkeur_model->getAll();
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'gebruiker/gegevensWijzigen');
         $this->template->load('main_master', $partials, $data);
@@ -88,12 +88,12 @@ class PersoonlijkeGegevens extends CI_Controller
 
         $gebruiker = $this->gebruiker_model->get($id);
 
-        $gebruiker->voornaam = $this->input->post('gegevensVoornaam');
-        $gebruiker->naam = $this->input->post('gegevensNaam');
-        $gebruiker->geboorte = $this->input->post('gegevensGeboorte');
-        $gebruiker->telefoon = $this->input->post('gegevensTelefoon');
-        $gebruiker->mail = $this->input->post('gegevensMail');
-        $gebruiker->voorkeurId = $this->input->post('gegevensCommunicatie');
+        $gebruiker->voornaam = $this->input->post('voornaam');
+        $gebruiker->naam = $this->input->post('naam');
+        $gebruiker->geboorte = $this->input->post('geboorte');
+        $gebruiker->telefoon = $this->input->post('telefoon');
+        $gebruiker->mail = $this->input->post('mail');
+        $gebruiker->voorkeurId = $this->input->post('voorkeurId');
 		$gebruiker->adresId = $this->input->post('adresId');
 
         $this->gebruiker_model->updateGebruiker($gebruiker);
