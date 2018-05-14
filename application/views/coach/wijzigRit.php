@@ -274,7 +274,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 <script>
 
     $("#heenStartAdres").click(function () {
-
+        $("#terugStartAdres").value("#heenStartAdres");
     });
 
     $(function () {
