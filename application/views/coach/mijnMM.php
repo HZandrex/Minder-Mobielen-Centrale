@@ -52,29 +52,52 @@ function haalGebruikerInfoOp(gebruikerId) {
         });
 	});
 </script>
-<div>
-	
-	<div class="row">
-		<div class="panel panel-primary col-lg-4">
-			<div class="panel-heading>Zoeken</div>
-				<div class="panel-body">
-					<div class="form-group">
-							<label for="naam">Zoeken:</label>
-							<?php echo form_input(array('name' => 'naam', 'id' => 'search', 'class' => 'form-control')) ?>
-					</div>
-				</div>
-				
-				<select id="listBoxMinderMobielen" class="form-control" name="listBoxMinderMobielen" size="15">
-				<?php foreach($minderMobielen as $minderMobiel){?>
-					<option value="<?php echo $minderMobiel->id?>"><?php echo $minderMobiel->voornaam." ".$minderMobiel->naam ?></option>
-					<?php } ?>
-				</select>
-		</div>
-				
-			
-		<div class="col-lg-8">
-			<div id="gebruikerInfo" class="row"></div>
-		</div>
-	
-	</div>
-</div>
+
+
+<?php
+if (!empty($minderMobielen)){
+?>
+
+    <div>
+
+        <div class="row">
+            <div class="panel panel-primary col-lg-4">
+                <div class="panel-heading>Zoeken</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                                <label for="naam">Zoeken:</label>
+                                <?php echo form_input(array('name' => 'naam', 'id' => 'search', 'class' => 'form-control')) ?>
+                        </div>
+                    </div>
+
+                    <select id="listBoxMinderMobielen" class="form-control" name="listBoxMinderMobielen" size="15">
+                    <?php foreach($minderMobielen as $minderMobiel){?>
+                        <option value="<?php echo $minderMobiel->id?>"><?php echo $minderMobiel->voornaam." ".$minderMobiel->naam ?></option>
+                        <?php } ?>
+                    </select>
+            </div>
+
+
+            <div class="col-lg-8">
+                <div id="gebruikerInfo" class="row"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <?php
+} else {
+    ?>
+
+    <div class="col-12 justify-content-center align-self-center">
+        <div class="card" style="margin-top: 20px">
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <p class="font-weight-bold">Er zijn geen mindermobiele waar jij verantwoordelijk voor bent</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>

@@ -9,6 +9,8 @@
  
  // var_dump($statussen);
 ?>
+
+
 <div class="card row mt-2">
 	<div class="card-body">
 		<h3>Filteren</h3>
@@ -94,7 +96,7 @@ if (!empty($ritten)){
 	</div>
 			
 <?php
-	}else { 
+	} else {
 ?>
 	<div class="col-12 justify-content-center align-self-center">
 		<div class="card" style="margin-top: 20px">
