@@ -79,6 +79,7 @@ class Ritten extends CI_Controller {
 		 * @see adres_model::getById()
 		 * @see adres_model::addAdres()
 		 * @see Gemaakt door Michiel Olijslagers
+		 * @return het volledige adres
 		*/
 		$this->load->model('adres_model');
 		$bestaat = $this->adres_model->bestaatAdres(htmlspecialchars(trim($_POST['huisnummer'])), htmlspecialchars(trim($_POST['straat'])), htmlspecialchars(trim($_POST['gemeente'])), htmlspecialchars(trim($_POST['postcode'])));
@@ -97,6 +98,7 @@ class Ritten extends CI_Controller {
 		 * @see google_model::getReisTijd()
 		 * @see instelling_model::getValueById()
 		 * @see Gemaakt door Michiel Olijslagers
+		 * @return Tijd, start- en eindAdres
 		*/
 		$this->load->model('google_model');
 		$this->load->model('instelling_model');
@@ -117,6 +119,7 @@ class Ritten extends CI_Controller {
 		 *
 		 * @see gebruiker_model::getCredits()
 		 * @see Gemaakt door Michiel Olijslagers
+		 * @return Het aantal credits dat nog over is voor de opgevraagde week bij de mindermobiele
 		*/
 		$this->load->model('gebruiker_model');
 		
