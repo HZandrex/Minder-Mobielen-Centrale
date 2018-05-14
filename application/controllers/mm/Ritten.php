@@ -166,7 +166,13 @@ class Ritten extends CI_Controller {
 	}
 
     public function wijzigRit($id){
-		//Lorenz
+        /**
+         * Deze functie is zorgt ervoor dat al de gegevens van een rit die gewijzigd zijn in de database komen te staan, deze worden dus geupdated.
+         *
+         * @see rit_model::getAllVoorGebruiker()
+         * @see rit_model::getByRitId()
+         * @see Gemaakt door Lorenz Cleymans
+         */
         $this->load->model('rit_model');
         $data['titel'] = 'Wijzig rit';
         $data['author'] = 'L. Cleymans';
@@ -181,7 +187,12 @@ class Ritten extends CI_Controller {
     }
 
     public function wijzigRitOpslaan(){
-		//Lorenz
+        /**
+         * Deze functie is het einde van een wijzig rit, hier zal een rit in de database gestoken worden.
+         *
+         * @see rit_model::saveNewRit()
+         * @see Gemaakt door Lorenz Cleymans
+         */
         $this->load->model('rit_model');
 
         $mmId = htmlspecialchars(trim($_POST['userId']));

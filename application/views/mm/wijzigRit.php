@@ -42,7 +42,6 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                         <?php
 
                             if ($heen->terugaankomst->adres->id) { ?>
-                                <p>piemel</p>
                                 <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug" checked >
                             <?php } else { ?>
 
@@ -272,6 +271,10 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete" async defer></script>
 <script>
+    $("#heenEindeAdres").change(function () {
+        var i = $('#heenEindeAdres option:checked').val();
+        $("#terugStartAdres").val(i);
+    });
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     })

@@ -1,3 +1,5 @@
+
+
 <?php
 	$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
 	if(!empty($adressen[0])){
@@ -19,7 +21,7 @@
 	</div>
 	<?php 
 		$attributes = array('name' => 'nieuweRit', 'id' => 'nieuweRit');
-		echo form_open('mm/ritten/nieuweRitOpslaan', $attributes);  
+		echo form_open('coach/ritten/nieuweRitOpslaan', $attributes);
 	?>
 		<div class="card">
 			<div class="card-body">
@@ -220,6 +222,10 @@
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete" async defer></script>
 <script>
+    $("#heenEindeAdres").change(function () {
+        var i = $('#heenEindeAdres option:checked').val();
+        $("#terugStartAdres").val(i);
+    });
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 })
