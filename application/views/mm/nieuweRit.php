@@ -306,7 +306,7 @@ $('#saveAdres').click(function(){
 					data:{ huisnummer:huisnummer, straat:straat, gemeente:gemeente, postcode:postcode},
 					success:function(response)
 					{
-						console.log(response);//Stationsstraat 177, Geel, België
+						// console.log(response);//Stationsstraat 177, Geel, België
 						var adres = JSON.parse(response);
 						//toevoegen aan adressen lijst
 						$('select').each(function(){
@@ -314,6 +314,7 @@ $('#saveAdres').click(function(){
 						});
 						$('#exampleModal').modal('hide');
 						$('#' + $('#exampleModal').attr('data-id')).val(adres.id);
+						calulateCost();
 					}
 				}
 			);
@@ -566,7 +567,7 @@ $('#opslaan').click(function(){
 	}
 	
 	if(!error){
-		console.log('submit');
+		// console.log('submit');
 		addData('userId', '<?php print $gebruikerMM->id; ?>');
 		$( "#nieuweRit" ).submit();
 	}
