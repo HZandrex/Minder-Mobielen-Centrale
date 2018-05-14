@@ -267,6 +267,8 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
         if (!$('.form-check-input:checked').length >= 1){
             $('#errorFunctie').show();
             event.preventDefault();
+        } else {
+            $('.form-check-input').removeAttr('required');
         }
     });
 

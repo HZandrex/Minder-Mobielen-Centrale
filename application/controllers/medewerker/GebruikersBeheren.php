@@ -225,6 +225,9 @@ class GebruikersBeheren extends CI_Controller
                 $gebruiker->$attribut = $post;
             }
         }
+        if ($gebruiker->geboorte > date('Y-m-d')){
+            redirect('medewerker/gebruikersBeheren/toonfoutdatum');
+        }
         if($gebruiker->id == null){
             if ($this->gebruiker_model->getByMail($gebruiker->mail) != false) {
                 redirect('medewerker/gebruikersBeheren/toonfoutbestaandemail');
@@ -434,6 +437,21 @@ class GebruikersBeheren extends CI_Controller
         $boodschap = "Er heeft zich een probleem opgetreden bij het opslaan.</br>"
             . "Probeer opnieuw! Als dit blijft voorvallen neemt u best contact op met de systeembeheerder.";
         $link = array("url" => "medewerker/gebruikersBeheren/gegevensWijzigen/$id", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     */
+    public function toonFoutDatum()
+    {
+        $titel = "Fout!";
+        $boodschap = "U heeft geprobeerd een geboortedatum op te slaan die in de toekomst ligd!</br>"
+            . "Dit mag niet probeer opnieuw!";
+        $link = array("url" => "medewerker/gebruikersBeheren/gegevensWijzigen", "tekst" => "Terug");
 
         $this->toonMelding($titel, $boodschap, $link);
     }
