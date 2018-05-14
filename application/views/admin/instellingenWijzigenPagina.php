@@ -5,6 +5,16 @@
 <script>
     $(document).ready(function(){
         var aniTijd = 100;
+        <?php if (empty($voorkeuren)) {?>
+        $('#voorkeurNew').hide(aniTijd);
+        $('#voorkeurEdit').hide(aniTijd);
+        $('#voorkeurAdd').show(aniTijd);
+        $('#nieuweVoorkeur').prop('disabled', false);
+        $('#voorkeurWijzigen').prop('disabled', true);
+        $('#voorkeurVerwijderen').prop('disabled', true);
+        $('#teWijzigeVoorkeur').prop('disabled', true);
+        <?php } ?>
+
 
         $('#teWijzigeVoorkeur').val('');
 
@@ -65,19 +75,22 @@
                     $lengte = count($voorkeuren);
                     if(count($voorkeuren) > 10){
                         $lengte = 10;
+                    } elseif (count($voorkeuren) == 1){
+                        $lengte = 2;
                     }
                     echo form_listboxpro('soort', $voorkeuren, 'id', 'naam', 0, array('id' => 'soort', 'size' => $lengte, 'class' => 'form-control'));
                     ?>
                 </div>
             <?php } else {?>
-            <div class="col-12 ">
+            <div class="col-12">
                 <div class="card" style="margin-top: 20px">
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <p class="font-weight-bold">Er zijn geen mindermobiele waar jij verantwoordelijk voor bent</p>
+                            <p class="font-weight-bold">Er zijn geen voorkeuren, maak er één aan!</p>
                         </div>
                     </div>
                 </div>
+            </div>
             <?php } ?>
 
 

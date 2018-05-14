@@ -32,13 +32,8 @@ class Voorkeur_model extends CI_Model {
     function getEmpty(){
         $voorkeur = new stdClass();
 
-        $this->db->where('id', 1);
-        $query = $this->db->get('voorkeur');
-        $voorbeeldVoorkeur = $query->row();
-
-        foreach ($voorbeeldVoorkeur as $attribut => $waarde){
-            $voorkeur->$attribut = null;
-        }
+        $voorkeur->id = null;
+        $voorkeur->naam  = null;
 
         return $voorkeur;
     }
@@ -50,11 +45,13 @@ class Voorkeur_model extends CI_Model {
     }
 
     function voegToe($voorkeur){
+        $voorkeur->naam = ucfirst(strtolower($voorkeur->naam));
         $this->db->insert('voorkeur', $voorkeur);
         return $this->db->insert_id();
     }
 
     function wijzigen($voorkeur){
+        $voorkeur->naam = ucfirst(strtolower($voorkeur->naam));
         $this->db->where('id', $voorkeur->id);
         $this->db->update('voorkeur', $voorkeur);
     }

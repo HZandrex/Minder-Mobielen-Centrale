@@ -37,13 +37,11 @@ class Adres_model extends CI_Model {
     function getEmpty(){
         $adres = new stdClass();
 
-        $this->db->where('id', 1);
-        $query = $this->db->get('adres');
-        $voorbeeldAdres = $query->row();
-
-        foreach ($voorbeeldAdres as $attribut => $waarde){
-            $adres->$attribut = null;
-        }
+        $adres->id = null;
+        $adres->straat = null;
+        $adres->huisnummer = null;
+        $adres->gemeente = null;
+        $adres->postcode = null;
 
         return $adres;
     }
