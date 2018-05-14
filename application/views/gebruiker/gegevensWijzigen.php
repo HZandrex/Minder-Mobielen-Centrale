@@ -1,34 +1,61 @@
 <?php
+/**
+ * @file gebruiker/gegevensWijzigen.php
+ *
+ * View waarin een gebruiker zijn gegevens veranderd kunnen worden
+ * - geeft via wijzigenGegevensFormulier alle gegevens door naar PersoonlijkeGegevens::gegevensVeranderen()
+ *
+ * PersoonlijkeGegevens::gegevensVeranderen()
+ */
+?>
+
+<?php
 $attributen = array('name' => 'wijzigenGegevensFormulier', 'class' => 'form-horizontal');
 $hidden = array('id' => $gegevens->id);
 echo form_open('gebruiker/persoonlijkeGegevens/gegevensVeranderen', $attributen, $hidden);
 ?>
-<div class=row>
+
+<style>
+	.pac-container {
+        z-index: 10000;
+    }
+
+    input::-webkit-calendar-picker-indicator{
+        display: none;
+    }
+    input[type="date"]::-webkit-input-placeholder{
+        visibility: hidden !important;
+    }
+
+	.datepicker { position: relative; z-index: 10000 !important; }
+</style>
+
+<div class="row">
     <div class="col-lg-6 col-sm-12">
         <div class="row">
             <h4 class="col-12">Contactgegevens</h4>
             <div class="col-6">
                 <?php echo form_label('Voornaam:', 'gegevensVoornaam'); ?>
-                <input type="text" class="form-control" name="gegevensVoornaam"
+                <input required placeholder="Voornaam" type="text" class="form-control" name="gegevensVoornaam"
                        value="<?php echo $gegevens->voornaam ?>"
                        required>
             </div>
             <div class="col-6">
                 <?php echo form_label('Naam:', 'gegevensNaam'); ?>
-                <input type="text" class="form-control" name="gegevensNaam" value="<?php echo $gegevens->naam ?>"
+                <input required placeholder="Naam" type="text" class="form-control" name="gegevensNaam" value="<?php echo $gegevens->naam ?>"
                        required>
             </div>
             <div class="col-12">
                 <?php echo form_label('Geboorte:', 'gegevensGeboorte'); ?>
-                <input type="date" class="form-control" name="gegevensGeboorte"
+                <input required class="form-control datepicker" data-provide="datepicker" type="date" name="gegevensGeboorte"
                        value="<?php print $gegevens->geboorte ?>"
                        required>
                 <?php echo form_label('Telefoon:', 'gegevensTelefoon'); ?>
-                <input type="text" class="form-control" name="gegevensTelefoon"
+                <input required minlength="9" pattern="^[0-9]*$" type="text" class="form-control" name="gegevensTelefoon"
                        value="<?php echo $gegevens->telefoon ?>"
                        required>
                 <?php echo form_label('Email:', 'gegevensMail'); ?>
-                <input type="text" class="form-control" name="gegevensMail" value="<?php echo $gegevens->mail ?>"
+                <input required type="text" class="form-control" name="gegevensMail" value="<?php echo $gegevens->mail ?>"
                        required>
                 <?php echo form_label('Gewenst communicatiemiddel:', 'gegevensCommunicatie'); ?>
                 <select class="form-control" name="gegevensCommunicatie" required>
@@ -51,7 +78,7 @@ echo form_open('gebruiker/persoonlijkeGegevens/gegevensVeranderen', $attributen,
             <h4 class="col-12">Adresgegevens</h4>
             <div class="col-12">
                 <label for="adres">Thuis adres: </label>
-                <select class="custom-select" id="adres" name="adresId">
+                <select class="custom-select" id="adres" name="adresId" required>
                     <?php
                     $selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
                     foreach ($adressen as $adres) {
@@ -73,10 +100,73 @@ echo form_open('gebruiker/persoonlijkeGegevens/gegevensVeranderen', $attributen,
     <?php echo anchor('gebruiker/persoonlijkeGegevens/persoonlijkeGegevens', 'Annuleren', 'class="btn btn-primary"'); ?>
     <?php echo form_close(); ?>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" data-id="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="adres" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nieuw adres</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" id="errorModal" style="display: none;"></div>
+                    <div id="locationField">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="autocomplete"
+                                   placeholder="Vul hier het adres in" onFocus="geolocate()">
+                        </div>
+                    </div>
+                    <div id="address">
+                        <div class="form-group">
+                            <label for="street_number">Nummer</label>
+                            <input type="text" class="form-control" id="street_number" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="route">Straat</label>
+                            <input type="text" class="form-control" id="route" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="locality">Gemeente</label>
+                            <input type="text" class="form-control" id="locality" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="postal_code">Postcode</label>
+                            <input type="text" class="form-control" id="postal_code" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="administrative_area_level_1">Staat</label>
+                            <input type="text" class="form-control" id="administrative_area_level_1"
+                                   disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Land</label>
+                            <input type="text" class="form-control" id="country" disabled="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="anuleerAdres">Anuleren</button>
+                    <button type="button" class="btn btn-primary" id="saveAdres">Opslaan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete"
         async defer></script>
 <script>
+$('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        weekStart: 1,
+        endDate: '+0d',
+        autoclose: true,
+        language: 'nl'
+    });
+
     $('select').change(function () {
         if ($(this).val() == 'nieuwAdres') {
             $('#exampleModal').attr('data-id', $(this).attr('id'));
@@ -85,7 +175,6 @@ echo form_open('gebruiker/persoonlijkeGegevens/gegevensVeranderen', $attributen,
     });
 
     $('#anuleerAdres').click(function () {
-        $('#' + $('#exampleModal').attr('data-id')).val('default');
         $('#exampleModal').modal('hide');
         $("form#adres :input").each(function () {
             $(this).val('');
