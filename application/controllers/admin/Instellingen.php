@@ -210,7 +210,7 @@ class Instellingen extends CI_Controller {
         foreach ($instellingen as $instelling){
             $waarde = $this->input->post($instelling->naam);
             if ($waarde != null) {
-                $instelling->waarde = $waarde;
+                $instelling->waarde = str_replace(",",".",$waarde);
                 $gewijzigd = true;
             }
         }

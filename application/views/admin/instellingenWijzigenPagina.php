@@ -41,7 +41,7 @@
         foreach ($instellingen as $instelling) {
             echo '<div class="form-group row">';
                 echo form_label($instelling->beschrijving, $instelling->naam, array('class' => 'col-sm-12 col-md-8 col-form-label'));
-                echo form_input(array('name' => $instelling->naam, 'id' => $instelling->naam, 'placeholder' => $instelling->waarde, 'type' => 'numeric', 'size' => '30', 'class' => 'form-control col-sm-12 col-md-2'));
+                echo form_input(array('name' => $instelling->naam, 'id' => $instelling->naam, 'placeholder' => str_replace(".",",",$instelling->waarde), 'type' => 'numeric', 'size' => '30', 'class' => 'form-control col-sm-12 col-md-2'));
             echo '</div>';
         }
 

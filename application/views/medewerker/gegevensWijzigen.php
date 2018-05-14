@@ -11,7 +11,8 @@
 
 <?php
 $attributen = array('name' => 'wijzigenGegevensFormulier',
-    'novalidate' => 'novalidate',
+    'id' => 'wijzigenGegevensFormulier',
+//    'novalidate' => 'novalidate',
     'class' => 'form-horizontal needs-validation');
 $hidden = array('id' => $editGebruiker->id);
 echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $hidden);
@@ -58,36 +59,54 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
             </div>
             <div class="col-12">
                 <div class="form-group">
-                    <?php
-                    echo form_labelpro('Geboorte', 'geboorte');
-                    $dataNaam = array('id' => 'geboorte',
-                        'name' => 'geboorte',
-                        'type' => 'date',
-                        'class' => 'form-control',
-                        'value' => $editGebruiker->geboorte,
-                        'required' => 'required');
-                    echo form_input($dataNaam) . "\n";
-                    ?>
+                    <?php echo form_labelpro('Geboorte', 'geboorte'); ?>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for='geboorte'>
+                                <i class="fas fa-calendar-alt"></i>
+                            </label>
+                        </div>
+                        <?php
+                        $dataNaam = array('id' => 'geboorte',
+                            'name' => 'geboorte',
+                            'class' => 'form-control datepicker',
+                            'value' => $editGebruiker->geboorte,
+                            'data-provide' => 'datepicker',
+                            'required' => 'required');
+                        echo form_input($dataNaam) . "\n";
+                        ?>
+                        <div class="invalid-feedback">Vul een geboortedatum in!</div>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <?php
                     echo form_labelpro('Telefoon (zonder spaties)', 'telefoon');
-                    $dataNaam = array('id' => 'telefoon',
+                    $dataTelefoon = array('id' => 'telefoon',
                         'name' => 'telefoon',
                         'class' => 'form-control',
                         'value' => $editGebruiker->telefoon,
                         'required' => 'required',
                         'minlength' => '9',
                         'pattern' => '^[0-9]*$');
-                    echo form_input($dataNaam) . "\n";
+                    echo form_input($dataTelefoon) . "\n";
                     ?>
                     <div class="invalid-feedback">Geef een geldige telefoon nummer in!</div>
                 </div>
 
-                <?php echo form_label('Email:', 'mail'); ?>
-                <input type="email" class="form-control" name="mail" value="<?php echo $editGebruiker->mail ?>"
-                       required>
+                <div class="form-group">
+                    <?php
+                    echo form_labelpro('E-mail', 'mail');
+                    $dataMail = array('id' => 'mail',
+                        'name' => 'mail',
+                        'class' => 'form-control',
+                        'value' => $editGebruiker->mail,
+                        'required' => 'required',
+                        'type' => 'mail');
+                    echo form_input($dataMail) . "\n";
+                    ?>
+                    <div class="invalid-feedback">Geef een geldig e-mailadres in!</div>
+                </div>
                 <?php echo form_label('Gewenst communicatiemiddel:', 'voorkeur'); ?>
                 <select class="form-control" name="voorkeurId" required>
                     <?php
@@ -104,42 +123,41 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
         </div>
     </div>
     <div class="col-lg-6 col-sm-12">
-        <div class="row">
-            <h4 class="col-12">Adresgegevens</h4>
-            <div class="col-12">
-                <label for="adres">Thuis adres: </label>
-                <select class="custom-select" id="adres" name="adresId">
-                    <?php
-                    $selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
-                    foreach ($adressen as $adres) {
-                        if ($adres->id == $editGebruiker->adres->id) {
-                            $selectAdressen .= '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                        } else {
-                            $selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                        }
+        <h4>Adresgegevens</h4>
+        <div class="form-group">
+            <label for="adres">Thuis adres: </label>
+            <select class="custom-select" id="adres" name="adresId" required>
+                <?php
+                $selectAdressen = '<option value="" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
+                foreach ($adressen as $adres) {
+                    if ($adres->id == $editGebruiker->adres->id) {
+                        $selectAdressen .= '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+                    } else {
+                        $selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
                     }
-                    echo $selectAdressen;
-                    ?>
-                </select>
-            </div>
-            <div class="col-12" style="margin-top: 20px;">
-                <h4>Functies</h4>
-                <?php foreach ($functies as $functie) {
-                    echo '<div class="form-check">';
-                    $temp = false;
-                    foreach ($editGebruiker->functies as $gebruikerFunctie) {
-                        if ($gebruikerFunctie->id == $functie->id) {
-                            echo form_checkbox("functie" . $functie->id, $functie->id, TRUE, 'class="form-check-input" id="' . $functie->naam . '"');
-                            $temp = true;
-                        }
+                }
+                echo $selectAdressen;
+                ?>
+            </select>
+            <div class="invalid-feedback">Selecteer een bestaand adres of maak een nieuw aan!</div>
+        </div>
+        <h4>Functies</h4>
+        <div class="from-group">
+            <?php foreach ($functies as $functie) {
+                echo '<div class="form-check">';
+                $temp = false;
+                foreach ($editGebruiker->functies as $gebruikerFunctie) {
+                    if ($gebruikerFunctie->id == $functie->id) {
+                        echo form_checkbox("functie" . $functie->id, $functie->id, TRUE, 'class="form-check-input" id="' . $functie->naam . '"');
+                        $temp = true;
                     }
-                    if (!$temp) {
-                        echo form_checkbox("functie" . $functie->id, $functie->id, FALSE, 'class="form-check-input" id="' . $functie->naam . '"');
-                    }
-                    echo form_label($functie->naam, $functie->naam, 'class="form-check-label"');
-                    echo "</div>";
-                } ?>
-            </div>
+                }
+                if (!$temp) {
+                    echo form_checkbox("functie" . $functie->id, $functie->id, FALSE, 'class="form-check-input" id="' . $functie->naam . '"');
+                }
+                echo form_label($functie->naam, $functie->naam, 'class="form-check-label"');
+                echo "</div>";
+            } ?>
         </div>
     </div>
 </div>
@@ -186,7 +204,8 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
                         </div>
                         <div class="form-group">
                             <label for="administrative_area_level_1">Staat</label>
-                            <input type="text" class="form-control" id="administrative_area_level_1" disabled="true">
+                            <input type="text" class="form-control" id="administrative_area_level_1"
+                                   disabled="true">
                         </div>
                         <div class="form-group">
                             <label for="country">Land</label>
@@ -205,14 +224,14 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete"
         async defer></script>
 <script>
-    (function() {
+    (function () {
         'use strict';
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.getElementsByClassName('needs-validation');
             // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -223,6 +242,21 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
         }, false);
     })();
 
+    $('#wijzigenGegevensFormulier').submit(function () {
+        if (!$('.form-check-input:checked').length >= 1){
+            $('.form-check-input').addClass('.is-invalid');
+            event.preventDefault();
+        }
+    });
+
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        weekStart: 1,
+        endDate: '+0d',
+        autoclose: true,
+        language: 'nl'
+    });
+
     $('select').change(function () {
         if ($(this).val() == 'nieuwAdres') {
             $('#exampleModal').attr('data-id', $(this).attr('id'));
@@ -231,7 +265,6 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
     });
 
     $('#anuleerAdres').click(function () {
-        $('#' + $('#exampleModal').attr('data-id')).val('default');
         $('#exampleModal').modal('hide');
         $("form#adres :input").each(function () {
             $(this).val('');

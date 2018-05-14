@@ -35,7 +35,6 @@
 		<?php echo haalJavascriptOp("popper.min.js"); ?>
 		<?php echo haalJavascriptOp("bootstrap-datepicker.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.min.js"); ?>
-        <?php echo haalJavascriptOp("validator.js"); ?>
         <script type="text/javascript">
             var site_url = '<?php echo site_url(); ?>';
             var base_url = '<?php echo base_url(); ?>';
