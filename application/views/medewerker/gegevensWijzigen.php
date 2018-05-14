@@ -12,7 +12,7 @@
 <?php
 $attributen = array('name' => 'wijzigenGegevensFormulier',
     'id' => 'wijzigenGegevensFormulier',
-//    'novalidate' => 'novalidate',
+    'novalidate' => 'novalidate',
     'class' => 'form-horizontal needs-validation');
 $hidden = array('id' => $editGebruiker->id);
 echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $hidden);
@@ -20,6 +20,13 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
 <style>
     .pac-container {
         z-index: 10000;
+    }
+
+    input::-webkit-calendar-picker-indicator{
+        display: none;
+    }
+    input[type="date"]::-webkit-input-placeholder{
+        visibility: hidden !important;
     }
 
 </style>
@@ -72,10 +79,11 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
                             'class' => 'form-control datepicker',
                             'value' => $editGebruiker->geboorte,
                             'data-provide' => 'datepicker',
+                            'type' => 'date',
                             'required' => 'required');
                         echo form_input($dataNaam) . "\n";
                         ?>
-                        <div class="invalid-feedback">Vul een geboortedatum in!</div>
+                        <div class="invalid-feedback" id="errorGeboorte">Vul een geboortedatum in!</div>
                     </div>
                 </div>
 
@@ -143,17 +151,18 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
         </div>
         <h4>Functies</h4>
         <div class="from-group">
+            <div class="invalid-feedback" id="errorFunctie" style="display: none">Een gebruiker moet minstens 1 functie hebben!</div>
             <?php foreach ($functies as $functie) {
                 echo '<div class="form-check">';
                 $temp = false;
                 foreach ($editGebruiker->functies as $gebruikerFunctie) {
                     if ($gebruikerFunctie->id == $functie->id) {
-                        echo form_checkbox("functie" . $functie->id, $functie->id, TRUE, 'class="form-check-input" id="' . $functie->naam . '"');
+                        echo form_checkbox("functie" . $functie->id, $functie->id, TRUE, 'class="form-check-input" id="' . $functie->naam . '" required');
                         $temp = true;
                     }
                 }
                 if (!$temp) {
-                    echo form_checkbox("functie" . $functie->id, $functie->id, FALSE, 'class="form-check-input" id="' . $functie->naam . '"');
+                    echo form_checkbox("functie" . $functie->id, $functie->id, FALSE, 'class="form-check-input" id="' . $functie->naam . '" required');
                 }
                 echo form_label($functie->naam, $functie->naam, 'class="form-check-label"');
                 echo "</div>";
@@ -242,15 +251,27 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
         }, false);
     })();
 
+    $('.form-check-input').change(function () {
+        if (!$('.form-check-input:checked').length >= 1){
+            $('#errorFunctie').show();
+            $('.form-check-input').prop('required',true);
+            $('.form-check-input').removeClass('is-valid').addClass('is-invalid');
+        }
+        else{
+            $('#errorFunctie').hide();
+            $('.form-check-input').removeAttr('required');
+            $('.form-check-input').removeClass('is-invalid').addClass('is-valid');
+        }
+    });
     $('#wijzigenGegevensFormulier').submit(function () {
         if (!$('.form-check-input:checked').length >= 1){
-            $('.form-check-input').addClass('.is-invalid');
+            $('#errorFunctie').show();
             event.preventDefault();
         }
     });
 
     $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'yyyy-mm-dd',
         weekStart: 1,
         endDate: '+0d',
         autoclose: true,
