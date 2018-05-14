@@ -2,62 +2,68 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
-	* @class Ritten
-	* @brief Controller-klasse voor ritten
-	*
-	*Controller-klasse met alle methodes om ritten op te halen
-*/
+ * @class Ritten
+ * @brief Controller-klasse voor het Ritten
+ * 
+ * Controller-klasse met alle methodes om ritten op te halen
+ */
 class Ritten extends CI_Controller {
 
     public function __construct() {
         parent::__construct();	
     }
-
-	/**
-		*Haalt al de informatie op van al de ritten op van de ingelogde minder mobiele
-		*
-		*@see Rit_model::getByMMCId()
-		*
-	*/	
-    public function index($startRij = 0) {
+	
+    public function index() {
+		/**
+		 * Laat al het overzicht zien van al de ritten van de ingelogde minder mobiele
+		 * 
+		 * @see Rit_model::getByMMCId()
+		 * @see Gemaakt door Michiel Olijslagers
+		 */
 		$data['titel'] = 'Ritten';
-        $data['author'] = 'Michiel O.';
+        $data['author'] = 'M. Olijslagers';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
 		
-        $this->load->model('rit_model');		
-		
+        $this->load->model('rit_model');	
 		$data['ritten'] = $this->rit_model->getByMMCId($data['gebruiker']->id);
 
         $partials = array('menu' => 'main_menu','inhoud' => 'mm/ritten');
         $this->template->load('main_master', $partials, $data);
     }
 
-	/**
-		*Haalt al de informatie op van al een bepaalde rit waar het id van meegegeven wordt
-		*
-		*@param $ritId Dit is het id van de gevraagde rit
-		*@see Rit_model::getByRitId()
-		*
-	*/
-	public function eenRit($ritId){		
+	public function eenRit($ritId){	
+		/**
+		 * Laat de detail pagina zien van 1 bepaalde rit, dit is de rit waar het id van meegegeven wordt.
+		 *
+		 * @param $ritId Dit is het id van de gevraagde rit
+		 * @see Rit_model::getByRitId()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
+		$data['titel'] = 'Details rit';
+        $data['author'] = 'M. Olijslagers';
+		$data['gebruiker'] = $this->authex->getGebruikerInfo();
+		
 		$this->load->model('rit_model');
 		$data['rit'] = $this->rit_model->getByRitId($ritId);
-		
-		$data['titel'] = 'Details rit';
-        $data['author'] = 'Michiel O.';
-		$data['gebruiker'] = $this->authex->getGebruikerInfo();
 		
 		$partials = array('menu' => 'main_menu','inhoud' => 'mm/rit');
         $this->template->load('main_master', $partials, $data);
 	}
 	
 	public function nieuweRit(){
-		$this->load->model('rit_model');
+		/**
+		 * Zorgt ervoor dat je de pagina krijgt voor een nieuwe rit aan te maken.
+		 * Deze functie gaat al de adressen ophalen die een de ingelogde gebruiker ooit gebruikt heeft.
+		 *
+		 * @see Rit_model::getAllVoorGebruiker()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
 		$data['titel'] = 'Nieuwe rit';
-        $data['author'] = 'Michiel O.';
+        $data['author'] = 'M. Olijslagers';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
 		$data['gebruikerMM'] = $data['gebruiker'];
-
+		
+		$this->load->model('rit_model');
 		$data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruikerMM']->id);
 		
 		$partials = array('menu' => 'main_menu','inhoud' => 'mm/nieuweRit');
@@ -65,8 +71,16 @@ class Ritten extends CI_Controller {
 	}
 	
 	public function nieuwAdres(){
+		/**
+		 * Deze functie voegt een nieuw adres toe als dit adres nog niet bestaat. Nadat een adres ingegeven is dan zal hij dit adres terug geven
+		 * Bestaat dit adres dan zal hij het bestaande adres terug geven.
+		 *
+		 * @see adres_model::bestaatAdres()
+		 * @see adres_model::getById()
+		 * @see adres_model::addAdres()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
 		$this->load->model('adres_model');
-		//check of adres al bestaat
 		$bestaat = $this->adres_model->bestaatAdres(htmlspecialchars(trim($_POST['huisnummer'])), htmlspecialchars(trim($_POST['straat'])), htmlspecialchars(trim($_POST['gemeente'])), htmlspecialchars(trim($_POST['postcode'])));
 		if($bestaat != false){
 			echo json_encode ($this->adres_model->getById($bestaat));
@@ -77,6 +91,13 @@ class Ritten extends CI_Controller {
 	}
 	
 	public function berekenKost(){
+		/**
+		 * Deze functie geeft in JSON de kost, de afstand en de prijs terug van een bepaalde rit waar een tijd, start- en eindAdres gegeven zijn
+		 *
+		 * @see google_model::getReisTijd()
+		 * @see instelling_model::getValueById()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
 		$this->load->model('google_model');
 		$this->load->model('instelling_model');
 		
@@ -91,18 +112,28 @@ class Ritten extends CI_Controller {
 	}
 	
 	public function berekenCredits(){
+		/**
+		 * Deze functie geeft een JSON terug waar instaat hoeveel credits een bepaalde gebruiker heeft binnen 1 week
+		 *
+		 * @see gebruiker_model::getCredits()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
 		$this->load->model('gebruiker_model');
 		
 		$userId = htmlspecialchars(trim($_POST['userId']));
-
 		$date = str_replace('/', '-', htmlspecialchars(trim($_POST['date'])));
-		
 		$credits = $this->gebruiker_model->getCredits($userId, date("Y-m-d G:i:s", strtotime($date)));
 		
 		echo json_encode($credits);
 	}
 	
 	public function nieuweRitOpslaan(){
+		/**
+		 * Deze functie is het einde van een nieuwe rit, hier zal een rit in de database gestoken worden.
+		 *
+		 * @see rit_model::saveNewRit()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
 		$this->load->model('rit_model');
 		
 		$mmId = htmlspecialchars(trim($_POST['userId']));
@@ -132,6 +163,7 @@ class Ritten extends CI_Controller {
 	}
 
     public function wijzigRit($id){
+		//Lorenz
         $this->load->model('rit_model');
         $data['titel'] = 'Wijzig rit';
         $data['author'] = 'L. Cleymans';
@@ -146,8 +178,7 @@ class Ritten extends CI_Controller {
     }
 
     public function wijzigRitOpslaan(){
-
-
+		//Lorenz
         $this->load->model('rit_model');
 
         $mmId = htmlspecialchars(trim($_POST['userId']));
@@ -177,6 +208,7 @@ class Ritten extends CI_Controller {
 
     }
     public function statusAanpassen($ritId){
+		//Nico
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker == null) {
             redirect('gebruiker/inloggen');

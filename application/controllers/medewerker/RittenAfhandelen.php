@@ -15,8 +15,16 @@ class RittenAfhandelen extends CI_Controller {
     }
 
     public function index() {
+		/**
+		 * Laat de detail pagina zien van 1 bepaalde rit, dit is de rit waar het id van meegegeven wordt.
+		 *
+		 * @param $ritId Dit is het id van de gevraagde rit
+		 * @see Rit_model::getAllRitten()
+		 * @see statussen::getAll()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
         $data['titel'] = 'Ritten beheren';
-        $data['author'] = 'Michiel O.';
+        $data['author'] = 'Olijslagers M.';
 		
 		$gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
@@ -35,12 +43,21 @@ class RittenAfhandelen extends CI_Controller {
     }
 	
 	public function eenRit($ritId){		
+		/**
+		 * Laat de detail pagina zien van 1 bepaalde rit, dit is de rit waar het id van meegegeven wordt.
+		 *
+		 * @param $ritId Dit is het id van de gevraagde rit
+		 * @see Rit_model::getByRitId()
+		 * @see vrijwilligerRit_model::getVrijwilligerByRit()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
+		$data['titel'] = 'Details rit';
+        $data['author'] = 'Olijslagers M.';
+		$data['gebruiker'] = $this->authex->getGebruikerInfo();
+	
 		$this->load->model('rit_model');
 		$this->load->model('vrijwilligerRit_model');
-	
-		$data['titel'] = 'Details rit';
-        $data['author'] = 'Michiel O.';
-		$data['gebruiker'] = $this->authex->getGebruikerInfo();
+		
 		$data['rit'] = $this->rit_model->getByRitId($ritId);
 		$data['vrijwilligers'] = $this->vrijwilligerRit_model->getVrijwilligerByRit($ritId);
 		
@@ -49,6 +66,12 @@ class RittenAfhandelen extends CI_Controller {
 	}
 	
 	public function koppelVrijwilliger(){
+		/**
+		 * Koppeld een vrijwilliger aan een rit
+		 *
+		 * @see vrijwilligerRit_model::koppelVrijwilliger()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
 		$this->load->model('vrijwilligerRit_model');
 		
 		$ritId = htmlspecialchars(trim($_POST['ritId']));
@@ -59,11 +82,19 @@ class RittenAfhandelen extends CI_Controller {
 	}
 	
 	public function wijzigRit($id){
-		$this->load->model('rit_model');
+		/**
+		 * Koppeld een vrijwilliger aan een rit
+		 *
+		 * @param $id Dit is het id van de gevraagde rit
+		 * @see rit_model::getByRitId()
+		 * @see rit_model::getAllVoorGebruiker()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
         $data['titel'] = 'Wijzig rit';
-        $data['author'] = 'Michiel O.';
+        $data['author'] = 'M. Olijslagers';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
 		
+		$this->load->model('rit_model');
 		$data['heen'] = $this->rit_model->getByRitId($id);
 		
         $data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['heen']->gebruikerMinderMobieleId);
@@ -73,6 +104,12 @@ class RittenAfhandelen extends CI_Controller {
 	}
 	
 	public function resetVrijwilliger(){
+		/**
+		 * Reset de status van een vrijwilliger bij de gegeven rit, dit zodat een vrijwilliger zich kan bedenken
+		 *
+		 * @see vrijwilligerRit_model::resetVrijwilliger()
+		 * @see Gemaakt door Michiel Olijslagers
+		*/
 		$this->load->model('vrijwilligerRit_model');
 		
 		$ritId = htmlspecialchars(trim($_POST['ritId']));
