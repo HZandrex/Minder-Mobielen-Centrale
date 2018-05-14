@@ -60,6 +60,13 @@
     </ul>
 </div>
 <div class="col-sm-12">
+    <?php
+    foreach ($selectedGebruiker->functies as $functie) {
+        if ($functie->id == 1) {
+            print anchor(array("coach/ritten/nieuweRit/$selectedGebruiker->id"), '<i class="fa fa-plus"></i> Nieuwe rit boeken', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om een nieuwe rit te boeken"');
+        }
+    }
+    ?>
     <?php print anchor("medewerker/gebruikersBeheren/gegevensWijzigen/$selectedGebruiker->id", 'Gegevens wijzigen', 'class="btn btn-primary"'); ?>
     <?php if ($selectedGebruiker->wachtwoord != null){
         print anchor("medewerker/gebruikersBeheren/wachtwoordWijzigen/$selectedGebruiker->id", 'Wachtwoord wijzigen', 'class="btn btn-primary"');

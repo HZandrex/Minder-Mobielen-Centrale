@@ -127,6 +127,7 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
                     }
                     ?>
                 </select>
+                <div class="invalid-feedback">Er is iets mis met de voorkeuren, verwittig de systeembeheerder en probeer later opnieuw!</div>
             </div>
         </div>
     </div>

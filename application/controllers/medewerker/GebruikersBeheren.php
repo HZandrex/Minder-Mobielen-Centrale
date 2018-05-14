@@ -239,8 +239,19 @@ class GebruikersBeheren extends CI_Controller
         else{
             $this->gebruiker_model->updateGebruiker($gebruiker);
         }
-
-        $allFuncties = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+        $ingelogdeGebruiker = $this->authex->getGebruikerInfo();
+        foreach ($ingelogdeGebruiker->functies as $functie) {
+            $this->load->model('functie_model');
+            if ($functie->id == 4){
+                $allFuncties = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+            }
+            if ($functie->id == 5){
+                $allFuncties = $this->functie_model->getAll(5); //5 = alle functies buiten admin
+            }
+            if ($functie->id < 4) {//id=4 -> Medewerker
+                redirect('admin/instellingen/toonfoutonbevoegd');
+            }
+        }
 
         foreach ($allFuncties as $functie){
             $this->pasFunctieGebruikerAan($gebruiker, $functie, $this->input->post('functie'.$functie->id));

@@ -115,6 +115,7 @@ class Gebruiker_model extends CI_Model {
 	
 	function updateGebruiker($gebruiker)
     {
+        $gebruiker->mail = ucfirst(strtolower($gebruiker->mail));
         $this->db->where('id', $gebruiker->id);
         $this->db->update('gebruiker', $gebruiker);
     }
@@ -140,7 +141,7 @@ class Gebruiker_model extends CI_Model {
             'naam' => $gebruiker->naam,
             'geboorte' => $gebruiker->geboorte,
             'telefoon' => $gebruiker->telefoon,
-            'mail' => $gebruiker->mail,
+            'mail' => ucfirst(strtolower($gebruiker->mail)),
             'voorkeurId' => $gebruiker->voorkeurId,
             'adresId' => $gebruiker->adresId
         );
@@ -175,24 +176,6 @@ class Gebruiker_model extends CI_Model {
             return null;
         }
     }
-    
-    /**
-     * Retourneert true wanneer het email adres nog niet wordt gebruikt en false
-     * wanneer er al een account is met dit mailadres.
-     * @param $email Het mailadres dat wordt gecontroleerd
-     * @return true bij nog niet bestaan & false bij het al bestaan
-     */
-    /*function controleerEmailVrij($email) {
-        // is email al dan niet aanwezig
-        $this->db->where('mail', $email);
-        $query = $this->db->get('gebruiker');
-
-        if ($query->num_rows() == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }*/
     
     /**
      * Retourneert true wanneer de resetToken bestaat en false wanneer hij niet bestaat.
