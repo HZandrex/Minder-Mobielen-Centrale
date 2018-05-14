@@ -72,16 +72,19 @@
 				<p>
 				<i class="fas fa-car"></i> chauffeur: 
 				<?php 
-					if(!empty($rit->vrijwilliger)){
-						if($rit->vrijwilliger->statusId != 1){
-							print $rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->vrijwilliger->vrijwilliger->naam; 
-						}
-						if($rit->vrijwilliger->statusId != 2){
-							print " <button id='voegVrijwilligerToe' type='button' class='btn btn-outline-primary'>Selecteer vrijwilliger</button>";
+					if($rit->status->id != 1){
+						if(!empty($rit->vrijwilliger)){
+							if($rit->vrijwilliger->statusId != 1){
+								print $rit->vrijwilliger->vrijwilliger->voornaam . " " . $rit->vrijwilliger->vrijwilliger->naam; 
+							}
+							if($rit->vrijwilliger->statusId != 2){
+								print " <button id='voegVrijwilligerToe' type='button' class='btn btn-outline-primary'>Selecteer vrijwilliger</button>";
+							}
+						}else{
+							print "<button id='voegVrijwilligerToe' type='button' class='btn btn-outline-primary'>Selecteer vrijwilliger</button>";
 						}
 					}else{
-						print "<button id='voegVrijwilligerToe' type='button' class='btn btn-outline-primary'>Selecteer vrijwilliger</button>";
-						
+						print "de rit is geanuleerd!";
 					}
 				?>
 				</p>

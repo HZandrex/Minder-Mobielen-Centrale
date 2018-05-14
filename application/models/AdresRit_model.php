@@ -7,24 +7,24 @@
 */
 class AdresRit_model extends CI_Model {
 	
-	/**
-		*Constructor
-	*/
     function __construct()
     {
+		/**
+			*Constructor
+		*/
         parent::__construct();
     }
 
-	/**
-		*Haalt een bepaald type adres op van een bepaalde rit
-		*
-		*@param $ritId Dit is het id van de gevraagde rit
-		*@param $type Dit is het het type van het adres
-		*@see Adres_model::getById()
-		*@return Het opgevraagde adres
-	*/
     function getByRitIdAndType($ritId, $type)
     {
+		/**
+			* Haalt een bepaald type adres op van een bepaalde rit
+			*
+			* @param $ritId Dit is het id van de gevraagde rit
+			* @param $type Dit is het het type van het adres
+			* @see Adres_model::getById()
+			* @return Het opgevraagde adres
+		*/
 		$this->load->model('adres_model');
 		
 		$this->db->select('*');
