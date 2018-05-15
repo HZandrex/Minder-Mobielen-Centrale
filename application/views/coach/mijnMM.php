@@ -62,7 +62,6 @@ if (!empty($minderMobielen)){
 
         <div class="row">
             <div class="panel panel-primary col-lg-4">
-                <div class="panel-heading>Zoeken</div>
                     <div class="panel-body">
                         <div class="form-group">
                                 <label for="naam">Zoeken:</label>
