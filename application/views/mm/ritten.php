@@ -1,10 +1,10 @@
 <?php
 /**
-	* @file ritten.php
+	* @file mm/ritten.php
 	*
 	* vieuw waar al de ritten van een minder mobiele persoon worden opgelijst. De eerst volgende rit zal vanboven staan.
 	* - krijgt een $ritten object binnen waar al de nodige info instaat
-	* - maakt gebruik van een tabel om alles weer te geven
+	* - maakt gebruik van een tabel om alles weer te geven  
 */
 	// var_dump($ritten);
 ?>

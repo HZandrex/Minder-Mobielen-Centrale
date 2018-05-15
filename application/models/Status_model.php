@@ -15,12 +15,13 @@ class Status_model extends CI_Model {
         parent::__construct();
     }
 
-	//Functie moet nog aangepast worden. Zorgen dat men de gegevens van de ingelogde persoon toont.
 	/**
-		*Haalt de status naam op waar het id $id is 
+		* Haalt al de status op van met een bepaald id
 		*
-		*@param $id is het id van de gevraagde status
-		*@return Al de informatie over de bepaalde status
+		* @param $id Het id van de status
+		* @return De status met het gegeven id
+		*
+		* Gemaakt door Michiel Olijslagers
 	*/
     function getById($id)
     {
@@ -30,6 +31,13 @@ class Status_model extends CI_Model {
         return $query->row();
     }
 	
+	/**
+		* Haalt al de statussen op
+		*
+		* @return Al statussen in de db
+		*
+		* Gemaakt door Michiel Olijslagers
+	*/
 	function getAll(){
 		$query = $this->db->get('status');
         return $query->result();

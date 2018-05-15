@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class helper_model
+ * @brief Model-klasse hulp bij bepaalde handelingen
+ * 
+ * Model-klasse die alle methodes bevat om te speciale en ingewikkelde handelingen uit te voeren.
+ */
 class helper_model extends CI_Model {
 
 	/**
