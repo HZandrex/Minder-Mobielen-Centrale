@@ -18,6 +18,8 @@ class Inloggen extends CI_Controller {
      * Toont het inlogscherm in de view gebruiker/inlogPagina.php.
      * 
      * @see gebruiker/inlogPagina.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function index() {
         $data['titel'] = '';
@@ -33,15 +35,15 @@ class Inloggen extends CI_Controller {
      * de inloggegevens worden via de post methode binnengehaald vanuit de form
      * in de view gebruiker/inlogPagina.php.
      * 
-     * Wanneer het inloggen lukt zal Home::index() worden opgeroepen
+     * Wanneer het inloggen lukt zal Home::index() worden opgeroepen,
      * wanner de gegevens fout zijn zal er een foutmelding worden getoond via Inloggen::toonFoutInloggen().
-     * 
-     * @param $email Het mail adres dat werd opgeven in de view Gebruiker/inlogPagina.php
-     * @param $wachtwoord Het wachtwoord dat werd opgeven in de view Gebruiker/inlogPagina.php
      * 
      * @see Inloggen::toonFoutInloggen()
      * @see Home::index()
      * @see gebruiker/inlogPagina.php
+     * @see Authex::meldAan()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function controleerLogin() {
         $email = strtolower($this->input->post('email'));
@@ -55,8 +57,12 @@ class Inloggen extends CI_Controller {
     }
 
     /**
-     * Logt uit met de Authex library met de methode meldAf(), vervolgens wordt Home::index() opgeroepen.
+     * Logt uit met de Authex library, vervolgens wordt Home::index() opgeroepen.
+     *
      * @see Home::index()
+     * @see Authex::meldAf()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function loguit() {
         $this->authex->meldAf();
@@ -67,6 +73,8 @@ class Inloggen extends CI_Controller {
      * Toont het scherm om een nieuw wachtwoord aan te vragen in de view gebruiker/wachtwoordVergeten.php.
      * 
      * @see gebruiker/wachtwoordVergeten.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function wachtwoordVergeten() {
         $data['titel'] = '';
@@ -103,6 +111,8 @@ class Inloggen extends CI_Controller {
      * @see Gebruiker_model::controleerResetToken()
      * @see Gebruiker_model::wijzigResetToken()
      * @see gebruiker/wachtwoordVergetenWijzigen.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function nieuwWachtwoordAanvragen() {
         $email = $this->input->post('email');
@@ -141,6 +151,8 @@ class Inloggen extends CI_Controller {
      * @see email.php
      * @see Inloggen::nieuwWachtwoordAanvragen()
      * @return bool
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     private function stuurMail($geadresseerde, $boodschap, $titel) {
         $this->load->library('email');
@@ -167,6 +179,8 @@ class Inloggen extends CI_Controller {
      * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
      * 
      * @see main_melding.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonMelding($foutTitel, $boodschap, $link) {
         $data['titel'] = '';
@@ -185,6 +199,8 @@ class Inloggen extends CI_Controller {
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      * 
      * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutInloggen() {
         $titel = "Fout!";
@@ -199,6 +215,8 @@ class Inloggen extends CI_Controller {
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutWachtwoordVeranderen() {
         $titel = "Fout!";
@@ -213,6 +231,8 @@ class Inloggen extends CI_Controller {
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutLinkVerlopen() {
         $titel = "Fout!";
@@ -227,6 +247,8 @@ class Inloggen extends CI_Controller {
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutNieuwWachtwoord($token) {
         $titel = "Fout!";
@@ -241,6 +263,8 @@ class Inloggen extends CI_Controller {
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutMail() {
         $titel = "Fout!";
@@ -255,6 +279,8 @@ class Inloggen extends CI_Controller {
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonMailNieuwWachtwoordVerstuurd() {
         $titel = "Mail verstuurd";
@@ -269,6 +295,8 @@ class Inloggen extends CI_Controller {
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonWachtwoordVeranderd() {
         $titel = "Wachtwoord succesvol veranderd";
@@ -283,6 +311,8 @@ class Inloggen extends CI_Controller {
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonGeactiveerd() {
         $titel = "Account succesvol geactiveerd";
@@ -297,6 +327,8 @@ class Inloggen extends CI_Controller {
      * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonGeactiveerdDoorMedewerker() {
         $titel = "Account succesvol geactiveerd";
@@ -318,6 +350,8 @@ class Inloggen extends CI_Controller {
      * @see Gebruiker_model::controleerResetToken()
      * @see Inloggen::toonFoutLinkVerlopen()
      * @see gebruiker/wachtwoordVergetenWijzigen.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function wachtwoordVergetenWijzigen($resetToken) {
         $this->load->model('gebruiker_model');
@@ -360,6 +394,8 @@ class Inloggen extends CI_Controller {
      * @see Inloggen::toonFoutLinkVerlopen()
      * @see Inloggen::toonFoutNieuwWachtwoord()
      * @see Inloggen::toonWachtwoordVeranderd()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function wachtwoordVeranderen() {
         $resetToken = $this->input->post('resetToken');
@@ -413,6 +449,8 @@ class Inloggen extends CI_Controller {
      * Genereert een string van 20 willekeurige karakters uit de string $chars.
      * 
      * @return $resetToken om vijlig wachtwoord te kunnen wijzigen
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     private function random_resetToken() {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

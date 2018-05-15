@@ -335,7 +335,7 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
                             console.log(response);//Stationsstraat 177, Geel, België
                             var adres = JSON.parse(response);
                             //toevoegen aan adressen lijst
-                            $('select').each(function () {
+                            $('select#adres').each(function () {
                                 $(this).children().eq(1).after('<option value="' + adres.id + '">' + adres.straat + ' ' + adres.huisnummer + ' (' + adres.gemeente + ')</option>');
                             });
                             $('#exampleModal').modal('hide');

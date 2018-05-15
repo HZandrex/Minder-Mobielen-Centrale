@@ -116,6 +116,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * Toont het scherm om het wachtwoord te veranderen in de view Gebruiker/wachtwoordWijzigen.php
      *
      * @see Gebruiker/wachtwoordWijzigen.php
+     *
 	 * Gemaakt door Geffrey Wuyts
      */
     public function wachtwoordWijzigen()
@@ -148,6 +149,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * @see PersoonlijkeGegevens::toonFoutOudWachtwoord()
      * @see PersoonlijkeGegevens::toonFoutWachtwoordOvereenkomst()
      * @see PersoonlijkeGegevens::toonWachtwoordVeranderd()
+     *
 	 * Gemaakt door Geffrey Wuyts
      */
     public function wachtwoordVeranderen()
@@ -194,6 +196,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * @see PersoonlijkeGegevens::wachtwoordVeranderen()
      *
      * @return bool
+     *
 	 * Gemaakt door Geffrey Wuyts
      */
     private function stuurMail($geadresseerde, $boodschap, $titel)
@@ -222,6 +225,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
      *
      * @see main_melding.php
+     *
 	 * Gemaakt door Geffrey Wuyts
      */
     public function toonMelding($foutTitel, $boodschap, $link)
@@ -242,6 +246,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
      * @see PersoonlijkeGegevens::toonMelding()
+     *
 	 * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutOudWachtwoord()
@@ -258,6 +263,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
      * @see PersoonlijkeGegevens::toonMelding()
+     *
 	 * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutWachtwoordOvereenkomst()
@@ -274,6 +280,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
      * @see PersoonlijkeGegevens::toonMelding()
+     *
 	 * Gemaakt door Geffrey Wuyts
      */
     public function toonWachtwoordVeranderd()
@@ -285,7 +292,15 @@ class PersoonlijkeGegevens extends CI_Controller
 
         $this->toonMelding($titel, $boodschap, $link);
     }
-    
+
+    /**
+     * Dit zal de view gebruiker/handleiding.php openen.
+     *
+     * @see gebruiker/handleiding.php
+     *
+     * Gemaakt door Geffrey Wuyts
+     * Medemogelijk door Tijmen Elseviers
+     */
     public function toonHandleiding() {
         $this->load->view("gebruiker/handleiding");
     }

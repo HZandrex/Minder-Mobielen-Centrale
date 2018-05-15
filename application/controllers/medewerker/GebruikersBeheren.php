@@ -20,6 +20,8 @@ class GebruikersBeheren extends CI_Controller
      * Toont het startscherm om gebruikers te beheren in de view medewerker/gebruikersBeherenOverzicht.php.
      *
      * @see medewerker/gebruikersBeherenOverzicht.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function index()
     {
@@ -55,7 +57,7 @@ class GebruikersBeheren extends CI_Controller
         }
 
         $inActive = $this->functie_model->getEmpty();
-        $inActive->naam = "Non-actief";
+        $inActive->naam = "Niet actief";
         array_push($data['functies'], $inActive);
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gebruikersBeherenOverzicht');
@@ -72,6 +74,8 @@ class GebruikersBeheren extends CI_Controller
      * @see Gebruiker_model::getAllInActive()
      * @see medewerker/gebruikersBeherenOverzicht.php
      * @see medewerker/ajax_Gebruikers.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function haalAjaxOp_GebruikersOpFunctie()
     {
@@ -94,6 +98,8 @@ class GebruikersBeheren extends CI_Controller
      * @see Gebruiker_model::getWithFunctions()
      * @see medewerker/gebruikersBeherenOverzicht.php
      * @see medewerker/ajax_GebruikerInfo.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function haalAjaxOp_GebruikerInfo()
     {
@@ -104,6 +110,13 @@ class GebruikersBeheren extends CI_Controller
         $this->load->view('medewerker/ajax_gebruikerInfo', $data);
     }
 
+    /**
+     * Toont het scherm om het wachtwoord te veranderen in de view medewerker/wachtwoordGebruikerWijzigen.php
+     *
+     * @see medewerker/wachtwoordGebruikerWijzigen.php
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
     public function wachtwoordWijzigen($id)
     {
         $data['titel'] = '';
@@ -129,6 +142,17 @@ class GebruikersBeheren extends CI_Controller
         $this->template->load('main_master', $partials, $data);
     }
 
+    /**
+     * Gaat kijken of $wachtwoord=$wachtwoordBevestigen, wanneer niet het zelfde wordt een foutmelding getoond via GebruikersBeheren::toonFoutWachtwoordWijzigen.
+     * Wanneer de twee wel het zelfde zijn wordt het wachtwoord gewijzigd via het gebruiker_model en wordt
+     * er een melding getoond via GebruikersBeheren::toonWachtwoordGewijzigd.
+     *
+     * @see Gebruiker_model::wijzigWachtwoord()
+     * @see GebruikersBeheren::toonFoutWachtwoordWijzigen
+     * @see GebruikersBeheren::toonWachtwoordGewijzigd
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
     public function wachtwoordVeranderen()
     {
         $id = $this->input->post('id');
@@ -146,11 +170,19 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Gaat de gegevens van een persoon doorgeven naar de gegevens wijzigen pagina.
+     * Gaat de gegevens van een persoon doorgeven naar de view medewerker/gegevensWijzigen.php. Wanneer er een nieuwe gebruiker wordt
+     * aangemaakt zal er een lege persoon worden meegegeven.
+     *
+     * @param $id Het id van de gebruiker die gewijzigd moet worden (bij een nieuwe gebruiker wordt dit niet megegeven en is die dus 0)
      *
      * @see Gebruiker_model::getWithFunctions()
+     * @see Gebruiker_model::getEmpty()
+     * @see Adres_model::getAll()
      * @see Voorkeur_model::getAll()
-     * @see Gebruiker::gegevensWijzigen()
+     * @see Functie_model::getAll()
+     * @see medewerker/gegevensWijzigen.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function gegevensWijzigen($id = 0){
 
@@ -174,13 +206,11 @@ class GebruikersBeheren extends CI_Controller
                 redirect('admin/instellingen/toonfoutonbevoegd');
             }
         }
-
+        $this->load->model('gebruiker_model');
         if ($id == 0) {
             $data['titel'] = 'Gebruiker Toevoegen';
-            $this->load->model('gebruiker_model');
             $data['editGebruiker'] = $this->gebruiker_model->getEmpty();
         } else {
-            $this->load->model('gebruiker_model');
             $data['titel'] = 'Gebruiker Gegevens Wijzigen';
             $data['editGebruiker'] = $this->gebruiker_model->getWithFunctions($id);
         }
@@ -196,13 +226,25 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Gaat de gegevens van de gebruiker in de databank veranderen.
+     * Gaat eerst kijken of geboortedatum niet in de toekomst ligt, wanneer dit wel is wordt GebruikersBeheren::toonFoutDatum() opgeroepen.
+     * vervolgens wordt er gekeken wanneer er een nieuwe gebruiker wordt toegevoegd of het mail adres nog niet is gebruikt ander wordt een fout getoond
+     * via GebruikersBeheren::toonFoutBestaandeMail(). Vervolgens wordt de nieuwe gebruiker toegevoegd via het Gebruiker_model en wordt de gebruiker verwittigd door
+     * de private functie GebruikersBeheren::verwittigGebruiker().
      *
-     * @see Gebruiker_model::get()
+     * Bij het aanpassen van en al bestaande gebruiker gebeurt dit ook door het Gebruiker_model.
+     *
+     * Als laatste worden de functies van de gebruiker aangepast wanneer nodig via GebruikersBeheren::pasFunctieGebruikerAan()
+     * en wordt er een melding getoond GebruikersBeheren::toonGegevensGewijzigd()
+     *
+     * @see Gebruiker_model::getByMail()
+     * @see Gebruiker_model::insertGebruiker()
      * @see Gebruiker_model::updateGebruiker()
-     * @see Adres_model::updateAdres()
-     * @see Medewerker::gebruikersBeheren()
-     * @see PersoonlijkeGegevens::persoonlijkeGegevens()
+     * @see GebruikersBeheren::toonFoutDatum()
+     * @see GebruikersBeheren::toonFoutBestaandeMail()
+     * @see GebruikersBeheren::toonGegevensGewijzigd()
+     * @see GebruikersBeheren::pasFunctieGebruikerAan()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function gegevensVeranderen(){
         $this->load->model('gebruiker_model');
@@ -257,6 +299,17 @@ class GebruikersBeheren extends CI_Controller
         redirect('medewerker/gebruikersBeheren/toongegevensgewijzigd');
     }
 
+    /**
+     * Er gaat via het Gebruiker_model de gebruiker worden opgehaald. Vervolgens gaat voor deze gebruiker een resetToken worden aangemaakt (voor meer uitleg zie Inloggen::nieuwWachtwoordAanvragen().
+     * Hierna wordt er een mail gestuurd via GebruikersBeheren::stuurMail.
+     *
+     * @param $id Het id van de gebruiker die verwittigd moet worden
+     *
+     * @see Gebruiker_model::get()
+     * @see GebruikersBeheren::stuurMail()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
     private function verwittigGebruiker($id){
         $this->load->model('gebruiker_model');
         $gebruiker = $this->gebruiker_model->get($id);
@@ -275,6 +328,22 @@ class GebruikersBeheren extends CI_Controller
         $this->stuurMail($gebruiker->mail, $boodschap, $titel);
     }
 
+    /**
+     * Wanneer een functie niet aangevinkt is $checkbox=null dan zal er gekeken worden of de gebruiker deze functie op deze moment heeft.
+     * Wanneer hij deze functie heeft wilt dit dus zeggen dat deze verwijderd moet worden via het FunctieGebruiker_model.
+     * Wanneer een functie wel aangevinkt is dan zal er weer gekeken worden of de gebruiker deze functie op deze moment heeft.
+     * Wanneer hij deze functie niet heeft wilt dit dus zeggen dat hij deze moet krijgen dit gebeurd via het FunctieGebruiker_model.
+     *
+     * @param $gebruiker De gebruiker voor wie de functie moet worden aangepast
+     * @param $functie De functie die moet worden aangepast
+     * @param $checkbox De status van de checkbox die bij deze functie hoort
+     *
+     * @see FunctieGebruiker_model::functieGebruikerBestaat()
+     * @see FunctieGebruiker_model::verwijderen()
+     * @see FunctieGebruiker_model::voegToe()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
     private function pasFunctieGebruikerAan($gebruiker, $functie, $checkbox){
         $this->load->model('functieGebruiker_model');
 
