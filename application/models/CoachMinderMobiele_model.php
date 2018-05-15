@@ -23,6 +23,13 @@ class CoachMinderMobiele_model extends CI_Model {
      */
     function getById($id)
     {
+        /**
+         * Deze functie haalt alle mindermobiele op die bij een specifieke coach behoren.
+         *
+         * @see rit_model::getByMMCId()
+         * @see gebruiker_model::get()
+         * @see Gemaakt door Lorenz Cleymans
+         */
         $this->db->where('gebruikerCoachId', $id);
         $query = $this->db->get('coachMinderMobiele');
         $naam = $query->result();
@@ -43,6 +50,12 @@ class CoachMinderMobiele_model extends CI_Model {
 	
 	function getMMById($id)
 	{
+        /**
+         * Deze functie haalt alle ID's op waar een $id is gelijk aan een gebruikerCoachId
+         *
+         * @see gebruiker_model::get()
+         * @see Gemaakt door Lorenz Cleymans
+         */
 		$this->db->where('gebruikerCoachId', $id);
 		$query = $this->db->get('coachMinderMobiele');
 		$mmIds = $query->result();
