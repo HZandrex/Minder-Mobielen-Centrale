@@ -35,6 +35,7 @@ if ($gebruiker == null) { // niet aangemeld
             case 'Medewerker' || 'Admin':
                 echo divAnchor('medewerker/rittenAfhandelen','Ritten afhandelen','class="nav-item nav-link"');
                 echo divAnchor('medewerker/gebruikersBeheren','Gebruikers beheren','class="nav-item nav-link"');
+                echo divAnchor('medewerker/relatiesBeheren','Relaties beheren','class="nav-item nav-link"');
                 if ($functie->naam == 'Admin'){
                     echo divAnchor('admin/webinfo', 'Webinfo wijzigen', 'class="nav-item nav-link"');
                     echo divAnchor('admin/instellingen', 'Instellingen', 'class="nav-item nav-link"');
