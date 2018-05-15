@@ -11,23 +11,33 @@ $attributes = array('name' => 'gebruikersForm', 'id' => 'gebruikersForm');
 echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
 ?>
 <div class="row">
-    <div class="col-6">
-        <p>
-			<b>Gebruikers</b>
-		</p>
-		<p>
-			<input type="text" id="filterNaam" class="form-control">
-		</p>
-        <?php
-			echo form_hidden('firstVisit', $firstVisit);
-			echo form_radiogroupFuncties('functieRadiogroup', $functies, 'id', 'naam');
-			echo form_listboxproGebruikersBeheren('gebruikersListbox', array(), 'id', 'voornaam', 'naam', 0, array('id' => 'gebruikersListbox', 'size' => 10, 'class' => 'form-control'));
-        ?>
-        <div style="margin-top: 10px;">
-			<?php print anchor("medewerker/gebruikersBeheren/gegevensWijzigen", '+ Nieuwe gebruiker', 'class="btn btn-primary"'); ?>
-		</div>
+    <div class="col-5">
+        <div class="row">
+            <div class="col-5 form-group">
+                <?php
+                echo form_labelpro('Functie', 'functieListbox');
+                echo form_listboxpro('functieRadiogroup', $functies, 'id', 'naam', 1, array('id' => 'functieListbox', 'class' => 'form-control'));
+                ?>
+            </div>
+            <div class="col-7 form-group">
+                <?php
+                echo form_labelpro('Filter op naam', 'filterNaam');
+                echo form_input(array('id' => 'filterNaam', 'placeholder' => 'Geef een naam in', 'class' => 'form-control'));
+                ?>
+            </div>
+            <div class="col-12 form-group">
+                <?php
+                echo form_hidden('firstVisit', $firstVisit);
+                echo form_listboxproGebruikersBeheren('gebruikersListbox', array(), 'id', 'voornaam', 'naam', 0, array('id' => 'gebruikersListbox', 'size' => 10, 'class' => 'form-control'));
+                ?>
+            </div>
+
+            <div class="col-12 form-group">
+                <?php print anchor("medewerker/gebruikersBeheren/gegevensWijzigen", '+ Nieuwe gebruiker', 'class="btn btn-primary"'); ?>
+            </div>
+        </div>
     </div>
-    <div class="col-6">
+    <div class="col-7">
         <div id="gebruikerInfo" class="row"></div>
     </div>
 </div>
@@ -85,12 +95,11 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
         if($("input[name=firstVisit]").val() == 1){
             $('#tutorialModal').modal('show');
         }
-		
-        $('#gebruikersForm input[id=functieRadiogroup0]').prop("checked", true);
-        haalGebruikersMetFunctieOp($('#gebruikersForm input[id=functieRadiogroup0]').val());
 
-        $('#gebruikersForm input[name=functieRadiogroup]').change(function () {
-            haalGebruikersMetFunctieOp($('#gebruikersForm input[name=functieRadiogroup]:checked').val());
+        haalGebruikersMetFunctieOp($('#functieListbox option:selected').val());
+
+        $('#functieListbox').change(function () {
+            haalGebruikersMetFunctieOp($('#functieListbox option:selected').val());
         });
 
         $('#gebruikersListbox').change(function () {
