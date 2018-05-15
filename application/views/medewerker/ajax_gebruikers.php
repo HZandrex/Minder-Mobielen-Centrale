@@ -3,6 +3,9 @@
  * @file medewerker/ajax_gebruikers.php
  *
  * View waarin een lijst van gebruikers wordt getoond
+ * - krijgt een $gebruiker-object binnen
+ *
+ * Gemaakt door Geffrey Wuyts
  */
 ?>
 

@@ -4,8 +4,12 @@
  *
  * View waarin een gebruiker zijn gegevens veranderd kunnen worden
  * - geeft via wijzigenGegevensFormulier alle gegevens door naar GebruikersBeheren::gegevensVeranderen()
+ * - maakt gebruik van validatie via jquery
  *
  * @see GebruikersBeheren::gegevensVeranderen()
+ *
+ * Gemaakt door Geffrey Wuyts
+ * Medemogelijk door Michiel Olijslagers
  */
 ?>
 

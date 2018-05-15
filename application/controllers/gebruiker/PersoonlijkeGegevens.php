@@ -127,9 +127,10 @@ class PersoonlijkeGegevens extends CI_Controller
      * Gaat kijken of het oude wachtwoord juist is via Gebruiker_model hiervoor wordt ook eerst de bijhorende gebruiker opgehaald,
      * wanneer dit niet juist is word een foutmelding gegeven via PersoonlijkeGegevens::toonFoutOudWachtwoord().
      * Vervolgens wordt gekeken of er 2x hetzelfde wachtwoord werd opgegeven zoniet word een foutmelding gegeven via PersoonlijkeGegevens::toonFoutWachtwoordOvereenkomst().
-     * Wanneer dit allemaal juist is zal het wachtwoord worden veranderd via Gebruiker_model, wordt een mail gestuurd om dit te melden
+     * Wanneer dit allemaal juist is zal het wachtwoord worden veranderd via Gebruiker_model, wordt de gebruiker afgemeld via Authex, wordt een mail gestuurd om dit te melden
      * en wordt er een melding getoont via PersoonlijkeGegevens::toonWachtwoordVeranderd().
      *
+     * @see Authex::meldAf()
      * @see Gebruiker_model::get()
      * @see Gebruiker_model::getGebruiker()
      * @see Gebruiker_model::wijzigWachtwoord()
@@ -151,6 +152,7 @@ class PersoonlijkeGegevens extends CI_Controller
         if ($this->gebruiker_model->getGebruiker($gebruiker->mail, $oudWachtwoord)) {
             if ($nieuwWachtwoord == $wachtwoordBevestigen) {
                 $this->gebruiker_model->wijzigWachtwoord($id, $nieuwWachtwoord);
+                $this->authex->meldAf();
                 $titel = "Minder Mobiele Centrale wachtwoord veranderd";
                 $boodschap = "<p>U heeft zojuist uw wachtwoord veranderd. Noteer dit wachtwoord ergens of onthoud dit goed.</p>"
                     . "<p>Heeft u het wachtwoord niet veranderd en krijgd u deze mail, neem dan snel contact met ons op."

@@ -3,9 +3,12 @@
  * @file medewerker/gebruikersBeherenOverzicht.php
  *
  * View waarin gebruikers in kunnen worden beheerd
+ * - krijgt een variabele $firstVisit binnen om gebruikersondersteuning te tonen bij het bezoeken voor de eerste keer
+ * - krijgt een $functies-object binnen om op functie gebruikers te kunnen tonen (medewerker kan tot en met vrijwilliger zien, admin tot en met medewerker)
+ *
+ * Gemaakt door Geffrey Wuyts
+ * Medemogelijk door Michiel Olijslagers
  */
- 
- // var_dump($functies);
 
 $attributes = array('name' => 'gebruikersForm', 'id' => 'gebruikersForm');
 echo form_open('admin/instellingen/voorkeurBeheren', $attributes);

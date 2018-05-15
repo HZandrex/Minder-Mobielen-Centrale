@@ -54,9 +54,6 @@ class GebruikersBeheren extends CI_Controller
             $data['firstVisit'] = false;
         }
 
-        $this->load->model('functieGebruiker_model');
-        $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersByFunction(1);
-
         $inActive = $this->functie_model->getEmpty();
         $inActive->naam = "Non-actief";
         array_push($data['functies'], $inActive);

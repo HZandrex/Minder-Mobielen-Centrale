@@ -2,7 +2,10 @@
 /**
  * @file medewerker/ajax_gebruikerInfo.php
  *
- * View waarin de gebruikersinfo van een gebruiker toont
+ * View waarin de gebruikersinfo van een gebruiker wordt getoond
+ * - krijgt een $selectedGebruiker-object binnen
+ *
+ * Gemaakt door Geffrey Wuyts
  */
 ?>
 <div class="col-sm-12">

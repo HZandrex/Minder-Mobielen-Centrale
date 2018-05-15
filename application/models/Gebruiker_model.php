@@ -278,11 +278,9 @@ class Gebruiker_model extends CI_Model {
     
     
     /**
-     * Wijzigt het wachtwoord waar id=$id en meld de gebruiker af via Authex.
+     * Wijzigt het wachtwoord waar id=$id.
      * @param $id Het id van de gebruiker waarvan het wachtwoord wordt veranderd
      * @param $wachtwoord Het nieuwe wachtwoord
-     *
-     * @see Authex
      *
      * Gemaakt door Geffrey Wuyts
      */
@@ -291,7 +289,6 @@ class Gebruiker_model extends CI_Model {
         $gebruiker->wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
         $this->db->where('id', $id);
         $this->db->update('gebruiker', $gebruiker);
-        $this->authex->meldAf();
     }
 
 	function getCredits($id, $date){

@@ -6,6 +6,8 @@
      * - geeft via loginForm email & wachtwoord door naar Inloggen::controleerLogin()
      * 
      * @see Inloggen::controleerLogin()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
 ?>
 

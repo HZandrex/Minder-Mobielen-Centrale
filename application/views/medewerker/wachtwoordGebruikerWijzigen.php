@@ -6,6 +6,8 @@
      * - geeft via wachtwoordWijzigenForm wachtwoord & wachtwoordBevestigen door naar GebruikersBeheren::wachtwoordVeranderen()
      * 
      * @see GebruikersBeheren::wachtwoordVeranderen()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
 ?>
 

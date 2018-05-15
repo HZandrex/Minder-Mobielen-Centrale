@@ -1,6 +1,16 @@
 <?php
-
-
+    /**
+     * @file admin/instellingenWijzigenPagina.php
+     *
+     * View waarin de instellingenWijzigenPagina wordt weergegeven
+     * - geeft via instellingenForm instellingen door naar Instellingen::wijzigInstellingen()
+     * - geeft via voorkeurForm voorkeuren door naar Instellingen::voorkeurBeheren()
+     *
+     * @see Instellingen::wijzigInstellingen()
+     * @see Instellingen::voorkeurBeheren()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
 ?>
 <script>
     $(document).ready(function(){

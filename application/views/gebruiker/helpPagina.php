@@ -3,7 +3,7 @@
  * @file gebruiker/helpPagina.php
  *
  * View waarin de helpPagina wordt weergegeven
- *  - Wanneer een medewerker op deze pagina komt krijgt hij een extra stuk te zien voor gebruikers te beheren
+ *  - Wanneer een medewerker of admin op deze pagina komt krijgt hij een extra stuk te zien voor gebruikers te beheren
  */
 ?>
     <style>
@@ -37,7 +37,7 @@
 <?php
     $temp = false;
     foreach ($gebruiker->functies as $functie) {
-        if ($functie->id == 4) {//id=4 -> Medewerker
+        if ($functie->id >= 4) {
             $temp = true;
         }
     }
