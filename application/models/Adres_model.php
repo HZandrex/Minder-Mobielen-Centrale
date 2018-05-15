@@ -121,7 +121,7 @@ class Adres_model extends CI_Model {
 			* @param $straat Dit is het straat van het adres
 			* @param $gemeente Dit is het gemeente van het adres
 			* @param $postcode Dit is het postcode van het adres
-			* @see Gemaakt door Michiel Olijslagers
+			* @see Gemaakt door Michiel Olijslagers 
 			* @return Het adres id als dit adres bestaat
 		*/            
 		$this->db->where('huisnummer', $huisnummer);
