@@ -4,82 +4,35 @@
  *
  * View waarin gebruikers in kunnen worden beheerd
  */
-?>
+ 
+ // var_dump($functies);
 
-<script>
-    function haalGebruikersMetFunctieOp(functieId) {
-        $.ajax({
-            type: "GET",
-            url: site_url + "/medewerker/gebruikersBeheren/haalAjaxOp_GebruikersOpFunctie",
-            data: {functieId: functieId},
-            success: function (result) {
-                $("#gebruikersListbox").html(result);
-            },
-            error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
-            }
-        });
-    }
-
-    function haalGebruikerInfoOp(gebruikerId) {
-        $.ajax({
-            type: "GET",
-            url: site_url + "/medewerker/gebruikersBeheren/haalAjaxOp_GebruikerInfo",
-            data: {gebruikerId: gebruikerId},
-            success: function (result) {
-                $("#gebruikerInfo").html(result);
-            },
-            error: function (xhr, status, error) {
-                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
-            }
-        });
-    }
-
-    $(document).ready(function () {
-        if($("input[name=firstVisit]").val() == 1){
-            $('#tutorialModal').modal('show');
-        }
-        $('#gebruikersForm input[id=functieRadiogroup0]').prop("checked", true);
-        haalGebruikersMetFunctieOp($('#gebruikersForm input[id=functieRadiogroup0]').val());
-
-        $('#gebruikersForm input[name=functieRadiogroup]').change(function () {
-            haalGebruikersMetFunctieOp($('#gebruikersForm input[name=functieRadiogroup]:checked').val());
-        });
-
-        $('#gebruikersListbox').change(function () {
-            haalGebruikerInfoOp($('#gebruikersListbox option:selected').val());
-        });
-
-        $('#closeTut').click(function () {
-            $('#tutorialModal').modal('hide');
-        });
-    });
-</script>
-
-
-<?php
 $attributes = array('name' => 'gebruikersForm', 'id' => 'gebruikersForm');
 echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
 ?>
 <div class="row">
     <div class="col-6">
-        <p><b>Gebruikers</b></p>
+        <p>
+			<b>Gebruikers</b>
+		</p>
+		<p>
+			<input type="text" id="filterNaam" class="form-control">
+		</p>
         <?php
-        echo form_hidden('firstVisit', $firstVisit);
-        echo form_radiogroupFuncties('functieRadiogroup', $functies, 'id', 'naam');
-        echo form_listboxproGebruikersBeheren('gebruikersListbox', array(), 'id', 'voornaam', 'naam', 0, array('id' => 'gebruikersListbox', 'size' => 10, 'class' => 'form-control'));
+			echo form_hidden('firstVisit', $firstVisit);
+			echo form_radiogroupFuncties('functieRadiogroup', $functies, 'id', 'naam');
+			echo form_listboxproGebruikersBeheren('gebruikersListbox', array(), 'id', 'voornaam', 'naam', 0, array('id' => 'gebruikersListbox', 'size' => 10, 'class' => 'form-control'));
         ?>
-        <div style="margin-top: 10px;"><?php print anchor("medewerker/gebruikersBeheren/gegevensWijzigen", '+ Nieuwe gebruiker', 'class="btn btn-primary"'); ?></div>
+        <div style="margin-top: 10px;">
+			<?php print anchor("medewerker/gebruikersBeheren/gegevensWijzigen", '+ Nieuwe gebruiker', 'class="btn btn-primary"'); ?>
+		</div>
     </div>
-
     <div class="col-6">
         <div id="gebruikerInfo" class="row"></div>
     </div>
-
 </div>
 <?php echo form_close(); ?>
-<div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="tutorialModalLabel"
-     aria-hidden="true" data-id="" >
+<div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="tutorialModalLabel" aria-hidden="true" data-id="" >
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -108,11 +61,15 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
                         ?>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" style="color: black;">
-                        <span><i class="fas fa-angle-left fa-2x"></i></span>
+                        <span>
+							<i class="fas fa-angle-left fa-2x"></i>
+						</span>
                         <span class="sr-only">Previous</span>
                     </a>
                     <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next" style="color: black;">
-                        <span><i class="fas fa-angle-right fa-2x"></i></span>
+                        <span>
+							<i class="fas fa-angle-right fa-2x"></i>
+						</span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
@@ -123,3 +80,67 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
         </div>
     </div>
 </div>
+<script>
+	$(document).ready(function () {
+        if($("input[name=firstVisit]").val() == 1){
+            $('#tutorialModal').modal('show');
+        }
+		
+        $('#gebruikersForm input[id=functieRadiogroup0]').prop("checked", true);
+        haalGebruikersMetFunctieOp($('#gebruikersForm input[id=functieRadiogroup0]').val());
+
+        $('#gebruikersForm input[name=functieRadiogroup]').change(function () {
+            haalGebruikersMetFunctieOp($('#gebruikersForm input[name=functieRadiogroup]:checked').val());
+        });
+
+        $('#gebruikersListbox').change(function () {
+            haalGebruikerInfoOp($('#gebruikersListbox option:selected').val());
+        });
+
+        $('#closeTut').click(function () {
+            $('#tutorialModal').modal('hide');
+        });
+    });
+	
+	$('#filterNaam').keyup(function(){
+		var filterNaam = $('#filterNaam').val().toLowerCase();
+		$('#gebruikersListbox option').show();
+		
+		
+		//minder mobiele check
+		if(filterNaam != ""){
+			$('#gebruikersListbox option').not('[data-m *= ' + filterNaam + ']').hide();
+		}
+	});
+	
+    function haalGebruikersMetFunctieOp(functieId) {
+        $.ajax({
+            type: "GET",
+            url: site_url + "/medewerker/gebruikersBeheren/haalAjaxOp_GebruikersOpFunctie",
+            data: {functieId: functieId},
+            success: function (result) {
+                $("#gebruikersListbox").html(result);
+				$('#gebruikersListbox option').each(function(){
+					$(this).attr('data-m', $(this).text().toLowerCase());
+				})
+            },
+            error: function (xhr, status, error) {
+                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+            }
+        });
+    }
+
+    function haalGebruikerInfoOp(gebruikerId) {
+        $.ajax({
+            type: "GET",
+            url: site_url + "/medewerker/gebruikersBeheren/haalAjaxOp_GebruikerInfo",
+            data: {gebruikerId: gebruikerId},
+            success: function (result) {
+                $("#gebruikerInfo").html(result);
+            },
+            error: function (xhr, status, error) {
+                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+            }
+        });
+    }
+</script>
