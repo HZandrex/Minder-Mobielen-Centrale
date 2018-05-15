@@ -23,6 +23,7 @@ class AdresRit_model extends CI_Model {
 			* @param $ritId Dit is het id van de gevraagde rit
 			* @param $type Dit is het het type van het adres
 			* @see Adres_model::getById()
+			* @see Gemaakt door Michiel Olijslagers
 			* @return Het opgevraagde adres
 		*/
 		$this->load->model('adres_model');
@@ -38,13 +39,14 @@ class AdresRit_model extends CI_Model {
         return $array;
     }
 	
-	/**
-		*Checked of er een rit terug is
-		*
-		*@param $ritId Dit is het id van de gevraagde rit
-		*@return True of False naargelang er een terugrit is of niet
-	*/
 	function terugRit($ritId){
+		/**
+			* Checked of er een rit terug is
+			*
+			* @param $ritId Dit is het id van de gevraagde rit
+			* @see Gemaakt door Michiel Olijslagers
+			* @return True of False naargelang er een terugrit is of niet
+		*/
         $this->db->where('ritId', $ritId);
 		$query = $this->db->get('adresRit');
 		
@@ -66,6 +68,14 @@ class AdresRit_model extends CI_Model {
 	}
 	
 	function getTime($ritId, $typeId){
+		/**
+			* Heeft al de informatie terug wanneer een persoon op een bepaald adres moet zijn bij een bepaalde rit
+			*
+			* @param $ritId Dit is het id van de gevraagde rit
+			* @param $typeId Dit is het type adres dat gevraagd is
+			* @see Gemaakt door Michiel Olijslagers
+			* @return Al de data die in de adresRit tabel zit
+		*/
 		$this->db->where('ritId', $ritId);
 		$this->db->where('typeAdresId', $typeId);
 		$query = $this->db->get('adresRit');
@@ -74,12 +84,20 @@ class AdresRit_model extends CI_Model {
 	}
 	
 	function getAdressen($ritId){
+		/**
+			* Haalt al de adressen op die gebruikt worden binnen een bepaalde rit 
+			*
+			* @param $ritId Dit is het id van de gevraagde rit
+			* @see adres_model::getById()
+			* @see Gemaakt door Michiel Olijslagers
+			* @return Al de adressen van een rit
+		*/
 		$this->load->model('adres_model');
-		$adressen = array();
 		$this->db->where('ritId', $ritId);
 		$query = $this->db->get('adresRit');
 		$rows = $query->result();
 		
+		$adressen = array();
 		foreach($rows as $row){
 			array_push($adressen, $this->adres_model->getById($row->adresId));
 		}
@@ -88,6 +106,15 @@ class AdresRit_model extends CI_Model {
 	}
 	
 	function saveAdresRit($ritId, $adresId, $typeAdresId, $tijd){
+		/**
+			* Slaat info op in de adresRit tabel
+			*
+			* @param $ritId Dit is het id van d e rit 
+			* @param $adresId Dit is het  id van het adres
+			* @param $typeAdresId Dit is type id van het ingegeven adres
+			* @param $tijd Dit is de tijd voor het adres
+			* @see Gemaakt door Michiel Olijslagers
+		*/
 		$data = array(
 			'ritId' => $ritId,
 			'adresId' => $adresId,
@@ -95,6 +122,5 @@ class AdresRit_model extends CI_Model {
 			'tijd' => $tijd
 		);
 		$this->db->insert('adresRit', $data);
-	}
-                        
+	}  
 }

@@ -15,15 +15,16 @@ class Google_model extends CI_Model {
         parent::__construct();
     }
 	
-	/**
-		*Geeft het opgevraagde lengte en breete graad van beide start en eind punt
-		*
-		*@param $adresIdStart Dit is het adres id van het startpunt
-		*@param $adresIdDestination Dit is het adres id van het eindpunt
-		*@param $startTime Dit is de tijd wanneer de afstand + tijd berekent moet worden
-		*@return Afstand in km, afstand in verkeer in km, tijd in u:min:sec
-	*/
 	function getReisTijd($adresIdStart, $adresIdDestination, $startTime){
+		/**
+			* Berekent de reistijd   + afstand van een bepaalde rit waar start en eind adres gegeven is
+			*
+			* @param $adresIdStart Dit is het adres id van het startpunt
+			* @param $adresIdDestination Dit is het adres id van het eindpunt
+			* @param $startTime Dit is de tijd wanneer de afstand + tijd berekent moet worden
+			* @see Gemaakt door Michiel Olijslagers
+			* @return Afstand in km, afstand in verkeer in km, tijd in u:min:sec
+		*/
 		$this->load->model('adres_model');
 		$adresStart = $this->adres_model->getById($adresIdStart);
 		$adresEinde = $this->adres_model->getById($adresIdDestination);

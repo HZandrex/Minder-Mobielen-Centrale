@@ -15,23 +15,23 @@ class Gebruiker_model extends CI_Model {
         parent::__construct();
     }
 
-    /**
-     * Retourneert het record met id=$id uit de tabel gebruiker.
-     * @param $id De id van het record dat opgevraagd wordt
-     * @return het opgevraagde record
-     */
     function get($id) {
+		/**
+		 * Retourneert het record met id=$id uit de tabel gebruiker.
+		 * @param $id De id van het record dat opgevraagd wordt
+		 * @return het opgevraagde record
+		 */
         $this->db->where('id', $id);
         $query = $this->db->get('gebruiker');
         return $query->row();
     }
 
-    /**
-     * Retourneert het record met id=$id uit de tabel gebruiker.
-     * @param $id De id van het record dat opgevraagd wordt
-     * @return het opgevraagde record
-     */
     function getAllInActive() {
+		/**
+		 * Retourneert het record met id=$id uit de tabel gebruiker.
+		 * @param $id De id van het record dat opgevraagd wordt
+		 * @return het opgevraagde record
+		 */
         $this->db->where('active', 0);
         $query = $this->db->get('gebruiker');
         return $query->result();
@@ -257,6 +257,15 @@ class Gebruiker_model extends CI_Model {
     }
 
 	function getCredits($id, $date){
+		/**
+		 * Berekent hoeveel credits een bepaalde gebruiker binnen een bepaalde week heet
+		 * 
+		 * @param $id Dit is het de minder mobiele
+		 * @param $date Datum van de week waar de credits berekent moeten worden
+		 * @see instelling_model::getValueById()
+		 * @see Rit_model::getAantalRitten()
+		 * @see Gemaakt door Michiel Olijslagers
+		 */
 		$this->load->model('instelling_model');
 		$this->load->model('rit_model');
 		

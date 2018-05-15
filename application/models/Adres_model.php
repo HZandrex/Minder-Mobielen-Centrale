@@ -7,22 +7,23 @@
 */
 class Adres_model extends CI_Model {
 
-	/**
-		*Constructor
-	*/
-    function __construct()
+	function __construct()
     {
+		/**
+			*Constructor
+		*/
         parent::__construct();
     }
 
-	/**
-		*Geeft het opgevraagde adres terug aan de hand van een id
-		*
-		*@param $id Dit is adres id
-		*@return Het opgevraagde adres
-	*/
     function getById($id)
     {
+		/**
+			* Geeft het opgevraagde adres terug aan de hand van een id
+			*
+			* @param $id Dit is adres id
+			* @see Gemaakt door Michiel Olijslagers
+			* @return Het opgevraagde adres
+		*/
         $this->db->where('id', $id);
         $query = $this->db->get('adres');
         return $query->row();
@@ -56,7 +57,7 @@ class Adres_model extends CI_Model {
 		$this->db->update('adres');
 	}
 
-    function insertAdres($adres){
+    function insertAdres($adres){  
         $data = array(
             'huisnummer' => $adres->huisnummer,
             'straat' => $adres->straat,
@@ -70,7 +71,17 @@ class Adres_model extends CI_Model {
         return $insert_id;
     }
 
-	function addAdres($huisnummer, $straat, $gemeente, $postcode){
+	function addAdres($huisnummer, $straat, $gemeente, $postcode){       
+		 /**
+			* Voegt een adres toe aan de database
+			*
+			* @param $huisnummer Dit is het huisnummer van het adres
+			* @param $straat Dit is het straat van het adres
+			* @param $gemeente Dit is het gemeente van het adres
+			* @param $postcode Dit is het postcode van het adres
+			* @see Gemaakt door Michiel Olijslagers
+			* @return Het adres id 
+		*/ 
 		$data = array(
 			'huisnummer' => $huisnummer,
 			'straat' => $straat,
@@ -103,6 +114,16 @@ class Adres_model extends CI_Model {
     }
 
 	function bestaatAdres($huisnummer, $straat, $gemeente, $postcode){
+		 /**
+			* Kijkt of een bepaalt adres al in de database zit
+			*
+			* @param $huisnummer Dit is het huisnummer van het adres
+			* @param $straat Dit is het straat van het adres
+			* @param $gemeente Dit is het gemeente van het adres
+			* @param $postcode Dit is het postcode van het adres
+			* @see Gemaakt door Michiel Olijslagers
+			* @return Het adres id als dit adres bestaat
+		*/            
 		$this->db->where('huisnummer', $huisnummer);
 		$this->db->where('straat', $straat);
 		$this->db->where('gemeente', $gemeente);
