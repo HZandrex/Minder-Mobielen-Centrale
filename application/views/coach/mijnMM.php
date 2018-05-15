@@ -1,3 +1,15 @@
+<?php
+/**
+ * @file coach/mijnMM.php
+ *
+ * View waarin een coach al zijn mindermobielen kan bekijken
+ * - Via de selectbox kan de coach beslissen van welke mindermobiele extra gegevens getoond worden.
+ *   Deze worden opgehaald via de controller MijnMM::haalAjaxOp_GebruikerInfo().
+ *
+ * @see MijnMM::haalAjaxOp_GebruikerInfo()
+ */
+?>
+
 <script>
 jQuery.fn.filterByText = function(textbox) {
   return this.each(function() {

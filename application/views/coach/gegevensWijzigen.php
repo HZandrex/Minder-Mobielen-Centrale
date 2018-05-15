@@ -1,4 +1,15 @@
 <?php
+/**
+ * @file coach/gegevensWijzigen.php
+ *
+ * View waarin een gebruiker zijn gegevens veranderd kunnen worden
+ * - geeft via wijzigenGegevensFormulier alle gegevens door naar MijnMM::gegevensVeranderen()
+ *
+ * @see MijnMM::gegevensVeranderen()
+ */
+?>
+
+<?php
 $attributen = array('name' => 'wijzigenGegevensFormulier', 'class' => 'form-horizontal');
 $hidden = array('id' => $editGebruiker->id);
 echo form_open('coach/mijnMM/gegevensVeranderen', $attributen, $hidden);

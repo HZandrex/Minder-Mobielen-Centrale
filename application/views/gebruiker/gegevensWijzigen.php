@@ -5,7 +5,7 @@
  * View waarin een gebruiker zijn gegevens veranderd kunnen worden
  * - geeft via wijzigenGegevensFormulier alle gegevens door naar PersoonlijkeGegevens::gegevensVeranderen()
  *
- * PersoonlijkeGegevens::gegevensVeranderen()
+ * @see PersoonlijkeGegevens::gegevensVeranderen()
  */
 ?>
 
