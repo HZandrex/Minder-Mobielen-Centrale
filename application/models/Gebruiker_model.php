@@ -295,6 +295,15 @@ class Gebruiker_model extends CI_Model {
     }
 
 	function getCredits($id, $date){
+		/**
+		 * Berekent hoeveel credits een bepaalde gebruiker binnen een bepaalde week heet
+		 * 
+		 * @param $id Dit is het de minder mobiele
+		 * @param $date Datum van de week waar de credits berekent moeten worden
+		 * @see instelling_model::getValueById()
+		 * @see Rit_model::getAantalRitten()
+		 * @see Gemaakt door Michiel Olijslagers
+		 */
 		$this->load->model('instelling_model');
 		$this->load->model('rit_model');
 		

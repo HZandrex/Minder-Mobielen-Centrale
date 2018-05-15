@@ -6,21 +6,15 @@
  * Model-klasse die alle methodes bevat om te data uit de database-tabel status te halen.
  */
 class CoachMinderMobiele_model extends CI_Model {
-
-    /**
-     *Constructor
-     */
+ 
     function __construct()
     {
+		/**
+		 *Constructor
+		 */
         parent::__construct();
     }
 
-    /**
-     *Haalt de status naam op waar het id $id is
-     *
-     *@param $id is het id van de gevraagde status
-     *@return Al de informatie over de bepaalde status
-     */
     function getById($id)
     {
         /**
@@ -33,6 +27,7 @@ class CoachMinderMobiele_model extends CI_Model {
         $this->db->where('gebruikerCoachId', $id);
         $query = $this->db->get('coachMinderMobiele');
         $naam = $query->result();
+		  
         $this->load->model('rit_model');
         $this->load->model('gebruiker_model');
         $ritten = array();
@@ -62,15 +57,9 @@ class CoachMinderMobiele_model extends CI_Model {
 		$this->load->model('gebruiker_model');
 		$minderMobielen = array();
 		
-		
 		foreach ($mmIds as $mmId){
-				array_push($minderMobielen,$this->gebruiker_model->get($mmId->gebruikerMinderMobieleId));
+			array_push($minderMobielen,$this->gebruiker_model->get($mmId->gebruikerMinderMobieleId));
 		}
-		
 		return $minderMobielen;
 	}
-
-
-
-
 }

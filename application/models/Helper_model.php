@@ -10,6 +10,13 @@ class helper_model extends CI_Model {
     }
 	
 	function getStartEnEindeWeek($date){
+		/**
+			* Berekent de start en einde van een bepaalde week
+			*
+			* @param $date Dit is datum waar de week van is
+			* @see Gemaakt door Michiel Olijslagers
+			* @return De start en einde van de week
+		*/
 		$today = date('U', strtotime($date));
 		
 		$dow = date('w', $today);
@@ -26,6 +33,14 @@ class helper_model extends CI_Model {
 	}
 	
 	function unique_multidim_array($array, $key) { 
+		/**
+			* Haalt de unikie waardes uit de array
+			*
+			* @param $array De array 
+			* @param $array De waarde die uniek moet zijn
+			* @see Gemaakt door Michiel Olijslagers
+			* @return De start en einde van de week
+		*/
 		$temp_array = array(); 
 		$i = 0; 
 		$key_array = array(); 
