@@ -1,17 +1,18 @@
 <?php
 /**
- * @class Gebruiker_model
- * @brief Model-klasse voor gebruikers (medewerkers, vrijwilligers, ...)
+ * @class FunctieGebruiker_model
+ * @brief Model-klasse voor functieGebruikers
  *
- * Model-klasse die alle methodes bevat om te interageren met de database-tabel gebruiker.
+ * Model-klasse die alle methodes bevat om te interageren met de database-tabel functieGebruiker. Hier wordt een functie
+ * toegekend aan een gebruiker.
  */
 class FunctieGebruiker_model extends CI_Model {
 
+    /**
+     * Constructor
+     */
     function __construct()
     {
-        /**
-         * Constructor
-         */
         parent::__construct();
     }
 
@@ -20,7 +21,9 @@ class FunctieGebruiker_model extends CI_Model {
      *
      * @param $gebruikerId De gebruikerId van het record dat opgevraagd wordt
      *
-     * @return het opgevraagde record
+     * @return Het opgevraagde record
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function getWithName($gebruikerId)
     {
@@ -45,7 +48,9 @@ class FunctieGebruiker_model extends CI_Model {
      * @param $gebruikerId De gebruikerId van het record dat opgevraagd wordt
      * @param $functieId De functieId van het record dat opgevraagd wordt
      *
-     * @return false of id van het record.
+     * @return False of id van het record
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function functieGebruikerBestaat($gebruikerId, $functieId)
     {
@@ -63,11 +68,14 @@ class FunctieGebruiker_model extends CI_Model {
     }
 
     /**
-     * Retourneert een lege record met alle eigenschappen van een record uit de tabel functieGebruiker. Deze lege record bevat ook een lege functie gemaakt via Functie_model.
+     * Retourneert een lege record met alle eigenschappen van een record uit de tabel functieGebruiker.
+     * Deze lege record bevat ook een lege functie gemaakt via Functie_model.
      *
      * @see Functie_model::getEmpty()
      *
-     * @return een lege array
+     * @return array
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function getEmpty(){
         $this->load->model('functie_model');
@@ -83,6 +91,8 @@ class FunctieGebruiker_model extends CI_Model {
      * @param  $functieGebruiker Eeen object dat moet worden toegevoegd
      *
      * @return bool
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function voegToe($functieGebruiker){
         if(!$this->db->insert('functieGebruiker', $functieGebruiker)){
@@ -99,6 +109,8 @@ class FunctieGebruiker_model extends CI_Model {
      * @param  $id De id van het record dat aangepast moet worden
      *
      * @return bool
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function verwijderen($id){
         $functieGebruiker = new stdClass();
@@ -119,7 +131,9 @@ class FunctieGebruiker_model extends CI_Model {
      *
      * @see Gebruiker_model::get()
      *
-     * @return het opgevraagde record
+     * @return Het opgevraagde record
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function getAllGebruikersByFunction($functieId)
     {

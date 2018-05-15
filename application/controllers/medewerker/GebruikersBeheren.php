@@ -141,7 +141,7 @@ class GebruikersBeheren extends CI_Controller
         $this->load->model('gebruiker_model');
 
         if ($Wachtwoord == $wachtwoordBevestigen) {
-            $this->gebruiker_model->wijzigWachtwoordGebruiker($id, $Wachtwoord);
+            $this->gebruiker_model->wijzigWachtwoord($id, $Wachtwoord);
             redirect('medewerker/gebruikersBeheren/toonwachtwoordgewijzigd');
         } else {
             redirect('medewerker/gebruikersBeheren/toonfoutwachtwoordwijzigen/' . $id);

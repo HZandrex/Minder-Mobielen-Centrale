@@ -6,7 +6,7 @@
          * @mainpage Commentaar bij Project23_1718
          * 
          * # Wat?
-         * Je vindt hier onze Docygen-commentaar bij het PHP-project <b>Project23_1718</b>.
+         * Je vindt hier onze Doxygen-commentaar bij het PHP-project <b>Project23_1718</b>.
          * - De commentaar bij onze model- en controller-klassen vind je onder het menu <em>Klassen</em>
          * - De commentaar bij onze view-bestanden vind je onder het menu <em>Bestanden</em>
          * - Ook de originele commentaar geschreven bij het Codeigniter-framwork is opgenomen.

@@ -178,6 +178,8 @@ class PersoonlijkeGegevens extends CI_Controller
      *
      * @see email.php
      * @see PersoonlijkeGegevens::wachtwoordVeranderen()
+     *
+     * @return bool
      */
     private function stuurMail($geadresseerde, $boodschap, $titel)
     {

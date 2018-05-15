@@ -1,7 +1,7 @@
 <?php
 /**
 	* @class Adres_model
-	* @brief Model-klasse voor adres
+	* @brief Model-klasse voor adressen
 	*
 	* Model-klasse die alle methodes bevat om te data uit de database-tabel adres te halen.
 */
