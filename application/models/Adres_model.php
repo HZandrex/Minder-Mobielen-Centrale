@@ -117,7 +117,7 @@ class Adres_model extends CI_Model {
 		 /**
 			* Kijkt of een bepaalt adres al in de database zit
 			*
-			* @param $huisnummer Dit is het huisnummer van het adres
+			* @param $huisnummer Dit is het huisnummer van het adres 
 			* @param $straat Dit is het straat van het adres
 			* @param $gemeente Dit is het gemeente van het adres
 			* @param $postcode Dit is het postcode van het adres
