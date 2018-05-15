@@ -20,6 +20,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * Haalt de persoonlijke gegevens van de ingelogde gebruiker op.
      *
      * @see Gebruiker::persoonlijkeGegevens()
+	 * Gemaakt door Tijmen Elseviers
      */
     public function persoonlijkeGegevens(){
         $data['titel'] = 'Persoonlijke Gegevens';
@@ -45,6 +46,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * @see Gebruiker_model::getWithFunctions()
 	 * @see Voorkeur_model::getAll()
      * @see Gebruiker::gegevensWijzigen()
+	 * Gemaakt door Tijmen Elseviers
      */
     public function gegevensWijzigen(){
         $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
@@ -69,13 +71,21 @@ class PersoonlijkeGegevens extends CI_Controller
     }
 	
 	/**
-     * Gaat de gegevens van de gebruiker in de databank veranderen.
+     * Gaat de gegevens van de gebruiker in de databank veranderen naar de gegevens die de gebruiker
+	 * heeft ingevuld. Deze werden meegegeven in $gebruiker en worden doorgestuurd naar het
+	 * gebruiker_model om in updateGebruikers de effectieve update te starten.
+	 * Achteraf word de gebruiker terug naar de controller PersoonlijkeGegevens::persoonlijkeGegevens()
+	 * gestuurd.
      *
+	 * @param $gebruiker
+	 *
      * @see Gebruiker_model::get()
 	 * @see Gebruiker_model::updateGebruiker()
      * @see Adres_model::updateAdres()
      * @see Medewerker::gebruikersBeheren()
      * @see PersoonlijkeGegevens::persoonlijkeGegevens()
+	 *
+	 * Gemaakt door Tijmen Elseviers
      */
     public function gegevensVeranderen(){
         $data['titel'] = 'Persoonlijke Gegevens Wijzigen';
@@ -106,6 +116,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * Toont het scherm om het wachtwoord te veranderen in de view Gebruiker/wachtwoordWijzigen.php
      *
      * @see Gebruiker/wachtwoordWijzigen.php
+	 * Gemaakt door Geffrey Wuyts
      */
     public function wachtwoordWijzigen()
     {
@@ -136,6 +147,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * @see PersoonlijkeGegevens::toonFoutOudWachtwoord()
      * @see PersoonlijkeGegevens::toonFoutWachtwoordOvereenkomst()
      * @see PersoonlijkeGegevens::toonWachtwoordVeranderd()
+	 * Gemaakt door Geffrey Wuyts
      */
     public function wachtwoordVeranderen()
     {
@@ -180,6 +192,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * @see PersoonlijkeGegevens::wachtwoordVeranderen()
      *
      * @return bool
+	 * Gemaakt door Geffrey Wuyts
      */
     private function stuurMail($geadresseerde, $boodschap, $titel)
     {
@@ -199,7 +212,7 @@ class PersoonlijkeGegevens extends CI_Controller
     }
 
     /**
-     * Toont de melding pagina met de opgeven parrameters foutTitel=$foutTitel, boodschap=$boodschap & link=$link
+     * Toont de melding pagina met de opgeven parameters foutTitel=$foutTitel, boodschap=$boodschap & link=$link
      * in de view main_melding.php.
      *
      * @param $foutTitel De titel die op de meldingspagina komt
@@ -207,6 +220,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
      *
      * @see main_melding.php
+	 * Gemaakt door Geffrey Wuyts
      */
     public function toonMelding($foutTitel, $boodschap, $link)
     {
@@ -223,9 +237,10 @@ class PersoonlijkeGegevens extends CI_Controller
     }
 
     /**
-     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
      * @see PersoonlijkeGegevens::toonMelding()
+	 * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutOudWachtwoord()
     {
@@ -238,9 +253,10 @@ class PersoonlijkeGegevens extends CI_Controller
     }
 
     /**
-     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
      * @see PersoonlijkeGegevens::toonMelding()
+	 * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutWachtwoordOvereenkomst()
     {
@@ -253,9 +269,10 @@ class PersoonlijkeGegevens extends CI_Controller
     }
 
     /**
-     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
      * @see PersoonlijkeGegevens::toonMelding()
+	 * Gemaakt door Geffrey Wuyts
      */
     public function toonWachtwoordVeranderd()
     {

@@ -1,12 +1,29 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @class MijnMM
+ * @brief Controller-klasse voor de Mindermobiele gegevens per coach
+ *
+ * Controller-klase met alle methodes die gebruikt worden om de mindermobielen per coach te beheren.
+ */
+defined('BASEPATH') OR exit('No direct script access allowed');
 class MijnMM extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
     }
 	
+	/**
+     * Toont de melding pagina met de opgeven parameters foutTitel=$foutTitel, boodschap=$boodschap & link=$link
+     * in de view main_melding.php.
+     *
+     * @param $foutTitel De titel die op de meldingspagina komt
+     * @param $boodschap De boodschap dat getoond moet worden
+     * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
+     *
+     * @see main_melding.php
+	 * Gemaakt door Geffrey Wuyts
+     */
 	    public function toonMelding($foutTitel, $boodschap, $link)
     {
         $data['titel'] = '';
@@ -21,6 +38,14 @@ class MijnMM extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
+	/**
+     * Haalt een lijst van mindermobielen op van de ingelogde coach. Deze lijst wordt daarna doorgestuurd en weergegeven
+	 * op de view coach/mijnMM.
+     *
+     * @see coach/mijnMM.php
+	 * @see CoachMinderMobiele_model::getMMById()
+	 * Gemaakt door Tijmen Elseviers
+     */
     public function mijnMMLijst() {
 		$data['titel'] = 'Mijn MM';
         $data['author'] = 'T. Elseviers';
@@ -40,6 +65,16 @@ class MijnMM extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
 	}
 	
+	/**
+     * Deze functie haalt de gegevens van een specifieke Mindermobiele op om in de view coach/ajax_gebruikerInfo
+	 * verder te gebruiken en achteraf weer te geven op de correcte pagina.
+     *
+	 * @see Gebruiker_model::getWithFunctions()
+	 * @see coach/ajax_gebruikerInfo.php
+	 *
+	 * Gemaakt door Tijmen Elseviers
+	 * Medemogelijk door Geffrey Wuyts
+     */
 	public function haalAjaxOp_GebruikerInfo()
     {
         $gebruikerId = $this->input->get('gebruikerId');
@@ -49,6 +84,19 @@ class MijnMM extends CI_Controller {
         $this->load->view('coach/ajax_gebruikerInfo', $data);
     }
 	
+	/**
+     * Deze functie laadt de view coach/gegevensWijzigen met de gegevens van de geselecteerde mindermobiele
+	 * door middel van deze op te halen uit het model Gebruiker_model::getWithFunctions().
+     *
+     * @see Gebruiker_model::getEmpty()
+	 * @see Gebruiker_model::getWithFunctions()
+	 * @see Adres_model::getAll()
+	 * @see Voorkeur_model::getAll()
+	 * @see coach/gegevensWijzigen.php
+	 *
+	 * Gemaakt door Tijmen Elseviers
+	 * Medemogelijk door Geffrey Wuyts
+     */
 	public function gegevensWijzigen($id = 0){
         $data['titel'] = 'Gebruiker Gegevens Wijzigen';
         $data['author'] = 'T. Elseviers';
@@ -83,6 +131,22 @@ class MijnMM extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 	
+	/**
+     * Deze functie zorgt ervoor dat de gegevens die de coach wijzigt op de view coach/gegevensWijzigen
+	 * aangepast worden in de databank. Het systeem stuurt deze gegevens mee door middel van de parameter
+	 * $gebruiker. Achteraf toont het systeem een melding dat dit gelukt via de controller 
+	 * coach::mijnMM::toonGegegevensGewijzigd()
+     *
+	 * @param $gebruiker
+	 *
+     * @see Gebruiker_model::getEmpty()
+	 * @see Gebruiker_model::insertGebruiker()
+	 * @see Gebruiker_model::updateGebruiker()
+	 * @see mijnMM::toonGegegevensGewijzigd()
+	 *
+	 * Gemaakt door Tijmen Elseviers
+	 * Medemogelijk door Geffrey Wuyts
+     */
 	public function gegevensVeranderen(){
         $this->load->model('gebruiker_model');
         $this->load->model('adres_model');
@@ -103,6 +167,14 @@ class MijnMM extends CI_Controller {
         redirect('coach/mijnMM/toonGegevensGewijzigd');
     }
 	
+	/**
+     * Toont het scherm om het wachtwoord te veranderen in de view coach/wachtwoordGebruikerWijzigen.php
+     *
+     * @see Coach/wachtwoordGebruikerWijzigen.php
+	 *
+	 * Gemaakt door Tijmen Elseviers
+	 * Medemogelijk door Geffrey Wuyts
+     */
 	public function wachtwoordWijzigen($id)
     {
         $data['titel'] = '';
@@ -128,6 +200,21 @@ class MijnMM extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 	
+	/**
+     * Gaat kijken of het oude wachtwoord juist is via Gebruiker_model hiervoor wordt ook eerst de bijhorende gebruiker opgehaald,
+     * wanneer dit niet juist is word een foutmelding gegeven via Coach::mijnMM::toonFoutOudWachtwoord().
+     * Vervolgens wordt gekeken of er 2x hetzelfde wachtwoord werd opgegeven zoniet word een foutmelding gegeven via PersoonlijkeGegevens::toonFoutWachtwoordOvereenkomst().
+     * Wanneer dit allemaal juist is zal het wachtwoord worden veranderd via Gebruiker_model, wordt een mail gestuurd om dit te melden
+     * en wordt er een melding getoont via Coach::mijnMM::toonWachtwoordVeranderd().
+     *
+     * @see Gebruiker_model::get()
+     * @see Gebruiker_model::getGebruiker()
+     * @see Gebruiker_model::wijzigWachtwoord()
+     * @see mijnMM::toonFoutOudWachtwoord()
+     * @see mijnMM::toonWachtwoordVeranderd()
+	 * Gemaakt door Tijmen Elseviers
+	 * Medemogelijk door Geffrey Wuyts
+     */
 	public function wachtwoordVeranderen()
     {
         $id = $this->input->post('id');
@@ -144,6 +231,12 @@ class MijnMM extends CI_Controller {
         }
     }
 	
+	/**
+     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
+     *
+     * @see PersoonlijkeGegevens::toonMelding()
+	 * Gemaakt door Geffrey Wuyts
+     */
 	public function toonFoutWachtwoordWijzigen($id)
     {
         $titel = "Fout!";
@@ -154,6 +247,12 @@ class MijnMM extends CI_Controller {
         $this->toonMelding($titel, $boodschap, $link);
     }
 	
+	/**
+     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
+     *
+     * @see PersoonlijkeGegevens::toonMelding()
+	 * Gemaakt door Geffrey Wuyts
+     */
 	public function toonWachtwoordGewijzigd()
     {
         $titel = "Wachtwoord succesvol veranderd";
@@ -164,6 +263,12 @@ class MijnMM extends CI_Controller {
         $this->toonMelding($titel, $boodschap, $link);
     }
 	
+	/**
+     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
+     *
+     * @see PersoonlijkeGegevens::toonMelding()
+	 * Gemaakt door Geffrey Wuyts
+     */
 	public function toonGegevensGewijzigd()
     {
         $titel = "Gegevens succesvol veranderd";

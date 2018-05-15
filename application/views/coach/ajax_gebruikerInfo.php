@@ -1,3 +1,11 @@
+<?php
+/**
+ * @file medewerker/ajax_gebruikerInfo.php
+ *
+ * View waarin de gebruikersinfo van een gebruiker toont
+ */
+?>
+
 <div class="col-sm-12">
     <h4>Contactgegevens</h4>
     <table class="table">

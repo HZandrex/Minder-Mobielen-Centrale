@@ -1,3 +1,16 @@
+<?php
+    /**
+     * @file gebruiker/persoonlijkeGegevens.php
+     * 
+     * View waarin de persoonlijke gegevens van de ingelogde gebruiker worden getoond.
+     * - Ga via de knop Wachtwoord wijzigen naar de controller PersoonlijkeGegevens::wachtwoordWijzigen()
+	 * - Ga via de knop Gegevens wijzigen naar de controller PersoonlijkeGegevens::gegevensWijzigen()
+     * 
+     * @see PersoonlijkeGegevens::wachtwoordWijzigen()
+	 * @see PersoonlijkeGegevens::gegevensWijzigen()
+     */
+?>
+
 <div class="col-lg-12">
     <div class="row">
         <div class="col-lg-6 col-sm-12 centered">
