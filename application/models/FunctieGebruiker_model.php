@@ -150,4 +150,31 @@ class FunctieGebruiker_model extends CI_Model {
         return $gebruikers;
     }
 
+    /**
+     * Haalt eerst all records op met functieId<$functieId en waar eindTijd=null uit de tabel functieGebruiker.
+     * Vervolgens worden alle gebruikers die deze functie hebben opgehaald($functie->gebruikerId) via het Gebruiker_model en geretourneerd als gebruikers.
+     *
+     * @param $functieId De functieId tot welke functie de gebruikers worden opgevraagd
+     *
+     * @see Gebruiker_model::get()
+     *
+     * @return Het opgevraagde record
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    function getAllGebruikersUntilFunction($functieId)
+    {
+        $this->db->where('functieId<', $functieId);
+        $this->db->where('eindTijd', null);
+        $query = $this->db->get('functieGebruiker');
+        $functies =  $query->result();
+        $this->load->model('gebruiker_model');
+        $gebruikers = array();
+        foreach ($functies as $functie) {
+            $gebruiker = $this->gebruiker_model->get($functie->gebruikerId);
+            if ($gebruiker->active == 1) array_push($gebruikers, $gebruiker);
+        }
+        return $gebruikers;
+    }
+
 }

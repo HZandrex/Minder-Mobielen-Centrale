@@ -37,12 +37,8 @@ class GebruikersBeheren extends CI_Controller
 
         foreach ($gebruiker->functies as $functie) {
             $this->load->model('functie_model');
-            if ($functie->id == 4){
-                $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
-            }
-            if ($functie->id == 5){
-                $data['functies'] = $this->functie_model->getAll(5); //5 = alle functies buiten admin
-            }
+            if ($functie->id == 4) $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+            if ($functie->id == 5) $data['functies'] = $this->functie_model->getAll(5); //5 = alle functies buiten admin
             if ($functie->id < 4) {//id=4 -> Medewerker
                 redirect('admin/instellingen/toonfoutonbevoegd');
             }
@@ -56,23 +52,29 @@ class GebruikersBeheren extends CI_Controller
             $data['firstVisit'] = false;
         }
 
+        $data['functies'] = $this->voegFunctiesToe($data['functies']);
+
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gebruikersBeherenOverzicht');
+        $this->template->load('main_master', $partials, $data);
+    }
+
+    private function voegFunctiesToe($functies){;
         $inActive = $this->functie_model->getEmpty();
         $inActive->id = 0;
         $inActive->naam = "Niet actief";
-        array_push($data['functies'], $inActive);
+        array_push($functies, $inActive);
         $all = $this->functie_model->getEmpty();
         $all->id = -1;
         $all->naam = "Alle gebruikers";
-        array_unshift($data['functies'], $all);
+        array_unshift($functies, $all);
 
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gebruikersBeherenOverzicht');
-
-        $this->template->load('main_master', $partials, $data);
+        return $functies;
     }
 
     /**
      * Haalt alle gebruikers op met een bepaalde functie via het FunctieGebruiker_model. Het functieId wordt doorgegeven via de view medewerker/gebruikersBeherenOverzicht.php.
-     * Wanneer er geen functie wordt meegegeven zullen alle gebruikers worden getoond die niet actief zijn via het Gebruiker_model.
+     * Wanneer er functie=0 wordt meegegeven zullen alle gebruikers worden getoond die niet actief zijn via het Gebruiker_model.
+     * Anders wordt er gekeken wie er is ingelogd (admin of medewerker) en worden alle gebruikers weergegeven die zij mogen beheren.
      * Al de gebruikers worden getoond via de view medewerker/ajax_Gebruikers.php
      *
      * @see FunctieGebruiker_model::getAllGebruikersByFunction()
@@ -84,6 +86,7 @@ class GebruikersBeheren extends CI_Controller
      */
     public function haalAjaxOp_GebruikersOpFunctie()
     {
+        $gebruiker = $this->authex->getGebruikerInfo();
         $this->load->model('gebruiker_model');
         $this->load->model('functieGebruiker_model');
         $functieId = $this->input->get('functieId');
@@ -92,7 +95,15 @@ class GebruikersBeheren extends CI_Controller
         } elseif ($functieId == 0){
             $data['gebruikers'] = $this->gebruiker_model->getAllInActive();
         } else{
-            $data['gebruikers'] = $this->gebruiker_model->getAllActive();
+            foreach ($gebruiker->functies as $functie) {
+                $this->load->model('functie_model');
+                if ($functie->id == 4){
+                    $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersUntilFunction(4);
+                }
+                if ($functie->id == 5){
+                    $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersUntilFunction(5);
+                }
+            }
         }
 
         $this->load->view('medewerker/ajax_gebruikers', $data);
@@ -110,6 +121,18 @@ class GebruikersBeheren extends CI_Controller
      */
     public function haalAjaxOp_GebruikerInfo()
     {
+        $gebruiker = $this->authex->getGebruikerInfo();
+        if ($gebruiker != null) {
+            $data['gebruiker'] = $gebruiker;
+        } else {
+            redirect('gebruiker/inloggen');
+        }
+        foreach ($gebruiker->functies as $functie) {
+            if ($functie->id < 4) {//id=4 -> Medewerker
+                redirect('admin/instellingen/toonfoutonbevoegd');
+            }
+        }
+
         $gebruikerId = $this->input->get('gebruikerId');
 
         $this->load->model('gebruiker_model');

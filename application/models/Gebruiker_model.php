@@ -32,20 +32,6 @@ class Gebruiker_model extends CI_Model
     }
 
     /**
-     * Retourneert alle records met active=1 uit de tabel gebruiker.
-     * @return De opgevraagde records
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    function getAllActive()
-    {
-        $this->db->where('active', 1);
-        $this->db->order_by('voornaam', 'ASC');
-        $query = $this->db->get('gebruiker');
-        return $query->result();
-    }
-
-    /**
      * Retourneert alle records met active=0 uit de tabel gebruiker.
      * @return De opgevraagde records
      *
