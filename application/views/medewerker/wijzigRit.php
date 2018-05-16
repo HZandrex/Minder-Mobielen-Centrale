@@ -33,7 +33,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
     <?php
     $attributes = array('name' => 'nieuweRit', 'id' => 'nieuweRit');
 
-    echo form_open('mm/ritten/wijzigRitOpslaan', $attributes);
+    echo form_open('medewerker/rittenAfhandelen/wijzigRitOpslaan', $attributes);
     ?>
     <div class="card">
         <div class="card-body">
@@ -49,7 +49,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 <div class="col-sm-6">
                     <button type="button" class="btn btn-primary" id="opslaan"><i class="fas fa-save"></i> Opslaan</button>
                     <?php
-                    print anchor(array('mm/ritten/accepterenAnnuleren'), '<i class="fas fa-ban"></i> Annuleren', array('class' => 'btn btn-danger'));
+                    print anchor(array('medewerker/rittenAfhandelen/accepterenAnnuleren'), '<i class="fas fa-ban"></i> Annuleren', array('class' => 'btn btn-danger'));
                     ?>
                 </div>
             </div>
@@ -293,7 +293,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
         $.ajax(
             {
                 type:"post",
-                url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenCredits",
+                url: "<?php echo base_url(); ?>index.php/medeerker/rittenAfhandelen/berekenCredits",
                 data:{ userId:'<?php echo $gebruiker->id; ?>', date: timeStamp},
                 success:function(response)
                 {
@@ -349,7 +349,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 $.ajax(
                     {
                         type:"post",
-                        url: "<?php echo base_url(); ?>index.php/mm/ritten/nieuwAdres",
+                        url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/nieuwAdres",
                         data:{ huisnummer:huisnummer, straat:straat, gemeente:gemeente, postcode:postcode},
                         success:function(response)
                         {
@@ -403,7 +403,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 $.ajax(
                     {
                         type:"post",
-                        url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenKost",
+                        url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/berekenKost",
                         data:{ startAdres:$('#heenStartAdres').val(), eindAdres:$('#heenEindeAdres').val(), timeStamp:timeStamp},
                         success:function(response)
                         {
@@ -418,7 +418,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                                 $.ajax(
                                     {
                                         type:"post",
-                                        url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenKost",
+                                        url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/berekenKost",
                                         data:{ startAdres:$('#terugStartAdres').val(), eindAdres:$('#terugEindeAdres').val(), timeStamp:timeStamp},
                                         success:function(response)
                                         {

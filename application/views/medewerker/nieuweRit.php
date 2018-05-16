@@ -1,27 +1,13 @@
+
+
 <?php
-
-/**
- * @file wijzigRit.php
- *
- * vieuw waar de mindermobiele zijn rit kan aanpassen of annuleren
- * - krijgt een $heen object binnen waar al de nodige info instaat
- * - krijgt een $adress object binnen waar alle adressen instaan die gebruikt zijn geweest
- *
- * @see Ritten::wijzigRitOpslaan()
- * @see Ritten::nieuweRit()
- * @see Ritten::accepterenannuleren()
- * Gemaakt door Lorenz Cleymans en Nico Claes en Michiel Olijslagers
- */
-
-
 $selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
-//foreach($adressen as $adres){
-//
-//    print($selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>');
-//}
+if(!empty($adressen[0])){
+    foreach($adressen as $adres){
+        $selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+    }
+}
 
-//var_dump($adressen);
-// var_dump($heen);
 ?>
 <style>
     .pac-container{
@@ -35,24 +21,15 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
     </div>
     <?php
     $attributes = array('name' => 'nieuweRit', 'id' => 'nieuweRit');
-
-    echo form_open('mm/ritten/wijzigRitOpslaan', $attributes);
+    echo form_open('medewerker/rittenAfhandelen/nieuweRitOpslaan', $attributes);
     ?>
     <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-6">
-                    <p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruiker->voornaam . " " . $gebruiker->naam; ?></p>
+                    <p><i class="fas fa-shopping-cart"></i> klant: <?php print $gebruikerMM->voornaam . " " . $gebruikerMM->naam; ?></p>
                     <div class="custom-control custom-checkbox">
-                        <?php
-
-                            if ($heen->terugaankomst->adres->id) { ?>
-                                <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug" checked >
-                            <?php } else { ?>
-
-                                <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug"  >
-                        <?php } ?>
-
+                        <input type="checkbox" class="custom-control-input" id="heenTerug" name="heenTerug">
                         <label class="custom-control-label" for="heenTerug">Heen en terug</label>
                     </div>
                     <p id="credits"></p>
@@ -60,7 +37,8 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 <div class="col-sm-6">
                     <button type="button" class="btn btn-primary" id="opslaan"><i class="fas fa-save"></i> Opslaan</button>
                     <?php
-                    print anchor(array('mm/ritten/accepterenAnnuleren'), '<i class="fas fa-ban"></i> Annuleren', array('class' => 'btn btn-danger'));
+                    print anchor(array('medewerker/rittenAfhandelen'), '<i class="fas fa-ban"></i> Anuleren', array('class' => 'btn btn-danger'));
+
                     ?>
                 </div>
             </div>
@@ -88,12 +66,12 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                                     <i class="fas fa-calendar-alt"></i>
                                 </label>
                             </div>
-                            <input data-provide="datepicker" id="heenDatum" class="form-control datepicker" name="heenDatum" value="<?php print date('j/m/Y' , strtotime($heen->heenvertrek->tijd)); ?>">
+                            <input data-provide="datepicker" id="heenDatum" class="form-control datepicker" name="heenDatum">
                         </div>
                     </div>
                     <div class="col">
                         <label for="startTijdHeen">Start tijd: </label>
-                        <input type="time" id="startTijdHeen" width="276" class="form-control" id="time" name="startTijdHeen" value="<?php print date('G:i' , strtotime($heen->heenvertrek->tijd)); ?>"/>
+                        <input type="time" id="startTijdHeen" width="276" class="form-control" id="time" name="startTijdHeen"/>
                     </div>
                 </div>
                 <div class="row">
@@ -101,15 +79,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                         <label for="heenStartAdres">Start adres: </label>
                         <select class="custom-select" id="heenStartAdres" name="heenStartAdres">
                             <?php
-                                foreach($adressen as $adres){
-
-                                    if($adres->id==$heen->heenvertrek->adres->id){
-                                        print  '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                                    }else{
-                                        print  '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                                    }
-
-                                }
+                            print $selectAdressen;
                             ?>
                         </select>
                     </div>
@@ -117,15 +87,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                         <label for="heenEindeAdres">Bestemming adres: </label>
                         <select class="custom-select" id="heenEindeAdres" name="heenEindeAdres">
                             <?php
-                            foreach($adressen as $adres){
-
-                                if($adres->id==$heen->heenaankomst->adres->id){
-                                    print  '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                                }else{
-                                    print  '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                                }
-
-                            }
+                            print $selectAdressen;
                             ?>
                         </select>
                     </div>
@@ -133,7 +95,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
             </div>
         </div>
     </article>
-    <article class="mt-2" id="terug" style=<?php if(!empty($heen->terug)){ print "" ; }else{ print "display:none;";}  ?>>
+    <article class="mt-2" id="terug" style="display: none;">
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -160,39 +122,23 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                     </div>
                     <div class="col">
                         <label for="startTijdTerug">Start tijd: </label>
-                        <input type="time" id="startTijdTerug" width="276" class="form-control" id="time" name="startTijdTerug" value="<?php print date('G:i' , strtotime($heen->terugvertrek->tijd)); ?>"/>
+                        <input type="time" id="startTijdTerug" width="276" class="form-control" id="time" name="startTijdTerug"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label for="terugStartAdres">Start adres: </label>
-                        <select class="custom-select" id="terugStartAdres" name="terugStartAdres" disabled>
+                        <select class="custom-select" id="terugStartAdres" name="terugStartAdres">
                             <?php
-                            foreach($adressen as $adres){
-
-                                if($adres->id==$heen->terugvertrek->adres->id){
-                                    print  '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                                }else{
-                                    print  '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                                }
-
-                            }
+                            print $selectAdressen;
                             ?>
                         </select>
                     </div>
                     <div class="col">
                         <label for="terugEindeAdres">Bestemming adres: </label>
-                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres" disabled>
+                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres">
                             <?php
-                            foreach($adressen as $adres){
-
-                                if($adres->id==$heen->terugaankomst->adres->id){
-                                    print  '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                                }else{
-                                    print  '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                                }
-
-                            }
+                            print $selectAdressen;
                             ?>
                         </select>
                     </div>
@@ -205,7 +151,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
             <div class="card">
                 <div class="card-body">
                     <h5>Opmerking</h5>
-                    <textarea class="form-control" id="opmerkingenMM" name="opmerkingenMM" rows="3" value=""><?php echo $heen->opmerkingKlant ?></textarea>
+                    <textarea class="form-control" id="opmerkingenMM" name="opmerkingenMM" rows="3"></textarea>
                 </div>
             </div>
         </div>
@@ -304,8 +250,8 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
         $.ajax(
             {
                 type:"post",
-                url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenCredits",
-                data:{ userId:'<?php echo $gebruiker->id; ?>', date: timeStamp},
+                url: "<?php echo base_url(); ?>index.php/medewerker/ritten/berekenCredits",
+                data:{ userId:'<?php echo $gebruikerMM->id; ?>', date: timeStamp},
                 success:function(response)
                 {
                     var credits = JSON.parse(response);
@@ -613,7 +559,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 
         if(!error){
             console.log('submit');
-            addData('userId', '<?php print $gebruiker->id; ?>');
+            addData('userId', '<?php print $gebruikerMM->id; ?>');
             $( "#nieuweRit" ).submit();
         }
 
