@@ -1,3 +1,15 @@
+<?php
+/**
+ * @file medewerker/relatiesBeherenOverzicht.php
+ *
+ * View waarin een medewerker relaties tussen minder mobiele gebruiker en coaches kan weergeven, maken en verwijderen.
+ *
+ * @see RelatiesBeheren::haalAjaxOp_bijhorendeCoaches()
+ *
+ * Gemaakt doorr Nico Claes
+ */
+?>
+
 <script>
 jQuery.fn.filterByText = function(textbox) {
   return this.each(function() {

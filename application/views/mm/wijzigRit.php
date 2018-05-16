@@ -10,7 +10,7 @@
  * @see Ritten::wijzigRitOpslaan()
  * @see Ritten::nieuweRit()
  * @see Ritten::accepterenannuleren()
- * Gemaakt door Lorenz Cleymans
+ * Gemaakt door Lorenz Cleymans en Nico Claes en Michiel Olijslagers
  */
 
 

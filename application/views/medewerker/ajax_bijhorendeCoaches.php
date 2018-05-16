@@ -1,4 +1,15 @@
 <?php
+    /**
+     * @file gebruiker/ajax_bijhorendeCoaches.php
+     * 
+     * View waarin de bijhorende coaches van een bepaalde gebruiker en de overige coaches worden weergegeven.
+     *
+     * @see RelatiesBeheren::archiveerBijhorendeCoach()
+     * @see RelatiesBeheren::voegToeBijhorendeCoach()
+     * 
+     * Gemaakt door Nico Claes
+     */
+
     //var_dump(json_encode($coaches));
 ?>
 <script>
