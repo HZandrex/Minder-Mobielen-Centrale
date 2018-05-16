@@ -32,6 +32,20 @@ class Gebruiker_model extends CI_Model
     }
 
     /**
+     * Retourneert alle records met active=1 uit de tabel gebruiker.
+     * @return De opgevraagde records
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    function getAllActive()
+    {
+        $this->db->where('active', 1);
+        $this->db->order_by('voornaam', 'ASC');
+        $query = $this->db->get('gebruiker');
+        return $query->result();
+    }
+
+    /**
      * Retourneert alle records met active=0 uit de tabel gebruiker.
      * @return De opgevraagde records
      *
@@ -40,6 +54,7 @@ class Gebruiker_model extends CI_Model
     function getAllInActive()
     {
         $this->db->where('active', 0);
+        $this->db->order_by('voornaam', 'ASC');
         $query = $this->db->get('gebruiker');
         return $query->result();
     }
@@ -139,7 +154,7 @@ class Gebruiker_model extends CI_Model
      */
     function updateGebruiker($gebruiker)
     {
-        $gebruiker->mail = ucfirst(strtolower($gebruiker->mail));
+        $gebruiker->mail = strtolower($gebruiker->mail);
         $this->db->where('id', $gebruiker->id);
         $this->db->update('gebruiker', $gebruiker);
     }
@@ -185,7 +200,7 @@ class Gebruiker_model extends CI_Model
             'naam' => $gebruiker->naam,
             'geboorte' => $gebruiker->geboorte,
             'telefoon' => $gebruiker->telefoon,
-            'mail' => ucfirst(strtolower($gebruiker->mail)),
+            'mail' => strtolower($gebruiker->mail),
             'voorkeurId' => $gebruiker->voorkeurId,
             'adresId' => $gebruiker->adresId
         );
@@ -206,7 +221,7 @@ class Gebruiker_model extends CI_Model
     function getGebruiker($email, $wachtwoord)
     {
         // geef gebruiker-object met $email en $wachtwoord EN geactiveerd = 1
-        $this->db->where('mail', $email);
+        $this->db->where('mail', strtolower($email));
         $this->db->where('active', 1);
         $query = $this->db->get('gebruiker');
 
