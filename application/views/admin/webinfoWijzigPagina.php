@@ -38,7 +38,7 @@
             <input type="tel" class="form-control" name="contactTelefoon" value= "<?php echo $webinfo["contactTelefoon"]?>" required>
         </div>
         <div class="form-group">
-            <?php echo form_label('Mail:', 'contactMail'); ?>
+            <?php echo form_label('E-mail:', 'contactMail'); ?>
             <input type="email" class="form-control" name="contactMail" value= "<?php echo $webinfo["contactMail"]?>" required>
         </div>
         <div class="form-group">
