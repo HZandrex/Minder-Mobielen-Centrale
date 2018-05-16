@@ -136,8 +136,13 @@ class MijnMM extends CI_Controller
     {
         $this->load->model('gebruiker_model');
         $this->load->model('adres_model');
+        $id = $this->input->post('id');
 
-        $gebruiker = $this->gebruiker_model->getEmpty();
+        if ($id != 0){
+            $gebruiker = $this->gebruiker_model->get($id);
+        } else{
+            $gebruiker = $this->gebruiker_model->getEmpty();
+        }
         foreach ($gebruiker as $attribut => $waarde) {
             $post = $this->input->post($attribut);
             if ($post != null) {
