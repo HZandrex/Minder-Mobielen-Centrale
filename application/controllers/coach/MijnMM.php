@@ -188,10 +188,10 @@ class MijnMM extends CI_Controller
 
     /**
      * Gaat kijken of het oude wachtwoord juist is via Gebruiker_model hiervoor wordt ook eerst de bijhorende gebruiker opgehaald,
-     * wanneer dit niet juist is word een foutmelding gegeven via Coach::mijnMM::toonFoutOudWachtwoord().
+     * wanneer dit niet juist is word een foutmelding gegeven via MijnMM::toonFoutOudWachtwoord().
      * Vervolgens wordt gekeken of er 2x hetzelfde wachtwoord werd opgegeven zoniet word een foutmelding gegeven via PersoonlijkeGegevens::toonFoutWachtwoordOvereenkomst().
      * Wanneer dit allemaal juist is zal het wachtwoord worden veranderd via Gebruiker_model, wordt een mail gestuurd om dit te melden
-     * en wordt er een melding getoont via Coach::mijnMM::toonWachtwoordVeranderd().
+     * en wordt er een melding getoont via MijnMM::toonWachtwoordVeranderd().
      *
      * @see Gebruiker_model::get()
      * @see Gebruiker_model::getGebruiker()
@@ -246,9 +246,9 @@ class MijnMM extends CI_Controller
     }
 
     /**
-     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
+     * Dit zal MijnMM::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
-     * @see PersoonlijkeGegevens::toonMelding()
+     * @see MijnMM::toonMelding()
      *
      * Gemaakt door Geffrey Wuyts
      */
@@ -263,9 +263,9 @@ class MijnMM extends CI_Controller
     }
 
     /**
-     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
+     * Dit zal MijnMM::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
-     * @see PersoonlijkeGegevens::toonMelding()
+     * @see MijnMM::toonMelding()
      *
      * Gemaakt door Geffrey Wuyts
      */
@@ -280,9 +280,9 @@ class MijnMM extends CI_Controller
     }
 
     /**
-     * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
+     * Dit zal MijnMM::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
-     * @see PersoonlijkeGegevens::toonMelding()
+     * @see MijnMM::toonMelding()
      *
      * Gemaakt door Geffrey Wuyts
      */

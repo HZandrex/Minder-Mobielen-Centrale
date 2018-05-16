@@ -8,6 +8,8 @@
      * @see Inloggen::wachtwoordVeranderen()
      *
      * Gemaakt door Tijmen Elseviers
+	 *
+	 * Medemogelijk door Geffrey Wuyts
      */
 ?>
 

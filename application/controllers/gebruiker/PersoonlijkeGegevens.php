@@ -46,7 +46,7 @@ class PersoonlijkeGegevens extends CI_Controller
      *
      * @see Gebruiker_model::getWithFunctions()
 	 * @see Voorkeur_model::getAll()
-     * @see Gebruiker::gegevensWijzigen()
+     * @see gebruiker/gegevensWijzigen.php
      *
 	 * Gemaakt door Tijmen Elseviers
      */
@@ -82,7 +82,6 @@ class PersoonlijkeGegevens extends CI_Controller
      * @see Gebruiker_model::get()
 	 * @see Gebruiker_model::updateGebruiker()
      * @see Adres_model::updateAdres()
-     * @see Medewerker::gebruikersBeheren()
      * @see PersoonlijkeGegevens::persoonlijkeGegevens()
 	 *
 	 * Gemaakt door Tijmen Elseviers
