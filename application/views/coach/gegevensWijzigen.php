@@ -19,7 +19,7 @@ $attributen = array('name' => 'wijzigenGegevensFormulier',
     'novalidate' => 'novalidate',
     'class' => 'form-horizontal needs-validation');
 $hidden = array('id' => $editGebruiker->id);
-echo form_open('gebruiker/persoonlijkeGegevens/gegevensVeranderen', $attributen, $hidden);
+echo form_open('coach/mijnMM/gegevensVeranderen', $attributen, $hidden);
 ?>
 <style>
     .pac-container {
@@ -139,19 +139,20 @@ echo form_open('gebruiker/persoonlijkeGegevens/gegevensVeranderen', $attributen,
             <h4 class="col-12">Adresgegevens</h4>
             <div class="col-12">
                 <label for="adres">Thuis adres: </label>
-                <select class="custom-select" id="adres" name="adresId">
-                    <?php
-                    $selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
-                    foreach ($adressen as $adres) {
-                        if ($adres->id == $editGebruiker->adres->id) {
-                            $selectAdressen .= '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                        } else {
-                            $selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                        }
-                    }
-                    echo $selectAdressen;
-                    ?>
-                </select>
+				<select class="custom-select" id="adres" name="adresId" required>
+					<?php
+					$selectAdressen = '<option value="" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
+					foreach ($adressen as $adres) {
+						if ($adres->id == $editGebruiker->adres->id) {
+							$selectAdressen .= '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+						} else {
+							$selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+						}
+					}
+					echo $selectAdressen;
+					?>
+				</select>
+				<div class="invalid-feedback">Selecteer een bestaand adres of maak een nieuw aan!</div>
             </div>
         </div>
     </div>
