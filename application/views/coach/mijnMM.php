@@ -9,6 +9,8 @@
  * @see MijnMM::haalAjaxOp_GebruikerInfo()
  *
  * Gemaakt door Tijmen Elseviers
+ *
+ * Medemogelijk door Geffrey Wuyts
  */
 ?>
 

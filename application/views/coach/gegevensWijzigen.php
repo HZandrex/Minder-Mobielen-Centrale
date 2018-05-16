@@ -8,6 +8,8 @@
  * @see MijnMM::gegevensVeranderen()
  *
  * Gemaakt door Tijmen Elseviers
+ *
+ * Medemogelijk door Geffrey Wuyts
  */
 ?>
 
