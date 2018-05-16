@@ -1,8 +1,12 @@
 <?php
 /**
- * @file medewerker/ajax_gebruikerInfo.php
+ * @file coach/ajax_gebruikerInfo.php
  *
  * View waarin de gebruikersinfo van een gebruiker toont
+ *
+ * Gemaakt door Tijmen Elseviers
+ *
+ * Medemogelijk door Geffrey Wuyts
  */
 ?>
 

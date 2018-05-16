@@ -29,6 +29,8 @@ class Authex {
      * @see Authex::isAangemeld()
      *
      * @return Null wanneer er niemand is ingelogd anders een gebruiker object
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function getGebruikerInfo() {
         // geef gebruiker-object als gebruiker aangemeld is
@@ -46,6 +48,8 @@ class Authex {
      * Kijkt of er een id zit in de sessievariabele gebruiker_id.
      *
      * @return bool
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function isAangemeld() {
         // gebruiker is aangemeld als sessievariabele gebruiker_id bestaat
@@ -69,6 +73,8 @@ class Authex {
      * @see Gebruiker_model::getGebruiker()
      *
      * @return bool
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function meldAan($email, $wachtwoord) {
         // gebruiker aanmelden met opgegeven email en wachtwoord
@@ -86,6 +92,8 @@ class Authex {
 
     /**
      * Gaat de sessievariabele gebruiker_id leegmaken en zo de gebruiker afmelden.
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     function meldAf() {
         // afmelden, dus sessievariabele wegdoen

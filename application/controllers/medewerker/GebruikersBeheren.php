@@ -37,12 +37,8 @@ class GebruikersBeheren extends CI_Controller
 
         foreach ($gebruiker->functies as $functie) {
             $this->load->model('functie_model');
-            if ($functie->id == 4){
-                $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
-            }
-            if ($functie->id == 5){
-                $data['functies'] = $this->functie_model->getAll(5); //5 = alle functies buiten admin
-            }
+            if ($functie->id == 4) $data['functies'] = $this->functie_model->getAll(4); //4 = alle functies buiten medewerker & admin
+            if ($functie->id == 5) $data['functies'] = $this->functie_model->getAll(5); //5 = alle functies buiten admin
             if ($functie->id < 4) {//id=4 -> Medewerker
                 redirect('admin/instellingen/toonfoutonbevoegd');
             }
@@ -56,18 +52,29 @@ class GebruikersBeheren extends CI_Controller
             $data['firstVisit'] = false;
         }
 
-        $inActive = $this->functie_model->getEmpty();
-        $inActive->naam = "Niet actief";
-        array_push($data['functies'], $inActive);
+        $data['functies'] = $this->voegFunctiesToe($data['functies']);
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gebruikersBeherenOverzicht');
-
         $this->template->load('main_master', $partials, $data);
+    }
+
+    private function voegFunctiesToe($functies){;
+        $inActive = $this->functie_model->getEmpty();
+        $inActive->id = 0;
+        $inActive->naam = "Niet actief";
+        array_push($functies, $inActive);
+        $all = $this->functie_model->getEmpty();
+        $all->id = -1;
+        $all->naam = "Alle gebruikers";
+        array_unshift($functies, $all);
+
+        return $functies;
     }
 
     /**
      * Haalt alle gebruikers op met een bepaalde functie via het FunctieGebruiker_model. Het functieId wordt doorgegeven via de view medewerker/gebruikersBeherenOverzicht.php.
-     * Wanneer er geen functie wordt meegegeven zullen alle gebruikers worden getoond die niet actief zijn via het Gebruiker_model.
+     * Wanneer er functie=0 wordt meegegeven zullen alle gebruikers worden getoond die niet actief zijn via het Gebruiker_model.
+     * Anders wordt er gekeken wie er is ingelogd (admin of medewerker) en worden alle gebruikers weergegeven die zij mogen beheren.
      * Al de gebruikers worden getoond via de view medewerker/ajax_Gebruikers.php
      *
      * @see FunctieGebruiker_model::getAllGebruikersByFunction()
@@ -79,13 +86,24 @@ class GebruikersBeheren extends CI_Controller
      */
     public function haalAjaxOp_GebruikersOpFunctie()
     {
+        $gebruiker = $this->authex->getGebruikerInfo();
+        $this->load->model('gebruiker_model');
+        $this->load->model('functieGebruiker_model');
         $functieId = $this->input->get('functieId');
-        if ($functieId != null){
-            $this->load->model('functieGebruiker_model');
+        if ($functieId > 0){
             $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersByFunction($functieId);
-        } else{
-            $this->load->model('gebruiker_model');
+        } elseif ($functieId == 0){
             $data['gebruikers'] = $this->gebruiker_model->getAllInActive();
+        } else{
+            foreach ($gebruiker->functies as $functie) {
+                $this->load->model('functie_model');
+                if ($functie->id == 4){
+                    $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersUntilFunction(4);
+                }
+                if ($functie->id == 5){
+                    $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersUntilFunction(5);
+                }
+            }
         }
 
         $this->load->view('medewerker/ajax_gebruikers', $data);
@@ -103,6 +121,18 @@ class GebruikersBeheren extends CI_Controller
      */
     public function haalAjaxOp_GebruikerInfo()
     {
+        $gebruiker = $this->authex->getGebruikerInfo();
+        if ($gebruiker != null) {
+            $data['gebruiker'] = $gebruiker;
+        } else {
+            redirect('gebruiker/inloggen');
+        }
+        foreach ($gebruiker->functies as $functie) {
+            if ($functie->id < 4) {//id=4 -> Medewerker
+                redirect('admin/instellingen/toonfoutonbevoegd');
+            }
+        }
+
         $gebruikerId = $this->input->get('gebruikerId');
 
         $this->load->model('gebruiker_model');
@@ -233,7 +263,7 @@ class GebruikersBeheren extends CI_Controller
      *
      * Bij het aanpassen van en al bestaande gebruiker gebeurt dit ook door het Gebruiker_model.
      *
-     * Als laatste worden de functies van de gebruiker aangepast wanneer nodig via GebruikersBeheren::pasFunctieGebruikerAan()
+     * Als laatste worden de functies van de gebruiker aangepast wanneer nodig via de private functie GebruikersBeheren::pasFunctieGebruikerAan()
      * en wordt er een melding getoond GebruikersBeheren::toonGegevensGewijzigd()
      *
      * @see Gebruiker_model::getByMail()
@@ -242,7 +272,6 @@ class GebruikersBeheren extends CI_Controller
      * @see GebruikersBeheren::toonFoutDatum()
      * @see GebruikersBeheren::toonFoutBestaandeMail()
      * @see GebruikersBeheren::toonGegevensGewijzigd()
-     * @see GebruikersBeheren::pasFunctieGebruikerAan()
      *
      * Gemaakt door Geffrey Wuyts
      */
@@ -367,7 +396,25 @@ class GebruikersBeheren extends CI_Controller
             }
         }
     }
-
+    /**
+     * Eerst wordt de gebruiker opgehaald via het Gebruiker_model. Vervolgens wordt er gekeken of de gebruiker op deze moment al actief is.
+     * Wanneer deze nog niet actief is en een mail heeft ingesteld zal er resetToken worden aangemaakt en vervolgens wordt je doorgestuurd naar Inloggen::wachtwoordVergetenWijzigen().
+     * Wanneer deze nog geen mail heeft ingesteld zal eerst de gebruiker worden geactiveerd via het Gebruiker_model en vervolgens wordt er een melding getoond via GebruikersBeheren::toonStatusVeranderd().
+     *
+     * Wanneer deze al actief is zal deze gedeactiveerd worden via het Gebruiker_model en zal er ook een melding worden getoond via GebruikersBeheren::toonStatusVeranderd().
+     *
+     * @param $id Het id van een gebruiker waarvan de status moet worden aangepast
+     * 
+     * @see Gebruiker_model::get()
+     * @see Gebruiker_model::controleerResetToken()
+     * @see Gebruiker_model::wijzigResetToken()
+     * @see Gebruiker_model::activeerGebruiker()
+     * @see Gebruiker_model::deactiveerGebruiker()
+     * @see GebruikersBeheren::toonStatusVeranderd()
+     * @see Inloggen::wachtwoordVergetenWijzigen()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
     public function pasStatusGebruikerAan($id){
         $this->load->model('gebruiker_model');
         $gebruiker = $this->authex->getGebruikerInfo();
@@ -377,7 +424,7 @@ class GebruikersBeheren extends CI_Controller
             redirect('gebruiker/inloggen');
         }
         foreach ($gebruiker->functies as $functie) {
-            if ($functie->id < 4) {//id=4 -> Medewerker
+            if ($functie->id < 4) {
                 redirect('admin/instellingen/toonfoutonbevoegd');
             }
         }
@@ -404,19 +451,16 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Stuurt een E-mail naar het ogegeven mailadres $geadresseerde, de mail wordt opgesteld
-     * met de parameters $titel en $boodschap. Dit gebeurd via de email library.
-     * De parameters komen van een andere functie waar deze functie wordt opgeroepen bv. inloggen::nieuwWachtwoordAanvragen().
-     *
-     * De configuratie van het mail adres waar me wordt verzonden is email.php dat zich bevind in de config map.
+     * Stuurt een mail. Voor verdere uitleg zie Inloggen::stuurMail().
      *
      * @param $geadresseerde Het mailadres waar de mail naar wordt gestuurd
      * @param $boodschap De inhoud van de mail
      * @param $titel De titel van de mail
      *
-     * @see email.php
-     * @see inloggen::nieuwWachtwoordAanvragen()
+     * @see Inloggen::stuurMail()
      * @return bool
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     private function stuurMail($geadresseerde, $boodschap, $titel) {
         $this->load->library('email');
@@ -443,6 +487,8 @@ class GebruikersBeheren extends CI_Controller
      * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
      *
      * @see main_melding.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonMelding($foutTitel, $boodschap, $link)
     {
@@ -459,9 +505,11 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutWachtwoordWijzigen($id)
     {
@@ -474,9 +522,11 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutBestaandeMail()
     {
@@ -489,9 +539,11 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutUrl()
     {
@@ -504,9 +556,11 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutOpslaan($id)
     {
@@ -519,9 +573,11 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutDatum()
     {
@@ -534,9 +590,11 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonWachtwoordGewijzigd()
     {
@@ -549,9 +607,11 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonGegevensGewijzigd()
     {
@@ -564,9 +624,11 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonStatusVeranderd($status)
     {
@@ -581,6 +643,8 @@ class GebruikersBeheren extends CI_Controller
      * Genereert een string van 20 willekeurige karakters uit de string $chars.
      *
      * @return $resetToken om vijlig wachtwoord te kunnen wijzigen
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     private function random_resetToken() {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

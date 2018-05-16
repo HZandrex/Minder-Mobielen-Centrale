@@ -5,7 +5,9 @@
      * View waarin het wachtwoord veranderd kan worden
      * - geeft via wachtwoordVeranderenForm oudWachtwoord, nieuwWachtwoord & wachtwoordBevestigen door naar PersoonlijkeGegevens::wachtwoordVeranderen()
      * 
-     * @see PersoonlijkeGegevens::wachtwoordVeranderen())
+     * @see PersoonlijkeGegevens::wachtwoordVeranderen()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
 ?>
 

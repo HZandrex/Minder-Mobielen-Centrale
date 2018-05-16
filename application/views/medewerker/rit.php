@@ -5,6 +5,8 @@
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
 	* - krijgt een $vrijwilligers object binnen
+        * 
+        * Gemaakt door Nico Claes en Michiel Olijslagers
 */
         // var_dump($rit);
 		// var_dump($vrijwilligers);

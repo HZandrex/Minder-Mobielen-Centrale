@@ -4,6 +4,8 @@
      * 
      * View waarin een melding wordt weergegeven
      * - de inhoud wordt megeven bij het oproepen van deze view
+     *
+     * Gemaakt door Geffrey Wuyts
      */
 ?>
 

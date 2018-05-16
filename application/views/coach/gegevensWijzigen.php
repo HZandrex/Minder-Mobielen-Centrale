@@ -6,11 +6,18 @@
  * - geeft via wijzigenGegevensFormulier alle gegevens door naar MijnMM::gegevensVeranderen()
  *
  * @see MijnMM::gegevensVeranderen()
+ *
+ * Gemaakt door Tijmen Elseviers
+ *
+ * Medemogelijk door Geffrey Wuyts
  */
 ?>
 
 <?php
-$attributen = array('name' => 'wijzigenGegevensFormulier', 'class' => 'form-horizontal');
+$attributen = array('name' => 'wijzigenGegevensFormulier',
+    'id' => 'wijzigenGegevensFormulier',
+    'novalidate' => 'novalidate',
+    'class' => 'form-horizontal needs-validation');
 $hidden = array('id' => $editGebruiker->id);
 echo form_open('coach/mijnMM/gegevensVeranderen', $attributen, $hidden);
 ?>
@@ -19,34 +26,99 @@ echo form_open('coach/mijnMM/gegevensVeranderen', $attributen, $hidden);
         z-index: 10000;
     }
 
+    input::-webkit-calendar-picker-indicator{
+        display: none;
+    }
+    input[type="date"]::-webkit-input-placeholder{
+        visibility: hidden !important;
+    }
+
 </style>
 <div class=row>
     <div class="col-lg-6 col-sm-12">
         <div class="row">
             <h4 class="col-12">Contactgegevens</h4>
             <div class="col-6">
-                <?php echo form_label('Voornaam:', 'voornaam'); ?>
-                <input type="text" class="form-control" name="voornaam"
-                       value="<?php echo $editGebruiker->voornaam ?>"
-                       required>
+                <div class="form-group">
+                    <?php
+                    echo form_labelpro('Voornaam', 'voornaam');
+                    $dataVoornaam = array('id' => 'voornaam',
+                        'name' => 'voornaam',
+                        'class' => 'form-control',
+                        'value' => $editGebruiker->voornaam,
+                        'placeholder' => 'Voornaam',
+                        'required' => 'required');
+                    echo form_input($dataVoornaam) . "\n";
+                    ?>
+                    <div class="invalid-feedback">Vul een voornaam in!</div>
+                </div>
             </div>
             <div class="col-6">
-                <?php echo form_label('Naam:', 'naam'); ?>
-                <input type="text" class="form-control" name="naam" value="<?php echo $editGebruiker->naam ?>"
-                       required>
+                <div class="form-group">
+                    <?php
+                    echo form_labelpro('Naam', 'naam');
+                    $dataNaam = array('id' => 'naam',
+                        'name' => 'naam',
+                        'class' => 'form-control',
+                        'value' => $editGebruiker->naam,
+                        'placeholder' => 'Naam',
+                        'required' => 'required');
+                    echo form_input($dataNaam) . "\n";
+                    ?>
+                    <div class="invalid-feedback">Vul een naam in!</div>
+                </div>
             </div>
             <div class="col-12">
-                <?php echo form_label('Geboorte:', 'geboorte'); ?>
-                <input type="date" class="form-control" name="geboorte"
-                       value="<?php print $editGebruiker->geboorte ?>"
-                       required>
-                <?php echo form_label('Telefoon:', 'telefoon'); ?>
-                <input type="text" class="form-control" name="telefoon"
-                       value="<?php echo $editGebruiker->telefoon ?>"
-                       required>
-                <?php echo form_label('Email:', 'mail'); ?>
-                <input type="text" class="form-control" name="mail" value="<?php echo $editGebruiker->mail ?>"
-                       required>
+                <div class="form-group">
+                    <?php echo form_labelpro('Geboorte', 'geboorte'); ?>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for='geboorte'>
+                                <i class="fas fa-calendar-alt"></i>
+                            </label>
+                        </div>
+                        <?php
+                        $dataNaam = array('id' => 'geboorte',
+                            'name' => 'geboorte',
+                            'class' => 'form-control datepicker',
+                            'value' => $editGebruiker->geboorte,
+                            'data-provide' => 'datepicker',
+                            'type' => 'date',
+                            'required' => 'required');
+                        echo form_input($dataNaam) . "\n";
+                        ?>
+                        <div class="invalid-feedback" id="errorGeboorte">Vul een geboortedatum in!</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <?php
+                    echo form_labelpro('Telefoon (zonder spaties)', 'telefoon');
+                    $dataTelefoon = array('id' => 'telefoon',
+                        'name' => 'telefoon',
+                        'class' => 'form-control',
+                        'value' => $editGebruiker->telefoon,
+                        'required' => 'required',
+                        'minlength' => '9',
+                        'pattern' => '^[0-9]*$');
+                    echo form_input($dataTelefoon) . "\n";
+                    ?>
+                    <div class="invalid-feedback">Geef een geldige telefoon nummer in!</div>
+                </div>
+
+                <div class="form-group">
+                    <?php
+                    echo form_labelpro('E-mail', 'mail');
+                    $dataMail = array('id' => 'mail',
+                        'name' => 'mail',
+                        'class' => 'form-control',
+                        'value' => $editGebruiker->mail,
+                        'required' => 'required',
+                        'type' => 'mail');
+                    echo form_input($dataMail) . "\n";
+                    ?>
+                    <div class="invalid-feedback">Geef een geldig e-mailadres in!</div>
+                </div>
                 <?php echo form_label('Gewenst communicatiemiddel:', 'voorkeur'); ?>
                 <select class="form-control" name="voorkeurId" required>
                     <?php
@@ -67,19 +139,20 @@ echo form_open('coach/mijnMM/gegevensVeranderen', $attributen, $hidden);
             <h4 class="col-12">Adresgegevens</h4>
             <div class="col-12">
                 <label for="adres">Thuis adres: </label>
-                <select class="custom-select" id="adres" name="adresId">
-                    <?php
-                    $selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
-                    foreach ($adressen as $adres) {
-                        if ($adres->id == $editGebruiker->adres->id) {
-                            $selectAdressen .= '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                        } else {
-                            $selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
-                        }
-                    }
-                    echo $selectAdressen;
-                    ?>
-                </select>
+				<select class="custom-select" id="adres" name="adresId" required>
+					<?php
+					$selectAdressen = '<option value="" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
+					foreach ($adressen as $adres) {
+						if ($adres->id == $editGebruiker->adres->id) {
+							$selectAdressen .= '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+						} else {
+							$selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
+						}
+					}
+					echo $selectAdressen;
+					?>
+				</select>
+				<div class="invalid-feedback">Selecteer een bestaand adres of maak een nieuw aan!</div>
             </div>
         </div>
     </div>
@@ -146,6 +219,32 @@ echo form_open('coach/mijnMM/gegevensVeranderen', $attributen, $hidden);
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete"
         async defer></script>
 <script>
+(function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        weekStart: 1,
+        endDate: '+0d',
+        autoclose: true,
+        language: 'nl'
+    });
+
     $('select').change(function () {
         if ($(this).val() == 'nieuwAdres') {
             $('#exampleModal').attr('data-id', $(this).attr('id'));
@@ -154,7 +253,6 @@ echo form_open('coach/mijnMM/gegevensVeranderen', $attributen, $hidden);
     });
 
     $('#anuleerAdres').click(function () {
-        $('#' + $('#exampleModal').attr('data-id')).val('default');
         $('#exampleModal').modal('hide');
         $("form#adres :input").each(function () {
             $(this).val('');

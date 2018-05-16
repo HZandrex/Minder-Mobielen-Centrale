@@ -6,8 +6,12 @@
  *
  * Model-klasse die alle methodes bevat om te interageren met de database-tabel voorkeur.
  */
-class Voorkeur_model extends CI_Model {
+class Voorkeur_model extends CI_Model
+{
 
+    /**
+     * Constructor
+     */
     function __construct()
     {
         parent::__construct();
@@ -20,7 +24,8 @@ class Voorkeur_model extends CI_Model {
      *
      * Gemaakt door Geffrey Wuyts
      */
-    function get($id) {
+    function get($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('voorkeur');
         return $query->row();
@@ -33,8 +38,9 @@ class Voorkeur_model extends CI_Model {
      *
      * Gemaakt door Geffrey Wuyts
      */
-    function getByNaam($naam) {
-        $this->db->where('naam', $naam);
+    function getByNaam($naam)
+    {
+        $this->db->where('naam', ucfirst(strtolower($naam)));
         $query = $this->db->get('voorkeur');
         return $query->row();
     }
@@ -45,11 +51,12 @@ class Voorkeur_model extends CI_Model {
      *
      * Gemaakt door Geffrey Wuyts
      */
-    function getEmpty(){
+    function getEmpty()
+    {
         $voorkeur = new stdClass();
 
         $voorkeur->id = null;
-        $voorkeur->naam  = null;
+        $voorkeur->naam = null;
 
         return $voorkeur;
     }
@@ -74,7 +81,8 @@ class Voorkeur_model extends CI_Model {
      *
      * Gemaakt door Geffrey Wuyts
      */
-    function voegToe($voorkeur){
+    function voegToe($voorkeur)
+    {
         $voorkeur->naam = ucfirst(strtolower($voorkeur->naam));
         $this->db->insert('voorkeur', $voorkeur);
         return $this->db->insert_id();
@@ -87,7 +95,8 @@ class Voorkeur_model extends CI_Model {
      *
      * Gemaakt door Geffrey Wuyts
      */
-    function wijzigen($voorkeur){
+    function wijzigen($voorkeur)
+    {
         $voorkeur->naam = ucfirst(strtolower($voorkeur->naam));
         $this->db->where('id', $voorkeur->id);
         $this->db->update('voorkeur', $voorkeur);
@@ -101,9 +110,10 @@ class Voorkeur_model extends CI_Model {
      *
      * Gemaakt door Geffrey Wuyts
      */
-    function verwijderen($id){
+    function verwijderen($id)
+    {
         $this->db->where('id', $id);
-        if (!$this->db->delete('voorkeur')){
+        if (!$this->db->delete('voorkeur')) {
             return false;
         }
         return true;

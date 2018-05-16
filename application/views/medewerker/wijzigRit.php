@@ -6,6 +6,8 @@
  * vieuw waar de mindermobiele zijn rit kan aanpassen of annuleren
  * - krijgt een $heen object binnen waar al de nodige info instaat
  * - krijgt een $adress object binnen waar alle adressen instaan die gebruikt zijn geweest
+ * 
+ * Gemaakt door Nico Claes
  */
 
 

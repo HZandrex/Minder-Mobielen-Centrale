@@ -7,6 +7,10 @@
  *   Deze worden opgehaald via de controller MijnMM::haalAjaxOp_GebruikerInfo().
  *
  * @see MijnMM::haalAjaxOp_GebruikerInfo()
+ *
+ * Gemaakt door Tijmen Elseviers
+ *
+ * Medemogelijk door Geffrey Wuyts
  */
 ?>
 
@@ -83,8 +87,9 @@ if (!empty($minderMobielen)){
 
                     <select id="listBoxMinderMobielen" class="form-control" name="listBoxMinderMobielen" size="15">
                     <?php foreach($minderMobielen as $minderMobiel){?>
+						<?php if($minderMobiel->eindDatum == NULL){ ?>
                         <option value="<?php echo $minderMobiel->id?>"><?php echo $minderMobiel->voornaam." ".$minderMobiel->naam ?></option>
-                        <?php } ?>
+                        <?php }} ?>
                     </select>
             </div>
 

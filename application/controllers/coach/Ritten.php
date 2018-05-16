@@ -12,14 +12,12 @@ class Ritten extends CI_Controller {
         parent::__construct();
     }
 
+    /**
+     * Deze functie laad de tabel vol met alle ritten die de coach kan zien, dus alleen van de MM die hij beheerd
+     *
+     * Gemaakt door Lorenz Cleymans
+     */
     public function index() {
-        /**
-         * Deze functie laad de tabel vol met alle ritten die de coach kan zien, dus alleen van de MM die hij beheerd
-         *
-         * @see Gemaakt door Lore Cleymans
-         */
-
-
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null){
             $this->load->model('coachMinderMobiele_model');
@@ -33,7 +31,6 @@ class Ritten extends CI_Controller {
             $data['titel'] = 'Ritten';
             $data['author'] = 'L. Cleymans';
 
-
             $partials = array('menu' => 'main_menu','inhoud' => 'coach/ritten');
             $this->template->load('main_master', $partials, $data);
 
@@ -42,12 +39,12 @@ class Ritten extends CI_Controller {
         }
     }
 
+    /**
+     * Deze functie geeft een foutmelding, deze kan opgeroepen worden door eender welke functie.
+     *
+     * Gemaakt door Lorenz Cleymans
+     */
     public function toonFoutUrl() {
-        /**
-         * Deze functie geeft een foutmelding, deze kan opgeroepen worden door eender welke functie.
-         *
-         * @see Gemaakt door Loren Cleymans
-         */
         $titel = "Fout!";
         $boodschap = "U moet ingelogd zijn om deze functie te kunnen gebruiken";
         $link = array("url" => "gebruiker/inloggen", "tekst" => "Ga naar login");
@@ -55,12 +52,14 @@ class Ritten extends CI_Controller {
         $this->toonMelding($titel, $boodschap, $link);
     }
 
+    /**
+     * Deze functie roept een foutmelding aan, hier kan je kiezen welke foutmelding je kan oproepen.
+     * @param $foutTitel  dient voor de titel
+     * @param $boodschap dient voor de boodschap
+     * @param dient voor de waar de webpagina naar toe moet gaan met een link.
+     * Gemaakt door Lorenz Cleymans
+     */
     public function toonMelding($foutTitel, $boodschap, $link) {
-        /**
-         * Deze functie roept een foutmelding aan, hier kan je kiezen welke foutmelding je kan oproepen.
-         *
-         * @see Gemaakt door Loren Cleymans
-         */
         $data['titel'] = '';
         $data['author'] = 'L. Cleymans';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
@@ -73,12 +72,12 @@ class Ritten extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
+    /**
+     * Deze functie zorgt er voor dat er een nieuwe rit wordt toegevoegd in de database.
+     * @param $id deze parameter is het nieuwe id voor een rit voor een specifieke gebruiker van een minder mobiele
+     * Gemaakt door Lorenz Cleymans
+     */
     public function nieuweRit($id){
-        /**
-         * Deze functie zorgt er voor dat er een nieuwe rit wordt toegevoegd in de database.
-         *
-         * @see Gemaakt door Loren Cleymans
-         */
         $this->load->model('rit_model');
         $data['titel'] = 'Nieuwe rit';
         $data['author'] = 'L. Cleymans';
@@ -95,12 +94,12 @@ class Ritten extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
+    /**
+     * Deze functie zorgt er voor dat er een rit kan worden gewijzigd je krijgt een id mee en alle waarden die moeten aangepast worden. Deze past ook alles aan in de database
+     * @param $id deze parameter zegt welke rit er wordt gewijzigd.
+     * Gemaakt door Lorenz Cleymans
+     */
     public function wijzigRit($id){
-        /**
-         * Deze functie zorgt er voor dat er een rit kan worden gewijzigd je krijgt een id mee en alle waarden die moeten aangepast worden. Deze past ook alles aan in de database
-         *
-         * @see Gemaakt door Lorenz Cleymans
-         */
         $this->load->model('rit_model');
         $data['titel'] = 'Wijzig rit';
         $data['author'] = 'L. Cleymans';
@@ -117,12 +116,15 @@ class Ritten extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
+    /**
+     * Deze functie zorgt er voor dat er een rit kan kan worden weergeven, ook alle details van die rit.
+     * @param $ritId deze parameter zorgt er voor dat de juiste rit wordt opgehaald uit de database
+     *
+     * @see $ritId rit_model::getByRitId()
+     *
+     * Gemaakt door Lorenz Cleymans
+     */
     public function eenRit($ritId){
-        /**
-         * Deze functie zorgt er voor dat er een rit kan kan worden weergeven, ook alle details van die rit.
-         *
-         * @see Gemaakt door Lorenz Cleymans
-         */
         $this->load->model('rit_model');
         $data['rit'] = $this->rit_model->getByRitId($ritId);
 
@@ -135,14 +137,15 @@ class Ritten extends CI_Controller {
         $partials = array('menu' => 'main_menu','inhoud' => 'coach/rit');
         $this->template->load('main_master', $partials, $data);
     }
-	
+
+    /**
+     * Deze functie zorgt er voor dat de status kan aangepast worden van een rit, er wordt een rit meegegeven en zo kan de volgende functie deze herkenen.
+     * @param $ritId Dit is het id van de gevraagde rit
+     * @see $ritId rit_model::updateStatusRitten()
+     *
+     * Gemaakt door Lorenz Cleymans
+     */
     public function statusAanpassen($ritId){
-        /**
-         * Deze functie zorgt er voor dat de status kan aangepast worden van een rit, er wordt een rit meegegeven en zo kan de volgende functie deze herkenen.
-         *
-         * @see rit_model::updateStatusRitten()
-         * @see Gemaakt door Lorenz Cleymans
-         */
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker == null) {
             redirect('gebruiker/inloggen');
@@ -152,14 +155,15 @@ class Ritten extends CI_Controller {
 
         redirect('coach/ritten');
     }
-	
+
+    /**
+     * Deze functie zorgt er voor dat de credits van een MM worden weergegeven.
+     *
+     * @see gebruiker_model::getCredits()
+     *
+     * Gemaakt door Michiel Olijslagers
+     */
     public function berekenCredits(){
-        /**
-         * Deze functie zorgt er voor dat de credits van een MM worden weergegeven.
-         *
-         * @see gebruiker_model::getCredits()
-         * @see Gemaakt door Michiel Olijslagers
-         */
         $this->load->model('gebruiker_model');
 
         $userId = htmlspecialchars(trim($_POST['userId']));
@@ -170,16 +174,16 @@ class Ritten extends CI_Controller {
 
         echo json_encode($credits);
     }
-	
-    public function berekenKost(){
-        /**
-         * Deze functie zorgt er voor dat de kost voor van punt A naar punt B te gaan berekend kan worden.
-         *
-         * @see google_model::getReisTijd()
-         * @see instelling_model::getValueById()
-         * @see Gemaakt door Michiel Olijslagers
-         */
 
+    /**
+     * Deze functie zorgt er voor dat de kost voor van punt A naar punt B te gaan berekend kan worden.
+     *
+     * @see google_model::getReisTijd()
+     * @see instelling_model::getValueById()
+     *
+     * Gemaakt door Michiel Olijslagers
+     */
+    public function berekenKost(){
         $this->load->model('google_model');
         $this->load->model('instelling_model');
 
@@ -192,15 +196,16 @@ class Ritten extends CI_Controller {
 
         echo json_encode ($afstand);
     }
-	
+
+    /**
+     * Deze functie zorgt er voor dat de er een nieuw adres in de select kan worden toegevoegd. Dit met behuld van Google.
+     *
+     * @see adres_model::bestaatAdres()
+     * @see adres_model::addAdres()
+     *
+     * Gemaakt door Michiel Olijslagers
+     */
     public function nieuwAdres(){
-        /**
-         * Deze functie zorgt er voor dat de er een nieuw adres in de select kan worden toegevoegd. Dit met behuld van Google.
-         *
-         * @see adres_model::bestaatAdres()
-         * @see adres_model::addAdres()
-         * @see Gemaakt door Michiel Olijslagers
-         */
         $this->load->model('adres_model');
         //check of adres al bestaat
         $bestaat = $this->adres_model->bestaatAdres(htmlspecialchars(trim($_POST['huisnummer'])), htmlspecialchars(trim($_POST['straat'])), htmlspecialchars(trim($_POST['gemeente'])), htmlspecialchars(trim($_POST['postcode'])));
@@ -211,16 +216,17 @@ class Ritten extends CI_Controller {
             echo json_encode ($this->adres_model->getById($id));
         }
     }
-	
-    public function wijzigRitOpslaan(){
-        /**
-         * Deze functie zorgt er voor dat de wijzigen van een rit kunnnen worden opgeslagen deze zal verder verwijzen naar de database waar het wordt opgeslagen.
-         *
-         * @see rit_model::saveNewRit()
-         * @see Gemaakt door Michiel Olijslagers
-         * @see Aangepast door Lorenz Cleymans
-         */
 
+    /**
+     * Deze functie zorgt er voor dat de wijzigen van een rit kunnnen worden opgeslagen deze zal verder verwijzen naar de database waar het wordt opgeslagen.
+     *
+     * @see rit_model::saveNewRit()
+     *
+     * Gemaakt door Michiel Olijslagers
+     *
+     * Aangepast door Lorenz Cleymans
+     */
+    public function wijzigRitOpslaan(){
         $this->load->model('rit_model');
 
         $mmId = htmlspecialchars(trim($_POST['userId']));
@@ -249,14 +255,17 @@ class Ritten extends CI_Controller {
         redirect('coach/ritten');
 
     }
+
+    /**
+     * Deze functie is het einde van een nieuwe rit, hier zal een rit in de database gestoken worden.
+     *
+     * @see rit_model::saveNewRit()
+     *
+     * Gemaakt door Michiel Olijslagers
+     *
+     * Aangepast door Lorenz Cleymans voor coach
+     */
     public function nieuweRitOpslaan(){
-        /**
-         * Deze functie is het einde van een nieuwe rit, hier zal een rit in de database gestoken worden.
-         *
-         * @see rit_model::saveNewRit()
-         * @see Gemaakt door Michiel Olijslagers
-         * @see Aangepast door Lorenz Cleymans voor coach
-         */
         $this->load->model('rit_model');
 
         $mmId = htmlspecialchars(trim($_POST['userId']));
@@ -284,10 +293,5 @@ class Ritten extends CI_Controller {
 
         redirect('coach/ritten');
     }
-
-
-
-
-
 }
 

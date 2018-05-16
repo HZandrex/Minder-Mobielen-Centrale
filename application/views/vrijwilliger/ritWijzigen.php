@@ -4,6 +4,8 @@
 	*
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
+        * 
+        * Gemaakt door Nico Claes
 */
         //var_dump($rit);
         $attributen = array('name' => 'mijnFormulier', 'class' => 'form-horizontal');
