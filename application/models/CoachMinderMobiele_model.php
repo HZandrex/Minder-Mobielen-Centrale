@@ -18,12 +18,16 @@ class CoachMinderMobiele_model extends CI_Model
     }
 
     /**
-     * Deze functie haalt alle mindermobiele op die bij een specifieke coach behoren.
+     * Deze functie haalt alle mindermobiele op die bij een specifieke coach behoren
+     *
+     * @param $id deze dit is de id van de coach die bij een mindermobiele hoort.
      *
      * @see Rit_model::getByMMCId()
      * @see Gebruiker_model::get()
      *
      * Gemaakt door Lorenz Cleymans
+     *
+     * @return geeft alle ritten terug voor een coach van alle mindermobiele die hij beheerd
      */
     function getById($id)
     {
@@ -49,10 +53,13 @@ class CoachMinderMobiele_model extends CI_Model
     /**
      * Deze functie haalt alle ID's op waar een $id is gelijk aan een gebruikerCoachId.
      *
-     * @parm $id Een id van een minder mobiele gebruiker.
+     * @param $id Een id van een minder mobiele gebruiker.
      * @see Gebruiker_model::get()
      *
+     * @return Alle mindermobielen
+     *
      * Gemaakt door Lorenz Cleymans
+     *
      */
     function getMMById($id)
     {
@@ -71,7 +78,7 @@ class CoachMinderMobiele_model extends CI_Model
     /**
      * Deze functie haalt alle coaches op die bij een minder mobiele behoort.
      *
-     * @parm $minderMobieleId Een id van een minder mobiele gebruiker.
+     * @param $minderMobieleId Een id van een minder mobiele gebruiker.
      * @see Gebruiker_model::get()
      *
      * @return De bijhorende coaches van een minder mobiele.
@@ -119,7 +126,7 @@ class CoachMinderMobiele_model extends CI_Model
     /**
      * Deze functie archiveerd een coach die tot een minder mobiele gebruiker behoorde.
      *
-     * @parm $coachMinderMobieleId Een id van een coach.
+     * @param $coachMinderMobieleId Een id van een coach.
      *
      * Gemaakt door Nico Claes
      */

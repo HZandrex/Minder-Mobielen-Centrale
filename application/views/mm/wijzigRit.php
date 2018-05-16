@@ -6,6 +6,11 @@
  * vieuw waar de mindermobiele zijn rit kan aanpassen of annuleren
  * - krijgt een $heen object binnen waar al de nodige info instaat
  * - krijgt een $adress object binnen waar alle adressen instaan die gebruikt zijn geweest
+ *
+ * @see Ritten::wijzigRitOpslaan()
+ * @see Ritten::nieuweRit()
+ * @see Ritten::accepterenannuleren()
+ * Gemaakt door Lorenz Cleymans
  */
 
 

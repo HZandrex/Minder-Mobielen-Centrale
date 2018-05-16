@@ -15,7 +15,7 @@ class Ritten extends CI_Controller {
     /**
      * Deze functie laad de tabel vol met alle ritten die de coach kan zien, dus alleen van de MM die hij beheerd
      *
-     * Gemaakt door Lore Cleymans
+     * Gemaakt door Lorenz Cleymans
      */
     public function index() {
         $gebruiker = $this->authex->getGebruikerInfo();
@@ -42,7 +42,7 @@ class Ritten extends CI_Controller {
     /**
      * Deze functie geeft een foutmelding, deze kan opgeroepen worden door eender welke functie.
      *
-     * Gemaakt door Loren Cleymans
+     * Gemaakt door Lorenz Cleymans
      */
     public function toonFoutUrl() {
         $titel = "Fout!";
@@ -54,8 +54,10 @@ class Ritten extends CI_Controller {
 
     /**
      * Deze functie roept een foutmelding aan, hier kan je kiezen welke foutmelding je kan oproepen.
-     *
-     * Gemaakt door Loren Cleymans
+     * @param $foutTitel  dient voor de titel
+     * @param $boodschap dient voor de boodschap
+     * @param dient voor de waar de webpagina naar toe moet gaan met een link.
+     * Gemaakt door Lorenz Cleymans
      */
     public function toonMelding($foutTitel, $boodschap, $link) {
         $data['titel'] = '';
@@ -72,8 +74,8 @@ class Ritten extends CI_Controller {
 
     /**
      * Deze functie zorgt er voor dat er een nieuwe rit wordt toegevoegd in de database.
-     *
-     * Gemaakt door Loren Cleymans
+     * @param $id deze parameter is het nieuwe id voor een rit voor een specifieke gebruiker van een minder mobiele
+     * Gemaakt door Lorenz Cleymans
      */
     public function nieuweRit($id){
         $this->load->model('rit_model');
@@ -92,7 +94,7 @@ class Ritten extends CI_Controller {
 
     /**
      * Deze functie zorgt er voor dat er een rit kan worden gewijzigd je krijgt een id mee en alle waarden die moeten aangepast worden. Deze past ook alles aan in de database
-     *
+     * @param $id deze parameter zegt welke rit er wordt gewijzigd.
      * Gemaakt door Lorenz Cleymans
      */
     public function wijzigRit($id){
@@ -114,6 +116,9 @@ class Ritten extends CI_Controller {
 
     /**
      * Deze functie zorgt er voor dat er een rit kan kan worden weergeven, ook alle details van die rit.
+     * @param $ritId deze parameter zorgt er voor dat de juiste rit wordt opgehaald uit de database
+     *
+     * @see $ritId rit_model::getByRitId()
      *
      * Gemaakt door Lorenz Cleymans
      */
@@ -133,8 +138,8 @@ class Ritten extends CI_Controller {
 
     /**
      * Deze functie zorgt er voor dat de status kan aangepast worden van een rit, er wordt een rit meegegeven en zo kan de volgende functie deze herkenen.
-     *
-     * @see rit_model::updateStatusRitten()
+     * @param $ritId Dit is het id van de gevraagde rit
+     * @see $ritId rit_model::updateStatusRitten()
      *
      * Gemaakt door Lorenz Cleymans
      */
