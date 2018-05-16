@@ -7,7 +7,7 @@
 	 *  - Deze pagina krijgt de variabele $adressen binnen waar al de adressen in staan die de minder mobiele ooit gebruikt heeft.
 	 */
 	// var_dump($adressen);
-	var_dump($instellingen);
+	// var_dump($instellingen);
 
 	$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
 	if(!empty($adressen[0])){
@@ -490,9 +490,7 @@ $('#opslaan').click(function(){
 			errorPlaats('Vul een datum in die in de toekomst ligt.');
 			error = true;
 		}else{
-			console.log(now);
-		now.setDate(now.getDate() + <?php print $instellingen->waarde; ?>); 
-		console.log(now);
+			now.setDate(now.getDate() + <?php print $instellingen->waarde; ?>); 
 			if(d <= now){
 				errorPlaats('Je kan maar <?php print $instellingen->waarde; ?> dagen op voorhand een rit aanvragen.');
 				error = true;
