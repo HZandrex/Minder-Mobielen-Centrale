@@ -353,7 +353,7 @@ function checkOfAdresIngeladenIs(huisnummer, straat, gemeente){
 	return result;
 }
 
-$('main input').change(function(){
+$('main input').blur(function(){
 	calulateCost();
 });
 

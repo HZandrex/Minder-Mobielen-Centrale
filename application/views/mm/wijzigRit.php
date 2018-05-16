@@ -416,7 +416,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
         return result;
     }
 
-    $('main input').change(function(){
+    $('main input').blur(function(){
         calulateCost();
     });
 
