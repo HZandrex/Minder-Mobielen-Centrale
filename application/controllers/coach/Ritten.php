@@ -82,9 +82,11 @@ class Ritten extends CI_Controller {
         $data['titel'] = 'Nieuwe rit';
         $data['author'] = 'L. Cleymans';
         $this->load->model('gebruiker_model');
+		$this->load->model('instelling_model');
 
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
         $data['gebruikerMM'] = $this->gebruiker_model->get($id);
+		$data['instellingen'] = $this->instelling_model->getValueById(3);
 
         $data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruikerMM']->id);
 

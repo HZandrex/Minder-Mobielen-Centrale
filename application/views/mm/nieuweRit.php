@@ -7,6 +7,7 @@
 	 *  - Deze pagina krijgt de variabele $adressen binnen waar al de adressen in staan die de minder mobiele ooit gebruikt heeft.
 	 */
 	// var_dump($adressen);
+	var_dump($instellingen);
 
 	$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
 	if(!empty($adressen[0])){
@@ -482,22 +483,29 @@ $('#opslaan').click(function(){
 		error = true;
 	}else{
 		var timeStamp = $('#heenDatum').val();
-		var now = new Date();
+		var now = new Date() ;		
 		var timeStamp = timeStamp.charAt(3) + timeStamp.charAt(4) + '/' + timeStamp.charAt(0) + timeStamp.charAt(1) + '/' + timeStamp.charAt(6) + timeStamp.charAt(7) + timeStamp.charAt(8) + timeStamp.charAt(9) + ' 00:00:00';
 		var d = new Date(timeStamp);
 		if(d <= now){
 			errorPlaats('Vul een datum in die in de toekomst ligt.');
 			error = true;
 		}else{
-			
-			//check aantal credits
-			if(!$('span#aantalCredits').length){
-				errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
+			console.log(now);
+		now.setDate(now.getDate() + <?php print $instellingen->waarde; ?>); 
+		console.log(now);
+			if(d <= now){
+				errorPlaats('Je kan maar <?php print $instellingen->waarde; ?> dagen op voorhand een rit aanvragen.');
 				error = true;
 			}else{
-				if($('span#aantalCredits').text() == 0){
-					errorPlaats('Je hebt niet meer voldoende credits voor deze week.');
+				//check aantal credits
+				if(!$('span#aantalCredits').length){
+					errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
 					error = true;
+				}else{
+					if($('span#aantalCredits').text() == 0){
+						errorPlaats('Je hebt niet meer voldoende credits voor deze week.');
+						error = true;
+					}
 				}
 			}
 		}
@@ -562,7 +570,6 @@ $('#opslaan').click(function(){
 		var terugTijd = new Date( Date.parse( theDate + " " + $('#startTijdTerug').val() ));
 		
 		if(terugTijd < heenTijd){
-			
 			errorPlaats('Vul een start tijd in voor de terugrit die later is dan de heen rit.');
 			error = true;
 		}

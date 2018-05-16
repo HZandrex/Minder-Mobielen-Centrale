@@ -57,6 +57,7 @@ class Ritten extends CI_Controller {
 		 * Deze functie gaat al de adressen ophalen die een de ingelogde gebruiker ooit gebruikt heeft.
 		 *
 		 * @see Rit_model::getAllVoorGebruiker()
+		 * @see instelling_model::getValueById()
 		 * 
 		 * Gemaakt door Michiel Olijslagers
 		*/
@@ -67,7 +68,9 @@ class Ritten extends CI_Controller {
 		$data['gebruikerMM'] = $data['gebruiker'];
 		
 		$this->load->model('rit_model');
+		$this->load->model('instelling_model');
 		$data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruikerMM']->id);
+		$data['instellingen'] = $this->instelling_model->getValueById(3);
 		
 		$partials = array('menu' => 'main_menu','inhoud' => 'mm/nieuweRit');
         $this->template->load('main_master', $partials, $data);
