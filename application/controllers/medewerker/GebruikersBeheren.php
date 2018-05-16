@@ -216,7 +216,7 @@ class GebruikersBeheren extends CI_Controller
      */
     public function gegevensWijzigen($id = 0){
 
-        $data['author'] = 'Geffrey Wuyts';
+        $data['author'] = 'G. Wuyts';
 
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
