@@ -479,15 +479,20 @@ $('#opslaan').click(function(){
 			errorPlaats('Vul een datum in die in de toekomst ligt.');
 			error = true;
 		}else{
-			
-			//check aantal credits
-			if(!$('span#aantalCredits').length){
-				errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
+			now.setDate(now.getDate() + <?php print $instellingen->waarde; ?>); 
+			if(d <= now){
+				errorPlaats('Je kan maar <?php print $instellingen->waarde; ?> dagen op voorhand een rit aanvragen.');
 				error = true;
 			}else{
-				if($('span#aantalCredits').text() == 0){
-					errorPlaats('Je hebt niet meer voldoende credits voor deze week.');
+				//check aantal credits
+				if(!$('span#aantalCredits').length){
+					errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
 					error = true;
+				}else{
+					if($('span#aantalCredits').text() == 0){
+						errorPlaats('Je hebt niet meer voldoende credits voor deze week.');
+						error = true;
+					}
 				}
 			}
 		}
