@@ -18,7 +18,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 //}
 
 //var_dump($adressen);
-//var_dump($heen);
+var_dump($heen);
 //var_dump($instellingen);
 ?>
 <style>
@@ -150,7 +150,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                     </div>
                     <div class="col">
                         <label for="startTijdTerug">Start tijd: </label>
-                        <input type="time" id="startTijdTerug" width="276" class="form-control" id="time" name="startTijdTerug" value="<?php print date('G:i' , strtotime($heen->terugvertrek->tijd)); ?>"/>
+                        <input type="time" id="startTijdTerug" width="276" class="form-control" id="time" name="startTijdTerug" value="<?php if(!empty($heen->terugvertrek)){print date('G:i' , strtotime($heen->terugvertrek->tijd));} ?>"/>
                     </div>
                 </div>
                 <div class="row">

@@ -25,7 +25,7 @@ class RittenAfhandelen extends CI_Controller {
 	*/
     public function index() {
 		$data['titel'] = 'Ritten beheren';
-        $data['author'] = 'Olijslagers M.';
+        $data['author'] = 'M. Olijslagers';
 		
 		$gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
@@ -54,7 +54,7 @@ class RittenAfhandelen extends CI_Controller {
 	*/
 	public function eenRit($ritId){		
 		$data['titel'] = 'Details rit';
-        $data['author'] = 'Olijslagers M.';
+        $data['author'] = 'M. Olijslagers';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
 	
 		$this->load->model('rit_model');

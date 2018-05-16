@@ -21,12 +21,8 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 //}
 
 //var_dump($adressen);
-<<<<<<< HEAD
-// var_dump($heen);
-=======
 //var_dump($heen);
 // var_dump($instellingen);
->>>>>>> 8118827ceaa151212d394967fcf5367bdf036cc8
 ?>
 <style>
     .pac-container{
@@ -317,7 +313,6 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                     $('#credits').html('Je hebt nog <span id="aantalCredits">' + credits + '</span> credits, deze rit kost 1 credit.');
                 }
             });
-
     });
 
     $('select').change(function() {
