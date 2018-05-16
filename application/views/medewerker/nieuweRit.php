@@ -128,7 +128,7 @@ if(!empty($adressen[0])){
                 <div class="row">
                     <div class="col">
                         <label for="terugStartAdres">Start adres: </label>
-                        <select class="custom-select" id="terugStartAdres" name="terugStartAdres">
+                        <select class="custom-select" id="terugStartAdres" name="terugStartAdres" disabled>
                             <?php
                             print $selectAdressen;
                             ?>
@@ -136,7 +136,7 @@ if(!empty($adressen[0])){
                     </div>
                     <div class="col">
                         <label for="terugEindeAdres">Bestemming adres: </label>
-                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres">
+                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres" disabled>
                             <?php
                             print $selectAdressen;
                             ?>
@@ -226,6 +226,11 @@ if(!empty($adressen[0])){
         var i = $('#heenEindeAdres option:checked').val();
         $("#terugStartAdres").val(i);
     });
+
+    $("#heenStartAdres").change(function () {
+        var i = $('#heenStartAdres option:checked').val();
+        $("#terugEindeAdres").val(i);
+    });
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     })
@@ -250,7 +255,7 @@ if(!empty($adressen[0])){
         $.ajax(
             {
                 type:"post",
-                url: "<?php echo base_url(); ?>index.php/medewerker/ritten/berekenCredits",
+                url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/berekenCredits",
                 data:{ userId:'<?php echo $gebruikerMM->id; ?>', date: timeStamp},
                 success:function(response)
                 {
@@ -306,7 +311,7 @@ if(!empty($adressen[0])){
                 $.ajax(
                     {
                         type:"post",
-                        url: "<?php echo base_url(); ?>index.php/mm/ritten/nieuwAdres",
+                        url: "<?php echo base_url(); ?>index.php/mm/rittenAfhandelen/nieuwAdres",
                         data:{ huisnummer:huisnummer, straat:straat, gemeente:gemeente, postcode:postcode},
                         success:function(response)
                         {
@@ -360,7 +365,7 @@ if(!empty($adressen[0])){
                 $.ajax(
                     {
                         type:"post",
-                        url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenKost",
+                        url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/berekenKost",
                         data:{ startAdres:$('#heenStartAdres').val(), eindAdres:$('#heenEindeAdres').val(), timeStamp:timeStamp},
                         success:function(response)
                         {
@@ -375,7 +380,7 @@ if(!empty($adressen[0])){
                                 $.ajax(
                                     {
                                         type:"post",
-                                        url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenKost",
+                                        url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/berekenKost",
                                         data:{ startAdres:$('#terugStartAdres').val(), eindAdres:$('#terugEindeAdres').val(), timeStamp:timeStamp},
                                         success:function(response)
                                         {

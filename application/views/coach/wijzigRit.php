@@ -277,10 +277,14 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete" async defer></script>
 <script>
-
     $("#heenEindeAdres").change(function () {
         var i = $('#heenEindeAdres option:checked').val();
         $("#terugStartAdres").val(i);
+    });
+
+    $("#heenStartAdres").change(function () {
+        var i = $('#heenStartAdres option:checked').val();
+        $("#terugEindeAdres").val(i);
     });
 
     $(function () {

@@ -172,7 +172,7 @@ var_dump($heen);
                     </div>
                     <div class="col">
                         <label for="terugEindeAdres">Bestemming adres: </label>
-                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres">
+                        <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres" disabled>
                             <?php
                             foreach($adressen as $adres){
 
@@ -269,6 +269,11 @@ var_dump($heen);
     $("#heenEindeAdres").change(function () {
         var i = $('#heenEindeAdres option:checked').val();
         $("#terugStartAdres").val(i);
+    });
+
+    $("#heenStartAdres").change(function () {
+        var i = $('#heenStartAdres option:checked').val();
+        $("#terugEindeAdres").val(i);
     });
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();

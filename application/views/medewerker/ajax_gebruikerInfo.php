@@ -66,7 +66,7 @@
     <?php
     foreach ($selectedGebruiker->functies as $functie) {
         if ($functie->id == 1) {
-            print anchor(array("coach/ritten/nieuweRit/$selectedGebruiker->id"), '<i class="fa fa-plus"></i> Nieuwe rit boeken', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om een nieuwe rit te boeken"');
+            print anchor(array("medewerker/rittenAfhandelen/nieuweRit/$selectedGebruiker->id"), '<i class="fa fa-plus"></i> Nieuwe rit boeken', 'class="btn btn-primary", data-toggle="tooltip", title="Klik hier om een nieuwe rit te boeken"');
         }
     }
     ?>

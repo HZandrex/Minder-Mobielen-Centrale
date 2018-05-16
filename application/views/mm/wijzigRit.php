@@ -281,6 +281,11 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
         var i = $('#heenEindeAdres option:checked').val();
         $("#terugStartAdres").val(i);
     });
+
+    $("#heenStartAdres").change(function () {
+        var i = $('#heenStartAdres option:checked').val();
+        $("#terugEindeAdres").val(i);
+    });
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     })

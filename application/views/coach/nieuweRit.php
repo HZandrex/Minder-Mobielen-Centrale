@@ -135,7 +135,7 @@
 					<div class="row">
 						<div class="col">
 							<label for="terugStartAdres">Start adres: </label>
-							<select class="custom-select" id="terugStartAdres" name="terugStartAdres">
+							<select class="custom-select" id="terugStartAdres" name="terugStartAdres" disabled>
 								<?php
 									print $selectAdressen;
 								?>
@@ -143,7 +143,7 @@
 						</div>
 						<div class="col">
 							<label for="terugEindeAdres">Bestemming adres: </label>
-							<select class="custom-select" id="terugEindeAdres" name="terugEindeAdres">
+							<select class="custom-select" id="terugEindeAdres" name="terugEindeAdres" disabled>
 								<?php
 									print $selectAdressen;
 								?>
@@ -232,6 +232,11 @@
     $("#heenEindeAdres").change(function () {
         var i = $('#heenEindeAdres option:checked').val();
         $("#terugStartAdres").val(i);
+    });
+
+    $("#heenStartAdres").change(function () {
+        var i = $('#heenStartAdres option:checked').val();
+        $("#terugEindeAdres").val(i);
     });
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
