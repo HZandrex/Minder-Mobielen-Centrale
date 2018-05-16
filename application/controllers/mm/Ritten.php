@@ -180,17 +180,22 @@ class Ritten extends CI_Controller {
 	 *
 	 * @see rit_model::getAllVoorGebruiker()
 	 * @see rit_model::getByRitId()
-     * @parameter deze id is van een rit zo weet de het model welke record hij moet gaan wijzigen
+	 * @see instelling_model::getValueById()
+	 
+     * @param deze id is van een rit zo weet de het model welke record hij moet gaan wijzigen
+	 *
 	 * Gemaakt door Lorenz Cleymans
 	 */
-    public function wijzigRit($id){
-        $this->load->model('rit_model');
+    public function wijzigRit($id){  
         $data['titel'] = 'Wijzig rit';
         $data['author'] = 'L. Cleymans';
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
-
+		
+		$this->load->model('rit_model');
+		$this->load->model('instelling_model');
+		
         $data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['gebruiker']->id);
-
+		$data['instellingen'] = $this->instelling_model->getValueById(3);
         $data['heen'] = $this->rit_model->getByRitId($id);
 
         $partials = array('menu' => 'main_menu','inhoud' => 'mm/wijzigRit');

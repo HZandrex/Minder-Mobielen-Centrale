@@ -85,11 +85,13 @@ class RittenAfhandelen extends CI_Controller {
 	}
 	
 	/**
-	 * Koppeld een vrijwilliger aan een rit
+     * Deze functie zorgt er voor dat er een rit kan worden gewijzigd je krijgt een id mee en alle waarden die moeten aangepast worden. Deze past ook alles aan in de database
 	 *
 	 * @param $id Dit is het id van de gevraagde rit
+	 
 	 * @see Rit_model::getByRitId()
 	 * @see Rit_model::getAllVoorGebruiker()
+	 * @see instelling_model::getValueById()
 	 * 
 	 * Gemaakt door Michiel Olijslagers
 	*/
@@ -99,7 +101,9 @@ class RittenAfhandelen extends CI_Controller {
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
 		
 		$this->load->model('rit_model');
+		$this->load->model('instelling_model');
 		$data['heen'] = $this->rit_model->getByRitId($id);
+		$data['instellingen'] = $this->instelling_model->getValueById(3);
 		
         $data['adressen'] = $this->rit_model->getAllVoorGebruiker($data['heen']->gebruikerMinderMobieleId);
 
