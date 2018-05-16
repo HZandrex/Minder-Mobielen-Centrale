@@ -22,6 +22,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 
 //var_dump($adressen);
 //var_dump($heen);
+// var_dump($instellingen);
 ?>
 <style>
     .pac-container{
@@ -132,7 +133,11 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
             </div>
         </div>
     </article>
+<<<<<<< HEAD
 	<article class="mt-2" id="terug" style="<?php if(empty($heen->terugvertrek)){print "display: none;";} ?>">
+=======
+    <article class="mt-2" id="terug" style=<?php if(!empty($heen->terug)){ print "" ; }else{ print "display:none;";}  ?>>
+>>>>>>> 2cea99ada2212fd95c59190abe693ba2752e5e72
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -531,17 +536,22 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 errorPlaats('Vul een datum in die in de toekomst ligt.');
                 error = true;
             }else{
-
-                //check aantal credits
-                if(!$('span#aantalCredits').length){
-                    errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
-                    error = true;
-                }else{
-                    if($('span#aantalCredits').text() == 0){
-                        errorPlaats('Je hebt niet meer voldoende credits voor deze week.');
-                        error = true;
-                    }
-                }
+				now.setDate(now.getDate() + <?php print $instellingen->waarde; ?>); 
+				if(d <= now){
+					errorPlaats('Je kan maar <?php print $instellingen->waarde; ?> dagen op voorhand een rit aanvragen.');
+					error = true;
+				}else{
+					//check aantal credits
+					if(!$('span#aantalCredits').length){
+						errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
+						error = true;
+					}else{
+						if($('span#aantalCredits').text() == 0){
+							errorPlaats('Je hebt niet meer voldoende credits voor deze week.');
+							error = true;
+						}
+					}
+				}
             }
         }
 

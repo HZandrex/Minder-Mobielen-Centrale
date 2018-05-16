@@ -75,6 +75,10 @@ class Ritten extends CI_Controller {
     /**
      * Deze functie zorgt er voor dat er een nieuwe rit wordt toegevoegd in de database.
      * @param $id deze parameter is het nieuwe id voor een rit voor een specifieke gebruiker van een minder mobiele
+	 * @see gebruiker_model::get()
+	 * @see instelling_model::getValueById()
+	 * 
+	 *
      * Gemaakt door Lorenz Cleymans
      */
     public function nieuweRit($id){
@@ -97,6 +101,10 @@ class Ritten extends CI_Controller {
     /**
      * Deze functie zorgt er voor dat er een rit kan worden gewijzigd je krijgt een id mee en alle waarden die moeten aangepast worden. Deze past ook alles aan in de database
      * @param $id deze parameter zegt welke rit er wordt gewijzigd.
+	 
+	 * @see gebruiker_model::get()
+	 * @see instelling_model::getValueById()
+	 
      * Gemaakt door Lorenz Cleymans
      */
     public function wijzigRit($id){
@@ -106,6 +114,9 @@ class Ritten extends CI_Controller {
 
         $data['gebruiker'] = $this->authex->getGebruikerInfo();
         $this->load->model('gebruiker_model');
+		$this->load->model('instelling_model');
+		
+		$data['instellingen'] = $this->instelling_model->getValueById(3);
         $data['heen'] = $this->rit_model->getByRitId($id);
 
         $data['gebruikerMM'] = $this->gebruiker_model->get($data['heen']->gebruikerMinderMobieleId);

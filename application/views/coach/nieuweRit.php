@@ -1,6 +1,13 @@
-
-
 <?php
+	/**
+	 * @file coach/nieuweRit.php
+	 *
+	 * View waarin de nieuwe rit pagina wordt weergegeven
+	 *  - Wanneer een mindermobiele een nieuwe rit wilt aanmaken komt hij hierop uit.
+	 *  - Deze pagina krijgt de variabele $adressen binnen waar al de adressen in staan die de minder mobiele ooit gebruikt heeft.
+	 *
+	 * Gemaakt door Lorenz Cleymans
+	 */
 	$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
 	if(!empty($adressen[0])){
 		foreach($adressen as $adres){
@@ -479,15 +486,20 @@ $('#opslaan').click(function(){
 			errorPlaats('Vul een datum in die in de toekomst ligt.');
 			error = true;
 		}else{
-			
-			//check aantal credits
-			if(!$('span#aantalCredits').length){
-				errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
+			now.setDate(now.getDate() + <?php print $instellingen->waarde; ?>); 
+			if(d <= now){
+				errorPlaats('Je kan maar <?php print $instellingen->waarde; ?> dagen op voorhand een rit aanvragen.');
 				error = true;
 			}else{
-				if($('span#aantalCredits').text() == 0){
-					errorPlaats('Je hebt niet meer voldoende credits voor deze week.');
+				//check aantal credits
+				if(!$('span#aantalCredits').length){
+					errorPlaats('Oops iets ging er mis. Je kan best even geduld hebben, anders kan je opnieuw proberen. Als je deze error blijft krijgen neem dan contact op met de admin!');
 					error = true;
+				}else{
+					if($('span#aantalCredits').text() == 0){
+						errorPlaats('Je hebt niet meer voldoende credits voor deze week.');
+						error = true;
+					}
 				}
 			}
 		}
