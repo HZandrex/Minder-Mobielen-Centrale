@@ -233,7 +233,7 @@ class GebruikersBeheren extends CI_Controller
      *
      * Bij het aanpassen van en al bestaande gebruiker gebeurt dit ook door het Gebruiker_model.
      *
-     * Als laatste worden de functies van de gebruiker aangepast wanneer nodig via GebruikersBeheren::pasFunctieGebruikerAan()
+     * Als laatste worden de functies van de gebruiker aangepast wanneer nodig via de private functie GebruikersBeheren::pasFunctieGebruikerAan()
      * en wordt er een melding getoond GebruikersBeheren::toonGegevensGewijzigd()
      *
      * @see Gebruiker_model::getByMail()
@@ -242,7 +242,6 @@ class GebruikersBeheren extends CI_Controller
      * @see GebruikersBeheren::toonFoutDatum()
      * @see GebruikersBeheren::toonFoutBestaandeMail()
      * @see GebruikersBeheren::toonGegevensGewijzigd()
-     * @see GebruikersBeheren::pasFunctieGebruikerAan()
      *
      * Gemaakt door Geffrey Wuyts
      */
