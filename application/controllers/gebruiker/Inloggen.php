@@ -136,209 +136,6 @@ class Inloggen extends CI_Controller {
             redirect('gebruiker/inloggen/toonmailnieuwwachtwoordverstuurd');
         }
     }
-
-    /**
-     * Stuurt een E-mail naar het ogegeven mailadres $geadresseerde, de mail wordt opgesteld
-     * met de parameters $titel en $boodschap. Dit gebeurd via de email library.
-     * De parameters komen van een andere functie waar deze functie wordt opgeroepen bv. Inloggen::nieuwWachtwoordAanvragen().
-     *
-     * De configuratie van het mail adres waar me wordt verzonden is email.php dat zich bevind in de config map.
-     *
-     * @param $geadresseerde Het mailadres waar de mail naar wordt gestuurd
-     * @param $boodschap De inhoud van de mail
-     * @param $titel De titel van de mail
-     *
-     * @see email.php
-     * @see Inloggen::nieuwWachtwoordAanvragen()
-     * @return bool
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    private function stuurMail($geadresseerde, $boodschap, $titel) {
-        $this->load->library('email');
-
-        $this->email->from('atworkteam23@gmail.com', 'Minder Mobielen Centrale');
-        $this->email->to($geadresseerde);
-        $this->email->subject($titel);
-        $this->email->message($boodschap);
-
-        if (!$this->email->send()) {
-            show_error($this->email->print_debugger());
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * Toont de melding pagina met de opgeven parrameters foutTitel=$foutTitel, boodschap=$boodschap & link=$link
-     * in de view main_melding.php.
-     * 
-     * @param $foutTitel De titel die op de meldingspagina komt
-     * @param $boodschap De boodschap dat getoond moet worden
-     * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
-     * 
-     * @see main_melding.php
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonMelding($foutTitel, $boodschap, $link) {
-        $data['titel'] = '';
-        $data['author'] = 'G. Wuyts';
-        $data['gebruiker'] = $this->authex->getGebruikerInfo();
-
-        $data['foutTitel'] = $foutTitel;
-        $data['boodschap'] = $boodschap;
-        $data['link'] = $link;
-
-        $partials = array('menu' => 'main_menu', 'inhoud' => 'main_melding');
-        $this->template->load('main_master', $partials, $data);
-    }
-    
-    /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     * 
-     * @see Inloggen::toonMelding()
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonFoutInloggen() {
-        $titel = "Fout!";
-        $boodschap = "Het opgegeven mail adres komt niet overeen met het wachtwoord.</br>"
-                . "Probeer opnieuw!";
-        $link = array("url" => "gebruiker/inloggen", "tekst" => "Terug");
-
-        $this->toonMelding($titel, $boodschap, $link);
-    }
-
-    /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     *
-     * @see Inloggen::toonMelding()
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonFoutWachtwoordVeranderen() {
-        $titel = "Fout!";
-        $boodschap = "Het opgegeven mail adres is niet gekoppeld aan een account.</br>"
-                . "Probeer opnieuw!";
-        $link = array("url" => "gebruiker/inloggen/wachtwoordvergeten", "tekst" => "Terug");
-
-        $this->toonMelding($titel, $boodschap, $link);
-    }
-
-    /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     *
-     * @see Inloggen::toonMelding()
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonFoutLinkVerlopen() {
-        $titel = "Fout!";
-        $boodschap = "De url die u gebruikte is niet meer geldig.</br>"
-                . "Vraag een nieuwe aan!";
-        $link = array("url" => "gebruiker/inloggen/wachtwoordvergeten", "tekst" => "Terug");
-
-        $this->toonMelding($titel, $boodschap, $link);
-    }
-
-    /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     *
-     * @see Inloggen::toonMelding()
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonFoutNieuwWachtwoord($token) {
-        $titel = "Fout!";
-        $boodschap = "De opgegeven wachtwoorden komen niet overeen.</br>"
-                . "Probeer opnieuw!";
-        $link = array("url" => "gebruiker/inloggen/wachtwoordvergetenwijzigen/" . $token, "tekst" => "Terug");
-
-        $this->toonMelding($titel, $boodschap, $link);
-    }
-
-    /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     *
-     * @see Inloggen::toonMelding()
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonFoutMail() {
-        $titel = "Fout!";
-        $boodschap = "Er is iets foutgelopen bij het versturen van een mail.</br>"
-            . "Probeer later opnieuw! Wanneer dit blijft voorvallen neem dan contact op met ons.";
-        $link = array("url" => "home", "tekst" => "Home");
-
-        $this->toonMelding($titel, $boodschap, $link);
-    }
-
-    /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     *
-     * @see Inloggen::toonMelding()
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonMailNieuwWachtwoordVerstuurd() {
-        $titel = "Mail verstuurd";
-        $boodschap = "Er wordt een mail gestuurd naar het opgegevens E-mail adres.</br>"
-                . "Dit kan enkele seconden duren, geen mail ontvangen? Ga terug en probeer opnieuw.";
-        $link = array("url" => "gebruiker/inloggen", "tekst" => "Terug");
-
-        $this->toonMelding($titel, $boodschap, $link);
-    }
-
-    /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     *
-     * @see Inloggen::toonMelding()
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonWachtwoordVeranderd() {
-        $titel = "Wachtwoord succesvol veranderd";
-        $boodschap = "Uw wachtwoord werd succesvol gewijzigd.</br>"
-                . "U kan nu gewoon inloggen met het nieuwe wachtwoord.";
-        $link = array("url" => "gebruiker/inloggen", "tekst" => "Inloggen");
-
-        $this->toonMelding($titel, $boodschap, $link);
-    }
-
-    /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     *
-     * @see Inloggen::toonMelding()
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonGeactiveerd() {
-        $titel = "Account succesvol geactiveerd";
-        $boodschap = "Uw account werd succesvol geactiveerd.</br>"
-            . "U kan nu gewoon inloggen met het ingestelde wachtwoord.";
-        $link = array("url" => "gebruiker/inloggen", "tekst" => "Inloggen");
-
-        $this->toonMelding($titel, $boodschap, $link);
-    }
-
-    /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
-     *
-     * @see Inloggen::toonMelding()
-     *
-     * Gemaakt door Geffrey Wuyts
-     */
-    public function toonGeactiveerdDoorMedewerker() {
-        $titel = "Account succesvol geactiveerd";
-        $boodschap = "Uw heeft de gebruiker succesvol geactiveerd.</br>"
-            . "De gebruiker zal een mail krijgen dat dit gebeurt is.</br>"
-            . "Wanneer u zelf een wachtwoord heeft gekozen verwitig de gebruiker dan zelf!";
-        $link = array("url" => "medewerker/gebruikersBeheren", "tekst" => "Terug");
-
-        $this->toonMelding($titel, $boodschap, $link);
-    }
     
     /**
      * Wanneer de $resetToken bestaat in de tabel gebruiker zal de view gebruiker/wachtwoordVergetenWijzigen.php getoond worden,
@@ -458,4 +255,206 @@ class Inloggen extends CI_Controller {
         return $resetToken;
     }
 
+    /**
+     * Stuurt een E-mail naar het ogegeven mailadres $geadresseerde, de mail wordt opgesteld
+     * met de parameters $titel en $boodschap. Dit gebeurd via de email library.
+     * De parameters komen van een andere functie waar deze functie wordt opgeroepen bv. Inloggen::nieuwWachtwoordAanvragen().
+     *
+     * De configuratie van het mail adres waar me wordt verzonden is email.php dat zich bevind in de config map.
+     *
+     * @param $geadresseerde Het mailadres waar de mail naar wordt gestuurd
+     * @param $boodschap De inhoud van de mail
+     * @param $titel De titel van de mail
+     *
+     * @see email.php
+     * @see Inloggen::nieuwWachtwoordAanvragen()
+     * @return bool
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    private function stuurMail($geadresseerde, $boodschap, $titel) {
+        $this->load->library('email');
+
+        $this->email->from('atworkteam23@gmail.com', 'Minder Mobielen Centrale');
+        $this->email->to($geadresseerde);
+        $this->email->subject($titel);
+        $this->email->message($boodschap);
+
+        if (!$this->email->send()) {
+            show_error($this->email->print_debugger());
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Toont de melding pagina met de opgeven parrameters foutTitel=$foutTitel, boodschap=$boodschap & link=$link
+     * in de view main_melding.php.
+     *
+     * @param $foutTitel De titel die op de meldingspagina komt
+     * @param $boodschap De boodschap dat getoond moet worden
+     * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
+     *
+     * @see main_melding.php
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonMelding($foutTitel, $boodschap, $link) {
+        $data['titel'] = '';
+        $data['author'] = 'G. Wuyts';
+        $data['gebruiker'] = $this->authex->getGebruikerInfo();
+
+        $data['foutTitel'] = $foutTitel;
+        $data['boodschap'] = $boodschap;
+        $data['link'] = $link;
+
+        $partials = array('menu' => 'main_menu', 'inhoud' => 'main_melding');
+        $this->template->load('main_master', $partials, $data);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonFoutInloggen() {
+        $titel = "Fout!";
+        $boodschap = "Het opgegeven mail adres komt niet overeen met het wachtwoord.</br>"
+            . "Probeer opnieuw!";
+        $link = array("url" => "gebruiker/inloggen", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonFoutWachtwoordVeranderen() {
+        $titel = "Fout!";
+        $boodschap = "Het opgegeven mail adres is niet gekoppeld aan een account.</br>"
+            . "Probeer opnieuw!";
+        $link = array("url" => "gebruiker/inloggen/wachtwoordvergeten", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonFoutLinkVerlopen() {
+        $titel = "Fout!";
+        $boodschap = "De url die u gebruikte is niet meer geldig.</br>"
+            . "Vraag een nieuwe aan!";
+        $link = array("url" => "gebruiker/inloggen/wachtwoordvergeten", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonFoutNieuwWachtwoord($token) {
+        $titel = "Fout!";
+        $boodschap = "De opgegeven wachtwoorden komen niet overeen.</br>"
+            . "Probeer opnieuw!";
+        $link = array("url" => "gebruiker/inloggen/wachtwoordvergetenwijzigen/" . $token, "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonFoutMail() {
+        $titel = "Fout!";
+        $boodschap = "Er is iets foutgelopen bij het versturen van een mail.</br>"
+            . "Probeer later opnieuw! Wanneer dit blijft voorvallen neem dan contact op met ons.";
+        $link = array("url" => "home", "tekst" => "Home");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonMailNieuwWachtwoordVerstuurd() {
+        $titel = "Mail verstuurd";
+        $boodschap = "Er wordt een mail gestuurd naar het opgegevens E-mail adres.</br>"
+            . "Dit kan enkele seconden duren, geen mail ontvangen? Ga terug en probeer opnieuw.";
+        $link = array("url" => "gebruiker/inloggen", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonWachtwoordVeranderd() {
+        $titel = "Wachtwoord succesvol veranderd";
+        $boodschap = "Uw wachtwoord werd succesvol gewijzigd.</br>"
+            . "U kan nu gewoon inloggen met het nieuwe wachtwoord.";
+        $link = array("url" => "gebruiker/inloggen", "tekst" => "Inloggen");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonGeactiveerd() {
+        $titel = "Account succesvol geactiveerd";
+        $boodschap = "Uw account werd succesvol geactiveerd.</br>"
+            . "U kan nu gewoon inloggen met het ingestelde wachtwoord.";
+        $link = array("url" => "gebruiker/inloggen", "tekst" => "Inloggen");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
+
+    /**
+     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     *
+     * @see Inloggen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
+     */
+    public function toonGeactiveerdDoorMedewerker() {
+        $titel = "Account succesvol geactiveerd";
+        $boodschap = "Uw heeft de gebruiker succesvol geactiveerd.</br>"
+            . "De gebruiker zal een mail krijgen dat dit gebeurt is.</br>"
+            . "Wanneer u zelf een wachtwoord heeft gekozen verwitig de gebruiker dan zelf!";
+        $link = array("url" => "medewerker/gebruikersBeheren", "tekst" => "Terug");
+
+        $this->toonMelding($titel, $boodschap, $link);
+    }
 }

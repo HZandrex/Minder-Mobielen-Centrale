@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @class GebruikersBeheren
- * @brief Controller-klasse voor de gebruikers te kunnen beheren
+ * @class RelatiesBeheren
+ * @brief Controller-klasse voor de relaties te kunnen beheren
  * 
- * Controller-klase met alle methodes die gebruikt worden voor de gebruikers te beheren.
+ * Controller-klase met alle methodes die gebruikt worden voor de relaties tussen minder mobiele en coaches te beheren.
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 

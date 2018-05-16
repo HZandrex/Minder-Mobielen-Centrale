@@ -18,7 +18,7 @@ class Instelling_model extends CI_Model {
     }
     
     /**
-     * Retourneert records uit de tabel instelling.
+     * Retourneert alle records uit de tabel instelling.
      * @return Alle records
      *
      * Gemaakt door Geffrey Wuyts

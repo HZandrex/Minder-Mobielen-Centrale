@@ -58,7 +58,7 @@ class Ritten extends CI_Controller {
 		 *
 		 * @see Rit_model::getAllVoorGebruiker()
 		 * 
-		 * @see Gemaakt door Michiel Olijslagers
+		 * Gemaakt door Michiel Olijslagers
 		*/
 	public function nieuweRit(){
 		$data['titel'] = 'Nieuwe rit';
@@ -81,6 +81,7 @@ class Ritten extends CI_Controller {
 	 * @see adres_model::getById()
 	 * @see adres_model::addAdres()
 	 * @return het volledige adres
+     *
 	 * Gemaakt door Michiel Olijslagers
 	*/
 	public function nieuwAdres(){
@@ -100,6 +101,7 @@ class Ritten extends CI_Controller {
 	 * @see google_model::getReisTijd()
 	 * @see instelling_model::getValueById()
 	 * @return Tijd, start- en eindAdres
+     *
 	 * Gemaakt door Michiel Olijslagers
 	*/
 	public function berekenKost(){
@@ -121,6 +123,7 @@ class Ritten extends CI_Controller {
 	 *
 	 * @see gebruiker_model::getCredits()
 	 * @return Het aantal credits dat nog over is voor de opgevraagde week bij de mindermobiele
+     *
 	 * Gemaakt door Michiel Olijslagers
 	*/
 	public function berekenCredits(){
@@ -137,6 +140,7 @@ class Ritten extends CI_Controller {
 	 * Deze functie is het einde van een nieuwe rit, hier zal een rit in de database gestoken worden.
 	 *
 	 * @see rit_model::saveNewRit()
+     *
 	 * Gemaakt door Michiel Olijslagers
 	*/
 	public function nieuweRitOpslaan(){
@@ -173,6 +177,7 @@ class Ritten extends CI_Controller {
 	 *
 	 * @see rit_model::getAllVoorGebruiker()
 	 * @see rit_model::getByRitId()
+     *
 	 * Gemaakt door Lorenz Cleymans
 	 */
     public function wijzigRit($id){

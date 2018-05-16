@@ -367,16 +367,23 @@ class GebruikersBeheren extends CI_Controller
         }
     }
     /**
-     * ???
+     * Eerst wordt de gebruiker opgehaald via het Gebruiker_model. Vervolgens wordt er gekeken of de gebruiker op deze moment al actief is.
+     * Wanneer deze nog niet actief is en een mail heeft ingesteld zal er resetToken worden aangemaakt en vervolgens wordt je doorgestuurd naar Inloggen::wachtwoordVergetenWijzigen().
+     * Wanneer deze nog geen mail heeft ingesteld zal eerst de gebruiker worden geactiveerd via het Gebruiker_model en vervolgens wordt er een melding getoond via GebruikersBeheren::toonStatusVeranderd().
+     *
+     * Wanneer deze al actief is zal deze gedeactiveerd worden via het Gebruiker_model en zal er ook een melding worden getoond via GebruikersBeheren::toonStatusVeranderd().
      *
      * @param $id Het id van een gebruiker waarvan de status moet worden aangepast
      * 
-     * @see gebruiker_model::controleerResetToken()
-     * @see FunctieGebruiker_model::controleerResetToken()
-     * @see FunctieGebruiker_model::wijzigResetToken()
-     * @see FunctieGebruiker_model::activeerGebruiker()
-     * @see FunctieGebruiker_model::deactiveerGebruiker()
+     * @see Gebruiker_model::get()
+     * @see Gebruiker_model::controleerResetToken()
+     * @see Gebruiker_model::wijzigResetToken()
+     * @see Gebruiker_model::activeerGebruiker()
+     * @see Gebruiker_model::deactiveerGebruiker()
+     * @see GebruikersBeheren::toonStatusVeranderd()
+     * @see Inloggen::wachtwoordVergetenWijzigen()
      *
+     * Gemaakt door Geffrey Wuyts
      */
     public function pasStatusGebruikerAan($id){
         $this->load->model('gebruiker_model');
@@ -414,20 +421,16 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Stuurt een E-mail naar het ogegeven mailadres $geadresseerde, de mail wordt opgesteld
-     * met de parameters $titel en $boodschap. Dit gebeurd via de email library.
-     * De parameters komen van een andere functie waar deze functie wordt opgeroepen bv. inloggen::nieuwWachtwoordAanvragen().
-     *
-     * De configuratie van het mail adres waar me wordt verzonden is email.php dat zich bevind in de config map.
+     * Stuurt een mail. Voor verdere uitleg zie Inloggen::stuurMail().
      *
      * @param $geadresseerde Het mailadres waar de mail naar wordt gestuurd
      * @param $boodschap De inhoud van de mail
      * @param $titel De titel van de mail
      *
-     * @see email.php
-     * @see inloggen::nieuwWachtwoordAanvragen()
+     * @see Inloggen::stuurMail()
      * @return bool
-     * 
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     private function stuurMail($geadresseerde, $boodschap, $titel) {
         $this->load->library('email');
@@ -470,9 +473,9 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
      */
     public function toonFoutWachtwoordWijzigen($id)
     {
@@ -485,9 +488,9 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
      */
     public function toonFoutBestaandeMail()
     {
@@ -500,9 +503,9 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
      */
     public function toonFoutUrl()
     {
@@ -515,9 +518,9 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
      */
     public function toonFoutOpslaan($id)
     {
@@ -530,9 +533,9 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
      */
     public function toonFoutDatum()
     {
@@ -545,9 +548,9 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
      */
     public function toonWachtwoordGewijzigd()
     {
@@ -560,9 +563,9 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
      */
     public function toonGegevensGewijzigd()
     {
@@ -575,9 +578,9 @@ class GebruikersBeheren extends CI_Controller
     }
 
     /**
-     * Dit zal Inloggen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
+     * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
-     * @see Inloggen::toonMelding()
+     * @see GebruikersBeheren::toonMelding()
      */
     public function toonStatusVeranderd($status)
     {

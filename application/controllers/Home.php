@@ -22,6 +22,9 @@ class Home extends CI_Controller {
      * 
      * @see Webinfo_model::getAll()
      * @see Gebruiker/homePagina.php
+     *
+     * Gemaakt door Nico Claes
+     * Medemogelijk door Geffrey Wuyts
      */
     public function index() {
         $data['titel'] = 'Home';
