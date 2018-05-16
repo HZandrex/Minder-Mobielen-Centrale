@@ -18,7 +18,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 //}
 
 //var_dump($adressen);
-var_dump($heen);
+// var_dump($heen);
 //var_dump($instellingen);
 ?>
 <style>
@@ -145,7 +145,7 @@ var_dump($heen);
                                     <i class="fas fa-calendar-alt"></i>
                                 </label>
                             </div>
-                            <input data-provide="datepicker" id="terugDatum" class="form-control" name="terugDatum" value="<?php print date('j/m/Y' , strtotime($heen->terugvertrek->tijd)); ?>" disabled>
+                            <input data-provide="datepicker" id="terugDatum" class="form-control" name="terugDatum" value="<?php print date('j/m/Y' , strtotime($heen->heenvertrek->tijd)); ?>" disabled>
                         </div>
                     </div>
                     <div class="col">
@@ -299,7 +299,7 @@ var_dump($heen);
         $.ajax(
             {
                 type:"post",
-                url: "<?php echo base_url(); ?>index.php/medeerker/rittenAfhandelen/berekenCredits",
+                url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/berekenCredits",
                 data:{ userId:'<?php echo $gebruiker->id; ?>', date: timeStamp},
                 success:function(response)
                 {
