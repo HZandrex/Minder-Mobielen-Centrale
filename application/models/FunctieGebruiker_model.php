@@ -172,7 +172,11 @@ class FunctieGebruiker_model extends CI_Model {
         $gebruikers = array();
         foreach ($functies as $functie) {
             $gebruiker = $this->gebruiker_model->get($functie->gebruikerId);
-            if ($gebruiker->active == 1) array_push($gebruikers, $gebruiker);
+            if ($gebruiker->active == 1){
+                if (!in_array($gebruiker, $gebruikers)){
+                    array_push($gebruikers, $gebruiker);
+                }
+            }
         }
         return $gebruikers;
     }
