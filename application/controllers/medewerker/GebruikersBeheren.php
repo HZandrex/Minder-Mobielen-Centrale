@@ -57,8 +57,13 @@ class GebruikersBeheren extends CI_Controller
         }
 
         $inActive = $this->functie_model->getEmpty();
+        $inActive->id = 0;
         $inActive->naam = "Niet actief";
         array_push($data['functies'], $inActive);
+        $all = $this->functie_model->getEmpty();
+        $all->id = -1;
+        $all->naam = "Alle gebruikers";
+        array_unshift($data['functies'], $all);
 
         $partials = array('menu' => 'main_menu', 'inhoud' => 'medewerker/gebruikersBeherenOverzicht');
 
@@ -79,13 +84,15 @@ class GebruikersBeheren extends CI_Controller
      */
     public function haalAjaxOp_GebruikersOpFunctie()
     {
+        $this->load->model('gebruiker_model');
+        $this->load->model('functieGebruiker_model');
         $functieId = $this->input->get('functieId');
-        if ($functieId != null){
-            $this->load->model('functieGebruiker_model');
+        if ($functieId > 0){
             $data['gebruikers'] = $this->functieGebruiker_model->getAllGebruikersByFunction($functieId);
-        } else{
-            $this->load->model('gebruiker_model');
+        } elseif ($functieId == 0){
             $data['gebruikers'] = $this->gebruiker_model->getAllInActive();
+        } else{
+            $data['gebruikers'] = $this->gebruiker_model->getAllActive();
         }
 
         $this->load->view('medewerker/ajax_gebruikers', $data);

@@ -11,8 +11,6 @@
  * Medemogelijk door Michiel Olijslagers
  */
 
-$attributes = array('name' => 'gebruikersForm', 'id' => 'gebruikersForm');
-echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
 ?>
 <div class="row">
     <div class="col-5">
@@ -20,7 +18,7 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
             <div class="col-5 form-group">
                 <?php
                 echo form_labelpro('Functie', 'functieListbox');
-                echo form_listboxpro('functieRadiogroup', $functies, 'id', 'naam', 1, array('id' => 'functieListbox', 'class' => 'form-control'));
+                echo form_listboxpro('functieListbox', $functies, 'id', 'naam', -1, array('id' => 'functieListbox', 'class' => 'form-control'));
                 ?>
             </div>
             <div class="col-7 form-group">
@@ -45,7 +43,6 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
         <div id="gebruikerInfo" class="row"></div>
     </div>
 </div>
-<?php echo form_close(); ?>
 <div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="tutorialModalLabel" aria-hidden="true" data-id="" >
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -116,15 +113,17 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
     });
 	
 	$('#filterNaam').keyup(function(){
-		var filterNaam = $('#filterNaam').val().toLowerCase();
-		$('#gebruikersListbox option').show();
-		
-		
-		//minder mobiele check
-		if(filterNaam != ""){
-			$('#gebruikersListbox option').not('[data-m *= ' + filterNaam + ']').hide();
-		}
+		filterOpNaam();
 	});
+
+	function filterOpNaam() {
+        var filterNaam = $('#filterNaam').val().toLowerCase();
+        $('#gebruikersListbox option').show();
+
+        if(filterNaam != ""){
+            $('#gebruikersListbox option').not('[data-m *= ' + filterNaam + ']').hide();
+        }
+    }
 	
     function haalGebruikersMetFunctieOp(functieId) {
         $.ajax({
@@ -135,7 +134,8 @@ echo form_open('admin/instellingen/voorkeurBeheren', $attributes);
                 $("#gebruikersListbox").html(result);
 				$('#gebruikersListbox option').each(function(){
 					$(this).attr('data-m', $(this).text().toLowerCase());
-				})
+				});
+                filterOpNaam();
             },
             error: function (xhr, status, error) {
                 alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
