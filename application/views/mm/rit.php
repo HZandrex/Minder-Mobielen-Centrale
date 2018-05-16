@@ -1,6 +1,6 @@
 <?php
 /**
-	* @file rit.php
+	* @file MM/rit.php
 	*
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen

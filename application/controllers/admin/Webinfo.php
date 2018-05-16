@@ -6,7 +6,14 @@ class Webinfo extends CI_Controller {
     public function __construct() {
         parent::__construct();
     }
-
+    
+    /**
+    * Laat de wijzig webinfo pagina zien.
+    *
+    * @see Webinfo_model::getAll()
+    * 
+    * Gemaakt door Nico Claes
+    */
     public function index() {
         $data['titel'] = 'Webinfo wijzigen';
         $data['author'] = 'N. Claes';
@@ -25,6 +32,15 @@ class Webinfo extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
+    /**
+    *  Sla alle webinfo op, op de wijzig webinfo pagina.
+    *
+    * @see Webinfo_model::getAllNames()
+    * @see Webinfo_model::getAll()
+    * @see Webinfo_model::update()
+    * 
+    * Gemaakt door Nico Claes
+    */
     public function wijzig() {
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {

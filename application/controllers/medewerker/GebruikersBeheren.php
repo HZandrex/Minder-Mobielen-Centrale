@@ -366,7 +366,18 @@ class GebruikersBeheren extends CI_Controller
             }
         }
     }
-
+    /**
+     * ???
+     *
+     * @param $id Het id van een gebruiker waarvan de status moet worden aangepast
+     * 
+     * @see gebruiker_model::controleerResetToken()
+     * @see FunctieGebruiker_model::controleerResetToken()
+     * @see FunctieGebruiker_model::wijzigResetToken()
+     * @see FunctieGebruiker_model::activeerGebruiker()
+     * @see FunctieGebruiker_model::deactiveerGebruiker()
+     *
+     */
     public function pasStatusGebruikerAan($id){
         $this->load->model('gebruiker_model');
         $gebruiker = $this->authex->getGebruikerInfo();
@@ -376,7 +387,7 @@ class GebruikersBeheren extends CI_Controller
             redirect('gebruiker/inloggen');
         }
         foreach ($gebruiker->functies as $functie) {
-            if ($functie->id < 4) {//id=4 -> Medewerker
+            if ($functie->id < 4) {
                 redirect('admin/instellingen/toonfoutonbevoegd');
             }
         }
@@ -416,6 +427,7 @@ class GebruikersBeheren extends CI_Controller
      * @see email.php
      * @see inloggen::nieuwWachtwoordAanvragen()
      * @return bool
+     * 
      */
     private function stuurMail($geadresseerde, $boodschap, $titel) {
         $this->load->library('email');

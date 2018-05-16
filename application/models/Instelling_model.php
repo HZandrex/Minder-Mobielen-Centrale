@@ -42,14 +42,14 @@ class Instelling_model extends CI_Model {
         }
     }
 
+	/**
+		* Haalt een waarde van instelling uit de db
+		*
+		* @param $id Het id van de instelling
+		* Gemaakt door Michiel Olijslagers
+		* @return De instelling
+	*/
 	function getValueById($id){
-		/**
-			* Haalt een waarde van instelling uit de db
-			*
-			* @param $id Het id van de instelling
-			* @see Gemaakt door Michiel Olijslagers
-			* @return De instelling
-		*/
 		$this->db->where('id', $id);
 		$query = $this->db->get('instelling');
 		return $query->row();

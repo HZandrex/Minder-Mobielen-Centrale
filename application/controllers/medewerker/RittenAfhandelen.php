@@ -14,16 +14,17 @@ class RittenAfhandelen extends CI_Controller {
         parent::__construct();
     }
 
+	/**
+	 * Laat de detail pagina zien van 1 bepaalde rit, dit is de rit waar het id van meegegeven wordt.
+	 *
+	 * @param $ritId Dit is het id van de gevraagde rit
+	 * @see Rit_model::getAllRitten()
+	 * @see statussen::getAll()
+	 * 
+	 * Gemaakt door Michiel Olijslagers
+	*/
     public function index() {
-		/**
-		 * Laat de detail pagina zien van 1 bepaalde rit, dit is de rit waar het id van meegegeven wordt.
-		 *
-		 * @param $ritId Dit is het id van de gevraagde rit
-		 * @see Rit_model::getAllRitten()
-		 * @see statussen::getAll()
-		 * @see Gemaakt door Michiel Olijslagers
-		*/
-        $data['titel'] = 'Ritten beheren';
+		$data['titel'] = 'Ritten beheren';
         $data['author'] = 'Olijslagers M.';
 		
 		$gebruiker = $this->authex->getGebruikerInfo();
@@ -42,15 +43,16 @@ class RittenAfhandelen extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 	
+	/**
+	 * Laat de detail pagina zien van 1 bepaalde rit, dit is de rit waar het id van meegegeven wordt.
+	 *
+	 * @param $ritId Dit is het id van de gevraagde rit
+	 * @see Rit_model::getByRitId()
+	 * @see vrijwilligerRit_model::getVrijwilligerByRit()
+	 * 
+	 * Gemaakt door Michiel Olijslagers
+	*/
 	public function eenRit($ritId){		
-		/**
-		 * Laat de detail pagina zien van 1 bepaalde rit, dit is de rit waar het id van meegegeven wordt.
-		 *
-		 * @param $ritId Dit is het id van de gevraagde rit
-		 * @see Rit_model::getByRitId()
-		 * @see vrijwilligerRit_model::getVrijwilligerByRit()
-		 * @see Gemaakt door Michiel Olijslagers
-		*/
 		$data['titel'] = 'Details rit';
         $data['author'] = 'Olijslagers M.';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
@@ -65,13 +67,14 @@ class RittenAfhandelen extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
 	}
 	
+	/**
+	 * Koppeld een vrijwilliger aan een rit
+	 *
+	 * @see vrijwilligerRit_model::koppelVrijwilliger()
+	 * 
+	 * Gemaakt door Michiel Olijslagers
+	*/
 	public function koppelVrijwilliger(){
-		/**
-		 * Koppeld een vrijwilliger aan een rit
-		 *
-		 * @see vrijwilligerRit_model::koppelVrijwilliger()
-		 * @see Gemaakt door Michiel Olijslagers
-		*/
 		$this->load->model('vrijwilligerRit_model');
 		
 		$ritId = htmlspecialchars(trim($_POST['ritId']));
@@ -81,15 +84,16 @@ class RittenAfhandelen extends CI_Controller {
 		return $this->vrijwilligerRit_model->koppelVrijwilliger($ritId, $vrijwilligerId, $alEen);
 	}
 	
+	/**
+	 * Koppeld een vrijwilliger aan een rit
+	 *
+	 * @param $id Dit is het id van de gevraagde rit
+	 * @see rit_model::getByRitId()
+	 * @see rit_model::getAllVoorGebruiker()
+	 * 
+	 * Gemaakt door Michiel Olijslagers
+	*/
 	public function wijzigRit($id){
-		/**
-		 * Koppeld een vrijwilliger aan een rit
-		 *
-		 * @param $id Dit is het id van de gevraagde rit
-		 * @see rit_model::getByRitId()
-		 * @see rit_model::getAllVoorGebruiker()
-		 * @see Gemaakt door Michiel Olijslagers
-		*/
         $data['titel'] = 'Wijzig rit';
         $data['author'] = 'M. Olijslagers';
 		$data['gebruiker'] = $this->authex->getGebruikerInfo();
@@ -103,14 +107,15 @@ class RittenAfhandelen extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
 	}
 	
+	/**
+	 * Reset de status van een vrijwilliger bij de gegeven rit, dit zodat een vrijwilliger zich kan bedenken
+	 *
+	 * @see vrijwilligerRit_model::resetVrijwilliger()
+	 * 
+	 * Gemaakt door Michiel Olijslagers
+	*/
 	public function resetVrijwilliger(){
-		/**
-		 * Reset de status van een vrijwilliger bij de gegeven rit, dit zodat een vrijwilliger zich kan bedenken
-		 *
-		 * @see vrijwilligerRit_model::resetVrijwilliger()
-		 * @see Gemaakt door Michiel Olijslagers
-		*/
-		$this->load->model('vrijwilligerRit_model');
+				$this->load->model('vrijwilligerRit_model');
 		
 		$ritId = htmlspecialchars(trim($_POST['ritId']));
 		$vrijwilligerId = htmlspecialchars(trim($_POST['vrijwilligerId']));

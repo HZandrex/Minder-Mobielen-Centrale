@@ -14,10 +14,11 @@ class Ritten extends CI_Controller {
     }
 
 	/**
-		*Haalt al de informatie op van al de ritten op van de ingelogde minder mobiele
-		*
-		*@see Rit_model::getByMMCId()
-		*
+        *Haalt al de informatie op van al de ritten op van de ingelogde minder mobiele
+        *
+        *@see VrijwilligerRit_model::getVrijwilligerRittenByVrijwilligerId()
+        *
+        * Gemaakt door Nico Claes
 	*/	
     public function index() {
 	$data['titel'] = 'Ritten';
@@ -37,11 +38,12 @@ class Ritten extends CI_Controller {
     }
 
 	/**
-		*Haalt al de informatie op van al een bepaalde rit waar het id van meegegeven wordt
-		*
-		*@param $ritId Dit is het id van de gevraagde rit
-		*@see Rit_model::getByRitId()
-		*
+            *Haalt al de informatie op van een bepaalde rit waar het id van meegegeven wordt.
+            *
+            *@param $vrijwilligerRitId Dit is het id van de gevraagde rit van een vrijwilliger.
+            *@see Rit_model::getByRitId()
+            *
+         * Gemaakt door Nico Claes en Michiel Olijslagers
 	*/
 	public function eenRit($vrijwilligerRitId){	
             $data['titel'] = 'Details rit';
@@ -59,7 +61,16 @@ class Ritten extends CI_Controller {
             $partials = array('menu' => 'main_menu','inhoud' => 'vrijwilliger/rit');
             $this->template->load('main_master', $partials, $data);
 	}
-	
+        
+	/**
+        *Verander de informatie van een bepaalde rit waar het id van de vrijwilliger zijn rit is meegegeven.
+        *
+        *@@param $vrijwilligerRitId Dit is het id van de gevraagde rit van een vrijwilliger.
+        * 
+        *@see VrijwilligerRit_model::getVrijwilligerRitByVrijwilligerRitId()
+        *
+        * Gemaakt door Nico Claes
+	*/
 	public function wijzigen($vrijwilligerRitId){
             $data['titel'] = 'Wijzig rit';
             $data['author'] = 'Nico C.';
@@ -77,6 +88,17 @@ class Ritten extends CI_Controller {
             $this->template->load('main_master', $partials, $data);
 	}
         
+        /**
+        *Update alleen de opmerking en extra kosten informatie van een bepaalde.
+        *rit dat overeen komt met het toegevoegde id van een vrijwilliger zijn rit.
+        *
+        *@param $vrijwilligerRitId Dit is het id van een toegewezen rit voor de vrijwilliger.
+        * 
+        *@see VrijwilligerRit_model::getVrijwilligerRitByVrijwilligerRitId()
+        *@see VrijwilligerRit_model::updateVrijwilligerRit()
+        *
+        * Gemaakt door Nico Claes
+	*/
 	public function update($vrijwilligerRitId){
             $gebruiker = $this->authex->getGebruikerInfo();
             if ($gebruiker == null) {
@@ -96,6 +118,15 @@ class Ritten extends CI_Controller {
             redirect('vrijwilliger/ritten/eenRit/'.$vrijwilligerRitId);
 	}
         
+        /**
+        *Pas de status aan van een vrijwilliger en mindermobiele zijn rit.
+        *
+        *@param $vrijwilligerRitId Dit is het id van een toegewezen rit voor de vrijwilliger.
+         * 
+        *@see VrijwilligerRit_model::updateStatusRitten()
+        *
+         * Gemaakt door Nico Claes
+	*/
         public function statusAanpassen($vrijwilligerRitId){
             $gebruiker = $this->authex->getGebruikerInfo();
             if ($gebruiker == null) {

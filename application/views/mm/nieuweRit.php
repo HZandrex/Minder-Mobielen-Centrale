@@ -1,4 +1,11 @@
 <?php
+	/**
+	 * @file MM/nieuweRit.php
+	 *
+	 * View waarin de nieuwe rit pagina wordt weergegeven
+	 *  - Wanneer een mindermobiele een nieuwe rit wilt aanmaken komt hij hierop uit.
+	 *  - Deze pagina krijgt de variabele $adressen binnen waar al de adressen in staan die de minder mobiele ooit gebruikt heeft.
+	 */
 	// var_dump($adressen);
 
 	$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';

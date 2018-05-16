@@ -9,7 +9,7 @@
 class Rit_model extends CI_Model {
 
 	/**
-		*Constructor
+		* Constructor
 	*/
     function __construct()
     {
@@ -17,11 +17,13 @@ class Rit_model extends CI_Model {
     }	
 	
 	/**
-		*Helpt met het sorteren van de ritten op datum
+		* Helpt met het sorteren van de ritten op datum
 		*
-		*@param $a de functie usort zal hier automatisch een array insteken
-		*@param $b de functie usort zal hier automatisch een array insteken
-		*@return het verschil tussen beide tijden
+		* @param $a de functie usort zal hier automatisch een array insteken
+		* @param $b de functie usort zal hier automatisch een array insteken
+		* @return het verschil tussen beide tijden
+		*
+		* Gemaakt door Michiel Olijslagers
 	*/
 	function date_compare($a, $b)
 	{
@@ -31,14 +33,16 @@ class Rit_model extends CI_Model {
 	} 
 	
 	/**
-		*Haalt al de informatie op van al de ritten waar het id van de minder mobiele meegegeven wordt
+		* Haalt al de informatie op van al de ritten waar het id van de minder mobiele meegegeven wordt
 		*
-		*@param $mmid Dit is het id van de gevraagde rit
-		*@see Adresrit_model::getByRitIdAndType()
-		*@see Adresrit_model::terugRit()
-		*@see vrijwilligerrit_model::getByRitId()
-		*@return al de opgevraagde ritten
+		* @param $mmid Dit is het id van de mindermobiele
+		* @see Adresrit_model::getByRitIdAndType()
+		* @see Adresrit_model::terugRit()
+		* @return al de opgevraagde ritten
+		*
+		* Gemaakt door Michiel Olijslagers
 	*/
+
     function getByMMCId($mmid)
     {
         $this->load->model('adresRit_model');
@@ -67,6 +71,18 @@ class Rit_model extends CI_Model {
         return $ritten;
     }	
 
+	/**
+		* Haalt al de informatie op van al de ritten 
+		*
+		* @see Adresrit_model::getByRitIdAndType()
+		* @see Adresrit_model::terugRit()
+		* @see status_model::getById()
+		* @see gebruiker_model::get()
+		* @see vrijwilligerRit_model::getByRitId()
+		* @return al de ritten
+		*
+		* Gemaakt door Michiel Olijslagers
+	*/
 	function getAllRitten(){
 		$this->load->model('adresRit_model');
         $this->load->model('status_model');
@@ -100,11 +116,13 @@ class Rit_model extends CI_Model {
 	}
 	
 	/**
-		*Haalt al de informatie op van een rit waar het id van de rit meegegeven is
+		* Haalt al de informatie op van een rit waar het id van de rit meegegeven is
 		*
-		*@param $mmid Dit is het id van de gevraagde rit
-		*@see Adres_model::getByRitId()
-		*@return al de opgevraagde rit
+		* @param $id Dit is het id van de gevraagde rit
+		* @see Adres_model::getByRitId()
+		* @return de opgevraagde rit
+		*
+		* Gemaakt door Michiel Olijslagers
 	*/
 	function getByRitId($id){
 		$this->load->model('adresRit_model');
@@ -121,7 +139,6 @@ class Rit_model extends CI_Model {
 		$rit->heenvertrek = $this->adresRit_model->getByRitIdAndType($rit->id, 1);
 		$rit->heenaankomst = $this->adresRit_model->getByRitIdAndType($rit->id, 2);
                 
-		//Bij ritId 5 krijg ik errors (zie ritten overzicht vrijwilliger) dat er iets mis is met de index van rows (zie 2 regels in commentaar hieronder)
 		$rit->heen = $this->google_model->getReisTijd($rit->heenvertrek->adresId, $rit->heenaankomst->adresId, $rit->heenvertrek->tijd);
 		
 		if($this->adresRit_model->terugRit($rit->id)){
@@ -138,6 +155,17 @@ class Rit_model extends CI_Model {
 		return $rit;
 	}
 	
+	/**
+		* Telt het aantal ritten van een mindermobiele op 1 week
+		*
+		* @param $mmid Dit is het id van de minder mobiele
+		* @param $date Dit is de datum die in de week ligt waar we gaan tellen hoeveel ritten er zijn
+		* @see adresRit_model::getTime()
+		* @see helper_model::getStartEnEindeWeek()
+		* @return het aantal ritten dat een mindermobiele heeft op 1 week
+		*
+		* Gemaakt door Michiel Olijslagers
+	*/
 	function getAantalRitten($mmId, $date){
 		$this->load->model('adresRit_model');
 		$this->load->model('helper_model');
@@ -158,6 +186,17 @@ class Rit_model extends CI_Model {
 		return $aantalRitten;
 	}	
 	
+	/**
+		* Geeft al de adressen van een bepaalde gebruiker 
+		*
+		* @param $mmid Dit is het id van de minder mobiele
+		* @see gebruiker_model::getWithFunctions()
+		* @see helper_model::unique_multidim_array()
+		* @see adresRit_model::getAdressen()
+		* @return Geeft al de adressen terug van een bepaalde minder mobiele
+		*
+		* Gemaakt door Michiel Olijslagers
+	*/
 	function getAllVoorGebruiker($mmId){
 		$this->load->model('gebruiker_model');
 		$this->load->model('helper_model');
@@ -195,11 +234,33 @@ class Rit_model extends CI_Model {
 		
 	}
 	
+	/**
+		* Voegt een nieuwe rit toe aan database
+		*
+		* @param $mmid Dit is het id van de rit
+		* @param $opmerkingKlant Dit is de opmerking van de klant van de rit
+		* @param $opmerkingVrijwilliger Dit is de opmerking van de vrijwilliger van de rit
+		* @param $prijs Dit is de prijs van de rit
+		* @param $extraKost Dit is de extra kost van de rit
+		* @param $statusId Dit is het id van de status van de rit
+		* @param $heenTerug Dit is een boolean die aanduid of er een heen en terug rit is
+		* @param $heenStartAdresId Dit is het adres id van de start van de heen rit
+		* @param $heenEindeAdresId Dit is het adres is van het inde van de heen rit
+		* @param $terugStartAdresId Dit is het adres id van de start van de terug rit
+		* @param $terugEindeAdresId Dit is het adres id van het einde van de terug rit
+		* @param $startTijdHeen Dit is de start tijd van de heen rit
+		* @param $startTijdTerug Dit is de start tijd van de terug rit
+		* @param $heenDatum Dit is de datum van de heen rit
+		* @param $terugDatum Dit is de datum van de terug rit
+		* @see adresRit_model::saveAdresRit()
+		* @return Het id van de net ingevoegde rit
+		*
+		* Gemaakt door Michiel Olijslagers
+	*/
 	function saveNewRit($mmId, $opmerkingKlant, $opmerkingVrijwilliger, $prijs, $extraKost, $statusId, $heenTerug, $heenStartAdresId, $heenEindeAdresId, $terugStartAdresId, $terugEindeAdresId, $startTijdHeen, $startTijdTerug, $heenDatum, $terugDatum){
 		$this->load->model('adresRit_model');
 		
 		$ritId = 0;
-		
 		$data = array(
 			'gebruikerMinderMobieleId' => $mmId,
 			'opmerkingKlant' => $opmerkingKlant,
@@ -211,7 +272,6 @@ class Rit_model extends CI_Model {
 		$this->db->insert('rit', $data);
 		$ritId = $this->db->insert_id();
 		
-
 		$tijd = substr($heenDatum, 3, 1) . substr($heenDatum, 4, 1) . "/" . substr($heenDatum, 0, 1) . substr($heenDatum, 1, 1) . "/" . substr($heenDatum, 6, 1) . substr($heenDatum, 7, 1) . substr($heenDatum,8, 1) . substr($heenDatum, 9, 1) . " " . $startTijdHeen .":00";
 		$timesStamp = date('Y-m-d G:i:s', strtotime($tijd));
 		var_dump($tijd);
@@ -224,29 +284,57 @@ class Rit_model extends CI_Model {
 			$this->adresRit_model->saveAdresRit($ritId, $terugStartAdresId, "3", $timesStamp);
 			$this->adresRit_model->saveAdresRit($ritId, $terugEindeAdresId, "4", $timesStamp);
 		}
-		
 		return $ritId;
 	}
 	
+	/**
+		* Update de status van een vrijwilliger bij een rit
+		*
+		* @param $vrijwilligerRitId Dit is de koppeling tussen rit en vrijwilliger op deze manier wordt de juiste rit en vrijwilliger gekozen
+		* @param $statusId Dit is de status naar waar aangepast moet worden
+		*
+		* Gemaakt door Michiel Olijslagers
+	*/
     function updateStatusVrijwilligerRit($vrijwilligerRitId, $statusId)
     {
         $data = array('statusId' => $statusId);
         $this->db->where('id', $vrijwilligerRitId);
         $this->db->update('rit', $data);
     }
-    
+		
+	/**
+		* Past de statsu aan van een rit en van de vrijwilligerrit
+		*
+		* @param $ritId Dit is het id van de rit
+		* @param $ritStatusId Dit is de status naar waar de rit aangepast moet worden
+		* @see Adresrit_model::updateStatusVrijwilligerRit()
+		*
+		* Gemaakt door Nico Claes
+		* Aangepast door Michiel Olijslagers
+	*/
     function updateStatusRitten($ritId,$ritStatusId)
     {
+		$this->load->model('adresRit_model');
+		
         $data = array('statusId' => $ritStatusId);
         $this->db->where('id', $ritId);
         $this->db->update('rit', $data);
-        
-        $data = array('statusId' => $ritStatusId);
-        $this->db->where('ritId', $ritId);
-        $this->db->update('vrijwilligerRit', $data);
-    }
+		
+		$this->adresRit_model->updateStatusVrijwilligerRit($ritId,$ritStatusId);
+    }   
 
-
-	
-                        
+	/** 
+		* Past de status van een rit aan 
+		*
+		* @param $ritId Dit is het id van de rit
+		* @param $ritStatusId Dit is de status naar waar de rit aangepast moet worden
+		* Gemaakt door Nico Claes
+		*
+		* Aangepast door Michiel Olijslagers
+	*/     
+	function updateStatusRit($ritId,$ritStatusId){
+		$data = array('statusId' => $ritStatusId);
+        $this->db->where('id', $ritId);
+        $this->db->update('rit', $data);
+	}
 }
