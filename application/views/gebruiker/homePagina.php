@@ -4,6 +4,8 @@
      * 
      * View waarin de beginpagina wordt weergegeven (info, contact gegevens, ...)
      * - krijgt een $webinfo-array binnen
+     *
+     * Gemaakt door Nico Claes
      */
 ?>
 

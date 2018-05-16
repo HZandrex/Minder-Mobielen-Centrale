@@ -173,6 +173,8 @@ class Instellingen extends CI_Controller {
      * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
      *
      * @see main_melding.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonMelding($foutTitel, $boodschap, $link) {
         $data['titel'] = '';
@@ -191,6 +193,8 @@ class Instellingen extends CI_Controller {
      * Dit zal Instellingen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Instellingen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutOnbevoegd() {
         $titel = "Fout!";
@@ -205,6 +209,8 @@ class Instellingen extends CI_Controller {
      * Dit zal Instellingen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Instellingen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutGeenWaardes() {
         $titel = "Fout!";
@@ -219,6 +225,8 @@ class Instellingen extends CI_Controller {
      * Dit zal Instellingen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Instellingen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutVoorkeurInGebruik() {
         $titel = "Fout!";
@@ -233,6 +241,8 @@ class Instellingen extends CI_Controller {
      * Dit zal Instellingen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Instellingen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutVoorkeurToevoegen() {
         $titel = "Fout!";
@@ -247,6 +257,8 @@ class Instellingen extends CI_Controller {
      * Dit zal Instellingen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Instellingen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutBestaatAl() {
         $titel = "Fout!";
@@ -261,6 +273,8 @@ class Instellingen extends CI_Controller {
      * Dit zal Instellingen::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see Instellingen::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonInstellingGewijzigd() {
         $titel = "Succes!";

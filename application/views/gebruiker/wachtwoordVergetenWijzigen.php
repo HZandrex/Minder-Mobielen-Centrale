@@ -6,6 +6,8 @@
      * - geeft via wachtwoordVergetenWijzigenForm wachtwoord & wachtwoordBevestigen door naar Inloggen::wachtwoordVeranderen()
      * 
      * @see Inloggen::wachtwoordVeranderen()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
 ?>
 

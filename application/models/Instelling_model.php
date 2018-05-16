@@ -3,11 +3,12 @@
 /**
  * @class Instelling_model
  * @brief Model-klasse voor instellingen
- * 
+ *
  * Model-klasse die alle methodes bevat om te interageren met de database-tabel instelling.
  */
 
-class Instelling_model extends CI_Model {
+class Instelling_model extends CI_Model
+{
 
     /**
      * Constructor
@@ -16,7 +17,7 @@ class Instelling_model extends CI_Model {
     {
         parent::__construct();
     }
-    
+
     /**
      * Retourneert alle records uit de tabel instelling.
      * @return Alle records
@@ -35,23 +36,27 @@ class Instelling_model extends CI_Model {
      *
      * Gemaakt door Geffrey Wuyts
      */
-    function wijzig($instellingen){
-        foreach ($instellingen as $instelling){
+    function wijzig($instellingen)
+    {
+        foreach ($instellingen as $instelling) {
             $this->db->where('id', $instelling->id);
             $this->db->update('instelling', $instelling);
         }
     }
 
-	/**
-		* Haalt een waarde van instelling uit de db
-		*
-		* @param $id Het id van de instelling
-		* Gemaakt door Michiel Olijslagers
-		* @return De instelling
-	*/
-	function getValueById($id){
-		$this->db->where('id', $id);
-		$query = $this->db->get('instelling');
-		return $query->row();
-	}
+    /**
+     * Haalt een waarde van instelling uit de db
+     *
+     * @param $id Het id van de instelling
+     *
+     * @return De instelling
+     *
+     * Gemaakt door Michiel Olijslagers
+     */
+    function getValueById($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('instelling');
+        return $query->row();
+    }
 }

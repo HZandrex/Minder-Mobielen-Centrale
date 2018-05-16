@@ -6,6 +6,10 @@
  * - geeft via wijzigenGegevensFormulier alle gegevens door naar PersoonlijkeGegevens::gegevensVeranderen()
  *
  * @see PersoonlijkeGegevens::gegevensVeranderen()
+ *
+ * Gemaakt door Tijmen Elseviers
+ *
+ * Medemogelijk door Geffrey Wuyts & Michiel Olijslagers
  */
 ?>
 

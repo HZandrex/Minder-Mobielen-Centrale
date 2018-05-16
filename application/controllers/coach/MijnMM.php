@@ -25,6 +25,7 @@ class MijnMM extends CI_Controller
      *
      * @see coach/mijnMM.php
      * @see CoachMinderMobiele_model::getMMById()
+     *
      * Gemaakt door Tijmen Elseviers
      */
     public function mijnMMLijst()
@@ -55,6 +56,7 @@ class MijnMM extends CI_Controller
      * @see coach/ajax_gebruikerInfo.php
      *
      * Gemaakt door Tijmen Elseviers
+     *
      * Medemogelijk door Geffrey Wuyts
      */
     public function haalAjaxOp_GebruikerInfo()
@@ -77,6 +79,7 @@ class MijnMM extends CI_Controller
      * @see coach/gegevensWijzigen.php
      *
      * Gemaakt door Tijmen Elseviers
+     *
      * Medemogelijk door Geffrey Wuyts
      */
     public function gegevensWijzigen($id = 0)
@@ -118,14 +121,15 @@ class MijnMM extends CI_Controller
      * Deze functie zorgt ervoor dat de gegevens die de coach wijzigt op de view coach/gegevensWijzigen
      * aangepast worden in de databank. Het systeem stuurt deze gegevens mee door middel van de parameter
      * $gebruiker. Achteraf toont het systeem een melding dat dit gelukt via de controller
-     * coach::mijnMM::toonGegegevensGewijzigd().
+     * MijnMM::toonGegegevensGewijzigd().
      *
      * @see Gebruiker_model::getEmpty()
      * @see Gebruiker_model::insertGebruiker()
      * @see Gebruiker_model::updateGebruiker()
-     * @see mijnMM::toonGegegevensGewijzigd()
+     * @see MijnMM::toonGegegevensGewijzigd()
      *
      * Gemaakt door Tijmen Elseviers
+     *
      * Medemogelijk door Geffrey Wuyts
      */
     public function gegevensVeranderen()
@@ -154,6 +158,7 @@ class MijnMM extends CI_Controller
      * @see Coach/wachtwoordGebruikerWijzigen.php
      *
      * Gemaakt door Tijmen Elseviers
+     *
      * Medemogelijk door Geffrey Wuyts
      */
     public function wachtwoordWijzigen($id)
@@ -193,7 +198,9 @@ class MijnMM extends CI_Controller
      * @see Gebruiker_model::wijzigWachtwoord()
      * @see mijnMM::toonFoutOudWachtwoord()
      * @see mijnMM::toonWachtwoordVeranderd()
+     *
      * Gemaakt door Tijmen Elseviers
+     *
      * Medemogelijk door Geffrey Wuyts
      */
     public function wachtwoordVeranderen()
@@ -221,6 +228,7 @@ class MijnMM extends CI_Controller
      * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
      *
      * @see main_melding.php
+     *
      * Gemaakt door Geffrey Wuyts
      */
     public function toonMelding($foutTitel, $boodschap, $link)
@@ -241,6 +249,7 @@ class MijnMM extends CI_Controller
      * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
      * @see PersoonlijkeGegevens::toonMelding()
+     *
      * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutWachtwoordWijzigen($id)
@@ -257,6 +266,7 @@ class MijnMM extends CI_Controller
      * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
      * @see PersoonlijkeGegevens::toonMelding()
+     *
      * Gemaakt door Geffrey Wuyts
      */
     public function toonWachtwoordGewijzigd()
@@ -273,6 +283,7 @@ class MijnMM extends CI_Controller
      * Dit zal PersoonlijkeGegevens::toonMelding() oproepen en de nodige parameters megeven om een boodschap te tonen.
      *
      * @see PersoonlijkeGegevens::toonMelding()
+     *
      * Gemaakt door Geffrey Wuyts
      */
     public function toonGegevensGewijzigd()

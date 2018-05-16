@@ -8,6 +8,8 @@
      * 
      * @see PersoonlijkeGegevens::wachtwoordWijzigen()
 	 * @see PersoonlijkeGegevens::gegevensWijzigen()
+     *
+     * Gemaakt door Tijmen Elseviers
      */
 ?>
 

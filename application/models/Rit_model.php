@@ -316,6 +316,7 @@ class Rit_model extends CI_Model
      * @see Adresrit_model::updateStatusVrijwilligerRit()
      *
      * Gemaakt door Nico Claes
+     *
      * Aangepast door Michiel Olijslagers
      */
     function updateStatusRitten($ritId, $ritStatusId)
@@ -336,6 +337,7 @@ class Rit_model extends CI_Model
      * @param $ritStatusId Dit is de status naar waar de rit aangepast moet worden
      *
      * Gemaakt door Nico Claes
+     *
      * Aangepast door Michiel Olijslagers
      */
     function updateStatusRit($ritId, $ritStatusId)

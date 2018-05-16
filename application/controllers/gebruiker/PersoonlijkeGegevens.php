@@ -20,6 +20,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * Haalt de persoonlijke gegevens van de ingelogde gebruiker op.
      *
      * @see Gebruiker::persoonlijkeGegevens()
+     *
 	 * Gemaakt door Tijmen Elseviers
      */
     public function persoonlijkeGegevens(){
@@ -46,6 +47,7 @@ class PersoonlijkeGegevens extends CI_Controller
      * @see Gebruiker_model::getWithFunctions()
 	 * @see Voorkeur_model::getAll()
      * @see Gebruiker::gegevensWijzigen()
+     *
 	 * Gemaakt door Tijmen Elseviers
      */
     public function gegevensWijzigen(){
@@ -76,8 +78,6 @@ class PersoonlijkeGegevens extends CI_Controller
 	 * gebruiker_model om in updateGebruikers de effectieve update te starten.
 	 * Achteraf word de gebruiker terug naar de controller PersoonlijkeGegevens::persoonlijkeGegevens()
 	 * gestuurd.
-     *
-	 * @param $gebruiker
 	 *
      * @see Gebruiker_model::get()
 	 * @see Gebruiker_model::updateGebruiker()
@@ -291,18 +291,6 @@ class PersoonlijkeGegevens extends CI_Controller
         $link = array("url" => "gebruiker/inloggen", "tekst" => "Inloggen");
 
         $this->toonMelding($titel, $boodschap, $link);
-    }
-
-    /**
-     * Dit zal de view gebruiker/handleiding.php openen.
-     *
-     * @see gebruiker/handleiding.php
-     *
-     * Gemaakt door Geffrey Wuyts
-     * Medemogelijk door Tijmen Elseviers
-     */
-    public function toonHandleiding() {
-        $this->load->view("gebruiker/handleiding");
     }
 
 }

@@ -7,6 +7,8 @@
  *   Deze worden opgehaald via de controller MijnMM::haalAjaxOp_GebruikerInfo().
  *
  * @see MijnMM::haalAjaxOp_GebruikerInfo()
+ *
+ * Gemaakt door Tijmen Elseviers
  */
 ?>
 
