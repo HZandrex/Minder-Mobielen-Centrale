@@ -39,13 +39,15 @@ class CoachMinderMobiele_model extends CI_Model
         $this->load->model('gebruiker_model');
         $ritten = array();
         foreach ($naam as $mm) {
-            $temp = $this->rit_model->getByMMCId($mm->gebruikerMinderMobieleId);
-            if (!empty($temp)) {
-                foreach ($temp as $rit) {
-                    $rit->persoon = $this->gebruiker_model->get($mm->gebruikerMinderMobieleId);
-                    array_push($ritten, $rit);
-                }
-            }
+			if($mm->eindDatum == NULL){
+				$temp = $this->rit_model->getByMMCId($mm->gebruikerMinderMobieleId);
+					if (!empty($temp)) {
+						foreach ($temp as $rit) {
+							$rit->persoon = $this->gebruiker_model->get($mm->gebruikerMinderMobieleId);
+							array_push($ritten, $rit);
+						}
+					}
+			}
         }
         return $ritten;
     }
@@ -71,7 +73,7 @@ class CoachMinderMobiele_model extends CI_Model
 
         foreach ($mmIds as $mmId) {
 			$mindermobiele = $this->gebruiker_model->get($mmId->gebruikerMinderMobieleId);
-			if($mindermobiele->active != 0){
+			if($mindermobiele->active != 0 && $mmId->eindDatum == NULL){
 				array_push($minderMobielen, $mindermobiele);
 			} 
         }
