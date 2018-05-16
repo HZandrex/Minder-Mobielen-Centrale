@@ -103,7 +103,7 @@ class VrijwilligerRit_model extends CI_Model {
         *
         * @param $vrijwilligerRit Dit is al de informatie die aangepast moet worden
 		*
-		* Gemaakt door Michiel Olijslagers
+		* Gemaakt door Nico Claes
     */
     function updateVrijwilligerRit($vrijwilligerRit)
     {

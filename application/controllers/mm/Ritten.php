@@ -225,8 +225,17 @@ class Ritten extends CI_Controller {
         redirect('mm/ritten');
 
     }
+    
+    /**
+     * Verander de status van een mindermobile zijn rit.
+     * 
+     * @param $ritId Dit is het id van de gevraagde rit
+     * 
+     * @see rit_model::updateStatusRitten()
+     * 
+     * Gemaakt door Nico Claes
+     */
     public function statusAanpassen($ritId){
-		//Nico
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker == null) {
             redirect('gebruiker/inloggen');

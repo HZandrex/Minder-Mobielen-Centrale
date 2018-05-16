@@ -17,6 +17,8 @@ class Webinfo_model extends CI_Model {
     /**
      * Retourneert een array met alle webinfo gegevens uit de tabel Webinfo.
      * @return een array van alle webinfo
+     * 
+     * Gemaakt door Geffrey Wuyts
      */
     function getAll()
     {
@@ -27,6 +29,13 @@ class Webinfo_model extends CI_Model {
         }
         return $webinfo;
     }
+    
+    /**
+     * Retourneert een array met alle webinfo gegevens uit de tabel Webinfo.
+     * @return een array van alle webinfo
+     * 
+     * Gemaakt door Nico Claes
+     */
     function getAllNames()
     {
         $query = $this->db->get('webinfo');
@@ -36,9 +45,12 @@ class Webinfo_model extends CI_Model {
         }
         return $webinfo;
     }
+    
     /**
      * Update alle webinfo met de nieuwe waarde uit de array $webinfo in de tabel Webinfo.
      * @param $webinfo Een array van alle tekst die is ingegeven om weer te geven op de startpagina.
+     * 
+     * Gemaakt door Nico Claes
      */
     function update($webinfo)
     {

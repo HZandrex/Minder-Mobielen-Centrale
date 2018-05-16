@@ -15,9 +15,11 @@ class RelatiesBeheren extends CI_Controller {
     }
 
     /**
-     * Toont het startscherm met alle gebruikers in de view Medewerker/gebruikersBeherenOverzicht.php.
+     * Toont het startscherm met alle gebruikers in de view Medewerker/relatiesBeherenOverzicht.php.
      * 
-     * @see Medewerker/gebruikersBeherenOverzicht.php
+     * @see FunctieGebruiker_model::getAllGebruikersByFunction()
+     * 
+     * Gemaakt door Nico Claes
      */
     public function index() {
         $data['titel'] = 'Relaties beheren';
@@ -36,6 +38,15 @@ class RelatiesBeheren extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
+    /**
+     * Toont alle bijhorende coaches van een minder mobiele in een listbox en de overige coaches in een combobox.
+     * Terug te vinden in de view Medewerker/ajax_bijhorendeCoaches.php.
+     * 
+     * @see CoachMinderMobiele_model::getBijhorendeCoaches()
+     * @see CoachMinderMobiele_model::getOverschotCoaches()
+     * 
+     * Gemaakt door Nico Claes
+     */
     public function haalAjaxOp_bijhorendeCoaches(){
         $minderMobieleId = $this->input->get('gebruikerId');
         $this->load->model('coachMinderMobiele_model');
@@ -45,6 +56,16 @@ class RelatiesBeheren extends CI_Controller {
         $this->load->view('medewerker/ajax_bijhorendeCoaches', $data);
     }
     
+    /**
+     * Archiveer coaches wanneer deze bij een minder mobiele hoort.
+     * De pagina zal niet herladen alleen het ajax component zal refreshen.
+     * 
+     * @see CoachMinderMobiele_model::getAllGebruikersByFunction()
+     * @see CoachMinderMobiele_model::getBijhorendeCoaches()
+     * @see CoachMinderMobiele_model::getOverschotCoaches()
+     * 
+     * Gemaakt door Nico Claes
+     */
     public function archiveerBijhorendeCoach(){
         $minderMobieleId = $this->input->get('gebruikerId');
         $coachMinderMobieleId = $this->input->get('coachMinderMobieleId');
@@ -57,6 +78,16 @@ class RelatiesBeheren extends CI_Controller {
         $this->load->view('medewerker/ajax_bijhorendeCoaches', $data);
     }
     
+    /**
+     * Voeg een coach toe wanneer deze niet meer bij een minder mobiele hoort.
+     * De pagina zal niet herladen alleen het ajax component zal refreshen.
+     * 
+     * @see CoachMinderMobiele_model::voegToeBijhorendeCoach()
+     * @see CoachMinderMobiele_model::getBijhorendeCoaches()
+     * @see CoachMinderMobiele_model::getOverschotCoaches()
+     * 
+     * Gemaakt door Nico Claes
+     */
     public function voegToeBijhorendeCoach(){
         $minderMobieleId = $this->input->get('gebruikerId');
         $coachId = $this->input->get('coachId');
