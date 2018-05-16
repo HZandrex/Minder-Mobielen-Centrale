@@ -7,6 +7,7 @@
  * - krijgt een $functies-object binnen om op functie gebruikers te kunnen tonen (medewerker kan tot en met vrijwilliger zien, admin tot en met medewerker)
  *
  * Gemaakt door Geffrey Wuyts
+ *
  * Medemogelijk door Michiel Olijslagers
  */
 

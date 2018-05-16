@@ -311,7 +311,7 @@ class Gebruiker_model extends CI_Model
      *
      * @param $id Dit is het de minder mobiele
      * @param $date Datum van de week waar de credits berekent moeten worden
-     * @see instelling_model::getValueById()
+     * @see Instelling_model::getValueById()
      * @see Rit_model::getAantalRitten()
      *
      * @return Aantal resterende credits

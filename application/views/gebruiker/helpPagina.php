@@ -4,6 +4,8 @@
  *
  * View waarin de helpPagina wordt weergegeven
  *  - Wanneer een medewerker of admin op deze pagina komt krijgt hij een extra stuk te zien voor gebruikers te beheren
+ *
+ * Gemaakt door Geffrey Wuyts & Tijmen Elseviers
  */
 ?>
     <style>

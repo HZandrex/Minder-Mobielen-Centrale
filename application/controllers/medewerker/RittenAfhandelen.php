@@ -48,7 +48,7 @@ class RittenAfhandelen extends CI_Controller {
 	 *
 	 * @param $ritId Dit is het id van de gevraagde rit
 	 * @see Rit_model::getByRitId()
-	 * @see vrijwilligerRit_model::getVrijwilligerByRit()
+	 * @see VrijwilligerRit_model::getVrijwilligerByRit()
 	 * 
 	 * Gemaakt door Michiel Olijslagers
 	*/
@@ -70,7 +70,7 @@ class RittenAfhandelen extends CI_Controller {
 	/**
 	 * Koppeld een vrijwilliger aan een rit
 	 *
-	 * @see vrijwilligerRit_model::koppelVrijwilliger()
+	 * @see VrijwilligerRit_model::koppelVrijwilliger()
 	 * 
 	 * Gemaakt door Michiel Olijslagers
 	*/
@@ -88,8 +88,8 @@ class RittenAfhandelen extends CI_Controller {
 	 * Koppeld een vrijwilliger aan een rit
 	 *
 	 * @param $id Dit is het id van de gevraagde rit
-	 * @see rit_model::getByRitId()
-	 * @see rit_model::getAllVoorGebruiker()
+	 * @see Rit_model::getByRitId()
+	 * @see Rit_model::getAllVoorGebruiker()
 	 * 
 	 * Gemaakt door Michiel Olijslagers
 	*/
@@ -110,7 +110,7 @@ class RittenAfhandelen extends CI_Controller {
 	/**
 	 * Reset de status van een vrijwilliger bij de gegeven rit, dit zodat een vrijwilliger zich kan bedenken
 	 *
-	 * @see vrijwilligerRit_model::resetVrijwilliger()
+	 * @see VrijwilligerRit_model::resetVrijwilliger()
 	 * 
 	 * Gemaakt door Michiel Olijslagers
 	*/

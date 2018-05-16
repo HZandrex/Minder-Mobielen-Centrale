@@ -43,6 +43,7 @@ class Webinfo extends CI_Controller
      * @see Webinfo_model::update()
      *
      * Gemaakt door Nico Claes
+     *
      * Medemogelijk door Geffrey Wuyts
      */
     public function wijzig()

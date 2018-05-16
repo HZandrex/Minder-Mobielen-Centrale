@@ -457,6 +457,8 @@ class GebruikersBeheren extends CI_Controller
      * @param $link De link en naam die wordt getoond om eventueel naar een andere pagina te gaan
      *
      * @see main_melding.php
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonMelding($foutTitel, $boodschap, $link)
     {
@@ -476,6 +478,8 @@ class GebruikersBeheren extends CI_Controller
      * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutWachtwoordWijzigen($id)
     {
@@ -491,6 +495,8 @@ class GebruikersBeheren extends CI_Controller
      * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutBestaandeMail()
     {
@@ -506,6 +512,8 @@ class GebruikersBeheren extends CI_Controller
      * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutUrl()
     {
@@ -521,6 +529,8 @@ class GebruikersBeheren extends CI_Controller
      * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutOpslaan($id)
     {
@@ -536,6 +546,8 @@ class GebruikersBeheren extends CI_Controller
      * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonFoutDatum()
     {
@@ -551,6 +563,8 @@ class GebruikersBeheren extends CI_Controller
      * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonWachtwoordGewijzigd()
     {
@@ -566,6 +580,8 @@ class GebruikersBeheren extends CI_Controller
      * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonGegevensGewijzigd()
     {
@@ -581,6 +597,8 @@ class GebruikersBeheren extends CI_Controller
      * Dit zal GebruikersBeheren::toonMelding() oproepen en de nodige parrameters megeven om een boodschap te tonen.
      *
      * @see GebruikersBeheren::toonMelding()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     public function toonStatusVeranderd($status)
     {
@@ -595,6 +613,8 @@ class GebruikersBeheren extends CI_Controller
      * Genereert een string van 20 willekeurige karakters uit de string $chars.
      *
      * @return $resetToken om vijlig wachtwoord te kunnen wijzigen
+     *
+     * Gemaakt door Geffrey Wuyts
      */
     private function random_resetToken() {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

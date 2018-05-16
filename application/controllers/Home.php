@@ -24,6 +24,7 @@ class Home extends CI_Controller {
      * @see Gebruiker/homePagina.php
      *
      * Gemaakt door Nico Claes
+     *
      * Medemogelijk door Geffrey Wuyts
      */
     public function index() {

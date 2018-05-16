@@ -6,6 +6,8 @@
  * - geeft via wijzigenGegevensFormulier alle gegevens door naar MijnMM::gegevensVeranderen()
  *
  * @see MijnMM::gegevensVeranderen()
+ *
+ * Gemaakt door Tijmen Elseviers
  */
 ?>
 

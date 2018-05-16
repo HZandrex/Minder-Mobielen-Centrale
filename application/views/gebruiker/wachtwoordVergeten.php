@@ -6,6 +6,8 @@
      * - stuurd naar het opgegeven mail adres in wachtwoordVergetenForm een link om het wachtwoord te wijzigen via Inloggen::nieuwWachtwoordAanvragen()
      * 
      * @see Inloggen::nieuwWachtwoordAanvragen()
+     *
+     * Gemaakt door Geffrey Wuyts
      */
 ?>
 

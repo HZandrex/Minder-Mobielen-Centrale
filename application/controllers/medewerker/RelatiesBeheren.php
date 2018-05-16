@@ -60,7 +60,7 @@ class RelatiesBeheren extends CI_Controller {
      * Archiveer coaches wanneer deze bij een minder mobiele hoort.
      * De pagina zal niet herladen alleen het ajax component zal refreshen.
      * 
-     * @see CoachMinderMobiele_model::getAllGebruikersByFunction()
+     * @see CoachMinderMobiele_model::archiveerBijhorendeCoach()
      * @see CoachMinderMobiele_model::getBijhorendeCoaches()
      * @see CoachMinderMobiele_model::getOverschotCoaches()
      * 

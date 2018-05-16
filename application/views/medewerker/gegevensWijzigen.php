@@ -9,6 +9,7 @@
  * @see GebruikersBeheren::gegevensVeranderen()
  *
  * Gemaakt door Geffrey Wuyts
+ *
  * Medemogelijk door Michiel Olijslagers
  */
 ?>

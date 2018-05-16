@@ -216,6 +216,7 @@ class Ritten extends CI_Controller {
      * @see rit_model::saveNewRit()
      *
      * Gemaakt door Michiel Olijslagers
+     *
      * Aangepast door Lorenz Cleymans
      */
     public function wijzigRitOpslaan(){
@@ -254,6 +255,7 @@ class Ritten extends CI_Controller {
      * @see rit_model::saveNewRit()
      *
      * Gemaakt door Michiel Olijslagers
+     *
      * Aangepast door Lorenz Cleymans voor coach
      */
     public function nieuweRitOpslaan(){
