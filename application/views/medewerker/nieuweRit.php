@@ -263,7 +263,6 @@ if(!empty($adressen[0])){
                     $('#credits').html('Je hebt nog <span id="aantalCredits">' + credits + '</span> credits, deze rit kost 1 credit.');
                 }
             });
-
     });
 
     $('select').change(function() {
@@ -305,13 +304,14 @@ if(!empty($adressen[0])){
             if(bestaat != false){
                 $('#exampleModal').modal('hide');
                 $('#' + $('#exampleModal').attr('data-id')).val(bestaat);
-
+				$("#terugStartAdres").val($('#heenEindeAdres option:checked').val());
+				$("#terugEindeAdres").val($('#heenStartAdres option:checked').val());
             }else{
                 // ajaxrequest
                 $.ajax(
                     {
                         type:"post",
-                        url: "<?php echo base_url(); ?>index.php/mm/rittenAfhandelen/nieuwAdres",
+                        url: "<?php echo base_url(); ?>index.php/medewerker/rittenAfhandelen/nieuwAdres",
                         data:{ huisnummer:huisnummer, straat:straat, gemeente:gemeente, postcode:postcode},
                         success:function(response)
                         {
@@ -323,6 +323,8 @@ if(!empty($adressen[0])){
                             });
                             $('#exampleModal').modal('hide');
                             $('#' + $('#exampleModal').attr('data-id')).val(adres.id);
+							$("#terugStartAdres").val($('#heenEindeAdres option:checked').val());
+							$("#terugEindeAdres").val($('#heenStartAdres option:checked').val());
                         }
                     }
                 );
@@ -565,6 +567,9 @@ if(!empty($adressen[0])){
         if(!error){
             console.log('submit');
             addData('userId', '<?php print $gebruikerMM->id; ?>');
+			$('#terugStartAdres').prop('disabled', false);
+			$('#terugEindeAdres').prop('disabled', false);
+			$('#terugDatum').prop('disabled', false);
             $( "#nieuweRit" ).submit();
         }
 

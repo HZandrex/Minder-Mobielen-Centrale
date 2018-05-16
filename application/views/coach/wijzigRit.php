@@ -277,6 +277,23 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete" async defer></script>
 <script>
+	$( document ).ready(function() {
+		calulateCost();
+		$('#terugDatum').val($('#heenDatum').val());
+        var timeStamp = $('#heenDatum').val() + ' 00:00:00';
+        $.ajax(
+            {
+                type:"post",
+                url: "<?php echo base_url(); ?>index.php/mm/ritten/berekenCredits",
+                data:{ userId:'<?php echo $gebruiker->id; ?>', date: timeStamp},
+                success:function(response)
+                {
+                    var credits = JSON.parse(response);
+                    $('#credits').html('Je hebt nog <span id="aantalCredits">' + credits + '</span> credits, deze rit kost 1 credit.');
+                }
+            });
+	});
+
     $("#heenEindeAdres").change(function () {
         var i = $('#heenEindeAdres option:checked').val();
         $("#terugStartAdres").val(i);

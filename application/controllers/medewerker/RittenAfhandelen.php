@@ -148,7 +148,7 @@ class RittenAfhandelen extends CI_Controller {
 	 * Gemaakt door Michiel Olijslagers
 	*/
 	public function resetVrijwilliger(){
-				$this->load->model('vrijwilligerRit_model');
+		$this->load->model('vrijwilligerRit_model');
 		
 		$ritId = htmlspecialchars(trim($_POST['ritId']));
 		$vrijwilligerId = htmlspecialchars(trim($_POST['vrijwilligerId']));
@@ -210,7 +210,7 @@ class RittenAfhandelen extends CI_Controller {
 
         $afstand = $this->google_model->getReisTijd($startAdres, $eindAdres, $timeStamp);
         $afstand->kostPerKm = $this->instelling_model->getValueById(2);
-
+		
         echo json_encode ($afstand);
     }
 

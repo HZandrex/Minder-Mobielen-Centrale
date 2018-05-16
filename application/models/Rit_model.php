@@ -218,20 +218,15 @@ class Rit_model extends CI_Model
 
         foreach ($ritten as $rit) {
             $ritAdressen = $this->adresRit_model->getAdressen($rit->id);
-			var_dump($ritAdressen);
             foreach ($ritAdressen as $adres) {
                 array_push($temp, $adres);
-				var_dump($adres);
             }
         }
 
         function cmp($a, $b)
         {
-			var_dump($a);
-			var_dump($b);
             return strcmp($a->straat, $b->straat);
         }
-		var_dump($temp);
         usort($temp, "cmp");
 
         $adressen = array_merge($adressen, $temp);
