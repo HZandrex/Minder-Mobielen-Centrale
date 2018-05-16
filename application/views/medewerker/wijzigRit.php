@@ -122,7 +122,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
             </div>
         </div>
     </article>
-    <article class="mt-2" id="terug" style="display: none;">
+    <article class="mt-2" id="terug" style="<?php if(empty($heen->terugvertrek)){print "display: none;";} ?>">
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -144,7 +144,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                                     <i class="fas fa-calendar-alt"></i>
                                 </label>
                             </div>
-                            <input data-provide="datepicker" id="terugDatum" class="form-control" name="terugDatum" disabled>
+                            <input data-provide="datepicker" id="terugDatum" class="form-control" name="terugDatum" value="<?php print date('j/m/Y' , strtotime($heen->terugvertrek->tijd)); ?>" disabled>
                         </div>
                     </div>
                     <div class="col">
