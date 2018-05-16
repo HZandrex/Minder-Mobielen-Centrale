@@ -1,4 +1,14 @@
-
+<?php
+    /**
+     * @file admin/webinfoWijzigPagina.php
+     *
+     * View waarin de dynamische webinfo kan worden aangepast.
+     *
+     * @see Webinfo::wijzig()
+     *
+     * Gemaakt door Nico Claes
+     */
+?>
 <div class="col-12">
     <?php
         $attributen = array('name' => 'mijnFormulier', 'class' => 'form-horizontal');

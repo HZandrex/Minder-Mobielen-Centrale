@@ -99,8 +99,8 @@ class Ritten extends CI_Controller {
 	 * Deze functie geeft in JSON de kost, de afstand en de prijs terug van een bepaalde rit waar een tijd, start- en eindAdres gegeven zijn
 	 *
 	 * @see google_model::getReisTijd()
-	 * @see instelling_model::getValueById()
-	 * @return Tijd, start- en eindAdres
+     * @see instelling_model::getValueById()
+     * @return Tijd, start- en eindAdres
      *
 	 * Gemaakt door Michiel Olijslagers
 	*/
@@ -177,7 +177,7 @@ class Ritten extends CI_Controller {
 	 *
 	 * @see rit_model::getAllVoorGebruiker()
 	 * @see rit_model::getByRitId()
-     *
+     * @parameter deze id is van een rit zo weet de het model welke record hij moet gaan wijzigen
 	 * Gemaakt door Lorenz Cleymans
 	 */
     public function wijzigRit($id){

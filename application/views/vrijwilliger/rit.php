@@ -4,6 +4,8 @@
 	*
 	* vieuw waar er 1 bepaalde rit getoond in detail getoond wordt, hier kan de rit ook geanuleerd of aangepast worden.
 	* - krijgt een $rit object binnen
+        *
+        * Gemaakt door Nico Claes en Michiel Olijslagers en Lorenz Cleymans 
 */
         //var_dump($rit);
 		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
