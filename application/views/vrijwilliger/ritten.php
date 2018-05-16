@@ -53,7 +53,7 @@ if (!empty($ritten)){ ?>
                                         print '<i class="fa fa-minus-circle fa-2x text-warning" data-toggle="tooltip" data-placement="top" title="' . $rit->status->naam . '"></i>';
                                     }
                                 ?></td>
-                                <td><?php print anchor(array('vrijwilliger/ritten/eenRit/', $rit->id), '<i class="fa fa-eye fa-2x" data-toggle="tooltip" data-placement="top" title="Bekijken"></i>'); ?></td>
+                                <td><?php print anchor(array('vrijwilliger/ritten/eenRit/', $rit->id), '<i class="fab fa-leanpub fa-2x" data-toggle="tooltip" data-placement="top" title="Bekijken"></i>'); ?></td>
                             </tr>
                 <?php
                         }

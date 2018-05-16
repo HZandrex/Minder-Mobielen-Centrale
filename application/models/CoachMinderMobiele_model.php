@@ -143,6 +143,22 @@ class CoachMinderMobiele_model extends CI_Model
         $this->db->where('eindDatum', NULL);
         $this->db->update('coachMinderMobiele');
     }
+    
+    function archiveerAlleBijhorendeCoaches($minderMobileId)
+    {
+        $this->db->set('eindDatum', date('Y-m-d H:i:s'));
+        $this->db->where('gebruikerMinderMobieleId', $minderMobileId);
+        $this->db->where('eindDatum', NULL);
+        $this->db->update('coachMinderMobiele');
+    }
+    
+    function archiveerAlleToegwezenMinderMobiele($coachId)
+    {
+        $this->db->set('eindDatum', date('Y-m-d H:i:s'));
+        $this->db->where('gebruikerCoachId', $coachId);
+        $this->db->where('eindDatum', NULL);
+        $this->db->update('coachMinderMobiele');
+    }
 
     /**
      * Deze functie maakt een nieuwe coach mindermobiele relatie.

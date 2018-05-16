@@ -417,6 +417,8 @@ class GebruikersBeheren extends CI_Controller
      */
     public function pasStatusGebruikerAan($id){
         $this->load->model('gebruiker_model');
+        $this->load->model('coachMinderMobiele_model');
+        $this->load->model('functieGebruiker_model');
         $gebruiker = $this->authex->getGebruikerInfo();
         if ($gebruiker != null) {
             $data['gebruiker'] = $gebruiker;
@@ -446,6 +448,13 @@ class GebruikersBeheren extends CI_Controller
 
         } else{
             $this->gebruiker_model->deactiveerGebruiker($id);
+            
+            if($this->functieGebruiker_model->functieGebruikerBestaat($id, 1) != NULL){
+                $this->coachMinderMobiele_model->archiveerAlleBijhorendeCoaches($id);
+            }
+            if($this->functieGebruiker_model->functieGebruikerBestaat($id, 2) != NULL){
+                $this->coachMinderMobiele_model->archiveerAlleToegwezenMinderMobiele($id);
+            }
             redirect('medewerker/gebruikersBeheren/toonstatusveranderd/'."gedeactiveerd");
         }
     }
