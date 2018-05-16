@@ -11,11 +11,11 @@
  */
 
 
-$selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
-//foreach($adressen as $adres){
-//
-//    print($selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>');
-//}
+// $selectAdressen = '<option value="default" selected disabled>Kies een adres of voeg er een toe</option><option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>';
+// foreach($adressen as $adres){
+
+   // print($selectAdressen .= '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>');
+// }
 
 //var_dump($adressen);
 // var_dump($heen);
@@ -50,7 +50,7 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                 <div class="col-sm-6">
                     <button type="button" class="btn btn-primary" id="opslaan"><i class="fas fa-save"></i> Opslaan</button>
                     <?php
-                    print anchor(array('medewerker/rittenAfhandelen/accepterenAnnuleren'), '<i class="fas fa-ban"></i> Annuleren', array('class' => 'btn btn-danger'));
+						print anchor(array('medewerker/rittenAfhandelen/accepterenAnnuleren'), '<i class="fas fa-ban"></i> Annuleren', array('class' => 'btn btn-danger'));
                     ?>
                 </div>
             </div>
@@ -90,15 +90,15 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                     <div class="col">
                         <label for="heenStartAdres">Start adres: </label>
                         <select class="custom-select" id="heenStartAdres" name="heenStartAdres">
+							<option value="default" selected disabled>Kies een adres of voeg er een toe</option>
+							<option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>
                             <?php
                                 foreach($adressen as $adres){
-
-                                    if($adres->id==$heen->heenvertrek->adres->id){
+                                    if($adres->id == $heen->heenvertrek->adres->id){
                                         print  '<option selected value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
                                     }else{
                                         print  '<option value="' . $adres->id . '">' . $adres->straat . ' ' . $adres->huisnummer . ' (' . $adres->gemeente . ')</option>';
                                     }
-
                                 }
                             ?>
                         </select>
@@ -106,6 +106,8 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                     <div class="col">
                         <label for="heenEindeAdres">Bestemming adres: </label>
                         <select class="custom-select" id="heenEindeAdres" name="heenEindeAdres">
+							<option value="default" selected disabled>Kies een adres of voeg er een toe</option>
+							<option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>
                             <?php
                             foreach($adressen as $adres){
 
@@ -157,6 +159,8 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                     <div class="col">
                         <label for="terugStartAdres">Start adres: </label>
                         <select class="custom-select" id="terugStartAdres" name="terugStartAdres" disabled>
+							<option value="default" selected disabled>Kies een adres of voeg er een toe</option>
+							<option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>
                             <?php
                             foreach($adressen as $adres){
 
@@ -173,6 +177,8 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                     <div class="col">
                         <label for="terugEindeAdres">Bestemming adres: </label>
                         <select class="custom-select" id="terugEindeAdres" name="terugEindeAdres" disabled>
+							<option value="default" selected disabled>Kies een adres of voeg er een toe</option>
+							<option id="nieuwAdres" value="nieuwAdres">Nieuw adres</option>
                             <?php
                             foreach($adressen as $adres){
 
@@ -351,7 +357,8 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
             if(bestaat != false){
                 $('#exampleModal').modal('hide');
                 $('#' + $('#exampleModal').attr('data-id')).val(bestaat);
-
+				$("#terugStartAdres").val($('#heenEindeAdres option:checked').val());
+				$("#terugEindeAdres").val($('#heenStartAdres option:checked').val());
             }else{
                 // ajaxrequest
                 $.ajax(
@@ -369,6 +376,8 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
                             });
                             $('#exampleModal').modal('hide');
                             $('#' + $('#exampleModal').attr('data-id')).val(adres.id);
+							$("#terugStartAdres").val($('#heenEindeAdres option:checked').val());
+							$("#terugEindeAdres").val($('#heenStartAdres option:checked').val());
                         }
                     }
                 );

@@ -233,15 +233,16 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3Fe2FqE9k7EP-u0Q1j5vUoVhtfbWfSjU&libraries=places&callback=initAutocomplete" async defer></script>
 <script>
 
-    $("#heenEindeAdres").change(function () {
-        var i = $('#heenEindeAdres option:checked').val();
-        $("#terugStartAdres").val(i);
-    });
+$("#heenEindeAdres").change(function () {
+	var i = $('#heenEindeAdres option:checked').val();
+	$("#terugStartAdres").val(i);
+});
 
-    $("#heenStartAdres").change(function () {
-        var i = $('#heenStartAdres option:checked').val();
-        $("#terugEindeAdres").val(i);
-    });
+$("#heenStartAdres").change(function () {
+	var i = $('#heenStartAdres option:checked').val();
+	$("#terugEindeAdres").val(i);
+});
+
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 })
@@ -316,7 +317,8 @@ $('#saveAdres').click(function(){
 		if(bestaat != false){
 			$('#exampleModal').modal('hide');
 			$('#' + $('#exampleModal').attr('data-id')).val(bestaat);
-			
+			$("#terugStartAdres").val($('#heenEindeAdres option:checked').val());
+			$("#terugEindeAdres").val($('#heenStartAdres option:checked').val());
 		}else{
 			// ajaxrequest
 			$.ajax(
@@ -333,7 +335,10 @@ $('#saveAdres').click(function(){
 							$(this).children().eq(1).after('<option value="' + adres.id + '">' + adres.straat + ' ' + adres.huisnummer + ' (' + adres.gemeente + ')</option>');
 						});
 						$('#exampleModal').modal('hide');
+						console.log('test');
 						$('#' + $('#exampleModal').attr('data-id')).val(adres.id);
+						$("#terugStartAdres").val($('#heenEindeAdres option:checked').val());
+						$("#terugEindeAdres").val($('#heenStartAdres option:checked').val());
 						calulateCost();
 					}
 				}
@@ -490,7 +495,7 @@ $('#opslaan').click(function(){
 		error = true;
 	}else{
 		var timeStamp = $('#heenDatum').val();
-		var now = new Date() ;		
+		var now = new Date() ;			
 		var timeStamp = timeStamp.charAt(3) + timeStamp.charAt(4) + '/' + timeStamp.charAt(0) + timeStamp.charAt(1) + '/' + timeStamp.charAt(6) + timeStamp.charAt(7) + timeStamp.charAt(8) + timeStamp.charAt(9) + ' 00:00:00';
 		var d = new Date(timeStamp);
 		if(d <= now){

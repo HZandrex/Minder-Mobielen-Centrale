@@ -114,7 +114,6 @@ class AdresRit_model extends CI_Model
         foreach ($rows as $row) {
             array_push($adressen, $this->adres_model->getById($row->adresId));
         }
-
         return $adressen;
     }
 
