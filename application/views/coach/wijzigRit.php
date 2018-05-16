@@ -657,6 +657,9 @@ $selectAdressen = '<option value="default" selected disabled>Kies een adres of v
         if(!error){
             console.log('submit');
             addData('userId', '<?php print $gebruikerMM->id; ?>');
+			$('#terugStartAdres').prop('disabled', false);
+			$('#terugEindeAdres').prop('disabled', false);
+			$('#terugDatum').prop('disabled', false);
             $( "#nieuweRit" ).submit();
         }
 
