@@ -115,7 +115,8 @@ echo form_open('medewerker/gebruikersBeheren/gegevensVeranderen', $attributen, $
                         'class' => 'form-control',
                         'value' => $editGebruiker->mail,
                         'required' => 'required',
-                        'type' => 'mail');
+                        'minlength' => '6',
+                        'pattern' => '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$');
                     echo form_input($dataMail) . "\n";
                     ?>
                     <div class="invalid-feedback">Geef een geldig e-mailadres in!</div>
