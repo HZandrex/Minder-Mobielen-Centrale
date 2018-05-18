@@ -16,8 +16,7 @@
     </style>
     <div class="card">
         <h2 class="card-title">Persoonlijk Wachtwoord Wijzigen</h2>
-        <p>Hieronder vindt ziet u in 3 stappen hoe u uw wachtwoord kan veranderen. Wij raden aan om uw wachtwoord
-            regelmatig te veranderen wegens veiligheidsredenen.</p>
+        <p>Hieronder vindt u in 3 stappen hoe u uw wachtwoord kan wijzigen. Om de veiligheid van uw account te garanderen raden we u aan dit regelmatig te doen.</p>
         <div class="row">
             <div class="col-lg-4">
                 <b>Stap 1</b>
@@ -31,7 +30,7 @@
             </div>
             <div class="col-lg-4">
                 <b>Stap 3</b>
-                <p>Daarna vul je het huidige wachtwoord en twee maal het nieuwe wachtwoord.</p>
+                <p>Daarna vul je het huidige wachtwoord en twee maal het nieuwe wachtwoord in.</p>
                 <?php echo toonAfbeelding('handleiding/handleiding3.png', $attributen = 'alt="afbeelding wachtwoord wijzigen" class="col-lg-12"'); ?>
             </div>
         </div>

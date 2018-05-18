@@ -35,7 +35,7 @@
                     <td class="col-3"><?php print $gegevens->telefoon; ?></td>
                 </tr>
                 <tr>
-                    <td class="col-3">Email:</td>
+                    <td class="col-3">E-mail:</td>
                     <td class="col-3"><?php print $gegevens->mail; ?></td>
                 </tr>
                 <tr>

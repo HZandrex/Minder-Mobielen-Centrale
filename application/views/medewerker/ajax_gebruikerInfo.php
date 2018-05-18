@@ -28,7 +28,7 @@
             <td><?php print $selectedGebruiker->telefoon; ?></td>
         </tr>
         <tr>
-            <td>Email:</td>
+            <td>E-mail:</td>
             <td><?php print $selectedGebruiker->mail; ?></td>
         </tr>
         <tr>
