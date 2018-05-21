@@ -7,6 +7,7 @@
      *
      * Gemaakt door Nico Claes
      */
+    var_dump($webinfo);
 ?>
 
 <div class="row">

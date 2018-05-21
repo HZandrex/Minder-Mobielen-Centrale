@@ -9,7 +9,7 @@
         * Gemaakt door Nico Claes en Michiel Olijslagers
 */
         // var_dump($rit);
-		// var_dump($vrijwilligers);
+		var_dump($rit);
 		setlocale(LC_TIME, array('.UTF-8','nld_nld@euro','nld_nld','dutch'));
 		
 		$niks = "";

@@ -56,12 +56,9 @@ class Webinfo extends CI_Controller
         }
 
         $this->load->model('webinfo_model');
-
-        $webinfoNamen = $this->webinfo_model->getAllNames();
-        $webinfo = $this->webinfo_model->getAll();
-
-        foreach ($webinfoNamen as $info) {
-            $webinfo[$info] = $this->input->post($info);
+        
+        foreach ($_POST as $key => $value){
+            $webinfo[$key] = htmlspecialchars(trim($value));
         }
 
         $this->webinfo_model->update($webinfo);
