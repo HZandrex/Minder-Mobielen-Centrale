@@ -1,5 +1,5 @@
 ###############################
-What is Minder Mobiele Centrale
+Wat is Minder Mobielen Centrale
 ###############################
 
 Minder Mobiele Centrale is een project van studenten aan Thomasmore Geel.
